@@ -33,7 +33,7 @@ With the following summary (NB: as of Mon Nov 12 2018 14:58:44):
 Other datasets that have not been shared publicly will be sort from idividual Project Managers (_The list will be provided soon_).
 
 ## Workflow
-![Workflow](/home/kibet/bioinformatics/github/co1_metaanalysis/workflow.png)
+![Workflow](https://github.com/kibet-gilbert/co1_metaanalysis/blob/master/workflow.png)
 
 ## Resources
 The metadata downloaded and stored as
