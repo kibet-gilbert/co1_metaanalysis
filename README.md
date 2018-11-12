@@ -25,15 +25,15 @@ arthropoda Kenya Tanzania Uganda Rwanda Burundi
 ```
  This results in [over 36000 published records](http://www.boldsystems.org/index.php/Public_SearchTerms)
 
-With the following summary (NB: as of Mon Nov 12 2018 14:58:44):
----
+**With the following summary (NB: as of Mon Nov 12 2018 14:58:44):**
+
 >_Found 36,436 published records, with 36,436 records with sequences, forming 10,210 BINs (clusters), with specimens from 6 countries, deposited in 126 institutions._
 >_Of these records, 8,865 have species names, and represent 2,241 species._
 
 Other datasets that have not been shared publicly will be sort from idividual Project Managers (_The list will be provided soon_).
 
 ## Workflow
-![Workflow](/home/kibet/bioinformatics/github/co1_metaanalysis/workflow.png)
+![Workflow](https://github.com/kibet-gilbert/co1_metaanalysis/blob/master/workflow.png)
 
 ## Resources
 The metadata downloaded and stored as
