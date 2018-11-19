@@ -19,9 +19,9 @@ This study will determine the phylogenetic diversity and phylogeographic distrib
 Further analyses will focus on identification of potential disease vector species among biting flies (Order Diptera) and crop pest species such as fruit flies (family Tephriditae) that have not yet been implicated with, but may have impact on human, animal and crop health.
 
 ## Data acquisition
-The co1 barcode sequence metadata will be exported from the [boldsystems public data portal](http://www.boldsystems.org/index.php/Public_BINSearch?searchtype=records) using the following search cretaria:
+The co1 barcode sequence metadata will be exported from the [boldsystems public data portal](http://www.boldsystems.org/index.php/Public_BINSearch?searchtype=records) using the following search cretaria in the search box:
 ```
-arthropoda Kenya Tanzania Uganda Rwanda Burundi
+arthropoda Kenya Uganda Tanzania Rwanda Burundi
 ```
  This results in [over 36000 published records](http://www.boldsystems.org/index.php/Public_SearchTerms)
 
@@ -30,7 +30,9 @@ arthropoda Kenya Tanzania Uganda Rwanda Burundi
 >_Found 36,436 published records, with 36,436 records with sequences, forming 10,210 BINs (clusters), with specimens from 6 countries, deposited in 126 institutions._
 >_Of these records, 8,865 have species names, and represent 2,241 species._
 
-Other datasets that have not been shared publicly will be sort from idividual Project Managers (_The list will be provided soon_).
+To quickly download a the latest dataset in .tsv format click [**API link**](http://www.boldsystems.org/index.php/API_Public/combined?geo=Kenya|Uganda|Tanzania|Rwanda|Burundi&taxon=arthropoda&format=tsv)
+
+Other datasets that have not been shared publicly will be sort from individual Project Managers (_The list will be provided soon_).
 
 ## Workflow
 ![Workflow](https://github.com/kibet-gilbert/co1_metaanalysis/blob/master/workflow.png)
@@ -38,6 +40,7 @@ Other datasets that have not been shared publicly will be sort from idividual Pr
 ## Resources
 The metadata downloaded and stored as
 >bold_data.tsv
+>(bold2.tsv is a test file that we have been working with as a test data set file)
 or
 >bold_data.xml
 or
