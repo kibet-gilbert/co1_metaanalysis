@@ -37,12 +37,36 @@ Other datasets that have not been shared publicly will be sort from individual P
 ## Workflow
 ![Workflow](https://github.com/kibet-gilbert/co1_metaanalysis/blob/master/workflow.png)
 
+##Tools
+###Programming languages:
+1. R
+2. Bash (awk)
+3. Python (Python2,Python3 and ipython)
+
+###Multiple Sequence Alignment
+1. Muscle
+2. T_Coffee
+3. MAFFT
+4. [SATé](https://github.com/sate-dev/sate-core) for [linux](https://github.com/sate-dev/sate-tools-linux)
+5. [PASTA](https://github.com/smirarab/pasta)
+6. Other tools; [SEPP](https://github.com/smirarab/sepp)
+
+###phylogenetic Inference
+1. RAxML
+2. FastTree
+
+###Phylogeographic Analysis
+1. BASTA (BEAST2 bayesian Package)
+2. Other tools; [georeferencing script]
+
 ## Resources
 The metadata downloaded and stored as
 >bold_data.tsv
->(bold2.tsv is a test file that we have been working with as a test data set file)
+>>(bold2.tsv is a test file that we have been working with as a test data set file)
+
 or
 >bold_data.xml
+
 or
 >bold_fasta.fas
 
