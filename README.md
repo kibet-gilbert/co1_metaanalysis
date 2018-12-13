@@ -40,14 +40,14 @@ Other datasets that have not been shared publicly will be sort from individual P
 ## Tools
 ### Programming languages:
 1. R
-2. Bash (awk)
+2. Bash (and awk)
 3. Python (Python2,Python3 and ipython)
 
 ### Multiple Sequence Alignment
 1. Muscle
 2. T_Coffee
 3. MAFFT
-4. [SATé](https://github.com/sate-dev/sate-core) for [linux](https://github.com/sate-dev/sate-tools-linux)
+4. [SATé](https://github.com/sate-dev/sate-core) for [sate-tools-linux](https://github.com/sate-dev/sate-tools-linux)
 5. [PASTA](https://github.com/smirarab/pasta)
 6. Other tools; [SEPP](https://github.com/smirarab/sepp)
 
@@ -57,12 +57,16 @@ Other datasets that have not been shared publicly will be sort from individual P
 
 ### Phylogeographic Analysis
 1. BASTA (BEAST2 bayesian Package)
-2. Other tools; [georeferencing script]
+2. Other tools; [geocoding script(Gratton et al., 2017)](https://github.com/paolo-gratton/Gratton_et_al_JBiogeogr_2016)
 
 ## Resources
+COI sequences preparation protocol;
+1. [Prosser et.al. 2016](https://github.com/kibet-gilbert/co1_metaanalysis/blob/master/Prosser_et-al_2016_NGS_DNA_type_specimens_MER.pdf)
+2. [Wilson 2012 DNA barcoding insects](https://github.com/kibet-gilbert/co1_metaanalysis/blob/master/Wilson_2012_DNA_barcoding_insects.pdf)
+
 The metadata downloaded and stored as
 >bold_data.tsv
->>(bold2.tsv is a test file that we have been working with as a test data set file)
+>(bold2.tsv is just a true copy of bold_data.tsv file that we are working with as a test data set file)
 
 or
 >bold_data.xml
