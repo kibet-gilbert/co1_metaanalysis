@@ -1,0 +1,15 @@
+[submodule "code/tools/pasta_code/pasta"]
+	path = code/tools/pasta_code/pasta
+	url = https://github.com/smirarab/pasta
+[submodule "code/tools/sate/satesrc-v2.2.7-2013Feb15/sate-tools-win"]
+	path = code/tools/sate/satesrc-v2.2.7-2013Feb15/sate-tools-win
+	url = https://github.com/sate-dev/sate-tools-win
+[submodule "code/tools/sate/satesrc-v2.2.7-2013Feb15/sate-tools-mac"]
+	path = code/tools/sate/satesrc-v2.2.7-2013Feb15/sate-tools-mac
+	url = https://github.com/sate-dev/sate-tools-mac
+[submodule "code/tools/sate/satesrc-v2.2.7-2013Feb15/sate-tools-linux"]
+	path = code/tools/sate/satesrc-v2.2.7-2013Feb15/sate-tools-linux
+	url = https://github.com/sate-dev/sate-tools-linux
+[submodule "code/tools/sate/satesrc-v2.2.7-2013Feb15/sate-core"]
+	path = code/tools/sate/satesrc-v2.2.7-2013Feb15/sate-core
+	url = https://github.com/sate-dev/sate-core

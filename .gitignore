@@ -1,0 +1,8 @@
+code/practice/
+*.swp
+*.pyc
+code/tools/sate/satesrc-v2.2.7-2013Feb15/sate-core/bin/
+code/tools/pasta_code/pasta/bin
+*.xml
+.ipynb_checkpoints/
+
