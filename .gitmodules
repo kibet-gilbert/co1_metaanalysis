@@ -15,4 +15,4 @@
 	url = https://github.com/sate-dev/sate-core
 [submodule "code/tools/pasta_code/sate-tools-linux"]
 	path = code/tools/pasta_code/sate-tools-linux
-	url = https://github.com/sate-dev/sate-core
+	url = https://github.com/smirarab/sate-tools-linux
