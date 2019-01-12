@@ -1,6 +1,6 @@
 # co1_metaanalysis
 
-## Preview.
+## Preview
 The co1_metaanalysis is a Master's of science in Molecular Biology and Bioinformatics project, Department of Biochemistry, [Jomo Kenyatta University of Agriculture and Technology(Jkuat)](http://www.jkuat.ac.ke/)
 
 It is conducted at the **[international centre for insect physiology and ecology(_icipe_)](http://www.icipe.org/)**  in collaboration with [BOLD Systems](http://www.boldsystems.org/)
