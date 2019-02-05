@@ -4,7 +4,7 @@ install.packages("tidyverse") ## installs tidyverse
 library(dplyr);library(magrittr) ## loads dplyr and magrittr packages
 
 
-bold_dataframe = read.delim("../data/input/eafro_data/bold2.tsv", stringsAsFactors = F, header = T, na.strings = "") ## loads bold2.tsv as a dataframe object. works ok, bold2.tsv does not contain any '\r' characters
+bold_dataframe = read.delim("../data/input/eafro_data/bold_data.tsv", stringsAsFactors = F, header = T, na.strings = "") ## loads bold2.tsv as a dataframe object. works ok, bold2.tsv does not contain any '\r' characters
 
 str(bold_dataframe) ## structure summary of bold_dataframe data
 
@@ -31,6 +31,12 @@ str(resulting_dataframe3) ## structure summary of resulting_dataframe data
 boxplot(resulting_dataframe1$seqlen1, resulting_dataframe3$seqlen2) ## visualizing the distribution of sequence length in resulting_dataframe3$unaligned_nucleotides
 hist(resulting_dataframe3$seqlen1); hist(resulting_dataframe3$seqlen2) ## visualizing the distribution of sequence length in resulting_dataframe3$unaligned_nucleotides
 
+###Generating a file with all 'COI-5P' sequences
+resulting_dataframe3 -> COI_all_data; cat(length(COI_all_data$unaligned_nucleotides),"sequences have 'COI-5P' marker")
+
+###Introducing a filter to remove sequences with less than 500 nucleotides
+resulting_dataframe3 %>% filter(seqlen2 >= 500 ) -> COI_Over499_data; cat(length(COI_Over500_data$unaligned_nucleotides),"sequences have more or equivalent to 500 bases")
+
 ### Introducing a filter to remove any sequence with less than 500 and more than 700 nucleotides
 resulting_dataframe3 %>% filter(seqlen2 >= 500 & seqlen2 <= 700) -> COI_clean_data; cat(length(COI_clean_data$unaligned_nucleotides),"sequences have from 500 to 700 bases") ## 
 
@@ -55,6 +61,6 @@ COI_teste07_data <- COI_Over700_data[sample(nrow(COI_Over700_data), 100), ]#from
 
 
 ### Printing copies of the final tidy files as dataframes in .tsv format
-datalist = lapply(c("COI_clean_data", "COI_clean01_data", "COI_Over700_data", "COI_Under500_data", "COI_testa00_data", "COI_testb01_data", "COI_testb02_data", "COI_testb03_data", "COI_testc04_data", "COI_testc05_data", "COI_testd06_data", "COI_teste07_data"), get)
-names(datalist) <- (c("../data/input/eafro_data/COI_clean_data", "../data/input/eafro_data/COI_clean01_data", "../data/input/eafro_data/COI_Over700_data", "../data/input/eafro_data/COI_Under500_data", "../data/input/eafro_data/COI_testa00_data", "../data/input/eafro_data/COI_testb01_data", "../data/input/eafro_data/COI_testb02_data", "../data/input/eafro_data/COI_testb03_data", "../data/input/eafro_data/COI_testc04_data", "../data/input/eafro_data/COI_testc05_data", "../data/input/eafro_data/COI_testd06_data", "../data/input/eafro_data/COI_teste07_data"))
+datalist = lapply(c("COI_all_data", "COI_Over499_data", "COI_clean_data", "COI_clean01_data", "COI_Over700_data", "COI_Under500_data", "COI_testa00_data", "COI_testb01_data", "COI_testb02_data", "COI_testb03_data", "COI_testc04_data", "COI_testc05_data", "COI_testd06_data", "COI_teste07_data"), get)
+names(datalist) <- (c("../data/input/eafro_data/COI_all_data", "../data/input/eafro_data/COI_Over499_data", "../data/input/eafro_data/COI_clean_data", "../data/input/eafro_data/COI_clean01_data", "../data/input/eafro_data/COI_Over700_data", "../data/input/eafro_data/COI_Under500_data", "../data/input/eafro_data/COI_testa00_data", "../data/input/eafro_data/COI_testb01_data", "../data/input/eafro_data/COI_testb02_data", "../data/input/eafro_data/COI_testb03_data", "../data/input/eafro_data/COI_testc04_data", "../data/input/eafro_data/COI_testc05_data", "../data/input/eafro_data/COI_testd06_data", "../data/input/eafro_data/COI_teste07_data"))
 for (i in 1:length(datalist)) {write.table(datalist[i], file = paste(names(datalist[i]), ".tsv", sep = ""), row.names = FALSE, col.names= TRUE, sep = "\t", quote=FALSE)}

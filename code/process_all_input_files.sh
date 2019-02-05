@@ -10,6 +10,8 @@ then
 	exit 1
 fi
 
+echo "generating .fasta files from .tsv metadata files"
+
 for input_filename in "$@"
 do
 	echo "Let us proceed with file ${input_filename}..."

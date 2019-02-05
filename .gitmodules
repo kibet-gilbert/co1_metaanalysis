@@ -16,3 +16,6 @@
 [submodule "code/tools/pasta_code/sate-tools-linux"]
 	path = code/tools/pasta_code/sate-tools-linux
 	url = https://github.com/smirarab/sate-tools-linux
+[submodule "code/tools/figtree"]
+	path = code/tools/figtree
+	url = https://github.com/rambaut/figtree

@@ -44,9 +44,10 @@ Other datasets that have not been shared publicly will be sort from individual P
 3. Python (Python2,Python3 and ipython)
 
 ### Multiple Sequence Alignment
-1. [Muscle](http://www.drive5.com/muscle/)
-2. [T_Coffee](http://www.tcoffee.org/)
-3. [MAFFT Version 7](https://mafft.cbrc.jp/alignment/software/)
+1. [Muscle.](http://www.drive5.com/muscle/)
+It is problematic to align large number of sequences using global alignment algorithims used by muscle as explained in [Very large alignments are usually a bad idea](http://www.drive5.com/muscle/manual/bigalignments.html). Clustering highly identical (95% or 90% identity) help reduce the the sequences and challanges faced.
+2. [T_Coffee](https://github.com/cbcrg/tcoffee). [The regressive mode of T-Coffee](https://github.com/cbcrg/tcoffee/blob/master/docs/tcoffee_quickstart_regressive.rst) is [described as most suitable for large datasets](https://www.biorxiv.org/content/10.1101/490235v1.full) by E. G. Nogales et. al (2018).
+3. [MAFFT Version 7](https://mafft.cbrc.jp/alignment/software/). For large datasets: [Tips for handling a large dataset](https://mafft.cbrc.jp/alignment/software/tips.html). More published by [T. Nakamura et. al (2018)](https://academic.oup.com/bioinformatics/article/34/14/2490/4916099)
 4. [SATé](https://github.com/sate-dev/sate-core) for [sate-tools-linux](https://github.com/sate-dev/sate-tools-linux)
 5. [PASTA](https://github.com/smirarab/pasta) [(Tutorial)](https://github.com/smirarab/pasta/blob/master/pasta-doc/pasta-tutorial.md)
 6. Other tools; [SEPP](https://github.com/smirarab/sepp), [HMMER](http://hmmer.org/)
@@ -54,6 +55,8 @@ Other datasets that have not been shared publicly will be sort from individual P
 ### Phylogenetic Inference
 1. [RAxML](https://cme.h-its.org/exelixis/web/software/raxml/index.html)
 2. [FastTree](http://www.microbesonline.org/fasttree/)
+
+The available/applicable computer readable formats of the phylogenetic trees are [Newick](http://evolution.genetics.washington.edu/phylip/newicktree.html), [NEXUS](http://en.wikipedia.org/wiki/Nexus_file) and [PhyloXML](http://en.wikipedia.org/wiki/PhyloXML)
 
 Programs to be used to visualize and edit phylogenetic trees:
 [FigTree](http://tree.bio.ed.ac.uk/software/figtree/).
