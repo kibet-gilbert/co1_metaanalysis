@@ -1,0 +1,7 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Type=Application
+Name=Dendroscope
+Exec="/home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/Dendroscope"
+Icon=/home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/Dendroscope.png
+Categories=Application;

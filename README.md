@@ -53,6 +53,12 @@ It is problematic to align large number of sequences using global alignment algo
 5. [PASTA](https://github.com/smirarab/pasta) [(Tutorial)](https://github.com/smirarab/pasta/blob/master/pasta-doc/pasta-tutorial.md)
 6. Other tools; [SEPP](https://github.com/smirarab/sepp), [HMMER](http://hmmer.org/)
 
+#### MSA evaluation:
+This is can be done based on two approaches: 1. Based on a reference MSA (which we don't have) or 2. Based on analysing the alignments themselves. In the later we use the following [sequence based methods](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#sequence-based-methods):
+1. [Computing the CORE index of any alignment
+](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#computing-the-local-core-index).
+2. Evaluating the [Transitive Consistency Score (TCS)](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#transitive-consistency-score-tcs) of an MSA.
+
 ### Phylogenetic Inference
 1. [RAxML](https://cme.h-its.org/exelixis/web/software/raxml/index.html)
 2. [FastTree](http://www.microbesonline.org/fasttree/)

@@ -7,6 +7,8 @@ muscle_dest=${co1_path}data/output/alignment/muscle_output/
 mafft_dest=${co1_path}data/output/alignment/mafft_output/
 makemergetable=${co1_path}code/makemergetable.rb
 tcoffee_dest=${co1_path}data/output/alignment/t_coffee_output/
+pasta_dest=${co1_path}data/output/alignment/pasta_output/
+sate_dest=${co1_path}data/output/alignment/sate_output/
 
 usage() { #checks if the positional arguments (input files) for execution of the script are defined
 	if [ $# -eq 0 ]
@@ -25,6 +27,7 @@ rename() { #generates output file names with same input filename prefix. The suf
 
 
 #========================================================================================
+#MUSCLE
 #========================================================================================
 ###muscle
 
@@ -38,7 +41,7 @@ muscle_large() { #muscle aligment of large datasets, long execution times is an 
 		if [ ! -f $i ]
 		then
 			echo "input error: file $i is non-existent!"
-		elif [[ ( -f $i ) && ( `basename $i` == *.fasta ) ]]
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa) ) ]]
 		then
 			rename
 			echo -e "\nproceeding with file `basename $i`..."
@@ -62,7 +65,7 @@ muscle_refine() {
 		if [ ! -f $i ]
 		then
 			echo "input error: file $i is non-existent!"
-		elif [[ ( -f $i ) && ( `basename $i` == *.afa ) ]]
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa) ) ]]
 		then
 			rename
 			echo -e "\nproceeding with file `basename $i`..."
@@ -89,7 +92,7 @@ muscle_p2p() {
 		then
 			echo "input file error: only two input files are allowed!"
 			break
-		elif [[ ( -f $i ) && ( `basename $i` == *.afa ) ]]
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa) ) ]]
 		then
 			if [ -z $in1_outname ]
 			then 
@@ -122,6 +125,7 @@ muscle_p2p() {
 
 
 #========================================================================================
+#MAFFT
 #========================================================================================
 
 ###mafft :highly similar ∼50,000 – ∼100,000 sequences × ∼5,000 sites incl. gaps (2016/Jul)
@@ -139,7 +143,7 @@ mafft_GlINS1() {
                 if [ ! -f $i ]
                 then
                         echo "input error: file $i is non-existent!"
-                elif [[ ( -f $i ) && ( `basename $i` == *.fasta ) ]]
+                elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa) ) ]]
                 then
                         rename
                         echo -e "\nmafft G-large-INS-1 MSA: proceeding with file `basename $i`..."
@@ -266,7 +270,7 @@ outputfilename() { #generates the name of the output (results) file when being m
 #               mafft --merge subMSAtable input > output
 
 mafft_merge() {
-	echo -e "\nwarning: Each sub-MSA is forecd to form a monophyletic cluster in version 7.043 and higher (2013/May/26)."
+	echo -e "\nwarning: Each sub-MSA is forced to form a monophyletic cluster in version 7.043 and higher (2013/May/26)."
 	printf "Enter [Yes] to continue or [No] to exit: "
 	read choice
 	case $choice in
@@ -357,7 +361,9 @@ mafft_addfragmets() {
 }
 
 
-#==============================================================================
+#=====================================================================================
+#T_COFFEE
+#=====================================================================================
 
 ### t_coffee: the regressive mode of T-Coffee is meant to align very large datasets with a high accuracy. It starts by aligning the most distantly related sequences first. It uses this guide tree to extract the N most diverse sequences. In this first intermediate MSA, each sequence is either a leaf or the representative of a subtree. The algorithm is re-aplied recursively onto every representative sequence until all sequences have been incorporated in an internediate MSA of max size N. The final MSA is then obtained by merging all the intermediate MSAs into the final MSA.
 
@@ -383,11 +389,11 @@ tcoffee_large() {
 		if [ ! -f $i ]
 		then
 			echo "input error: file $i is non-existent!"
-		elif [[ ( -f $i ) && ( `basename $i` == *.fasta ) ]]
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa) ) ]]
 		then
 			rename
 			echo -e "\nproceeding with file `basename $i`..."
-			t_coffee -reg -seq $i -reg_nseq 100 -reg_tree mbed -reg_method clustalo_msa -outfile ${tcoffee_dest}aligned/${output_filename}.aln -newtree ${tcoffee_dest}trees/${output_filename}.mbed
+			t_coffee -reg -seq $i -reg_nseq 100 -reg_tree mbed -reg_method clustalo_msa -outfile ${tcoffee_dest}aligned/${output_filename}.fasta -newtree ${tcoffee_dest}trees/${output_filename}.mbed
 		else
 			echo "input file error in `basename $i`: input file should be a .fasta file format"
 			continue
@@ -396,3 +402,150 @@ tcoffee_large() {
 	done
 
 }
+
+
+
+#=====================================================================================
+##Doing MSA of DNA sequences protein Translates.
+
+#Working with coding DNA: it is advisable to first align the sequences at the protein level and later thread back the DNA onto your aligned proteins.
+
+#Translating DNA sequences into protein sequences: often safer and more accurate to align them as proteins (as protein sequences are more conserved than their corresponding DNA sequence)
+
+#Syntax:        $ t_coffee -other_pg seq_reformat -in proteases_small_dna.fasta -action \ +translate -output fasta_seq
+
+#Back-translation with the bona fide DNA sequences:
+
+#Syntax:        t_coffee -other_pg seq_reformat -in proteases_small_dna.fasta -in2 \ proteases_small.aln -action +thread_dna_on_prot_aln -output clustalw
+
+
+
+
+
+#=====================================================================================
+
+##Evaluating Your Alignment: Most of T_coffee evalution methods are designed for protein sequences (notably structure based methods), however, T-Coffee via sequence-based-methods (TCS and CORE index) offers some possibilities to evaluate also DNA alignments
+
+#The CORE index is the basis of T-Coffee is an estimation of the consistency between your alignment and the computed library( by default a list of pairs of residues that align in possible global and 10 best local pairwise alignments). The higher the consistency, the better the alignment.
+#Computing the CORE index of any alignment: To evaluate any existing alignment with the CORE index, provide that alignment with the -infile flag and specify that you want to evaluate it
+
+#syntax:	$ t_coffee -infile=proteases_small_g10.aln -output=html -score
+
+COREindex() { #Evaluating an existing alignment with the CORE index
+	usage $@
+	echo "t_coffee starting MSA alignment evaluation using CORE index... "
+	
+	for i in $@
+	do
+		if [ ! -f $i ]
+		then
+			echo "input error: file $i is non-existent!"
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa|aln) ) ]]
+		then
+			rename
+			outfile_dest
+			echo -e "\nproceeding with `basename $i` alignment file evaluatio..."
+			t_coffee -infile=$i -output=html -score -outfile ${output_dest}scores/coreindex/${output_filename}.html
+		else
+			echo "input file error in `basename $i`: input file should be a *.aln file format"
+			continue
+		fi
+	done
+}
+
+
+#=====================================================================================
+
+input_src=`dirname "$(realpath "${i}")"`
+outfile_dest() { #Redirecting the output results based on input results source path
+	case $input_src in
+		$muscle_dest*)
+			output_dest=$muscle_dest
+			;;
+		$mafft_dest*)
+			output_dest=$mafft_dest
+			;;
+		$tcoffee_dest*)
+			output_dest=$tcoffee_dest
+			;;
+		$pasta_dest*)
+			output_dest=$pasta_dest
+			;;
+		$sate_dest*)
+			output_dest=$sate_dest
+			;;
+		*)
+			echo -e "input file is from unrecognized source directory `dirname "$(realpath "${i}")"` "
+			#exit 1
+			;;
+	esac
+}
+
+
+#=====================================================================================
+
+# However, to evaluate an alignment, the use of Transitive Consistency Score (TCS) procedure is recommended. TCS is an alignment evaluation score that makes it possible to identify the most correct positions in an MSA. It has been shown that these positions are the most likely to be structuraly correct and also the most informative when estimating phylogenetic trees.
+#Evaluating an existing MSA with Transitive Consistency Score (TCS): most informative when used to identify low-scoring portions within an MSA. *.score_ascii file displays the score of the MSA, the sequences and the residues. *.score_html file displays a colored version score of the MSA, the sequences and the residues
+
+#syntax:	$ t_coffee -infile sample_seq1.aln -evaluate -output=score_ascii,aln,score_html
+
+TCSeval() { #Evaluating an existing alignment with the TCS
+        usage $@
+        echo "t_coffee starting MSA alignment evaluation using TCS... "
+
+        for i in $@
+        do
+                if [ ! -f $i ]
+                then
+                        echo "input error: file $i is non-existent!"
+                elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa|aln) ) ]]
+                then
+                        rename
+			outfile_dest
+                        echo -e "\nproceeding with `basename $i` alignment file evaluatio..."
+                        t_coffee -infile $i -evaluate -output=score_ascii,aln,html -outfile ${output_dest}scores/tcs/${output_filename}_score #${tcoffee_dest}tcs/${output_filename}.score_aln ${tcoffee_dest}tcs/${output_filename}.score_html
+                else
+                        echo "input file error in `basename $i`: input file should be a .fasta file format"
+                        continue
+                fi
+        done
+}
+
+
+#=====================================================================================
+
+##Comparing alternative alignments: compare alternative alignments quantitatively
+
+#Reference dependent methods.
+#T-Coffee comes along with an alignment comparison module named **aln_compare**. You can use it to estimate the amount of difference between your two alignments either using the Sum-of-Pair score or the column score using the flag -compare_mode (sp or column).
+#1. The sp score is defined as the number of aligned residue pairs (i.e. not gaps) that are common between the reference (-al1) and the test (-al2) divided by the total numbers of pairs in the reference, while excluding gaps. By default aln_compare returns the SoP score:
+
+#Syntax:        $ t_coffee -other_pg aln_compare -al1 b80.aln -al2 b30.aln -compare_mode sp
+
+#Returns:       seq1    seq2    Sim     [ALL]           Tot
+#               b80     19      33.6    94.2 [100.0]    [79686]
+
+#b80 is the reference MSA, it contains 19 sequences with an average identity of 33.6%, and is 94.2% identical to the second MSA b30.aln (79686 pairs to be precise)
+
+#Other modes of comparison are available include:
+#2. TC score:   the number of columns in the test MSA (-al2) that are common between the reference and the test, divided by the total number of columns in the reference
+#3. column score:       the total number pairs occuring in columns entirely identical between the reference (-al1) and the test (-al2) divided by the total number of pairs in the reference (excluding gaps)
+
+
+#=====================================================================================
+
+##Estimating the diversity in your alignment:
+
+# The "-other_pg" flag: call a collection of tools that perform other operations: reformatting, evaluating results, comparing methods. After the flag -other_pg, the common T-Coffee flags are not recognized. "-seq_reformat" flag: calls one of several tools to reformat/trim/clean/select your input data but also your output results, from a very powerful reformatting utility named seq_reformat
+
+# "-output" option of "seq_reformat", will output all the pairwise identities, as well as the average level of identity between each sequence and the others:
+#               "-output sim_idscore" realign your sequences pairwise so it can accept unaligned or aligned sequences alike. "-output sim" computes the identity using the sequences as they are in your input file so it is only suited for MSAs
+
+#Syntax:        $ t_coffee -other_pg seq_reformat -in sample_seq1.aln -output sim
+
+#               "-in" and "in2" flags: define the input file(s)
+#               "-output" flag: defines output format*
+
+
+
+#=====================================================================================
