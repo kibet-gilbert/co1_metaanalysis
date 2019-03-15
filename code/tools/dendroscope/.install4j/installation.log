@@ -1,4 +1,4 @@
-[INFO] logger started at Tue Feb 19 17:13:11 EAT 2019
+[INFO] logger started at Tue Feb 26 17:24:27 EAT 2019
 [INFO] executable name: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/Dendroscope_unix_3_5_10.sh
 [INFO] install4j version: 7.0.8 (build 7248)
 [INFO] Properties: 
@@ -43,13 +43,13 @@ install4j.cwd=/home/kibet/bioinformatics/github/co1...
 user.timezone=Africa/Nairobi
 java.awt.printerjob=sun.print.PSPrinterJob
 java.specification.version=1.8
-install4j.jvmDir=/home/kibet/bioinformatics/anaconda3/...
+install4j.jvmDir=/home/kibet/bioinformatics/anaconda3
 file.encoding=UTF-8
 user.name=kibet
 java.class.path=i4jruntime.jar
 java.vm.specification.version=1.8
 sun.arch.data.model=64
-java.home=/home/kibet/bioinformatics/anaconda3/...
+java.home=/home/kibet/bioinformatics/anaconda3/jre
 sun.java.command=com.install4j.runtime.launcher.UnixLa...
 java.specification.vendor=Oracle Corporation
 user.language=en
@@ -80,24 +80,32 @@ sun.cpu.isalist=
        Property rollbackSupported: false
        Property updateInstallationDirectory: true
        Variable changed: sys.resolveUserSpecificInstallationDir=true[class java.lang.Boolean]
-       Execute action successful after 4 ms
+       Execute action successful after 9 ms
 [INFO] com.install4j.runtime.beans.screens.StartupScreen [ID 15]: command: move 1 screens, executing actions, checking condition
 [INFO] com.install4j.runtime.beans.screens.WelcomeScreen [ID 1691242162]: Show screen
 [INFO] checking writable with maximum
-[INFO] Variable changed: sys.confirmedUpdateInstallation=false[class java.lang.Boolean]
+[INFO] Variable changed: sys.confirmedUpdateInstallation=true[class java.lang.Boolean]
+[INFO] com.install4j.runtime.beans.actions.misc.LoadResponseFileAction [ID 1691242263]: Execute action
+       Property excludedVariables: null
+       Property file: null
+       Property overwriteStrategy: Do not overwrite command line
+       Property registerForResponseFile: true
+       Property rollbackSupported: true
+       Variable changed: sys.component.1691242184=true[class java.lang.Boolean]
+       Variable changed: sys.component.1691242261=true[class java.lang.Boolean]
+       Variable changed: sys.adminRights=false[class java.lang.Boolean]
+       Variable changed: sys.languageId=en[class java.lang.String]
+       Variable changed: sys.symlinkDir=/usr/local/bin[class java.lang.String]
+       Variable changed: sys.programGroupDisabled=false[class java.lang.Boolean]
+       Variable changed: sys.component.1691242183=true[class java.lang.Boolean]
+       Variable changed: sys.installationDir=/home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope[class java.lang.String]
+       Variable changed: myXmx=600[class java.lang.Integer]
+       Execute action successful after 72 ms
 [INFO] com.install4j.runtime.beans.screens.WelcomeScreen [ID 1691242162]: command: move 1 screens, executing actions, checking condition
 [INFO] com.install4j.runtime.beans.screens.LicenseScreen [ID 1691242163]: Show screen
 [INFO] com.install4j.runtime.beans.screens.LicenseScreen [ID 1691242163]: command: move 1 screens, executing actions, checking condition
-[INFO] com.install4j.runtime.beans.screens.InstallationDirectoryScreen [ID 1691242164]: Show screen
-       Variable changed: sys.installationDir=/home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope[class java.lang.String]
-       checking writable with maximum
-[INFO] com.install4j.runtime.beans.screens.InstallationDirectoryScreen [ID 1691242164]: command: move 1 screens, executing actions, checking condition
 [INFO] com.install4j.runtime.beans.screens.ComponentsScreen [ID 1691242165]: Show screen
 [INFO] com.install4j.runtime.beans.screens.ComponentsScreen [ID 1691242165]: command: move 1 screens, executing actions, checking condition
-[INFO] com.install4j.runtime.beans.screens.StandardProgramGroupScreen [ID 1691242166]: Show screen
-       Variable changed: sys.symlinkDir=/usr/local/bin[class java.lang.String]
-       Variable changed: sys.programGroupDisabled=false[class java.lang.Boolean]
-[INFO] com.install4j.runtime.beans.screens.StandardProgramGroupScreen [ID 1691242166]: command: move 1 screens, executing actions, checking condition
 [INFO] com.install4j.runtime.beans.screens.InstallationScreen [ID 1691242168]: Show screen
 [INFO] com.install4j.runtime.beans.actions.UninstallPreviousAction [ID 1691242497]: Execute action
        Property installationDirectory: null
@@ -108,10 +116,13 @@ sun.cpu.isalist=
        Property uninstallServices: true
        checking running processes
        checking running processes ok
-       previous installation id at /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope: null
-       no previous installation detected, uninstaller was not started
+       previous installation id at /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope: 3637-0812-9190-9529
+       starting uninstaller
+       executing /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/uninstall
+       see uninstallPrevious.log for the log file of the uninstaller
+       Variable changed: sys.undeletedUninstallFiles=null
        finished
-       Execute action successful after 3 ms
+       Execute action successful after 4052 ms
 [INFO] com.install4j.runtime.beans.actions.InstallFilesAction [ID 1691242169]: Execute action
        Property directoryResolverScript: null
        Property fileFilterScript: null
@@ -212,13 +223,14 @@ sun.cpu.isalist=
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/xml-apis-ext-1.3.04.jar; size: 85686 bytes; exists: false
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/xml-apis.jar; size: 220536 bytes; exists: false
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/xmlgraphics-commons-2.0.jar; size: 632499 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/inst_jre.cfg; size: 54 bytes; exists: false
-       File options set to: [fileTime: Tue Feb 19 17:13:57 EAT 2019, mode: 644, overwriteMode: Always, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/inst_jre.cfg; size: 41 bytes; exists: false
+       File options set to: [fileTime: Tue Feb 26 17:24:44 EAT 2019, mode: 644, overwriteMode: Always, shared: false, uninstallMode: If created, delayIfNecessary: false]
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4jruntime.jar; size: 1919891 bytes; exists: false
-       File options set to: [fileTime: Tue Feb 19 17:13:57 EAT 2019, mode: 644, overwriteMode: Always, shared: false, uninstallMode: Always, delayIfNecessary: false]
+       File options set to: [fileTime: Tue Feb 26 17:24:44 EAT 2019, mode: 644, overwriteMode: Always, shared: false, uninstallMode: Always, delayIfNecessary: false]
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/MessagesDefault; size: 33678 bytes; exists: false
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4jparams.conf; size: 106144 bytes; exists: false
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/stats.properties; size: 1032 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/uninstallPrevious.log; size: 4499 bytes; exists: false
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/launchers.xml; size: 275 bytes; exists: false
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/user.jar; size: 26588 bytes; exists: false
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4j_extf_0_jg1g94.utf8; size: 33678 bytes; exists: false
@@ -228,7 +240,8 @@ sun.cpu.isalist=
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4j_extf_4_jg1g94_un9apv.png; size: 1884 bytes; exists: false
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4j_extf_5_jg1g94_18gg8kx@2x.png; size: 15419 bytes; exists: false
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4j_extf_1_jg1g94.txt; size: 968 bytes; exists: false
-       Execute action successful after 839 ms
+       Backing up /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/response.varfile
+       Execute action successful after 424 ms
 [INFO] com.install4j.runtime.beans.actions.desktop.CreateProgramGroupAction [ID 1691242170]: Execute action
        Property categories: Application
        Property linkDirectory: /usr/local/bin
@@ -244,18 +257,18 @@ sun.cpu.isalist=
        Property unixSymlinks: true
        Variable changed: sys.programGroupName=Dendroscope[class java.lang.String]
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/Dendroscope.desktop; size: 297 bytes; exists: false
-       File options set to: [fileTime: Tue Feb 19 17:13:58 EAT 2019, mode: 755, overwriteMode: Always, shared: false, uninstallMode: Always, delayIfNecessary: false]
+       File options set to: [fileTime: Tue Feb 26 17:24:44 EAT 2019, mode: 755, overwriteMode: Always, shared: false, uninstallMode: Always, delayIfNecessary: false]
        Install file: /home/kibet/.local/share/applications/Dendroscope-1.desktop; size: 297 bytes; exists: false
-       File options set to: [fileTime: Tue Feb 19 17:13:58 EAT 2019, mode: 644, overwriteMode: Always, shared: false, uninstallMode: Always, delayIfNecessary: false]
+       File options set to: [fileTime: Tue Feb 26 17:24:44 EAT 2019, mode: 644, overwriteMode: Always, shared: false, uninstallMode: Always, delayIfNecessary: false]
 [ERROR] com.install4j.runtime.beans.actions.desktop.CreateProgramGroupAction [ID 1691242170]: /usr/local/bin/Dendroscope
-[INFO] com.install4j.runtime.beans.actions.desktop.CreateProgramGroupAction [ID 1691242170]: Execute action successful after 26 ms
+[INFO] com.install4j.runtime.beans.actions.desktop.CreateProgramGroupAction [ID 1691242170]: Execute action successful after 16 ms
 [INFO] com.install4j.runtime.beans.actions.desktop.RegisterAddRemoveAction [ID 1691242171]: Execute action
        Property icon: null
        Property iconSource: Installer icon
        Property itemName: Dendroscope 3.5.10
        Property persistentProperties: {}
        Property rollbackSupported: true
-       Execute action successful after 2 ms
+       Execute action successful after 0 ms
 [INFO] com.install4j.runtime.beans.screens.InstallationScreen [ID 1691242168]: Rollback barrier reached
        command: move 1 screens, executing actions, checking condition
 [INFO] com.install4j.runtime.beans.screens.FormScreen [ID 1691242348]: Show screen
@@ -267,7 +280,7 @@ sun.cpu.isalist=
        Property macosVmOptionsType: Contained in the application bundle
        Property vmOptions: [-Xmx600M]
        Property rollbackSupported: true
-       Execute action successful after 3 ms
+       Execute action successful after 1 ms
 [INFO] com.install4j.runtime.beans.screens.FormScreen [ID 1691242423]: command: move 1 screens, executing actions, checking condition
 [INFO] com.install4j.runtime.beans.screens.FinishedScreen [ID 1691242172]: Show screen
 [INFO] com.install4j.runtime.beans.screens.FinishedScreen [ID 1691242172]: command: finish
