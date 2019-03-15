@@ -13,6 +13,7 @@
 <entry name="examples/fishes/first.nexml" shared="false" uninstallMode="0"/>
 <entry name="jars/LICENSE.xerces_2_5_0.txt" shared="false" uninstallMode="0"/>
 <entry name="jars/batik-LICENSE.txt" shared="false" uninstallMode="0"/>
+<entry name=".install4j/uninstallPrevious.log" shared="false" uninstallMode="2"/>
 <entry name="jars/js.jar" shared="false" uninstallMode="0"/>
 <entry name="examples/grasses/rbcL-original.nexml" shared="false" uninstallMode="0"/>
 <entry name="jars/LICENSE.dom-software.txt" shared="false" uninstallMode="0"/>
@@ -103,7 +104,7 @@
 <entry name="examples/grasses" shared="false" uninstallMode="0"/>
 <entry name="examples/fishes" shared="false" uninstallMode="0"/>
 <entry name="examples" shared="false" uninstallMode="0"/>
-<entry name=".install4j" shared="false" uninstallMode="0"/>
+<entry name=".install4j" shared="false" uninstallMode="2"/>
 <entry name="." shared="false" uninstallMode="0"/>
 </createdDirs>
 </fileLog>

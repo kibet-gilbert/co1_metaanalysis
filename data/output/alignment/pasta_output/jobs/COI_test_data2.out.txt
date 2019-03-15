@@ -1,0 +1,28 @@
+PASTA INFO: Directory for temporary files created at /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/pasta_output/temporaries/COI_test_data/temp_fs1xwhv
+PASTA INFO: Name translation information saved to /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/pasta_output/jobs/COI_test_data2_temp_name_translation.txt as safe name, original name, blank line format.
+PASTA INFO: Creating a starting tree for the PASTA algorithm...
+PASTA INFO: Performing initial alignment of the entire data matrix...
+PASTA INFO: Performing initial tree search to get starting tree...
+PASTA INFO: Starting PASTA algorithm on initial tree...
+PASTA INFO: Max subproblem set to 50
+PASTA INFO: Step 0. Realigning with decomposition strategy set to mincluster
+PASTA INFO: Step 0. Alignment obtained. Tree inference beginning...
+PASTA INFO: realignment accepted and score improved.
+PASTA INFO: current score: -23391.754, best score: -23391.754
+PASTA INFO: TreeShrink option has been turned off!
+PASTA INFO: Step 1. Realigning with decomposition strategy set to mincluster
+PASTA INFO: Step 1. Alignment obtained. Tree inference beginning...
+PASTA INFO: realignment accepted and score improved.
+PASTA INFO: current score: -23366.924, best score: -23366.924
+PASTA INFO: TreeShrink option has been turned off!
+PASTA INFO: Step 2. Realigning with decomposition strategy set to mincluster
+PASTA INFO: Step 2. Alignment obtained. Tree inference beginning...
+PASTA INFO: realignment accepted despite the score not improving.
+PASTA INFO: current score: -23365.368, best score: -23365.368
+PASTA INFO: TreeShrink option has been turned off!
+PASTA INFO: Writing resulting alignment to /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/pasta_output/jobs/COI_test_data2.marker001.COI_test_data.aln
+PASTA INFO: Writing resulting tree to /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/pasta_output/jobs/COI_test_data2.tre
+PASTA INFO: Writing resulting likelihood score to /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/pasta_output/jobs/COI_test_data2.score.txt
+PASTA INFO: The resulting alignment (with the names in a "safe" form) was first written as the file "/home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/pasta_output/jobs/COI_test_data2_temp_iteration_2_seq_alignment.txt"
+PASTA INFO: The resulting tree (with the names in a "safe" form) was first written as the file "/home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/pasta_output/jobs/COI_test_data2_temp_iteration_2_tree.tre"
+PASTA INFO: Total time spent: 38.4304141998291s
