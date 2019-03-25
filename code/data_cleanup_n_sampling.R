@@ -4,7 +4,7 @@
 ### installing tidyverse package and loading libraries
 install.packages("tidyverse") ## installs tidyverse
 
-library(dplyr);library(magrittr) ## loads dplyr and magrittr packages
+suppressMessages(library(dplyr));suppressMessages(library(magrittr))## loads dplyr and magrittr packages
 
 
 bold_dataframe = read.delim("../data/input/eafro_data/bold_data.tsv", stringsAsFactors = F, header = T, na.strings = "") ## loads bold2.tsv as a dataframe object. works ok, bold2.tsv does not contain any '\r' characters

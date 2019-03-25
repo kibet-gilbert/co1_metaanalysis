@@ -2,12 +2,12 @@
 
 
 ### installing tidyverse package and loading libraries
-#install.packages("tidyverse") ## installs tidyverse
+#Checking if a package is installed and if not installed it is installed. if installed it is loaded. "install.packages("tidyverse")" installs tidyverse
 if("tidyverse" %in% rownames(installed.packages()) == FALSE) {
         install.packages("tidyverse")
 } else {
         cat("\nExcellent tidyverse already installed.\nproceeding with clean_up and sorting\n")
-	library(dplyr);library(magrittr) ## loads dplyr and magrittr packages
+	suppressMessages(library(dplyr));suppressMessages(library(magrittr)) ## loads dplyr and magrittr packages
 }
 
 
@@ -51,6 +51,9 @@ COI_all_data %>% filter(seqlen2 > 700) -> COI_Over700_data; cat("\n\t",length(CO
 
 
 ### Printing copies of the final tidy files as dataframes in .tsv format
-datalist = lapply(c("COI_all_data", "COI_Over499_data", "COI_500to700_data", "COI_650to660_data", "COI_Over700_data", "COI_Under500_data"), get)
-names(datalist) <- (c("../data/input/afro_data/clean_africa/COI_all_data", "../data/input/afro_data/clean_africa/COI_Over499_data", "../data/input/afro_data/clean_africa/COI_500to700_data", "../data/input/afro_data/clean_africa/COI_650to660_data", "../data/input/afro_data/clean_africa/COI_Over700_data", "../data/input/afro_data/clean_africa/COI_Under500_data"))
+data_path = '~/bioinformatics/github/co1_metaanalysis/data/input/afro_data/clean_africa/'
+output_list = c("COI_all_data", "COI_Over499_data", "COI_500to700_data", "COI_650to660_data", "COI_Over700_data", "COI_Under500_data")
+
+datalist = lapply(output_list, get)
+names(datalist) <- paste(data_path, output_list, sep= "" )
 for (i in 1:length(datalist)) {write.table(datalist[i], file = paste(names(datalist[i]), ".tsv", sep = ""), row.names = FALSE, col.names= TRUE, sep = "\t", quote=FALSE)}

@@ -1,0 +1,139 @@
+
+
+IMPORTANT WARNING: Sequences GBMIN47658-17|Blattodea|l-922 and GBMIN47706-17|Blattodea|l-922 are exactly identical
+
+IMPORTANT WARNING
+Found 1 sequence that is exactly identical to other sequences in the alignment.
+Normally they should be excluded from the analysis.
+
+Just in case you might need it, an alignment file with 
+sequence duplicates removed is printed to file COI_testa00_data.fasta.reduced
+
+
+Using BFGS method to optimize GTR rate parameters, to disable this specify "--no-bfgs" 
+
+
+
+This is RAxML version 8.2.12 released by Alexandros Stamatakis on May 2018.
+
+With greatly appreciated code contributions by:
+Andre Aberer      (HITS)
+Simon Berger      (HITS)
+Alexey Kozlov     (HITS)
+Kassian Kobert    (HITS)
+David Dao         (KIT and HITS)
+Sarah Lutteropp   (KIT and HITS)
+Nick Pattengale   (Sandia)
+Wayne Pfeiffer    (SDSC)
+Akifumi S. Tanabe (NRIFS)
+Charlie Taylor    (UF)
+
+
+Alignment has 687 distinct alignment patterns
+
+Proportion of gaps and completely undetermined characters in this alignment: 56.84%
+
+RAxML rapid hill-climbing mode
+
+Using 1 distinct models/data partitions with joint branch length optimization
+
+
+Executing 20 inferences on the original alignment using 20 distinct randomized MP trees
+
+All free model parameters will be estimated by RAxML
+GAMMA model of rate heterogeneity, ML estimate of alpha-parameter
+
+GAMMA Model parameters will be estimated up to an accuracy of 0.1000000000 Log Likelihood units
+
+Partition: 0
+Alignment Patterns: 687
+Name: No Name Provided
+DataType: DNA
+Substitution Matrix: GTR
+
+
+
+
+RAxML was called as follows:
+
+raxmlHPC -m GTRGAMMA -p 12345 -s COI_testa00_data.fasta -# 20 -n T6 
+
+
+Partition: 0 with name: No Name Provided
+Base frequencies: 0.302 0.164 0.150 0.384 
+
+Inference[0]: Time 178.433777 GAMMA-based likelihood -25946.350509, best rearrangement setting 15
+alpha[0]: 0.388975 rates[0] ac ag at cg ct gt: 1.266088 5.434198 7.969740 2.597223 21.960392 1.000000 
+Inference[1]: Time 180.642876 GAMMA-based likelihood -25942.375451, best rearrangement setting 5
+alpha[0]: 0.389940 rates[0] ac ag at cg ct gt: 1.216426 5.156793 7.616312 2.547495 20.988141 1.000000 
+Inference[2]: Time 155.443374 GAMMA-based likelihood -25943.412835, best rearrangement setting 15
+alpha[0]: 0.389524 rates[0] ac ag at cg ct gt: 1.210891 5.160251 7.543868 2.448474 20.463158 1.000000 
+Inference[3]: Time 209.046149 GAMMA-based likelihood -25940.358944, best rearrangement setting 15
+alpha[0]: 0.387357 rates[0] ac ag at cg ct gt: 1.264520 5.160077 7.568378 2.462619 20.515842 1.000000 
+Inference[4]: Time 152.010747 GAMMA-based likelihood -25937.844117, best rearrangement setting 15
+alpha[0]: 0.388820 rates[0] ac ag at cg ct gt: 1.245018 5.094920 7.534095 2.376077 20.459425 1.000000 
+Inference[5]: Time 120.530398 GAMMA-based likelihood -25943.241804, best rearrangement setting 10
+alpha[0]: 0.385313 rates[0] ac ag at cg ct gt: 1.201235 5.259948 7.727816 2.514802 21.343225 1.000000 
+Inference[6]: Time 234.851218 GAMMA-based likelihood -25938.305538, best rearrangement setting 15
+alpha[0]: 0.389492 rates[0] ac ag at cg ct gt: 1.231079 5.303811 7.744512 2.526574 21.135354 1.000000 
+Inference[7]: Time 143.698116 GAMMA-based likelihood -25944.740695, best rearrangement setting 15
+alpha[0]: 0.390233 rates[0] ac ag at cg ct gt: 1.261630 5.277321 7.615316 2.503729 20.474335 1.000000 
+Inference[8]: Time 92.293329 GAMMA-based likelihood -25945.550325, best rearrangement setting 10
+alpha[0]: 0.382748 rates[0] ac ag at cg ct gt: 1.200873 5.234178 7.874219 2.572424 21.501967 1.000000 
+Inference[9]: Time 108.360453 GAMMA-based likelihood -25952.317205, best rearrangement setting 15
+alpha[0]: 0.391591 rates[0] ac ag at cg ct gt: 1.242353 5.187778 7.603625 2.526377 20.757657 1.000000 
+Inference[10]: Time 128.792856 GAMMA-based likelihood -25947.689654, best rearrangement setting 10
+alpha[0]: 0.390171 rates[0] ac ag at cg ct gt: 1.186054 5.271939 7.859467 2.550738 21.610110 1.000000 
+Inference[11]: Time 216.771341 GAMMA-based likelihood -25935.452752, best rearrangement setting 15
+alpha[0]: 0.389397 rates[0] ac ag at cg ct gt: 1.264431 5.339334 7.889896 2.505328 21.636668 1.000000 
+Inference[12]: Time 154.198166 GAMMA-based likelihood -25942.839543, best rearrangement setting 5
+alpha[0]: 0.386991 rates[0] ac ag at cg ct gt: 1.480842 5.845325 8.414083 2.866217 22.651511 1.000000 
+Inference[13]: Time 93.528041 GAMMA-based likelihood -25942.681251, best rearrangement setting 10
+alpha[0]: 0.392187 rates[0] ac ag at cg ct gt: 1.238649 5.022311 7.252949 2.326982 19.596317 1.000000 
+Inference[14]: Time 116.824207 GAMMA-based likelihood -25945.609368, best rearrangement setting 10
+alpha[0]: 0.389569 rates[0] ac ag at cg ct gt: 1.331610 5.427669 7.950066 2.602433 21.536191 1.000000 
+Inference[15]: Time 179.158486 GAMMA-based likelihood -25950.204730, best rearrangement setting 10
+alpha[0]: 0.388058 rates[0] ac ag at cg ct gt: 1.169550 5.374270 7.900500 2.575919 21.584124 1.000000 
+Inference[16]: Time 95.920543 GAMMA-based likelihood -25963.549062, best rearrangement setting 10
+alpha[0]: 0.392010 rates[0] ac ag at cg ct gt: 1.295134 5.347646 7.636346 2.510150 20.380111 1.000000 
+Inference[17]: Time 182.100645 GAMMA-based likelihood -25941.021443, best rearrangement setting 5
+alpha[0]: 0.388294 rates[0] ac ag at cg ct gt: 1.305107 5.201661 7.590048 2.616987 21.007566 1.000000 
+Inference[18]: Time 176.335689 GAMMA-based likelihood -25938.577506, best rearrangement setting 10
+alpha[0]: 0.386905 rates[0] ac ag at cg ct gt: 1.244941 5.170306 7.448001 2.422294 20.176188 1.000000 
+Inference[19]: Time 106.126125 GAMMA-based likelihood -25951.418740, best rearrangement setting 15
+alpha[0]: 0.389408 rates[0] ac ag at cg ct gt: 1.408793 5.740522 8.349083 2.821217 22.695476 1.000000 
+
+
+Conducting final model optimizations on all 20 trees under GAMMA-based models ....
+
+Inference[0] final GAMMA-based Likelihood: -25946.447310 tree written to file /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_result.T6.RUN.0
+Inference[1] final GAMMA-based Likelihood: -25942.373397 tree written to file /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_result.T6.RUN.1
+Inference[2] final GAMMA-based Likelihood: -25943.434548 tree written to file /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_result.T6.RUN.2
+Inference[3] final GAMMA-based Likelihood: -25940.197613 tree written to file /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_result.T6.RUN.3
+Inference[4] final GAMMA-based Likelihood: -25937.817870 tree written to file /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_result.T6.RUN.4
+Inference[5] final GAMMA-based Likelihood: -25943.346602 tree written to file /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_result.T6.RUN.5
+Inference[6] final GAMMA-based Likelihood: -25938.322912 tree written to file /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_result.T6.RUN.6
+Inference[7] final GAMMA-based Likelihood: -25944.907112 tree written to file /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_result.T6.RUN.7
+Inference[8] final GAMMA-based Likelihood: -25945.895379 tree written to file /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_result.T6.RUN.8
+Inference[9] final GAMMA-based Likelihood: -25952.554834 tree written to file /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_result.T6.RUN.9
+Inference[10] final GAMMA-based Likelihood: -25947.906031 tree written to file /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_result.T6.RUN.10
+Inference[11] final GAMMA-based Likelihood: -25935.412442 tree written to file /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_result.T6.RUN.11
+Inference[12] final GAMMA-based Likelihood: -25942.564747 tree written to file /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_result.T6.RUN.12
+Inference[13] final GAMMA-based Likelihood: -25942.644067 tree written to file /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_result.T6.RUN.13
+Inference[14] final GAMMA-based Likelihood: -25945.787544 tree written to file /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_result.T6.RUN.14
+Inference[15] final GAMMA-based Likelihood: -25950.327948 tree written to file /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_result.T6.RUN.15
+Inference[16] final GAMMA-based Likelihood: -25964.018058 tree written to file /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_result.T6.RUN.16
+Inference[17] final GAMMA-based Likelihood: -25941.055428 tree written to file /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_result.T6.RUN.17
+Inference[18] final GAMMA-based Likelihood: -25938.322901 tree written to file /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_result.T6.RUN.18
+Inference[19] final GAMMA-based Likelihood: -25951.469587 tree written to file /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_result.T6.RUN.19
+
+
+Starting final GAMMA-based thorough Optimization on tree 11 likelihood -25935.412442 .... 
+
+Final GAMMA-based Score of best tree -25935.412442
+
+Program execution info written to /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_info.T6
+Best-scoring ML tree written to: /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/mafft_output/aligned/RAxML_bestTree.T6
+
+Overall execution time: 3058.110556 secs or 0.849475 hours or 0.035395 days
+
