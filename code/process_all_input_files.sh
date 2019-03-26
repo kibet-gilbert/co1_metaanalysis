@@ -128,105 +128,105 @@ clean_sort_tsv() {
 
 			case $output_filename in
 				Algeria|Madagascar|Angola|Malawi|Benin|Mali|Botswana|Mauritania|Burkina_Faso|Mauritius|Morocco|Cameroon|Mozambique|Cape_Verde|Namibia|Central_African_Republic|Nigeria|Chad|Niger|Comoros|Republic_of_the_Congo|Cote_d_Ivoire|Reunion|Democratic_republic_of_the_Congo|Djibouti|Sao_Tome_and_Principe|Egypt|Senegal|Equatorial_Guinea|Seychelles|Eritrea|Sierra_Leone|Somalia|Gabon|South_Africa|Gambia|Ghana|Sudan|Guinea-Bissau|Swaziland|Guinea|Togo|Tunisia|Lesotho|Liberia|Zambia|Libya|Zimbabwe)
-					input=${afrodata_path}/clean_africa/COI_500to700_data.tsv
+					input=${afrodata_path}clean_africa/COI_500to700_data.tsv
 					if [ `grep -v "X..bioinformatics" ${input} | wc -l` -ge 1 ]
 					then
 						awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${input} >> ${output_files_africa[0]}
 					else
-						echo -e "\n `basename $input` from `basename $1` has no content besides the header!!!"
+						echo -e "\n `basename $input` from `basename $i` has no content besides the header!!!"
 					fi
 
 					#awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${afrodata_path}/clean_africa/COI_500to700_data.tsv >> ${output_files_africa[0]}
-					input=${afrodata_path}/clean_africa/COI_650to660_data.tsv
+					input=${afrodata_path}clean_africa/COI_650to660_data.tsv
                                         if [ `grep -v "X..bioinformatics" ${input} | wc -l` -ge 1 ]
                                         then
                                                 awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${input} >> ${output_files_africa[1]}
                                         else
-                                                echo -e "\n `basename $input` from `basename $1` has no content besides the header!!!"
+                                                echo -e "\n `basename $input` from `basename $i` has no content besides the header!!!"
                                         fi
 
 					#awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${afrodata_path}/clean_africa/COI_650to660_data.tsv >> ${output_files_africa[1]}
-					input=${afrodata_path}/clean_africa/COI_all_data.tsv 
+					input=${afrodata_path}clean_africa/COI_all_data.tsv 
                                         if [ `grep -v "X..bioinformatics" ${input} | wc -l` -ge 1 ]
                                         then
                                                 awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${input} >> ${output_files_africa[2]}
                                         else
-                                                echo -e "\n `basename $input` from `basename $1` has no content besides the header!!!"
+                                                echo -e "\n `basename $input` from `basename $i` has no content besides the header!!!"
                                         fi
 
 					#awk 'FNR==1 { while (/^X..bioinformatics/) getline; }	1 {print}' ${afrodata_path}/clean_africa/COI_all_data.tsv >> ${output_files_africa[2]}
-					input=${afrodata_path}/clean_africa/COI_Over499_data.tsv
+					input=${afrodata_path}clean_africa/COI_Over499_data.tsv
                                         if [ `grep -v "X..bioinformatics" ${input} | wc -l` -ge 1 ]
                                         then
                                                 awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${input} >> ${output_files_africa[3]}
                                         else
-                                                echo -e "\n `basename $input` from `basename $1` has no content besides the header!!!"
+                                                echo -e "\n `basename $input` from `basename $i` has no content besides the header!!!"
                                         fi
 					#awk 'FNR==1 { while (/^X..bioinformatics/) getline; }	1 {print}' ${afrodata_path}/clean_africa/COI_Over499_data.tsv >> ${output_files_africa[3]}
-					input=${afrodata_path}/clean_africa/COI_Over700_data.tsv
+					input=${afrodata_path}clean_africa/COI_Over700_data.tsv
                                         if [ `grep -v "X..bioinformatics" ${input} | wc -l` -ge 1 ]
                                         then
                                                 awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${input} >> ${output_files_africa[4]}
                                         else
-                                                echo -e "\n `basename $input` from `basename $1` has no content besides the header!!!"
+                                                echo -e "\n `basename $input` from `basename $i` has no content besides the header!!!"
                                         fi
 					#awk 'FNR==1 { while (/^X..bioinformatics/) getline; }	1 {print}' ${afrodata_path}/clean_africa/COI_Over700_data.tsv >> ${output_files_africa[4]}
-					input=${afrodata_path}/clean_africa/COI_Under500_data.tsv
+					input=${afrodata_path}clean_africa/COI_Under500_data.tsv
                                         if [ `grep -v "X..bioinformatics" ${input} | wc -l` -ge 1 ]
                                         then
                                                 awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${input} >> ${output_files_africa[5]}
                                         else
-                                                echo -e "\n `basename $input` from `basename $1` has no content besides the header!!!"
+                                                echo -e "\n `basename $input` from `basename $i` has no content besides the header!!!"
                                         fi
 					#awk 'FNR==1 { while (/^X..bioinformatics/) getline; }	1 {print}' ${afrodata_path}/clean_africa/COI_Under500_data.tsv >> ${output_files_africa[5]}
 					;;
 				*)
-					input=${afrodata_path}/clean_africa/COI_500to700_data.tsv
+					input=${afrodata_path}clean_africa/COI_500to700_data.tsv
                                         if [ `grep -v "X..bioinformatics" ${input} | wc -l` -ge 1 ]
                                         then
                                                 awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${input} >> ${output_files_eafrica[0]}
                                         else
-                                                echo -e "\n `basename $input` from `basename $1` has no content besides the header!!!"
+                                                echo -e "\n `basename $input` from `basename $i` has no content besides the header!!!"
                                         fi
 					#awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${afrodata_path}/clean_africa/COI_500to700_data.tsv >> ${output_files_eafrica[0]}
-					input=${afrodata_path}/clean_africa/COI_650to660_data.tsv
+					input=${afrodata_path}clean_africa/COI_650to660_data.tsv
                                         if [ `grep -v "X..bioinformatics" ${input} | wc -l` -ge 1 ]
                                         then
                                                 awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${input} >> ${output_files_eafrica[1]}
                                         else
-                                                echo -e "\n `basename $input` from `basename $1` has no content besides the header!!!"
+                                                echo -e "\n `basename $input` from `basename $i` has no content besides the header!!!"
                                         fi
 					#awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${afrodata_path}/clean_africa/COI_650to660_data.tsv >> ${output_files_eafrica[1]}
-					input=${afrodata_path}/clean_africa/COI_all_data.tsv
+					input=${afrodata_path}clean_africa/COI_all_data.tsv
                                         if [ `grep -v "X..bioinformatics" ${input} | wc -l` -ge 1 ]
                                         then
                                                 awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${input} >> ${output_files_eafrica[2]}
                                         else
-                                                echo -e "\n `basename $input` from `basename $1` has no content besides the header!!!"
+                                                echo -e "\n `basename $input` from `basename $i` has no content besides the header!!!"
                                         fi
 					#awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${afrodata_path}/clean_africa/COI_all_data.tsv >> ${output_files_eafrica[2]}
-					input=${afrodata_path}/clean_africa/COI_Over499_data.tsv
+					input=${afrodata_path}clean_africa/COI_Over499_data.tsv
                                         if [ `grep -v "X..bioinformatics" ${input} | wc -l` -ge 1 ]
                                         then
                                                 awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${input} >> ${output_files_eafrica[3]}
                                         else
-                                                echo -e "\n `basename $input` from `basename $1` has no content besides the header!!!"
+                                                echo -e "\n `basename $input` from `basename $i` has no content besides the header!!!"
                                         fi
 					#awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${afrodata_path}/clean_africa/COI_Over499_data.tsv >> ${output_files_eafrica[3]}
-					input=${afrodata_path}/clean_africa/COI_Over700_data.tsv
+					input=${afrodata_path}clean_africa/COI_Over700_data.tsv
                                         if [ `grep -v "X..bioinformatics" ${input} | wc -l` -ge 1 ]
                                         then
                                                 awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${input} >> ${output_files_eafrica[4]}
                                         else
-                                                echo -e "\n `basename $input` from `basename $1` has no content besides the header!!!"
+                                                echo -e "\n `basename $input` from `basename $i` has no content besides the header!!!"
                                         fi
 					#awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${afrodata_path}/clean_africa/COI_Over700_data.tsv >> ${output_files_eafrica[4]}
-					input=${afrodata_path}/clean_africa/COI_Under500_data.tsv
+					input=${afrodata_path}clean_africa/COI_Under500_data.tsv
                                         if [ `grep -v "X..bioinformatics" ${input} | wc -l` -ge 1 ]
                                         then
                                                 awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${input} >> ${output_files_eafrica[5]}
                                         else
-                                                echo -e "\n `basename $input` from `basename $1` has no content besides the header!!!"
+                                                echo -e "\n `basename $input` from `basename $i` has no content besides the header!!!"
                                         fi
 					#awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${afrodata_path}/clean_africa/COI_Under500_data.tsv >> ${output_files_eafrica[5]}
 					;;
