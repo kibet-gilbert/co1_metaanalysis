@@ -1,0 +1,39 @@
+
+This document explain an alternative way of setting up the suitable environment using a list of all packages and their versions in my environment.
+
+Option1: 
+I generated a list of urls that conda can use to install packages and setup and environment as follows:
+
+>conda activate <env_name>
+>conda list --explicit > spec-file.txt
+
+Now create an environment and install as follows:
+
+>conda create --name myenv --file spec-file.txt
+
+Or install directly in a created environment as follows:
+
+>conda install --name <env_name> --file spec-file.txt
+
+Option2:
+This how i generated the list of all packages in my conda environment in a linux=64 platform computer.
+
+>conda list | awk 'BEGIN {FS=" *"} ; {print $1 "=" $2 }' > packages.txt
+
+To install this packages in a new environment do as follows:
+copy the packages.txt file to a desired directory.
+Activate conda environment
+
+>conda activate <enviroment_name>
+
+Add channels
+
+>conda config --add channels defaults
+>conda config --add channels r
+>conda config --add channels conda-forge
+>conda config --add channels bioconda
+
+Then install the packages as follows:
+
+>cat packages.txt | xargs #generate a space separated string of all packages in packages.txt
+>conda install <paste here the output of the command above>

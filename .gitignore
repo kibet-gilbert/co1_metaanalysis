@@ -26,4 +26,6 @@ data/output/sate_output/*
 *.swn
 *.swo
 code/tools/sate/satesrc-v2.2.7-2013Feb15/linux1/
-
+*.docx
+*.ppt
+*.odp
