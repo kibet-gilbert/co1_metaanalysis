@@ -477,7 +477,7 @@ outfile_dest() { #Redirecting the output results based on input results source p
 			;;
 		*)
 			echo -e "input file is from unrecognized source directory `dirname "$(realpath "${i}")"` "
-			#exit 1
+			exit 1
 			;;
 	esac
 }
@@ -556,12 +556,13 @@ TCSeval() { #Evaluating an existing alignment with the TCS
 #Usage:		$run_pasta.py [options] <settings_file1> <settings_file2> ...
 #syntax:	$run_pasta.py -i <input_fasta_file> -j <job_name> --temporaries <TEMP_DIR> -o <output_dir>
 
-pasta() { #MSA alignment using pasta
+pasta_aln() { #MSA alignment using pasta
 	usage $@
 	echo "PASTA starting alinment..."
 	
 	PYTHON3_EXEC=$( which python3 )
-	pasta_code=
+	runpasta=${co1_path}code/tools/pasta_code/pasta/run_pasta.py
+
 	for i in $@
 	do
 		if [ ! -f $i ]
@@ -571,8 +572,8 @@ pasta() { #MSA alignment using pasta
 		then
 			rename
 			echo -e "\nproceeding with file `basename $i`..."
-			${PYTHON3_EXEC} ${run_pasta} -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
-			cp ${pasta_dest}\jobs/*.${output_filename}.aln ${pasta_dest}aligned/ #&& mv ${pasta_dest}aligned/*.${output_filename}.aln ${pasta_dest}aligned/${output_filename}.aln
+			${PYTHON3_EXEC} ${runpasta} --aligner=ginsi -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
+			cp ${pasta_dest}\jobs/*.${output_filename}.aln ${pasta_dest}aligned/ && mv ${pasta_dest}aligned/{*.${output_filename}.aln,${output_filename}.aln}
 			cp ${pasta_dest}\jobs/${output_filename}.tre ${pasta_dest}aligned/${output_filename}.tre
                 else
                         echo "input file error in `basename $i`: input file should be a .fasta file format"
