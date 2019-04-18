@@ -10,13 +10,15 @@ tcoffee_dest=${co1_path}data/output/alignment/t_coffee_output/
 pasta_dest=${co1_path}data/output/alignment/pasta_output/
 run_pasta=${co1_path}code/tools/pasta_code/pasta/run_pasta.py
 sate_dest=${co1_path}data/output/alignment/sate_output/
+MPIRUN=$( which mpirun )
+mpionly=${co1_path}code/mpionly.noscheduler
 
 usage() { #checks if the positional arguments (input files) for execution of the script are defined
 	if [ $# -eq 0 ]
 	then
 		echo "Input error..."
 		echo "Usage: $0 file1.fasta[file2.fasta file3.fasta ...]"
-		exit 1
+		return 1
 		
 	fi
 }
@@ -127,6 +129,7 @@ muscle_p2p() {
 
 #========================================================================================
 #MAFFT
+
 #========================================================================================
 
 ###mafft :highly similar ∼50,000 – ∼100,000 sequences × ∼5,000 sites incl. gaps (2016/Jul)
@@ -155,10 +158,12 @@ mafft_GlINS1() {
 					fasta_output_format)
 						echo -e "\nGenerating .fasta output\n"
 						mafft --large --globalpair --thread -1 --reorder $i > ${mafft_dest}aligned/${output_filename}.fasta
+						break
 						;;
 					clustal_output_format)
 						echo -e "\nGenerating a clustal format output\n"
 						mafft --large --globalpair --thread -1 --reorder --clustalout $1 > ${mafft_dest}aligned/${output_filename}.aln
+						break
 						;;
 					none_exit)
 						break
@@ -172,6 +177,64 @@ mafft_GlINS1() {
                 fi
         done
 }
+
+
+#=======================================================================================
+#MPI version of high-accuracy progressive options, [GLE]-large-INS-1; Two environmental variables, MAFFT_N_THREADS_PER_PROCESS and MAFFT_MPIRUN, have to be set:
+#The number of threads to run in a process: Set "1" unless using a MPI/Pthreads hybrid mode.
+#	export MAFFT_N_THREADS_PER_PROCESS="1"
+#Location of mpirun/mpiexec and options: mpirun or mpiexec must be from the same library as mpicc that was used in compiling
+#	export MAFFT_MPIRUN="/somewhere/bin/mpirun -n 160 -npernode 16 -bind-to none ..." (for OpenMPI)
+#OR	export MAFFT_MPIRUN="/somewhere/bin/mpirun -n 160 -perhost  16 -binding none ..." (for MPICH)
+
+#mpi command: Add "--mpi --large" to the normal command of G-INS-1, L-INS-1 or E-INS-1
+#	mafft --mpi --large --localpair --thread 16 input
+
+#mafft L-INS-I command:
+#mafft --localpair --maxiterate 1000 input_file > output_file
+
+
+mafft_local() {
+        usage $@
+
+        for i in $@
+        do
+                if [ ! -f $i ]
+                then
+                        echo "input error: file $i is non-existent!"
+                elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa) ) ]]
+                then
+                        rename
+                        echo -e "\nmafft G-large-INS-1 MSA: proceeding with file `basename $i`..."
+                        printf "Choose from the following output formats: \n"
+                        select output_formats in fasta_output_format clustal_output_format none_exit
+                        do
+                                case $output_formats in
+                                        fasta_output_format)
+                                                echo -e "\nGenerating .fasta output\n"
+						bash $mpionly
+                                                mafft --mpi --large --globalpair --thread -1 --reorder $i > ${mafft_dest}aligned/${output_filename}_l.fasta
+						break
+                                                ;;
+                                        clustal_output_format)
+                                                echo -e "\nGenerating a clustal format output\n"
+						bash $mpionly
+                                                mafft --mpi --large --globalpair --thread -1 --reorder --clustalout $1 > ${mafft_dest}aligned/${output_filename}_l.aln
+						break
+                                                ;;
+                                        none_exit)
+                                                break
+                                                ;;
+                                        *) echo "error: Invalid selection!"
+                                esac
+                        done
+                else
+                        echo "input file error in `basename $i`: input file should be a .fasta file format"
+                        continue
+                fi
+        done
+}
+
 
 
 
@@ -221,15 +284,15 @@ inputfiletest() { #test files if they exist, if they are the right format and ge
 			else 
 				echo -e "\n input file errors: you have provided more than 5 input files. At most 5 input files can be renamed by this function\n"
 				echo "================================================="
-				exit 1
+				return 0
                         fi
                 elif [ ! -f $i ]
                 then
                         echo "input error: file $i is non-existent!"
-                        exit 1
+                        return 0
                 else
                         echo "input file error in `basename $i`: input file should be a .fasta file format"
-                        exit 1
+                        return 0 
                 fi
         done
 }
@@ -457,26 +520,26 @@ COREindex() { #Evaluating an existing alignment with the CORE index
 
 #=====================================================================================
 
-input_src=`dirname "$(realpath "${i}")"`
+input_src=`dirname "$( realpath "${i}" )"`
 outfile_dest() { #Redirecting the output results based on input results source path
 	case $input_src in
-		$muscle_dest*)
+		${muscle_dest}aligned)
 			output_dest=$muscle_dest
 			;;
-		$mafft_dest*)
+		${mafft_dest}aligned)
 			output_dest=$mafft_dest
 			;;
-		$tcoffee_dest*)
+		${tcoffee_dest}aligned)
 			output_dest=$tcoffee_dest
 			;;
-		$pasta_dest*)
+		${pasta_desta}aligned)
 			output_dest=$pasta_dest
 			;;
-		$sate_dest*)
+		${sate_dest}aligned)
 			output_dest=$sate_dest
 			;;
 		*)
-			echo -e "input file is from unrecognized source directory `dirname "$(realpath "${i}")"` "
+			echo -e "input file is from unrecognized source directory `dirname "$( realpath "${i}" )"` "
 			exit 1
 			;;
 	esac
@@ -504,7 +567,26 @@ TCSeval() { #Evaluating an existing alignment with the TCS
                         rename
 			outfile_dest
                         echo -e "\nproceeding with `basename $i` alignment file evaluatio..."
-                        t_coffee -infile $i -evaluate -output=score_ascii,aln,html -outfile ${output_dest}scores/tcs/${output_filename}_score #${tcoffee_dest}tcs/${output_filename}.score_aln ${tcoffee_dest}tcs/${output_filename}.score_html
+			select TCS_library_estimation_format in proba_pair fast_mafft_kalign_muscle_combo none_exit
+			do
+				case $TCS_library_estimation_format in
+					proba_pair)
+						echo -e "\nTCS evaluation using default aligner proba_pair"
+						t_coffee -infile $i -evaluate -method proba_pair -output=score_ascii,html -outfile ${output_dest}scores/tcs/${output_filename}_score
+						break
+						;;
+					fast_mafft_kalign_muscle_combo)
+						echo -e "\nTCS evaluation using a series of fast multiple aligners; mafft_msa,kalign_msa,muscle_msa"
+						t_coffee -infile $i -evaluate -method mafft_msa,kalign_msa,muscle_msa -output=score_ascii,html -outfile ${output_dest}scores/tcs/${output_filename}_score
+						break
+						;;
+					none_exit)
+						break
+						;;
+					*)
+						echo "error: Invalid selection!"
+				esac
+			done
                 else
                         echo "input file error in `basename $i`: input file should be a .fasta file format"
                         continue
@@ -514,7 +596,17 @@ TCSeval() { #Evaluating an existing alignment with the TCS
 
 
 #=====================================================================================
+#Filtering unreliable MSA positions: columns
+#TCS allows you to filter out from your alignment regions that appears unreliable according to the consistency score; the filtering can be made at the residue level or the column level:
+#	 t_coffee -infile sample_seq1.aln -evaluate -output tcs_residue_filter3,tcs_column_filter3,tcs_residue_lower4
 
+#sample_seq1.tcs_residue_filter3 :All residues with a TCS score lower than 3 are filtered out
+#sample_seq1.tcs_column_filter3 :All columns with a TCS score lower than 3 are filtered out
+#sample_seq1.tcs_residue_lower4 :All residues with a TCS score lower than 3 are in lower case
+
+#t_coffee -infile sample_seq1.aln -evaluate -output tcs_residue_filter1,tcs_column_filter1
+
+#=====================================================================================
 ##Comparing alternative alignments: compare alternative alignments quantitatively
 
 #Reference dependent methods.
@@ -572,7 +664,7 @@ pasta_aln() { #MSA alignment using pasta
 		then
 			rename
 			echo -e "\nproceeding with file `basename $i`..."
-			${PYTHON3_EXEC} ${runpasta} --aligner=ginsi -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
+			${PYTHON3_EXEC} ${runpasta} --aligner=mafft -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
 			cp ${pasta_dest}\jobs/*.${output_filename}.aln ${pasta_dest}aligned/ && mv ${pasta_dest}aligned/{*.${output_filename}.aln,${output_filename}.aln}
 			cp ${pasta_dest}\jobs/${output_filename}.tre ${pasta_dest}aligned/${output_filename}.tre
                 else

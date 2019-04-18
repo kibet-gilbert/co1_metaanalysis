@@ -1,0 +1,59 @@
+#!/bin/sh 
+
+####### Manually edit the variables below
+
+#n_machines="4"
+n_machines="1"
+# Number of machines to use
+
+#n_processes_per_machine="8"
+n_processes_per_machine="2"
+# Number of processes per machine
+
+n_threads_per_process="1"
+# Number of threads per process for step 1
+
+# n_processes_per_machine x n_threads_per_process 
+# must be less than or equal to the number of physical cores in a machine
+
+n_processes=`expr $n_machines \* $n_processes_per_machine` #32
+n_threads=`expr $n_processes \* $n_threads_per_process` #32
+n_threads_per_machine=`expr $n_threads_per_process \* $n_processes_per_machine ` #8
+                                          
+#command="/somewhere/bin/mafft --mpi --large --globalpair"
+#input="input"
+#output="output"
+# Command, input file, output file
+
+machinefileopt=$( which mpirun ) # system default is used?
+#machinefileopt="--machinefile $PWD/hosts" # for OpenMPI/MPICH
+# Machine list file. Absolute path is necessary.
+# Use $PWD if the file is in the current directory.
+
+export  MAFFT_N_THREADS_PER_PROCESS=$n_threads_per_process
+
+export  MAFFT_MPIRUN="mpirun $machinefileopt -n $n_processes -npernode $n_processes_per_machine -bind-to none"  # for OpenMPI
+#export MAFFT_MPIRUN="mpirun $machinefileopt -n $n_processes -perhost  $n_processes_per_machine -binding none"  # for MPICH?
+# mpirun or mpiexec and options
+# Add environment-specific options as necessary.
+
+#export LD_LIBRARY_PATH="/foo/bar/lib/${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+# . /foo/bar/mpivars.sh
+# Configure MPI if necessary
+
+#export  MAFFT_TMPDIR="/fast/filesystem/"
+# Directory for temporary data, in fast shared filesystem
+# If not set, "$HOME/maffttmp"
+
+####### Manually edit the variables above
+
+w=`expr $n_threads_per_process \* $n_processes - 1`
+
+echo $n_machines " machines"       1>&2
+echo $n_processes " processes"     1>&2
+echo $n_threads " threads"         1>&2
+echo $w " workers"                 1>&2
+echo ''                            1>&2
+
+#$command --threadtb $n_processes_per_machine $input > $output
+# Use $n_processes_per_machine, instead of $n_threads_per_process.
