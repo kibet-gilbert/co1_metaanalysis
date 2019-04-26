@@ -1,766 +1,255 @@
-LOCUS       NC_039833              15266 bp    DNA     circular INV 15-NOV-2018
-DEFINITION  Tarattia gutama voucher 17LW02005 mitochondrion, complete genome.
-ACCESSION   NC_039833
-VERSION     NC_039833.1
-DBLINK      BioProject: PRJNA504281
-KEYWORDS    RefSeq.
-SOURCE      mitochondrion Tarattia gutama
-  ORGANISM  Tarattia gutama
-            Eukaryota; Metazoa; Ecdysozoa; Arthropoda; Hexapoda; Insecta;
-            Pterygota; Neoptera; Holometabola; Lepidoptera; Glossata; Ditrysia;
-            Papilionoidea; Nymphalidae; Limenitidinae; Limenitidini; Moduza.
-REFERENCE   1  (bases 1 to 15266)
-  AUTHORS   Wu,L.W., Chiba,H., Lees,D.C., Ohshima,Y. and Jeng,M.L.
-  TITLE     Unravelling relationships among the shared stripes of sailors:
-            Mitogenomic phylogeny of Limenitidini butterflies (Lepidoptera,
-            Nymphalidae, Limenitidinae), focusing on the genera Athyma and
-            Limenitis
-  JOURNAL   Mol. Phylogenet. Evol. 130, 60-66 (2018)
-   PUBMED   30278254
-  REMARK    Publication Status: Available-Online prior to print
-REFERENCE   2  (bases 1 to 15266)
-  CONSRTM   NCBI Genome Project
+LOCUS       KT209005                 658 bp    DNA     linear   INV 10-OCT-2015
+DEFINITION  Thoralus cranchii voucher MT03543 cytochrome oxidase subunit 1
+            (COI) gene, partial cds; mitochondrial.
+ACCESSION   KT209005
+VERSION     KT209005.1
+KEYWORDS    BARCODE.
+SOURCE      mitochondrion Thoralus cranchii
+  ORGANISM  Thoralus cranchii
+            Eukaryota; Metazoa; Ecdysozoa; Arthropoda; Crustacea; Malacostraca;
+            Eumalacostraca; Eucarida; Decapoda; Pleocyemata; Caridea;
+            Alpheoidea; Hippolytidae; Thoralus.
+REFERENCE   1  (bases 1 to 658)
+  AUTHORS   Raupach,M.J., Barco,A., Steinke,D., Beermann,J., Laakmann,S.,
+            Mohrbeck,I., Neumann,H., Kihara,T.C., Pointner,K., Radulovici,A.,
+            Segelken-Voigt,A., Wesse,C. and Knebelsberger,T.
+  TITLE     The Application of DNA Barcodes for the Identification of Marine
+            Crustaceans from the North Sea and Adjacent Regions
+  JOURNAL   PLoS ONE 10 (9), E0139421 (2015)
+   PUBMED   26417993
+  REMARK    Publication Status: Online-Only
+REFERENCE   2  (bases 1 to 658)
+  AUTHORS   Raupach,M.J., Barco,A., Steinke,D., Beermann,J., Laakmann,S.,
+            Mohrbeck,I., Neumann,H., Kihara,T.-C., Pointner,K.,
+            Radulovici,A.E., Segelken-Voigt,A., Wesse,C. and Knebelsberger,T.
   TITLE     Direct Submission
-  JOURNAL   Submitted (09-NOV-2018) National Center for Biotechnology
-            Information, NIH, Bethesda, MD 20894, USA
-REFERENCE   3  (bases 1 to 15266)
-  AUTHORS   Wu,L.-W.
-  TITLE     Direct Submission
-  JOURNAL   Submitted (02-JAN-2018) College of Bio-Resources and Agriculture,
-            National Taiwan University, The Experimental Forest, No. 12, Sec.
-            1, Qianshan Rd., Zhushan Township, Nantou 557, Taiwan
-COMMENT     REVIEWED REFSEQ: This record has been curated by NCBI staff. The
-            reference sequence is identical to MG747608.
-            
-            ##Assembly-Data-START##
-            Assembly Method       :: CLC Genomic WorkBench 9 v. megahit 1.1
-            Sequencing Technology :: Illumina
-            ##Assembly-Data-END##
-            COMPLETENESS: full length.
+  JOURNAL   Submitted (24-JUN-2015) Molecular Taxonomy of Marine Organisms,
+            German Center of Marine Biodiversity, Sudstrand 44, Wilhelmshaven,
+            Lower Saxony 26382, Germany
 FEATURES             Location/Qualifiers
-     source          1..15266
-                     /organism="Tarattia gutama"
+     source          1..658
+                     /organism="Thoralus cranchii"
                      /organelle="mitochondrion"
                      /mol_type="genomic DNA"
-                     /specimen_voucher="17LW02005"
-                     /db_xref="taxon:2482828"
-     gene            1..67
-                     /gene="trnM(cat)"
-                     /locus_tag="EFH62_mgt01"
-                     /db_xref="GeneID:38339370"
-     tRNA            1..67
-                     /gene="trnM(cat)"
-                     /locus_tag="EFH62_mgt01"
-                     /product="tRNA-Met"
-                     /db_xref="GeneID:38339370"
-     gene            68..132
-                     /gene="trnI(gat)"
-                     /locus_tag="EFH62_mgt02"
-                     /db_xref="GeneID:38339334"
-     tRNA            68..132
-                     /gene="trnI(gat)"
-                     /locus_tag="EFH62_mgt02"
-                     /product="tRNA-Ile"
-                     /db_xref="GeneID:38339334"
-     gene            complement(130..198)
-                     /gene="trnQ(ttg)"
-                     /locus_tag="EFH62_mgt03"
-                     /db_xref="GeneID:38339335"
-     tRNA            complement(130..198)
-                     /gene="trnQ(ttg)"
-                     /locus_tag="EFH62_mgt03"
-                     /product="tRNA-Gln"
-                     /db_xref="GeneID:38339335"
-     gene            249..1259
-                     /gene="ND2"
-                     /locus_tag="EFH62_mgp13"
-                     /db_xref="GeneID:38339336"
-     CDS             249..1259
-                     /gene="ND2"
-                     /locus_tag="EFH62_mgp13"
+                     /specimen_voucher="MT03543"
+                     /db_xref="BOLD:BNSC325-11.COI-5P"
+                     /db_xref="taxon:576236"
+                     /country="North Sea: German Bight, Helgoland"
+                     /lat_lon="54.169 N 7.898 E"
+                     /collection_date="20-Aug-2011"
+                     /collected_by="Michael Raupach"
+                     /identified_by="Michael J. Raupach"
+                     /PCR_primers="fwd_seq: ggtcaacaaatcataaagatattgg, rev_seq:
+                     taaacttcagggtgaccaaaaaatca"
+     gene            <1..>658
+                     /gene="COI"
+     CDS             <1..>658
+                     /gene="COI"
+                     /codon_start=2
+                     /transl_table=5
+                     /product="cytochrome oxidase subunit 1"
+                     /protein_id="ALH17512.1"
+                     /translation="TLYFIFGAWAGMVGTSLSLLIRAELGQPGSLIGNDQIYNVIVTA
+                     HAFVMIFFMVMPIMIGGFGNWLVPLMLGAPDMAFPRMNNMSFWLLPPSLTLLLSSGMV
+                     ESGVGTGWTVYPPLAAGIAHAGASVDMGIFSLHLAGVSSILGAVNFMTTVINMRSTGM
+                     TLDRMPLFVWSVFLTAILLLLSLPVLAGAITMLLTDRNLNTSFFDPAGGGDPILYQHL
+                     F"
+ORIGIN      
+        1 aaccttatat tttattttcg gagcttgagc tggaatagta ggtacttctt taagactttt
+       61 aattcgagct gaacttggac aaccaggtag actcattggr aatgatcaaa tttacaacgt
+      121 tattgtaaca gctcatgctt ttgttataat tttcttcata gttataccta ttataattgg
+      181 ggggtttggt aattgactag tacctttaat attaggagct cctgatatag catttcctcg
+      241 aataaataat ataagatttt gactccttcc tccctctyta accctccttt tatctagagg
+      301 aatagtagaa agaggagtag gaactggttg aactgtwtac cctcctttag cagcaggcat
+      361 cgctcatgcy ggagcttcag tagatatagg gattttctct cttcatttag ctggagtttc
+      421 ttctatttta ggagctgtta attttataac cacagttatt aatatacgaa gtactggtat
+      481 aaccttagac cgaataccat tgtttgtatg atcagtattt ttaacagcta ttttattact
+      541 cctttcttta ccagttttag ccggagctat tactatacta cttacagatc gtaatttaaa
+      601 tacatctttt tttgatcctg ctggaggagg agatccaatt ttataccaac atttattt
+//
+LOCUS       MF078587                 682 bp    DNA     linear   INV 23-MAY-2018
+DEFINITION  Ryuthela sasakii voucher XUX-2012-378 cytochrome oxidase submit 1
+            (CO1) gene, partial cds; mitochondrial.
+ACCESSION   MF078587
+VERSION     MF078587.1
+KEYWORDS    .
+SOURCE      mitochondrion Ryuthela sasakii
+  ORGANISM  Ryuthela sasakii
+            Eukaryota; Metazoa; Ecdysozoa; Arthropoda; Chelicerata; Arachnida;
+            Araneae; Mesothelae; Heptathelidae; Ryuthela.
+REFERENCE   1  (bases 1 to 682)
+  AUTHORS   Xu,X., Liu,F., Ono,H., Chen,J., Kuntner,M. and Li,D.
+  TITLE     Targeted sampling in Ryukyus facilitates species delimitation of
+            the primitively segmented spider genus Ryuthela (Araneae:
+            Mesothelae: Liphistiidae)
+  JOURNAL   Zool. J. Linn. Soc. 181 (4), 867-909 (2017)
+REFERENCE   2  (bases 1 to 682)
+  AUTHORS   Xu,X.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (09-MAY-2017) College of Life Sciences, Hunan Normal
+            University, Lushan Road, Changsha, Hunan, China
+FEATURES             Location/Qualifiers
+     source          1..682
+                     /organism="Ryuthela sasakii"
+                     /organelle="mitochondrion"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="XUX-2012-378"
+                     /db_xref="taxon:1285377"
+                     /country="Japan"
+                     /identified_by="Xin Xu"
+     gene            <1..>682
+                     /gene="CO1"
+     CDS             <1..>682
+                     /gene="CO1"
                      /codon_start=1
                      /transl_table=5
-                     /product="NADH dehydrogenase subunit 2"
-                     /protein_id="YP_009536372.1"
-                     /db_xref="GeneID:38339336"
-                     /translation="MILMTNSNKMFFLFILFFSTLISVSANSWLGCWIGLEINLLSFI
-                     PLISTHNNLLNSEASLKYFLTQSIASINFLFSILLSLFLMKNFFFNNFFSIIINSSLL
-                     MKMGSIPFHFWFPNIMEGLSWFNCFMLMTWQKISPMILLSYYFNLNFLYFVMIFNVLI
-                     GSIGSFNQTSLRKLMAFSSINNLGWMISSMIISENLWLIYFIFYSIFTFIMCFLFYII
-                     NIFFISQLFFFNMNFLIKISIMINFLSLXGLPPFLGFFPKWLVINYLLNNNFFIISFV
-                     FIMSSLILLFVYIRIIYSSLLFFSFKLKWFKIFIKNNFLIFIYFFNFISLFGMIISTF
-                     FF"
-     gene            1258..1325
-                     /gene="trnW(tca)"
-                     /locus_tag="EFH62_mgt04"
-                     /db_xref="GeneID:38339337"
-     tRNA            1258..1325
-                     /gene="trnW(tca)"
-                     /locus_tag="EFH62_mgt04"
-                     /product="tRNA-Trp"
-                     /db_xref="GeneID:38339337"
-     gene            complement(1318..1382)
-                     /gene="trnC(gca)"
-                     /locus_tag="EFH62_mgt05"
-                     /db_xref="GeneID:38339338"
-     tRNA            complement(1318..1382)
-                     /gene="trnC(gca)"
-                     /locus_tag="EFH62_mgt05"
-                     /product="tRNA-Cys"
-                     /db_xref="GeneID:38339338"
-     gene            complement(1386..1450)
-                     /gene="trnY(gta)"
-                     /locus_tag="EFH62_mgt06"
-                     /db_xref="GeneID:38339339"
-     tRNA            complement(1386..1450)
-                     /gene="trnY(gta)"
-                     /locus_tag="EFH62_mgt06"
-                     /product="tRNA-Tyr"
-                     /db_xref="GeneID:38339339"
-     gene            <1458..2988
-                     /gene="COX1"
-                     /locus_tag="EFH62_mgp12"
-                     /db_xref="GeneID:38339340"
-     CDS             <1458..2988
-                     /gene="COX1"
-                     /locus_tag="EFH62_mgp12"
-                     /note="TAA stop codon is completed by the addition of 3' A
-                     residues to the mRNA"
+                     /product="cytochrome oxidase submit 1"
+                     /protein_id="AWK91331.1"
+                     /translation="KDIGTMYLIFGIWSAMAGTALSMIIRTELGQPGSLIGDDQTYNV
+                     IVTAHAFIMIFFMVMPIMIGGFGNWLVPLMLGAPDMAFPRLNNLSFWLLPPSILLLLS
+                     SSMVESGAGTGWTVYPPLAGLEFHPGASVDFTIFSLHLAGASSILGAINFITTIINMR
+                     SSGMLMERVPLFVWSVLITTILLLLSLPVLAGAITMLLTDRNFNTSFFDPAGGGDPIL
+                     FQHLFWFFG"
+ORIGIN      
+        1 aaagatattg gaactatata tttaattttc ggaatttgat ctgcgatagc gggaactgcc
+       61 ctaagaataa ttattcgtac agaattaggt caaccaggtt cgttaattgg tgatgatcaa
+      121 acatataatg taattgttac tgctcatgct ttcatcataa ttttctttat ggttatacca
+      181 attataattg gaggatttgg gaattgatta gtaccactaa tattaggagc cccagatatg
+      241 gcctttcctc gacttaataa tttaagattt tgattacttc ctccatcaat tttacttctt
+      301 ttaagctctt caatagtaga aagaggagct ggaacaggat gaacagtgta ccctccactt
+      361 gcaggtttag aattccatcc aggagcctca gtagacttca ccattttttc ccttcattta
+      421 gcaggtgcct catcaatttt aggtgctatc aattttatta caacaattat taatatacga
+      481 tcaagaggga tattaataga acgagtacct ttatttgttt gatcagtttt aattaccact
+      541 attcttctcc ttctctcttt accagttcta gccggagcaa ttactatatt acttacagat
+      601 cgtaatttca acacatcttt ttttgatccc gccggaggcg gagatcctat tttatttcaa
+      661 cacttattct gattttttgg tc
+//
+LOCUS       JQ667971                 723 bp    DNA     linear   ROD 14-JUL-2012
+DEFINITION  Praomys mutoni voucher RUCA LEG01765 cytochrome oxidase subunit 1
+            (COI) gene, partial cds; mitochondrial.
+ACCESSION   JQ667971
+VERSION     JQ667971.1
+KEYWORDS    .
+SOURCE      mitochondrion Praomys mutoni (Riverine Praomys)
+  ORGANISM  Praomys mutoni
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Euarchontoglires; Glires; Rodentia; Myomorpha;
+            Muroidea; Muridae; Murinae; Praomys.
+REFERENCE   1  (bases 1 to 723)
+  AUTHORS   Nicolas,V., Schaeffer,B., Missoup,A.D., Kennis,J., Colyn,M.,
+            Denys,C., Tatard,C., Cruaud,C. and Laredo,C.
+  TITLE     Assessment of three mitochondrial genes (16S, Cytb, CO1) for
+            identifying species in the Praomyini tribe (Rodentia: Muridae)
+  JOURNAL   PLoS ONE 7 (5), E36586 (2012)
+   PUBMED   22574186
+  REMARK    Publication Status: Online-Only
+REFERENCE   2  (bases 1 to 723)
+  AUTHORS   Nicolas,V., Schaeffer,B., Colyn,B., Denys,B., Denys,B., Denys,C.,
+            Tatard,C., Cruaud,C. and Laredo,C.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (14-FEB-2012) Departement de Systematique et Evolution,
+            UMR 7205, MNHN, 55 rue Buffon, CP 51, Paris 75005, France
+FEATURES             Location/Qualifiers
+     source          1..723
+                     /organism="Praomys mutoni"
+                     /organelle="mitochondrion"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="RUCA LEG01765"
+                     /db_xref="BOLD:PRAO380-11.COI-5P"
+                     /db_xref="taxon:526885"
+                     /country="Democratic Republic of the Congo: Kisangani,
+                     Yoko"
+                     /lat_lon="0.283 N 25.283 E"
+                     /identified_by="Violaine Nicolas"
+                     /PCR_primers="fwd_seq: cctactcrgccattttacctatg, rev_seq:
+                     acttctgggtgtccaaagaatca"
+     gene            <1..>723
+                     /gene="COI"
+     CDS             <1..>723
+                     /gene="COI"
                      /codon_start=1
-                     /transl_except=(pos:2988,aa:TERM)
+                     /transl_table=2
+                     /product="cytochrome oxidase subunit 1"
+                     /protein_id="AFI72524.1"
+                     /translation="LPMFVNRWLFSTNHKDIGTLYLLFGAWAGMVGTALSILIRAELG
+                     QPGALLGDDQIYNVIVTAHAFVMIFFMVMPMMIGGFGNWLVPLMIGAPDMAFPRMNNM
+                     SFWLLPPSFLLLLASSMVEAGAGTGWTVYPPLAGNLAHAGASVDLTIFSLHLAGVSSI
+                     LGAINFITTIINMKPPAMTQYQTPLFVWSVLITAVLLLLSLPVLAAGITMLLTDRNLN
+                     TTFFDPAGGGDPILYQHLFWFFG"
+ORIGIN      
+        1 ttacctatgt tcgtaaatcg ttgactattt tcaactaacc ataaagatat tggaacccta
+       61 tacttactat ttggtgcctg agcaggaata gtaggaacag cacttagcat tctaattcga
+      121 gctgaattag gtcaaccagg tgcacttcta ggagatgacc aaatctataa cgtaattgtt
+      181 accgcccatg catttgttat aattttcttc atagtgatac caataataat cggaggcttt
+      241 ggtaattgac ttgtcccatt aataattgga gcccctgata tagcatttcc acgaataaat
+      301 aatataagtt tttgacttct acccccatca ttcctcctct tactagcatc ctctatagta
+      361 gaagcaggag caggaacagg atgaacagta tacccacctt tagctggaaa tttagcccac
+      421 gctggagcat ccgttgacct aaccattttt tccctacatt tagcaggtgt ctcatctatc
+      481 ttaggagcaa ttaacttcat cacaactatt attaatatga aacccccagc aataactcaa
+      541 tatcaaactc cattattcgt ttgatcagta ctaattacag ctgttcttct acttctatcc
+      601 cttccagttc tagccgcagg aattacaata cttctaacag atcgaaacct taatacaacc
+      661 ttttttgatc ctgcaggagg aggtgatcca atcctttatc aacacttatt ctgattcttt
+      721 gga
+//
+LOCUS       KF218795                 656 bp    DNA     linear   INV 06-SEP-2014
+DEFINITION  Ballonema sp. MCZ DNA106902 cytochrome c oxidase subunit I (COI)
+            gene, partial cds; mitochondrial.
+ACCESSION   KF218795
+VERSION     KF218795.1
+KEYWORDS    .
+SOURCE      mitochondrion Ballonema sp. MCZ DNA106902
+  ORGANISM  Ballonema sp. MCZ DNA106902
+            Eukaryota; Metazoa; Ecdysozoa; Arthropoda; Myriapoda; Chilopoda;
+            Notostigmophora; Scutigeromorpha; Scutigeridae; Ballonema.
+REFERENCE   1  (bases 1 to 656)
+  AUTHORS   Giribet,G. and Edgecombe,G.D.
+  TITLE     Stable phylogenetic patterns in scutigeromorph centipedes
+            (Myriapoda : Chilopoda : Scutigeromorpha): dating the
+            diversification of an ancient lineage of terrestrial arthropods
+  JOURNAL   Invertebr. Syst. 27 (5), 485-501 (2013)
+REFERENCE   2  (bases 1 to 656)
+  AUTHORS   Giribet,G. and Edgecombe,G.D.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (10-JUN-2013) Museum of Comparative Zoology, Harvard
+            University, 26 Oxford Street, Cambridge, MA 02138, USA
+COMMENT     ##Assembly-Data-START##
+            Assembly Method       :: Sequencher v. 5.0.1
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..656
+                     /organism="Ballonema sp. MCZ DNA106902"
+                     /organelle="mitochondrion"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="MCZ:DNA106902"
+                     /db_xref="taxon:1539942"
+                     /country="Papua New Guinea"
+     gene            <1..>656
+                     /gene="COI"
+     CDS             <1..>656
+                     /gene="COI"
+                     /codon_start=3
                      /transl_table=5
                      /product="cytochrome c oxidase subunit I"
-                     /protein_id="YP_009536373.1"
-                     /db_xref="GeneID:38339340"
-                     /translation="RKWLFSTNHKDIGTLYFIFGIWAGMVGTSLSLLIRTELGNPGSL
-                     IGDDQIYNTIVTAHAFIMIFFMVMPIMIGGFGNWLVPLMLGAPDMAFPRMNNMSFWLL
-                     PPSLILLISSSIVENGAGTGWTVYPPLSSNIAHGGSSVDLAIFSLHLAGISSILGAIN
-                     FITTIINMRVNNMSFDQMPLFIWSVGITALLLLLSLPVLAGAITMLLTDRNLNTSFFD
-                     PAGGGDPILYQHLFWFFGHPEVYILILPGFGMISHLISQESGKKETFGYLGMIYAMMA
-                     IGLLGFIVWAHHMFTVGMDIDTRAYFTSATMIIAVPTGIKIFSWLATLHGTQINYSPS
-                     MLWGLGFIFLFTVGGLTGVVLANSSIDITLHDTYYVVXHFHYVLSMGAVFAIFGGFIH
-                     WYPLFTGLTMNPYLLKIQFISMFIGVNLTFFPQHFLGLAGMPRRYSDYPDSFISWNII
-                     SSLGSYISLFSMIMMVIIVWESMINQRLVLFSLNMSSSIEWYQNLPPAEHSYNELPIL
-                     SN"
-     gene            2989..3055
-                     /gene="trnL(taa)"
-                     /locus_tag="EFH62_mgt07"
-                     /db_xref="GeneID:38339341"
-     tRNA            2989..3055
-                     /gene="trnL(taa)"
-                     /locus_tag="EFH62_mgt07"
-                     /product="tRNA-Leu"
-                     /db_xref="GeneID:38339341"
-     gene            3057..3735
-                     /gene="COX2"
-                     /locus_tag="EFH62_mgp11"
-                     /db_xref="GeneID:38339342"
-     CDS             3057..3735
-                     /gene="COX2"
-                     /locus_tag="EFH62_mgp11"
-                     /note="TAA stop codon is completed by the addition of 3' A
-                     residues to the mRNA"
-                     /codon_start=1
-                     /transl_except=(pos:3735,aa:TERM)
-                     /transl_table=5
-                     /product="cytochrome c oxidase subunit II"
-                     /protein_id="YP_009536374.1"
-                     /db_xref="GeneID:38339342"
-                     /translation="MATWSNLNYQNSASPLMEQIIFFHDHTLIILIMITILVSYLMIS
-                     LFFNKYINRFLLEEQMIELIWTILPAITLIFIALPSLRLLYLLDELNNPLITLKSIGH
-                     QWYWSYEYSDFNNIEFDSYMIQSTDNLSNFRLLDVDNRIVLPMNNQIRILITATDVIH
-                     SWTIPSLSVKVDANPGRLNQTSFFINRPGIFYGQCSEICGANHSFMPIVIESISIKNF
-                     INWINNYS"
-     gene            3736..3806
-                     /gene="trnK(ctt)"
-                     /locus_tag="EFH62_mgt08"
-                     /db_xref="GeneID:38339343"
-     tRNA            3736..3806
-                     /gene="trnK(ctt)"
-                     /locus_tag="EFH62_mgt08"
-                     /product="tRNA-Lys"
-                     /db_xref="GeneID:38339343"
-     gene            3806..3871
-                     /gene="trnD(gtc)"
-                     /locus_tag="EFH62_mgt09"
-                     /db_xref="GeneID:38339344"
-     tRNA            3806..3871
-                     /gene="trnD(gtc)"
-                     /locus_tag="EFH62_mgt09"
-                     /product="tRNA-Asp"
-                     /db_xref="GeneID:38339344"
-     gene            3872..4036
-                     /gene="ATP8"
-                     /locus_tag="EFH62_mgp10"
-                     /db_xref="GeneID:38339345"
-     CDS             3872..4036
-                     /gene="ATP8"
-                     /locus_tag="EFH62_mgp10"
-                     /codon_start=1
-                     /transl_table=5
-                     /product="ATP synthase F0 subunit 8"
-                     /protein_id="YP_009536375.1"
-                     /db_xref="GeneID:38339345"
-                     /translation="MPQMMPINWIFSFIFFIVIFIIFNIMNYFIFNYKNINYNNNNKK
-                     IMKNNFSWKW"
-     gene            4030..4707
-                     /gene="ATP6"
-                     /locus_tag="EFH62_mgp09"
-                     /db_xref="GeneID:38339346"
-     CDS             4030..4707
-                     /gene="ATP6"
-                     /locus_tag="EFH62_mgp09"
-                     /codon_start=1
-                     /transl_table=5
-                     /product="ATP synthase F0 subunit 6"
-                     /protein_id="YP_009536376.1"
-                     /db_xref="GeneID:38339346"
-                     /translation="MMNNLFSIFDPSTNIFNLSINWVSTFIGLMFIPYSFWLIPNRHF
-                     ILWNFISSKLHEEFKTLLGPNSFNGSTFIFISLFFFILFNNFLGLFPYIFTSTSHLNI
-                     SLSLSLTLWLSFMIYGWINNTQHMFIHMIPQGTPTILMPFMVLIETISNIIRPGTLAV
-                     RLTANMIAGHLLLTLLSNTGTNMPNYLLIILIFIQILLLILESAVAVIQSYVITILST
-                     LYSSEVN"
-     gene            4715..5503
-                     /gene="COX3"
-                     /locus_tag="EFH62_mgp08"
-                     /db_xref="GeneID:38339347"
-     CDS             4715..5503
-                     /gene="COX3"
-                     /locus_tag="EFH62_mgp08"
-                     /codon_start=1
-                     /transl_table=5
-                     /product="cytochrome c oxidase subunit III"
-                     /protein_id="YP_009536377.1"
-                     /db_xref="GeneID:38339347"
-                     /translation="MTLNHNHPYHLVDYSPWPLTGAIGVMTLVTGLVKWFHNFSLNLL
-                     ILGYIIVLLTMYQWWRDICREGTYQGKHTILVTKGLRWGMILFIISEIFFFISFFWAF
-                     FHSSLSPNIEIGSMWPPMSIVAFNPFQIPLLNTIILITSGITVTWAHHSLMENNFTQT
-                     FQSLLITVLLGTYFTLIQAYEYIEAPFTIADSIYGSTFFMATGFHGLHVIIGTIFLLT
-                     CLIRHMNNHFSNSHHFGFXAAAWYWHFVDVVWLFLYIFIYWWGN"
-     gene            5506..5572
-                     /gene="trnG(tcc)"
-                     /locus_tag="EFH62_mgt10"
-                     /db_xref="GeneID:38339348"
-     tRNA            5506..5572
-                     /gene="trnG(tcc)"
-                     /locus_tag="EFH62_mgt10"
-                     /product="tRNA-Gly"
-                     /db_xref="GeneID:38339348"
-     gene            5573..5926
-                     /gene="ND3"
-                     /locus_tag="EFH62_mgp07"
-                     /db_xref="GeneID:38339349"
-     CDS             5573..5926
-                     /gene="ND3"
-                     /locus_tag="EFH62_mgp07"
-                     /codon_start=1
-                     /transl_table=5
-                     /product="NADH dehydrogenase subunit 3"
-                     /protein_id="YP_009536378.1"
-                     /db_xref="GeneID:38339349"
-                     /translation="MNLMMMMSLIMIIIANIFMTISFIISKKSFLDREKCSPFECGFD
-                     PKSLSRIPFSLHFFLITVIFLIFDVEIALIFPMIPTFLTVNFITWFKINFFFIIILLV
-                     GLYHEWNQNMLNWTN"
-     gene            5929..5994
-                     /gene="trnA(tgc)"
-                     /locus_tag="EFH62_mgt11"
-                     /db_xref="GeneID:38339350"
-     tRNA            5929..5994
-                     /gene="trnA(tgc)"
-                     /locus_tag="EFH62_mgt11"
-                     /product="tRNA-Ala"
-                     /db_xref="GeneID:38339350"
-     gene            5996..6058
-                     /gene="trnR(tcg)"
-                     /locus_tag="EFH62_mgt12"
-                     /db_xref="GeneID:38339351"
-     tRNA            5996..6058
-                     /gene="trnR(tcg)"
-                     /locus_tag="EFH62_mgt12"
-                     /product="tRNA-Arg"
-                     /db_xref="GeneID:38339351"
-     gene            6059..6124
-                     /gene="trnN(gtt)"
-                     /locus_tag="EFH62_mgt13"
-                     /db_xref="GeneID:38339352"
-     tRNA            6059..6124
-                     /gene="trnN(gtt)"
-                     /locus_tag="EFH62_mgt13"
-                     /product="tRNA-Asn"
-                     /db_xref="GeneID:38339352"
-     gene            6123..6183
-                     /gene="trnS(gct)"
-                     /locus_tag="EFH62_mgt14"
-                     /db_xref="GeneID:38339353"
-     tRNA            6123..6183
-                     /gene="trnS(gct)"
-                     /locus_tag="EFH62_mgt14"
-                     /product="tRNA-Ser"
-                     /db_xref="GeneID:38339353"
-     gene            6185..6251
-                     /gene="trnE(ttc)"
-                     /locus_tag="EFH62_mgt15"
-                     /db_xref="GeneID:38339354"
-     tRNA            6185..6251
-                     /gene="trnE(ttc)"
-                     /locus_tag="EFH62_mgt15"
-                     /product="tRNA-Glu"
-                     /db_xref="GeneID:38339354"
-     gene            complement(6250..6313)
-                     /gene="trnF(gaa)"
-                     /locus_tag="EFH62_mgt16"
-                     /db_xref="GeneID:38339355"
-     tRNA            complement(6250..6313)
-                     /gene="trnF(gaa)"
-                     /locus_tag="EFH62_mgt16"
-                     /product="tRNA-Phe"
-                     /db_xref="GeneID:38339355"
-     gene            complement(6314..8048)
-                     /gene="ND5"
-                     /locus_tag="EFH62_mgp06"
-                     /db_xref="GeneID:38339356"
-     CDS             complement(6314..8048)
-                     /gene="ND5"
-                     /locus_tag="EFH62_mgp06"
-                     /note="TAA stop codon is completed by the addition of 3' A
-                     residues to the mRNA"
-                     /codon_start=1
-                     /transl_except=(pos:complement(6314),aa:TERM)
-                     /transl_table=5
-                     /product="NADH dehydrogenase subunit 5"
-                     /protein_id="YP_009536379.1"
-                     /db_xref="GeneID:38339356"
-                     /translation="MNNKFNICFISFFFLFFFMLINFFSMIYFIMYNKVIFLEWEVIS
-                     FNSINIVFSILLDWMSLLFMMFVSLISSCVIFYSKSYMSSELNLNRFIILVLLFVFSM
-                     ILLIISPNMISIFLGWDGLGLVSYCLVIYYQNIKSYNAGMLTALSNRIGDVMILMLIS
-                     WMLNYGSWNYIFYLNFMSNDFSMKIISLLVIIAAMTKSAQIPFSSWLPAAMAAPTPVS
-                     ALVHSSTLVTAGVYLLIRFNNLLIEMFFLKFLLLFSGLTMMMAGICANYEYDLKKIIA
-                     LSTLSQLGLMMSILSMGFYDLAFFHLLTHAMFKALLFMCAGVVIHMMNNNQDIRMMGG
-                     ISFYIPLTSLCLNISNLALCGIPFLAGFYSKDMILEMVSMSNLNLLIFYLYYFSTGLT
-                     MFYTIRLLMYLMINDYNLLSIYNLYDEDYVMLKSMFVLLFMSLVSGSFLSWLIFYYPY
-                     MIYLPNSLKMMVIYVSIAGMLMGLLISNMNIYSMNKFLMFYNLSGFLTVMWFLPNLST
-                     YGLNYYFLKFGQILSKNIDMGWSEIYSGQGMYKIIKFYSLVNMIYQMNNFKIYLFSFI
-                     LWMMIFIILIMI"
-     gene            complement(8049..8112)
-                     /gene="trnH(gtg)"
-                     /locus_tag="EFH62_mgt17"
-                     /db_xref="GeneID:38339357"
-     tRNA            complement(8049..8112)
-                     /gene="trnH(gtg)"
-                     /locus_tag="EFH62_mgt17"
-                     /product="tRNA-His"
-                     /db_xref="GeneID:38339357"
-     gene            complement(8113..9451)
-                     /gene="ND4"
-                     /locus_tag="EFH62_mgp05"
-                     /db_xref="GeneID:38339358"
-     CDS             complement(8113..9451)
-                     /gene="ND4"
-                     /locus_tag="EFH62_mgp05"
-                     /note="TAA stop codon is completed by the addition of 3' A
-                     residues to the mRNA"
-                     /codon_start=1
-                     /transl_except=(pos:complement(8113),aa:TERM)
-                     /transl_table=5
-                     /product="NADH dehydrogenase subunit 4"
-                     /protein_id="YP_009536380.1"
-                     /db_xref="GeneID:38339358"
-                     /translation="MMKFLVMMIFMIPLCFKKNMFWLAQMLLMFMMFMFMNSTINIMN
-                     FCNLSYMLGYDMISYGLILLSIWISSLMIMASESLYKSNFYSNLFLFNIIFLMMMLYL
-                     TFSVMNLFMFYLFFESSLIPTLMLIIGWGYQPERIQAGMYLLFYTLFASLPLLMGIFY
-                     LYKNMNYMMIYFLKFYDYNLLMLYLCLVMAFLVKMPMYFVHLWLPKAHVEAPISGSMI
-                     LAAIMLKLGGYGLLRVMIILQEINLKMSFIWMVISLIGGFYISLKCFCQIDMKSLIAY
-                     SSVAHMSVVIGGIMTMNYWGYMGSYILMIGHGLCSSGMFCLSNMNYERLNSRSLFINK
-                     GMMNFMPSMSLWWFLLMSSNMAAPPSLNLMGEISLINSLVSWSWLSMIMLMCISFFSA
-                     GYSLYLYSYTQHGKYNMGIYSFYTGTSREYLMLMLHWLPLNILIMKIDYSMIWF"
-     gene            complement(9451..9735)
-                     /gene="ND4L"
-                     /locus_tag="EFH62_mgp04"
-                     /db_xref="GeneID:38339359"
-     CDS             complement(9451..9735)
-                     /gene="ND4L"
-                     /locus_tag="EFH62_mgp04"
-                     /codon_start=1
-                     /transl_table=5
-                     /product="NADH dehydrogenase subunit 4L"
-                     /protein_id="YP_009536381.1"
-                     /db_xref="GeneID:38339359"
-                     /translation="MLNMSLIIIIMFMFGNMIFVSKHKHLLIVLMSLEFMVLSIFFFM
-                     LLYLMMIDYNLYMLMVFLVFSVCEGALGLSILVSMIRTHGNDYFQSFNLI"
-     gene            9747..9811
-                     /gene="trnT(tgt)"
-                     /locus_tag="EFH62_mgt18"
-                     /db_xref="GeneID:38339360"
-     tRNA            9747..9811
-                     /gene="trnT(tgt)"
-                     /locus_tag="EFH62_mgt18"
-                     /product="tRNA-Thr"
-                     /db_xref="GeneID:38339360"
-     gene            complement(9812..9875)
-                     /gene="trnP(tgg)"
-                     /locus_tag="EFH62_mgt19"
-                     /db_xref="GeneID:38339361"
-     tRNA            complement(9812..9875)
-                     /gene="trnP(tgg)"
-                     /locus_tag="EFH62_mgt19"
-                     /product="tRNA-Pro"
-                     /db_xref="GeneID:38339361"
-     gene            9878..10408
-                     /gene="ND6"
-                     /locus_tag="EFH62_mgp03"
-                     /db_xref="GeneID:38339362"
-     CDS             9878..10408
-                     /gene="ND6"
-                     /locus_tag="EFH62_mgp03"
-                     /codon_start=1
-                     /transl_table=5
-                     /product="NADH dehydrogenase subunit 6"
-                     /protein_id="YP_009536382.1"
-                     /db_xref="GeneID:38339362"
-                     /translation="MLKMFLSILLISISIFLYFTNHPLAMGLLILTQTLLTCLISGML
-                     INTYWFSYMLFLVFLGGLLVLFIYVSSVASNELFKIHFISKFFLIYILFIMIFSIFFK
-                     NNLTWMNFSFNDEMNNFFNSILFFNNEYNFNLSKLYNKQNYWMMLMMIIYLFITLVAI
-                     VKITNIFFGPLRSFNN"
-     gene            10408..11559
-                     /gene="CYTB"
-                     /locus_tag="EFH62_mgp02"
-                     /db_xref="GeneID:38339363"
-     CDS             10408..11559
-                     /gene="CYTB"
-                     /locus_tag="EFH62_mgp02"
-                     /codon_start=1
-                     /transl_table=5
-                     /product="cytochrome b"
-                     /protein_id="YP_009536383.1"
-                     /db_xref="GeneID:38339363"
-                     /translation="MMNLYKPIRKTHPVIKIINGSLVDLPTPSNISSWWNFGSLLALC
-                     LMTQILTGLFLTMYYTANVDLAFFSVNYICRNVNYGWLIRTLHANGASFFFICIYFHI
-                     GRGIYYESFNLKFTWMIGVIILFLLMATAFMGYVLPWGQMSFWGATVITNLLSAIPYL
-                     GTTLVNWIWGGFAVDNATLTRFYTFHFLFPFIILMLTMIHLLFLHQTGSNNPXGINSN
-                     LDKIPFHPFFTFKDLIGFIILISILTFLSLINPYLLGDPDNFIPANPLVTPIHIQPEW
-                     YFLFAYAILRSIPNKLGGVIALVMSILILIILPFTFNKKIQGIQFYPLNQILFWSLIT
-                     TIILLTWIGARSVEAPYIITGQILTLIYFSYFIINPILNKFWDKLIFNL"
-     gene            11563..11627
-                     /gene="trnS(tga)"
-                     /locus_tag="EFH62_mgt20"
-                     /db_xref="GeneID:38339364"
-     tRNA            11563..11627
-                     /gene="trnS(tga)"
-                     /locus_tag="EFH62_mgt20"
-                     /product="tRNA-Ser"
-                     /db_xref="GeneID:38339364"
-     gene            complement(11626..12582)
-                     /gene="ND1"
-                     /locus_tag="EFH62_mgp01"
-                     /db_xref="GeneID:38339365"
-     CDS             complement(11626..12582)
-                     /gene="ND1"
-                     /locus_tag="EFH62_mgp01"
-                     /codon_start=1
-                     /transl_table=5
-                     /product="NADH dehydrogenase subunit 1"
-                     /protein_id="YP_009536384.1"
-                     /db_xref="GeneID:38339365"
-                     /translation="MLMQDLYNILIGILILLIGVLIGVAFLTLLERKVLGYIQIRKGP
-                     NKMGMMGILQPFCDAIKLFSKEQAYLNYSNYFSFYFSPIVSFSLSLMIWMLMPYIFNL
-                     IVFNLGLLFFLCCTSIGVYTLLIAGWSSNSNYSLLGGLRAVAQTISYEVSLSLILMSN
-                     IILIMDFNMIKFSEYQYLGWFMMMMLPLSMCFLSSLMAETNRTPFDFAEGESELVSGF
-                     NIEYSSGGFALIFLAEYSSILFMSLLFVIIYMGGYDLNLMFYLKLVFLSFFFIWVRGT
-                     LPRYRYDKLMYLCWKSYLPLSLNYLLFFMVVKMILVYKMNLV"
-     gene            complement(12584..12651)
-                     /gene="trnL(tag)"
-                     /locus_tag="EFH62_mgt21"
-                     /db_xref="GeneID:38339366"
-     tRNA            complement(12584..12651)
-                     /gene="trnL(tag)"
-                     /locus_tag="EFH62_mgt21"
-                     /product="tRNA-Leu"
-                     /db_xref="GeneID:38339366"
-     gene            complement(12652..13977)
-                     /gene="rrnL"
-                     /locus_tag="EFH62_mgr02"
-                     /db_xref="GeneID:38339367"
-     rRNA            complement(12652..13977)
-                     /gene="rrnL"
-                     /locus_tag="EFH62_mgr02"
-                     /product="16S ribosomal RNA"
-                     /db_xref="GeneID:38339367"
-     gene            complement(13978..14042)
-                     /gene="trnV(tac)"
-                     /locus_tag="EFH62_mgt22"
-                     /db_xref="GeneID:38339368"
-     tRNA            complement(13978..14042)
-                     /gene="trnV(tac)"
-                     /locus_tag="EFH62_mgt22"
-                     /product="tRNA-Val"
-                     /db_xref="GeneID:38339368"
-     gene            complement(14043..14816)
-                     /gene="rrnS"
-                     /locus_tag="EFH62_mgr01"
-                     /db_xref="GeneID:38339369"
-     rRNA            complement(14043..14816)
-                     /gene="rrnS"
-                     /locus_tag="EFH62_mgr01"
-                     /product="12S ribosomal RNA"
-                     /db_xref="GeneID:38339369"
+                     /protein_id="AIL89885.1"
+                     /translation="MYLIFGAWAAMVGTALSLLIRLELGQPESLIGDDQIYNVIVTAH
+                     AFVMIFFMVMPIMIGGFGNWLVPLMIGAPDMAFPRMNNMSFWLLPPSLTLLLASSLVE
+                     SGAGTGWTVYPPLASELAHAGASVDLAIFSLHLAGVSSILGAINFITTIINMRTSGML
+                     FERMPLFVWAVFITAILLLLSLPVLAGAITMLLVDRNFNTSFFDPTGGGDPILYQHLF
+                     "
 ORIGIN      
-        1 ttaaaaataa gctaaaaaag cttttgggtt catacctcaa atataaagga aatacctttt
-       61 ttttaaaaat aaagtgcctg attaaaagga ttattctgat aggataaata atgtaaattt
-      121 ttacctttat tatattttat agaattaaac tatacctaat aacttcaaaa attactgtgc
-      181 atcttacact aaaatataat ttttataata tgaataaatt tcattataga ttttaattct
-      241 tattttttat tattttaata acaaattcta ataaaatatt ttttttattt attttatttt
-      301 ttagaacctt aatttctgta tctgctaatt cttgattagg atgttgaatt ggtttagaaa
-      361 ttaatttatt aagatttatc cccctaatct caacacataa taatctttta aattcagaag
-      421 cttctcttaa atattttctt actcaatcaa ttgcctcaat taatttttta ttttcaattt
-      481 tattaagatt atttttaata aaaaattttt tttttaataa ttttttttca attattatta
-      541 attcttcatt acttataaaa ataggatcaa ttccatttca tttttgattt cctaatatta
-      601 tagaaggtct ttcatgattt aattgtttca tattaataac ttgacaaaaa atttccccta
-      661 taattctttt atcttattat tttaatttaa attttttata ttttgttata atttttaatg
-      721 tattaattgg atctattggt agatttaacc aaacttcttt acgaaaatta atagcttttt
-      781 cttcaattaa taatttaggt tgaatgatct catctataat tattagtgaa aatttatgat
-      841 taatttattt tattttttat tcaattttta catttattat atgtttttta ttttatatta
-      901 ttaatatttt ttttattaga caattattct tttttaatat aaatttttta attaaaattt
-      961 ctattataat taattttctt tctttagkag gtttgcctcc ttttttagga tttttcccta
-     1021 agtgacttgt tattaattat ttactaaata ataatttttt tattatttct tttgtattta
-     1081 ttatatcaag attaatttta ttatttgttt atattcgtat tatttattct tctttattat
-     1141 ttttttcttt taaattaaaa tgatttaaga tttttattaa aaataatttt ttaattttta
-     1201 tttatttttt taattttatt tctttatttg gtataattat tagaactttt tttttttaag
-     1261 gttttaagtt aaatataaac taataatctt caaaattatt tataaagaaa tttctttaag
-     1321 ccttagtatt tatacaccat aaaatttgca attttatatc attttttttt gaatataaga
-     1381 ctttataata aaagagaatt ttcccgtaaa taaatttaca atttatcgct tatatctcag
-     1441 ccattttatt taattagcga aaatgacttt tttctacaaa tcataaggat attggaactt
-     1501 tatattttat ttttggaatt tgagcaggaa tagtaggtac atctttaagt ttattaattc
-     1561 gaactgaatt aggaaatcca ggctctttaa ttggagatga tcaaatttat aatactattg
-     1621 taacagctca tgcttttatt ataatttttt ttatagttat acctatcata attggaggat
-     1681 ttggtaattg attagttcct ttgatattag gagctcctga tatagcattt ccccgtataa
-     1741 ataatataag attttgactt ttacccccat ctttaattct tttaatttct agtagaattg
-     1801 ttgaaaatgg agcaggaaca ggatgaacag tttatccccc actttcatct aatattgctc
-     1861 atggtggctc ttctgttgat ttagctattt tttctcttca tttagctggt atttcttcaa
-     1921 ttttaggagc aattaatttt attacaacta ttattaatat gcgagttaat aatatatctt
-     1981 ttgatcaaat acccctattt atttgatctg ttggaattac agctcttctt ttattattat
-     2041 ctttacctgt attagcagga gctattacta tacttttaac tgatcgtaat ttaaatacct
-     2101 cattttttga tccagcagga ggaggagatc ctattcttta tcaacattta ttttgatttt
-     2161 ttgggcatcc agaagtttat attttaattt tacctggatt tggtataatt tcccatttaa
-     2221 tttctcaaga aagaggaaaa aaggaaactt ttggatattt aggaataatt tatgctataa
-     2281 tagcaattgg actgcttgga tttattgttt gagctcatca tatatttaca gtaggaatag
-     2341 atattgacac tcgtgcatat tttacttctg ccactataat tattgctgtc ccaacaggaa
-     2401 ttaaaatttt tagatgatta gctactcttc acggaaccca aattaactat agcccttcca
-     2461 tattatgagg tttaggattt attttcttat ttacagtagg aggattaaca ggagttgttt
-     2521 tagctaattc ttctattgac attactcttc atgatactta ctatgttgta gyacattttc
-     2581 attatgtatt atcaatagga gctgtatttg caatttttgg aggatttatt cattgatacc
-     2641 ctctatttac aggattaact ataaatcctt acttattaaa aattcaattt atttcaatat
-     2701 ttattggagt taatttaact ttttttccac aacatttctt aggtttagca ggaatacctc
-     2761 gtcgttactc agattatcct gatagtttta tttcatgaaa tattatttct tctcttggat
-     2821 catatatttc attattttca ataattataa tagtaattat tgtctgagaa tcaataatta
-     2881 atcaacgttt agttcttttt tcattaaata tatcttcatc tattgaatga tatcaaaatt
-     2941 taccccctgc tgaacattca tataatgaat tacctatttt aagtaatttc taatatggca
-     3001 gattatatgt aatggattta aaccccattt ataaaggatt atcctttttt tagaatatgg
-     3061 caacatgatc taatcttaat tatcaaaata gagcttctcc tttaatagaa caaattattt
-     3121 tttttcatga tcatacttta attattttaa ttataattac aattttagta tcttatttaa
-     3181 taattagttt attttttaat aaatatatta atcgatttct tttagaagaa caaataattg
-     3241 aattaatttg aactatttta ccagcaatta ctcttatttt tattgcttta ccttctttac
-     3301 gacttttata tcttttagat gaattaaata atcctttaat tacattaaaa tctattggac
-     3361 atcaatgata ttgaagttat gaatattctg attttaataa tattgaattt gattcatata
-     3421 taattcaatc aactgataat ttatctaatt ttcgactttt agatgtagat aatcgaattg
-     3481 ttttacctat aaataatcaa attcgaattt taattacagc cactgatgta attcattctt
-     3541 gaactattcc atctttaagt gtaaaagttg atgctaatcc aggtcgatta aatcaaacaa
-     3601 gattttttat taatcgwcct ggtatttttt atggtcaatg ttctgaaatt tgcggtgcta
-     3661 atcatagttt tatacctatt gtaattgaaa gaatttcaat taaaaatttt attaattgaa
-     3721 ttaataatta ttcatcatta gatgactgaa agcaagtact ggtctcttaa accattttat
-     3781 agtaaattag caactacttc taatgaaaga attagttaat ttataacata aatatgtcaa
-     3841 atttaaatta ttactttagt aatattcttt tattcctcaa ataataccta ttaactgaat
-     3901 tttttctttc atttttttta ttgtaatttt tattattttt aatattataa attattttat
-     3961 ttttaattat aaaaatatta actataataa taataataaa aaaattataa aaaataactt
-     4021 ttcttgaaaa tgataaataa tttattttct attttcgacc cttctactaa tatttttaat
-     4081 ttatctatta attgagtaag aacttttatt ggtttaatat ttattcctta ttctttttga
-     4141 ttaattccta atcgtcattt tattttatga aattttattt catctaaatt acatgaagaa
-     4201 tttaaaactc ttttaggacc taatagattt aatggatcaa cttttatctt tatttcatta
-     4261 ttttttttta ttttatttaa taatttttta ggtttatttc catacatttt tacaagtact
-     4321 agacatttaa atatttcctt atctttatct ttaaccttat gattaagatt tataatttat
-     4381 ggatgaatta ataatactca acatatattt attcatataa ttccccaagg aactccaact
-     4441 attttaatac catttatagt tttaattgaa acaattagta atattattcg accaggtact
-     4501 ttagctgtcc gattgacagc taatataatt gctggtcatt tacttttaac tttattaagt
-     4561 aatacaggaa caaatatacc taattattta ttaatcattt taatttttat tcaaattctt
-     4621 ttattaattt tagaatctgc tgtagcagta attcaatctt atgttattac tattttaagt
-     4681 actctttatt ctagtgaagt taattaattt ataaatgact cttaatcata atcatcctta
-     4741 tcatttagta gattatagtc cttgaccttt aactggagct attggtgtaa taactttagt
-     4801 aactggttta gtaaaatgat ttcataattt tagattaaat ttacttattt taggttacat
-     4861 tattgtttta ttaacaatat atcaatgatg acgagatatt tgccgagaag gtacttatca
-     4921 aggtaagcat actattttag ttactaaagg tcttcgatga ggaataattt tatttattat
-     4981 ttcagaaatt ttttttttta tttcattttt ttgagcattt ttccatagaa gtttatctcc
-     5041 taatattgaa attggatcta tatgacctcc tataagaatt gtagcattta atccatttca
-     5101 aattccttta ttaaatacta ttattttaat tacttcagga attactgtta cttgagctca
-     5161 tcatagttta atagaaaata attttactca aacttttcaa agtttattaa ttactgtctt
-     5221 attaggaact tattttactt taattcaagc ttatgaatat attgaagctc cttttacaat
-     5281 tgcagataga atttatggat caactttttt tatagctaca ggatttcatg gacttcatgt
-     5341 tattattgga actatttttc ttttaacttg tttaattcga catataaata atcacttttc
-     5401 taattctcat cattttggat ttkaagcagc tgcatgatat tgacattttg ttgatgtagt
-     5461 atgattattt ctttatattt ttatttattg atgaggaaat taactattta tataatatat
-     5521 ttagtatatt tgacttccaa tcaaaaagtt taatttatta ttaatataaa taattaattt
-     5581 aataataata atatctttaa ttataattat cattgctaat attttcataa caatttcatt
-     5641 cattatttca aaaaaatctt ttcttgatcg agaaaaatgt tcaccatttg aatgtgggtt
-     5701 cgacccaaaa tcactatcac gtattccatt ttctcttcat ttttttttaa ttacagtaat
-     5761 ttttttaatt tttgatgtag aaattgcttt aattttccca ataattccaa cttttttaac
-     5821 agttaatttt attacttgat tcaaaattaa tttttttttt attattattt tattagtagg
-     5881 tctttatcat gagtgaaatc aaaatatatt aaactgaaca aattaattag gattatagtt
-     5941 tatttaaaac atttgatttg cattcaaata atattgaaat atcaatttat cttataaata
-     6001 agaagcaatt tgcatttaat ttcgacttaa aagatagagt taataaactc cttatttatt
-     6061 aattgaaacc aaaaaagagg tatatcactg ttaatgataa aattgaataa gaattccaat
-     6121 tagaaatata taataattaa gctgctaact taatttatag tgaataaaat cattaatatt
-     6181 tctaatttat atagtttaaa taaaacttta cattttcatt gtaaaaataa aaaaattttt
-     6241 ttttataaat atttaaagat tatataatca ccctaatatc ttcaatatta tactcttttt
-     6301 aagctattta aataaattat aattaaaata ataaaaatta ttattcataa aataaatcta
-     6361 aataaataaa ttttaaaatt atttatttga taaattatat taactaaaga ataaaattta
-     6421 ataatcttat atataccttg tcctctataa atttctcttc aacctatgtc aatatttttt
-     6481 cttaaaattt gaccaaattt taaaaaataa taatttaaac cataagtact taaatttggt
-     6541 aaaaatcata ttacagttaa aaaccctctt aaattataaa atattaaaaa tttatttatt
-     6601 gaataaatat ttatattact aattaataaa cctattaata ttcctgcaat tctcacataa
-     6661 attactatta tttttaaaga atttggtaaa taaattatat aaggataata aaaaattaat
-     6721 caacttaaaa aacttccaga aactaaactc ataaataata aaacaaatat actttttaat
-     6781 attacataat cttcatcata taaattataa attgacaata aattataatc attaattatt
-     6841 aagtatatta ataaacgaat agtataaaat attgttaacc ctgttgaaaa ataatataaa
-     6901 taaaaaatca ataaatttaa atttcttatt cttactattt ctaaaattat atccttagaa
-     6961 taaaatccag ctaaaaaagg aattccacat aaagctaaat ttgaaatatt taaacataaa
-     7021 gaagttaaag gaatataaaa tctaattcct cctattatac gaatatcttg attattattt
-     7081 attatatgaa taactacccc agcacatata aataataaag ctttaaatat agcatgtgtt
-     7141 aataaatgaa aaaaagctaa atcataaaat cccattctta aaattcttat tattaaccct
-     7201 aattgtctta aagttgataa agcaataatt ttttttaaat catattcata attagcacaa
-     7261 attcctgcta ttattattgt taatccagaa aataataata aaaattttaa aaaaaatatt
-     7321 tcaattaaaa gattattaaa tcgaattaat aaataaaccc ctgcagtaac taatgtagaa
-     7381 gaatgtacta aagcagaaac cggagtagga gcagctattg cagcaggtaa tcaagaacta
-     7441 aaaggaattt gagctctttt agttatagct gcaataatta ctaataatct aataatcttc
-     7501 atagaaaaat cattacttat aaaatttaaa taaaaaatat aatttcaact accataattt
-     7561 aatattcaag aaattaatat taaaatcatt acatcaccaa ttcgattaga taaagctgtt
-     7621 aatataccag cattataaga tttaatattt tggtaataaa ttactaaaca ataagaaact
-     7681 aaacctaatc catctcaacc taagaaaatt ctaattatat taggactaat aattaataaa
-     7741 attatcgaaa atacaaataa taaaactaaa ataataaatc gatttaaatt taattcagat
-     7801 cttatatatc tttttctata aaaaattaca caagaagaaa ttaatgatac aaatattata
-     7861 aacaataaag atattcaatc taataaaata gaaaatacaa tattaattga attaaaagaa
-     7921 ataacttccc actctaaaaa aataacttta ttatatataa taaaataaat tattctaaaa
-     7981 aaattaatta atataaaaaa aaataaaaaa aaaaatctga taaaacaaat attaaattta
-     8041 ttattaatga cctaaaatga atcttcatat ttttgactcc acaaatcaat atttttttta
-     8101 aattatttaa gtaaaatcaa attattctat aatcaatttt tataattaaa atatttaaag
-     8161 gtaatcaatg taatattaat attaaatatt ctcgtgatgt tcctgtataa aatctataaa
-     8221 ttcctatatt atatttccca tgttgggtat aagaatataa atataatcta tatccggcac
-     8281 taaaaaatga aatacatatt aatataatta ttcttaacca agatcaacta actaatctat
-     8341 taattaatct aatttcacct attaaattta aagaaggagg agcagccata tttgaagata
-     8401 ttaataaaaa tcatcataat cttatagagg gtataaaatt tattattcct ttattaataa
-     8461 ataaacttcg tctatttaat cgctcataat ttatattaga taaacaaaat ataccagaag
-     8521 aacataaacc atgcccaatt attaaaatat aggaacctat ataacctcaa taatttatag
-     8581 ttataattcc cccaattaca actcttatat gtgctacgga tgaataagca attaaagatt
-     8641 ttatatcaat ttgacaaaaa cattttaatc taatataaaa tcccccaata agtctaatta
-     8701 ctattcagat aaatcttatt tttaaattaa tttcctgtaa aataattatt acacgtaata
-     8761 aaccatatcc ccctaacttt aatataattg cagctaaaat tattgaacca gaaataggag
-     8821 cttctacatg agcttttggt aatcataaat gtacaaaata tataggtatt ttcactaaaa
-     8881 atgctattac taaacataaa tataatatta ataaattata atcataaaac tttaaaaaat
-     8941 aaattattat ataatttata tttttgtata aataaaaaat tcctattaat aaaggtaaag
-     9001 aagcaaataa tgtataaaat aatagatata tacctgcttg aattcgttca ggttgatacc
-     9061 ctcaaccaat aattaatatt aaagttggaa ttaatcttct ttcaaaaaat aaataaaata
-     9121 taaataaatt tattactcta aaagttaaat ataatattat tattaaaaaa ataatattaa
-     9181 ataaaaataa atttgaataa aaattacttt tatataatct ttctcttgct ataattatta
-     9241 aacttctaat tcaaattctt aataaaatta aaccataaga aattatatca tatcctaata
-     9301 tatatcttaa attacaaaaa tttataatat taatagtaga atttataaat ataaatatta
-     9361 taaacattaa taatatttga gccaatcaaa atatattttt tttaaaacat aaaggaatta
-     9421 taaaaattat tattactaaa aattttatca ttaaattaaa ttaaaacttt gaaaataatc
-     9481 atttccatgt gttcgaatta tggaaactaa aattgatagc cctaaagccc cctcacaaac
-     9541 agaaaagact aaaaatacta ttaatatata taaattataa tcaattatta taagatataa
-     9601 taatataaaa aagaaaattc ttaatactat aaattctaaa cttattaaaa caattaataa
-     9661 atgtttatgt tttgatacaa aaattatatt tccaaatata aatatgataa taataattaa
-     9721 tcttatattt aacattagtt agttaagttt ttatagttta ataaaaaact ttggtcttgt
-     9781 aaatcaaaaa taagaatatt ctttaaaaac ttcaaagaaa aagattttct ttatctataa
-     9841 tctccaaaat tattattttt ataaactatt ctttgatatt ttaaaaatat ttttatctat
-     9901 tttattaatt tctatttcaa tttttttgta cttcaccaat catcctcttg ctataggtct
-     9961 attaattctt actcaaacac ttcttacatg tttaatttca ggaatattaa ttaatacata
-    10021 ttgattttca tacatacttt tcttagtttt cttaggggga ttattagtat tatttattta
-    10081 tgtatcaaga gtagcttcaa atgagttatt taaaattcat tttattagta aattttttct
-    10141 tatttatatt ttatttatta taatttttag aatttttttt aaaaataatc taacttgaat
-    10201 aaatttctca tttaatgatg aaataaataa tttttttaac tcaattttat tttttaataa
-    10261 cgaatataat tttaatttat ctaaattata taataaacaa aattattgaa taatattaat
-    10321 aataattatt tatttattta ttacactagt tgcaattgta aaaattacta atattttttt
-    10381 tggtccttta cgatcattta ataattaatg ataaatctat ataaacctat ccgtaaaact
-    10441 catcccgtaa ttaaaattat taatggatca ttagtagatc ttcctacacc ttcaaatatt
-    10501 tcatcttgat gaaattttgg ttcattatta gctttatgtt taataactca aattttaaca
-    10561 ggattatttt taactatata ttatacagct aatgtagatt tagccttttt tagagtaaat
-    10621 tatatttgtc gaaatgttaa ttatggttga ttaattcgaa ctttacatgc aaatggagca
-    10681 tctttttttt ttatttgtat ttattttcat attgggcgag gaatttatta tgaatcattt
-    10741 aatttaaaat ttacttgaat aattggagtt attattttat ttttattaat agctacagct
-    10801 tttataggat atgttcttcc ttgaggacaa atatcttttt gaggagctac agtaattact
-    10861 aatttattat cggcaattcc atatttagga acaacacttg taaactgaat ttgaggaggt
-    10921 tttgcagttg ataatgcaac attaactcga ttttatactt ttcatttttt gttcccattt
-    10981 attattctta tattaactat aattcattta ttatttttac atcaaacagg atcaaataat
-    11041 ccattkggaa ttaatagaaa tttagataaa attccttttc atccattttt tacattcaaa
-    11101 gatttaattg gatttattat tctaatctca attttaactt ttctttctct aatcaaccct
-    11161 tatttattag gagacccaga taatttcatt ccagcaaatc cattagttac acctattcat
-    11221 attcaacctg aatgatattt tttatttgcc tatgctattc ttcgatctat ccctaataaa
-    11281 ttaggaggtg taattgcttt agtaatatca attttaattt taattatttt accttttact
-    11341 tttaataaaa aaattcaagg tattcaattt tatcctttaa atcaaatttt attctgatct
-    11401 ttaattacaa caattatttt attaacttga attggagcac gatcagtaga agcaccttat
-    11461 attattactg gtcaaatttt aacattaatt tatttttctt attttattat taacccaatc
-    11521 ttaaataaat tttgagataa attaattttc aatttataat ttaattaatg agcttgtata
-    11581 agcatttgtt ttgaaaactt aagaaagaat aaatattcta ttaatttata ctaaatttat
-    11641 tttatatact aaaattattt ttactactat aaaaaataat aaataattta atgataaagg
-    11701 taaatatctt tttcaacata aatatattaa tttatcataa cgataacgag gtaatgtccc
-    11761 tcgaactcaa ataaaaaaaa aagataaaaa tactaacttt aaataaaaca ttaaatttaa
-    11821 atcataacct cctatataaa taattacaaa taataaactt ataaataaaa tactagaata
-    11881 ttcagctaaa aaaattaaag caaatccycc tcttctatac tcaatattaa atcctgaaac
-    11941 taattctctt tcaccctctg caaaatcaaa aggagtacga ttagtttcag ctattaatga
-    12001 agataaaaaa catattctta aaggtaatat cattattata aatcaaccta aatattgata
-    12061 ttcactaaat ttaattatat taaaatctat aattaaaata atattagata ttaaaattaa
-    12121 agataatcta acttcataag aaatcgtttg agctactgct cgtaatcctc ctaataaaga
-    12181 ataatttcta tttgaagatc aaccagcaat taataaagta taaactccaa ttcttgtaca
-    12241 acataaaaaa aataataacc ctaaattaaa aacaattaaa ttaaaaatat aaggtattaa
-    12301 cattcaaatt attaaagata aagaaaatct tacaatagga gaaaaataaa aagaaaaata
-    12361 attagagtaa tttaaataag cttgttcttt agaaaataat ttaatagcat cacaaaaagg
-    12421 ttgtaaaatt cctattatac ccattttatt aggacctttt cgaatttgaa tataacctaa
-    12481 aactttccgc tctaataatg ttaaaaaagc aaccccaatt aaaactccaa ttaataaaat
-    12541 taaaatccca attaaaatat tatataaatc ttgtattaac atatactatt tatataattt
-    12601 aattatacat ttatgacttc taaaatcatc acatttttct gtcaaaatag tttaacttaa
-    12661 attattatta atattcatta aattttaact attaaaaata tttgatcctt tcgtactaaa
-    12721 atattttatt attttaaaga tagaaaccaa cctggctcac accggtttga actcagatca
-    12781 tgtaagattt taatgatcga acagatcaaa attttaaact tttgcattta aattttatct
-    12841 taatccaaca tcgaggtcgc aaactttttt ttctatttgt actagaaaaa aatattacgc
-    12901 tgttatcmct aaggtaattt tttcttttaa tcattataaa tggatcaaat atacacttat
-    12961 ttatgttaat tttttaaaaa aagttaaata aatttttttg tcaccccaac aaaatattaa
-    13021 ttttattttt aatttttaat tatatattta atcttaaata aatttaatat aaaactctat
-    13081 aggktcttct cgtcttttaa atttatttta gctttttaac taaaaaatta aattttatat
-    13141 ataaattaga gacagtttat atttcatcaa atctttcata caagtctcca attaaaagac
-    13201 tattgattat gctacctttg tacagtcaat atactgcagc cctttaatat aattatcagt
-    13261 gggcagatta gactttaaat tattttctaa aagacatgtt tttgataaac aagtgaatat
-    13321 aaatttttgc cgaattcctt taatttaatt tttattaatt aaattatatt ttatttgtaa
-    13381 tatactaatt ttatcattat tattaatttt tttttattat aaattattat tttatataaa
-    13441 tttaaatttt ttattaaatt ttattattat taaaattttt tgtaataaat taaaattttt
-    13501 aaacaatata aattttaaaa tttttaaatt ttattttaat ttattataaa tttttatatt
-    13561 aaagcttatc ccttaatata tttaatttta aatattttat tattaattat aattaataat
-    13621 aaaatttttt aaattttaaa ttaaattttt ttctaaaata actagatata tttaaaaacg
-    13681 attaacattt catttcaaat taattattaa aaataattat tccacattaa cttttataat
-    13741 taattaactc ttttaaattc gagatttttt tatttaaaaa atatttttta ataaactctg
-    13801 atacacaaga tacactaaat aaaaattact tttttattaa tttattttca attatttcaa
-    13861 atttcttttt caatactaat taactataaa ataatttatt ttttttttaa aaaaatactt
-    13921 taacatcccc caatattaaa aattttttta ttatttatat tttattaatt ttccccctca
-    13981 aattaattaa ttattttaat ttcttttcaa tgtaaatgaa atacttaaca agctctaatt
-    14041 tgttcattct agaaacactt tccagtactt ctactttgtt acgacttatt tcaattttta
-    14101 aatgaaagtg acgggcaata tgtacatatt ttaattttta atcattttaa taaattaatt
-    14161 aaaattacat ttaaatccac cttcaatcaa attttacaaa atttttttcg tttaaataaa
-    14221 tttattgtaa tccatcttaa acttaattat aatctgcatc ttgatctgaa ttaaatttta
-    14281 ttttaaattt taaaatatta tttttattta aaaatatttt tttaacaatg atatacaaaa
-    14341 ttataaatta agtaaaatta ttcgtggatt atcaattact agacagattc ctctaaatga
-    14401 actaaaatac cgccatatta tttaagtttc aacaatattt tatttactat tttagtattt
-    14461 tttattaaat ttttaataat agggtatcta atcctagttt ataataaaat ttattaaatc
-    14521 ataaattaaa aataattttt aattaaatta aaatttcact taataattta atatttattt
-    14581 taatatttaa ttatttatta tatactgaaa taatttaatt taacttttgt ttaaccgcaa
-    14641 ctgctggcac aaaattagtt attaatttaa atattactaa atcttaattt yttaaatttt
-    14701 taattttaat tactttttaa ttaaattaat tatttttaaa ataattaaaa ttttattaaa
-    14761 aaatttaaat ttaaaataaa tttataataa attataaaaa aaataaaaaa tttatctaat
-    14821 taaattattt tttaaataaa ttttattttt tttttttttt ttttatatta tatatttaat
-    14881 ataaattaat aaatttttat tatttctctt attttctttc tagtaatatt attataaaaa
-    14941 ttaattttga ttataaatca attataattc aattaaataa aaatatatta taaaaatatt
-    15001 atttaaatta aataaaaatt tatatatata tatatattat taatatatta aatatttaat
-    15061 ttattaatat aatttttata atttaaatat ttaatttata tatatatata tatgaatata
-    15121 taatttaaat aaaataaaaa aaaaatctat tttttatttt tatttattaa actgtaatta
-    15181 aaatttttag ttattataat ttttttataa actttaattt aaaaaattat taaaccataa
-    15241 ttaataaatt ttgcataaat aatata
+        1 ctatatattt aattttcgga gcatgagcag caatagtagg aaccgctctt agtcttctta
+       61 ttcgtcttga attaggtcaa ccagaaagcc taattggaga tgatcaaatt tataacgtta
+      121 ttgttacagc tcacgccttt gtaataattt tttttatagt tatacctatc ataattggag
+      181 gatttggaaa ctgactagtt ccccttataa ttggagcacc agatatagct ttccctcgaa
+      241 taaataatat aagattttga cttcttcctc cttctctaac tctacttctt gcttcatccc
+      301 tagtagaaag tggagcagga actggatgaa cagtttatcc ccctttagct agagaactag
+      361 ctcacgcggg agcttcagtt gatttagcta ttttctctct tcacctagcc ggtgtttctt
+      421 caattttagg tgccattaay tttattacta caattattaa tatacgaaca agaggtatat
+      481 tatttgaacg tataccttta tttgtttgag cagtatttat tactgctatt cttcttcttc
+      541 tatctcttcc agttcttgca ggagctatta ctatattatt agtagatcga aattttaata
+      601 caagtttttt tgatcctaca ggaggaggag accctattct ttaccaacac ctattc
 //
-
 LOCUS       KJ021206                 661 bp    DNA     linear   PLN 06-OCT-2014
 DEFINITION  Ophiocordyceps sinensis isolate 62(1) cytochrome oxidase subunit I
             (COI) gene, partial cds; mitochondrial.
@@ -817,185 +306,3 @@ ORIGIN
       601 atacttcatt ttttgaccct gcaggagggg gagaccctat tttatatcaa catttatttt
       661 g
 //
-
-LOCUS       KJ021220                 661 bp    DNA     linear   PLN 06-OCT-2014
-DEFINITION  Metacordyceps liangshanensis isolate E2 cytochrome oxidase subunit
-            I (COI) gene, partial cds; mitochondrial.
-ACCESSION   KJ021220
-VERSION     KJ021220.1
-KEYWORDS    .
-SOURCE      mitochondrion Metacordyceps liangshanensis
-  ORGANISM  Metacordyceps liangshanensis
-            Eukaryota; Fungi; Dikarya; Ascomycota; Pezizomycotina;
-            Sordariomycetes; Hypocreomycetidae; Hypocreales; Clavicipitaceae;
-            Metacordyceps.
-REFERENCE   1  (bases 1 to 661)
-  AUTHORS   Chen,S.
-  TITLE     Direct Submission
-  JOURNAL   Submitted (28-DEC-2013) Research and Inspection Center of
-            Traditional Medicine and Ethnomedicine, National Institutes for
-            Food and Drug Control, No. 2 West the Temple of Heaven Lane
-            Dongcheng District, Beijing 100050, China
-FEATURES             Location/Qualifiers
-     source          1..661
-                     /organism="Metacordyceps liangshanensis"
-                     /organelle="mitochondrion"
-                     /mol_type="genomic DNA"
-                     /isolate="E2"
-                     /db_xref="taxon:92715"
-                     /country="China"
-                     /PCR_primers="fwd_name: COI-F, fwd_seq:
-                     ggtcaacaaatcataaagatattg, rev_name: COI-R, rev_seq:
-                     taaacttcagggtgaccaaaaaat"
-     gene            <1..>661
-                     /gene="COI"
-     CDS             <1..>661
-                     /gene="COI"
-                     /codon_start=3
-                     /transl_table=4
-                     /product="cytochrome oxidase subunit I"
-                     /protein_id="AIS23745.1"
-                     /translation="TLYFIFGIWAGILGTSLRLLIRTELGNPGSLIGDDQIYNVIVTA
-                     HAFIIIFFIVIPIIIGGFGNWLVPLILGAPDIAFPRINNIRFWLLPPSLILLISSRIV
-                     ENGAGTGWTVYPPLSANLAHTGSSVDLAIFSLHLAGISSILGAVNFITTVINIRPKRI
-                     SFDRIPLFVWRVAITALLLLLSLPVLAGAITILLTDRNLNTSFFDPAGGGDPILYQHL
-                     F"
-ORIGIN      
-        1 gaactttata ttttattttt ggtatctgag caggaatatt aggaacatct ttaagattac
-       61 taattcgaac agaactagga aatccaggat ctttaattgg tgatgatcaa atttataatg
-      121 taattgttac agctcatgct tttattataa ttttttttat agtaatacct attataattg
-      181 gaggatttgg gaattgatta gtccctttaa tattaggagc tcctgatata gcctttcctc
-      241 gaataaataa tataagattt tgattattac ctccttcatt aatattacta atttcttcaa
-      301 gaattgtaga aaatggagct ggaacaggtt gaacagtata ccctccttta tctgctaatt
-      361 tagctcatac tggaagttca gttgatttag caattttttc tttacattta gcaggaattt
-      421 catcaatttt aggtgcagtt aattttatta caactgtaat caatatacga cctaaaagaa
-      481 tatcttttga ccgaatacct ttattcgtct gaagagtagc aattactgct ttattattat
-      541 tattatcttt acctgtatta gcaggagcta ttactatatt attaacagat cgaaatttaa
-      601 atacttcatt ttttgaccct gcagggggag gagaccctat tttatatcaa catttatttt
-      661 g
-//
-
-LOCUS       KJ021195                 661 bp    DNA     linear   PLN 06-OCT-2014
-DEFINITION  Cordyceps gunnii isolate 35 cytochrome oxidase subunit I (COI)
-            gene, partial cds; mitochondrial.
-ACCESSION   KJ021195
-VERSION     KJ021195.1
-KEYWORDS    .
-SOURCE      mitochondrion Cordyceps gunnii (anamorph: Paecilomyces gunnii)
-  ORGANISM  Cordyceps gunnii
-            Eukaryota; Fungi; Dikarya; Ascomycota; Pezizomycotina;
-            Sordariomycetes; Hypocreomycetidae; Hypocreales; Cordycipitaceae;
-            Cordyceps.
-REFERENCE   1  (bases 1 to 661)
-  AUTHORS   Chen,S.
-  TITLE     Direct Submission
-  JOURNAL   Submitted (28-DEC-2013) Research and Inspection Center of
-            Traditional Medicine and Ethnomedicine, National Institutes for
-            Food and Drug Control, No. 2 West the Temple of Heaven Lane
-            Dongcheng District, Beijing 100050, China
-FEATURES             Location/Qualifiers
-     source          1..661
-                     /organism="Cordyceps gunnii"
-                     /organelle="mitochondrion"
-                     /mol_type="genomic DNA"
-                     /isolate="35"
-                     /db_xref="taxon:99897"
-                     /country="China"
-                     /PCR_primers="fwd_name: COI-F, fwd_seq:
-                     ggtcaacaaatcataaagatattg, rev_name: COI-R, rev_seq:
-                     taaacttcagggtgaccaaaaaat"
-     gene            <1..>661
-                     /gene="COI"
-     CDS             <1..>661
-                     /gene="COI"
-                     /codon_start=3
-                     /transl_table=4
-                     /product="cytochrome oxidase subunit I"
-                     /protein_id="AIS23720.1"
-                     /translation="TLYFIFGIWAGIVGTSLRLLIRTELGNPGSLIGDDQIYNVIVTA
-                     HAFIIIFFIVIPIIIGGFGNWLVPLILGAPDIAFPRLNNIRFWLLPPSLILLISSRIV
-                     ENGAGTGWTVYPPLSSNIAHAGRSVDLAIFSLHLAGISSILGAVNFITTVINIRSNGI
-                     SFDRIPLFVWRVAITALLLLLSLPVLAGAITILLTDRNLNTSFFDPAGGGDPILYQHL
-                     F"
-ORIGIN      
-        1 gaactttata ttttattttt ggtatttgag ctgggatagt aggaacttcc ttaagattat
-       61 taatccgaac agaattaggt aaccctggtt ctttaattgg tgatgatcaa atttataatg
-      121 taattgttac agcacatgct tttattataa ttttttttat agttatacct attataattg
-      181 gtggatttgg aaattgatta gttcctttaa tattaggagc tcctgatata gcatttccac
-      241 gattaaataa tataagattt tgattattac ccccttcatt aatattatta atttctagta
-      301 gaattgtaga aaacggtgca ggaacaggtt gaacagttta tcctccttta tcttctaata
-      361 ttgcacatgc tggtagatca gtagatttag ctattttttc tttacattta gcaggtattt
-      421 catctatttt aggtgcagtt aattttatta caactgtaat taatatacga tcaaatggaa
-      481 tatcttttga tcgtataccc ttatttgttt gaagagtagc aattacagct ttattattat
-      541 tattatcttt accagtatta gcaggagcta ttactatatt actaactgat cgtaatttaa
-      601 atacttcatt ttttgatcct gctggaggtg gagatcctat tttataccaa catttatttt
-      661 g
-//
-
-LOCUS       KX844393                 658 bp    DNA     linear   PLN 22-NOV-2016
-DEFINITION  Solieria pacifica voucher jka07-03328 cytochrome oxidase subunit 1
-            (COI) gene, partial cds; mitochondrial.
-ACCESSION   KX844393
-VERSION     KX844393.1
-KEYWORDS    BARCODE.
-SOURCE      mitochondrion Solieria pacifica
-  ORGANISM  Solieria pacifica
-            Eukaryota; Rhodophyta; Florideophyceae; Rhodymeniophycidae;
-            Gigartinales; Solieriaceae; Solieria.
-REFERENCE   1  (bases 1 to 658)
-  AUTHORS   Pohjoismaki,J.L., Kahanpaa,J. and Mutanen,M.
-  TITLE     DNA Barcodes for the Northern European Tachinid Flies (Diptera:
-            Tachinidae)
-  JOURNAL   PLoS ONE 11 (11), E0164933 (2016)
-   PUBMED   27814365
-  REMARK    Publication Status: Online-Only
-REFERENCE   2  (bases 1 to 658)
-  AUTHORS   Pohjoismaki,J., Kahanpaa,J. and Mutanen,M.
-  TITLE     Direct Submission
-  JOURNAL   Submitted (13-SEP-2016) Department of Environmental and Biological
-            Sciences, University of Eastern Finland, P.O.Box 111, Joensuu,
-            Eastern Finland 80101, Finland
-FEATURES             Location/Qualifiers
-     source          1..658
-                     /organism="Solieria pacifica"
-                     /organelle="mitochondrion"
-                     /mol_type="genomic DNA"
-                     /specimen_voucher="jka07-03328"
-                     /db_xref="BOLD:FIDIP3284-12.COI-5P"
-                     /db_xref="taxon:38515"
-                     /country="Finland: Alandia, Lemland, Ytternaes"
-                     /lat_lon="60.071 N 19.956 E"
-                     /collection_date="12-Jun-2007"
-                     /collected_by="J. Kahanpaeae"
-                     /identified_by="Jere Kahanpaa"
-                     /PCR_primers="fwd_seq: attcaaccaatcataaagatattgg, rev_seq:
-                     taaacttctggatgtccaaaaaatca"
-                     /PCR_primers="fwd_seq: ggtcaacaaatcataaagatattgg, rev_seq:
-                     taaacttcagggtgaccaaaaaatca"
-     gene            <1..>658
-                     /gene="COI"
-     CDS             <1..>658
-                     /gene="COI"
-                     /codon_start=2
-                     /transl_table=4
-                     /product="cytochrome oxidase subunit 1"
-                     /protein_id="APC93708.1"
-                     /translation="TLYFIFGAWSGIVGTSLSILIRAELGHPGALIGDDQIYNVIVTA
-                     HAFIIIFFIVIPIIIGGFGNWLVPLILGAPDIAFPRINNIRFWLLPPALTLLLISSII
-                     ENGAGTGWTVYPPLSSNIAHDGASVDLAIFSLHLAGISSILGAVNFITTVINIRSTGI
-                     TFDRIPLFVWSVVITALLLLLSLPVLAGAITILLTDRNLNTSFFDPAGGGDPVLYQHL
-                     F"
-ORIGIN      
-        1 aactttatat tttatttttg gtgcctgatc aggaatagta ggaacttctt taagtatttt
-       61 aattcgagca gaattaggac atcctggagc tttaattgga gatgatcaaa tttataatgt
-      121 aattgtaaca gctcatgctt ttattataat tttttttata gtaataccaa ttataattgg
-      181 tggatttgga aattgattag ttccattaat attaggagct ccagatatag catttcctcg
-      241 aataaataat ataagatttt gattattacc acctgcatta acattactgc ttataagtag
-      301 tataattgaa aatggagctg gaacaggatg gacagtatac ccacctctat catctaacat
-      361 tgctcatgat ggagcttcag ttgacttagc aattttttct ttacatttag ctggaatttc
-      421 ttctatttta ggtgcagtaa attttattac aacagtaatt aatatacgat caactggaat
-      481 tacatttgat cgtatacctt tatttgtatg atcagtagtt attacagctt tactattact
-      541 tttatcttta cctgttttag caggtgctat tactatacta ctaactgatc gaaatttaaa
-      601 tacttctttt tttgatcctg cgggaggagg tgatccagtt ttatatcaac atttattt
-//
-

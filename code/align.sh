@@ -435,14 +435,15 @@ mafft_addfragmets() {
 
 #syntax:	$ t_coffee -reg -seq proteases_large.fasta -reg_nseq 100 -reg_tree mbed -reg_method clustalo_msa -outfile proteases_large.aln -outtree proteases_large.mbed
 
-#		-seq: provide sequences. must be in FASTA format
-#		-reg_tree: defines the method to be used to estimste the tree
-#		-outtree: defines the name of newly computed out tree. mbed method of Clustal Omega is used.
-#		-outfile**: defines the name of output file of the MSA
-#		-reg_nseq: sets the max size of the subsequence alignments; the groups is 100
-#		-reg_thread: sets max threads to be used
-#		-reg_method**: defines the method to be used to estimate MSA: Clustal Omega
-
+#-seq		:provide sequences. must be in FASTA format
+#-reg_tree	:defines the method to be used to estimste the tree
+#-outtree	:defines the name of newly computed out tree. mbed method of Clustal Omega is used.
+#-outfile**	:defines the name of output file of the MSA
+#-reg_nseq	:sets the max size of the subsequence alignments; the groups is 100
+#-reg_thread	:sets max threads to be used
+#-reg_method**	:defines the method to be used to estimate MSA: Clustal Omega
+#-multi_core    :Specifies that T-Coffee should be multithreaded or not; by default all relevant steps are parallelized; DEFAULT: templates_jobs_relax_msa_evaluate OR templates_jobs_relax_msa_evaluate (when flag set)
+#-n_core        :Number of cores to be used by machine [default=0 => all those defined in the environement]
 
 tcoffee_large() {
 	usage $@
@@ -457,7 +458,7 @@ tcoffee_large() {
 		then
 			rename
 			echo -e "\nproceeding with file `basename $i`..."
-			t_coffee -reg -seq $i -reg_nseq 100 -reg_tree mbed -reg_method clustalo_msa -outfile ${tcoffee_dest}aligned/${output_filename}.fasta -newtree ${tcoffee_dest}trees/${output_filename}.mbed
+			t_coffee -reg -multi_core -n_core=32 -seq $i -reg_nseq 100 -reg_tree mbed -reg_method clustalo_msa -outfile ${tcoffee_dest}aligned/${output_filename}.fasta -newtree ${tcoffee_dest}trees/${output_filename}.mbed
 		else
 			echo "input file error in `basename $i`: input file should be a .fasta file format"
 			continue
@@ -509,7 +510,7 @@ COREindex() { #Evaluating an existing alignment with the CORE index
 			rename
 			outfile_dest
 			echo -e "\nproceeding with `basename $i` alignment file evaluatio..."
-			t_coffee -infile=$i -output=html -score -outfile ${output_dest}scores/coreindex/${output_filename}.html
+			t_coffee -infile=$i -multi_core -n_core=32 -output=html -score -outfile ${output_dest}scores/coreindex/${output_filename}.html
 		else
 			echo "input file error in `basename $i`: input file should be a *.aln file format"
 			continue
@@ -520,8 +521,9 @@ COREindex() { #Evaluating an existing alignment with the CORE index
 
 #=====================================================================================
 
-input_src=`dirname "$( realpath "${i}" )"`
 outfile_dest() { #Redirecting the output results based on input results source path
+	input_src=`dirname "$( realpath "${i}" )"`
+	unset output_dest
 	case $input_src in
 		${muscle_dest}aligned)
 			output_dest=$muscle_dest
@@ -532,7 +534,7 @@ outfile_dest() { #Redirecting the output results based on input results source p
 		${tcoffee_dest}aligned)
 			output_dest=$tcoffee_dest
 			;;
-		${pasta_desta}aligned)
+		${pasta_dest}aligned)
 			output_dest=$pasta_dest
 			;;
 		${sate_dest}aligned)
@@ -540,7 +542,7 @@ outfile_dest() { #Redirecting the output results based on input results source p
 			;;
 		*)
 			echo -e "input file is from unrecognized source directory `dirname "$( realpath "${i}" )"` "
-			exit 1
+			return 1
 			;;
 	esac
 }
@@ -566,27 +568,33 @@ TCSeval() { #Evaluating an existing alignment with the TCS
                 then
                         rename
 			outfile_dest
-                        echo -e "\nproceeding with `basename $i` alignment file evaluatio..."
-			select TCS_library_estimation_format in proba_pair fast_mafft_kalign_muscle_combo none_exit
-			do
-				case $TCS_library_estimation_format in
-					proba_pair)
-						echo -e "\nTCS evaluation using default aligner proba_pair"
-						t_coffee -infile $i -evaluate -method proba_pair -output=score_ascii,html -outfile ${output_dest}scores/tcs/${output_filename}_score
-						break
-						;;
-					fast_mafft_kalign_muscle_combo)
-						echo -e "\nTCS evaluation using a series of fast multiple aligners; mafft_msa,kalign_msa,muscle_msa"
-						t_coffee -infile $i -evaluate -method mafft_msa,kalign_msa,muscle_msa -output=score_ascii,html -outfile ${output_dest}scores/tcs/${output_filename}_score
-						break
-						;;
-					none_exit)
-						break
-						;;
-					*)
-						echo "error: Invalid selection!"
-				esac
-			done
+			if [ -z "$output_dest" ]
+			then
+				echo -e "\noutput destination folder not set: input can only be sourced from: \n$muscle_dest; \n$mafft_dest; \n$tcoffee_dest; \n$pasta_dest; and \n$sate_dest"
+				continue
+			else
+				echo -e "\nproceeding with `basename $i` alignment file evaluatio..."
+				select TCS_library_estimation_format in proba_pair fast_mafft_kalign_muscle_combo none_exit
+				do
+					case $TCS_library_estimation_format in
+						proba_pair)
+							echo -e "\nTCS evaluation using default aligner proba_pair"
+							t_coffee -multi_core -n_core=32 -infile $i -evaluate -method proba_pair -output=score_ascii,html -outfile ${output_dest}scores/tcs/${output_filename}_score
+							break
+							;;
+						fast_mafft_kalign_muscle_combo)
+							echo -e "\nTCS evaluation using a series of fast multiple aligners; mafft_msa,kalign_msa,muscle_msa. \nThis option is not accurate and can not be relied on in filtering sequences"
+							t_coffee -multi_core -n_core=32 -infile $i -evaluate -method mafft_msa,kalign_msa,muscle_msa -output=score_ascii,html -outfile ${output_dest}scores/tcs/${output_filename}_fastscore
+							break
+							;;
+						none_exit)
+							break
+							;;
+						*)
+							echo "error: Invalid selection!"
+					esac
+				done
+			fi
                 else
                         echo "input file error in `basename $i`: input file should be a .fasta file format"
                         continue
@@ -605,25 +613,6 @@ TCSeval() { #Evaluating an existing alignment with the TCS
 #sample_seq1.tcs_residue_lower4 :All residues with a TCS score lower than 3 are in lower case
 
 #t_coffee -infile sample_seq1.aln -evaluate -output tcs_residue_filter1,tcs_column_filter1
-
-#=====================================================================================
-##Comparing alternative alignments: compare alternative alignments quantitatively
-
-#Reference dependent methods.
-#T-Coffee comes along with an alignment comparison module named **aln_compare**. You can use it to estimate the amount of difference between your two alignments either using the Sum-of-Pair score or the column score using the flag -compare_mode (sp or column).
-#1. The sp score is defined as the number of aligned residue pairs (i.e. not gaps) that are common between the reference (-al1) and the test (-al2) divided by the total numbers of pairs in the reference, while excluding gaps. By default aln_compare returns the SoP score:
-
-#Syntax:        $ t_coffee -other_pg aln_compare -al1 b80.aln -al2 b30.aln -compare_mode sp
-
-#Returns:       seq1    seq2    Sim     [ALL]           Tot
-#               b80     19      33.6    94.2 [100.0]    [79686]
-
-#b80 is the reference MSA, it contains 19 sequences with an average identity of 33.6%, and is 94.2% identical to the second MSA b30.aln (79686 pairs to be precise)
-
-#Other modes of comparison are available include:
-#2. TC score:   the number of columns in the test MSA (-al2) that are common between the reference and the test, divided by the total number of columns in the reference
-#3. column score:       the total number pairs occuring in columns entirely identical between the reference (-al1) and the test (-al2) divided by the total number of pairs in the reference (excluding gaps)
-
 
 #=====================================================================================
 
