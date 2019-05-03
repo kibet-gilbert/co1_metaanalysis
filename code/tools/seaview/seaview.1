@@ -1,0 +1,93 @@
+.\"     Title: SEAVIEW
+.\"    Author: Manolo Gouy <mgouy@biomserv.univ-lyon1.fr>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: 05/27/2009
+.\"    Manual: Seaview Manual
+.\"    Source: seaview 4.0
+.\"
+.TH "SEAVIEW" "1" "05/27/2009" "seaview 4.0" "Seaview Manual"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+seaview \- a multiplatform, graphical user interface for multiple sequence alignment and molecular phylogeny.
+.SH "SYNOPSIS"
+.HP 8
+\fBseaview\fR [\fIfilename\fR]
+.SH "DESCRIPTION"
+.PP
+\fBseaview\fR
+is the program that starts the SeaView GUI\&.
+.PP
+SeaView is a graphical interface for multiple sequence alignment and molecular phylogeny\&. It is able to read various alignment formats (MSF, CLUSTAL, FASTA, PHYLIP, MASE, NEXUS) and the Newick tree format, and allows one to manually edit the alignment, to run DOT\-PLOT, CLUSTAL or MUSCLE programs to locally improve the alignment, and also to compute, draw and edit phylogenetic trees\&.
+.PP
+If started from the command line with
+\fIfilename\fR
+as an argument, seaview will open the alignment or tree stored in
+\fIfilename\fR\& and display/draw it on screen. Filename can be in any of the mase, clustal, phylip, msf, fasta, or nexus alignment
+formats or in the Newick tree format.
+.SH "OPTIONS"
+.PP
+\fB\-fast\fR
+.RS 4
+Suppresses double buffering for display\&. This should only accelerate display on very slow systems\&.
+.RE
+.PP
+\fB\-fontsize\fR \fIn\fR
+.RS 4
+Sets the font size to
+\fIn\fR\&.
+.RE
+.SH "FILES"
+.PP
+\fI\fI$HOME\fR\fR\fI/\&.seaviewrc\fR
+holds the user\'s configuration for SeaView\&.
+.SH "SEE ALSO"
+.PP
+The program is fully documented online\&. Press the "help" button in the main window\&. On Debian systems, the text template for SeaView\'s help can be found in
+\fI/usr/share/doc/seaview/seaview\&.html\fR\&.
+.PP
+Two multiple alignment programs can be called from whithin SeaView:
+\fBmuscle\fR(1)
+and
+\fBclustalw\fR(1)\&.
+.PP
+The home page of SeaView is http://pbil\&.univ\-lyon1\&.fr/software/seaview\&.html\&.
+.PP
+SeaView usees some components of the PHYLIP package, see \(oqhttp://evolution\&.genetics\&.washington\&.edu/phylip\&.html\(cq\&.
+.SH "REFERENCE"
+.PP
+If you use SeaView in a published work, please cite the following reference: Galtier, N\&., Gouy, M\&. and Gautier, C\&. (1996) SeaView and Phylo_win, two graphic tools for sequence alignment and molecular phylogeny\&. Comput\&. Applic\&. Biosci\&., 12, 543\-548\&.
+.SH "AUTHORS"
+.PP
+\fBManolo Gouy\fR <\&mgouy@biomserv\&.univ\-lyon1\&.fr\&>
+.sp -1n
+.IP "" 4
+Upstream author of SeaView\&.
+.PP
+\fBStéphane Bortzmeyer\fR <\&bortzmeyer@debian\&.org\&>
+.sp -1n
+.IP "" 4
+Wrote this manpage in DocBook XML for the Debian distribution\&.
+.PP
+\fBCharles Plessy\fR <\&plessy@debian\&.org\&>
+.sp -1n
+.IP "" 4
+Updated this manpage in DocBook XML for the Debian distribution\&.
+.SH "COPYRIGHT"
+Copyright \(co 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 Manolo Gouy
+.br
+Copyright \(co 1999 Stéphane Bortzmeyer
+.br
+Copyright \(co 2006, 2007, 2008, 2009 Charles Plessy
+.br
+.PP
+SeaView
+is released under the GNU General Public Licence, with a special permission to use some source files from the PHYLIP package\&. Because these files are used, you are not allowed generate revenue with SeaView\&.
+.PP
+You can redistribute and/or modify this manpage under same terms as SeaView itself\&.
+.PP
+On Debian systems, the complete text of the GNU General Public License version 2 can be found in
+\fI/usr/share/common\-licenses/GPL\-2\fR\&.
+.sp

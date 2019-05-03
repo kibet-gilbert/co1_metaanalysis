@@ -1,0 +1,4 @@
+#!/usr/bin/perl -w
+$command = "/Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.13/SuiteMSA_Package1.3.13B/indel-seq-gen-2.1.03/src/./indel-seq-gen -m PAM -p /Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.13/SuiteMSA_Package1.3.13B/indel-seq-gen-2.1.03/data -j trs -o f -e /Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.13/SuiteMSA_Package1.3.13B/indel-seq-gen-2.1.03/data/exon_intron_out -d 011110 < /Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.13/SuiteMSA_Package1.3.13B/indel-seq-gen-2.1.03/data/exon_intron.tree 2> /Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.13/SuiteMSA_Package1.3.13B/indel-seq-gen-2.1.03/data/sim_log_current.txt";
+system($command);
+print "\nCOMMAND EXECUTED\n\n";

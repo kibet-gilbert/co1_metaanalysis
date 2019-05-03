@@ -1,0 +1,1 @@
+/home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/pasta_output/aligned

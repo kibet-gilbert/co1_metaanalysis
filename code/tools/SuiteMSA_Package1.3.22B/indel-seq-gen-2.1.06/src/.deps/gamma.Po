@@ -1,0 +1,18 @@
+gamma.o gamma.o: gamma.cpp /usr/include/math.h \
+  /usr/include/architecture/i386/math.h /usr/include/sys/cdefs.h \
+  /usr/include/sys/_symbol_aliasing.h \
+  /usr/include/sys/_posix_availability.h twister.h gamma.h
+
+/usr/include/math.h:
+
+/usr/include/architecture/i386/math.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/sys/_symbol_aliasing.h:
+
+/usr/include/sys/_posix_availability.h:
+
+twister.h:
+
+gamma.h:

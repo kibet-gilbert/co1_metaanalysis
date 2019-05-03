@@ -1,0 +1,65 @@
+           HOW TO COMPILE SEAVIEW ON UNIX/LINUX SYSTEMS
+
+The seaview program requires the FLTK library for its graphical user interface.
+Version 1.3.0 or later of FLTK is necessary.
+
+The FLTK library is available as packages for a number of Linux distributions.
+If this package is installed on your system, go to step II.
+If no such package is available for your system, or if version 1.3.0 is not available,
+or if you don't want to use such package, you can compile the FLTK library as follows.
+
+I COMPILING THE FLTK LIBRARY FROM SOURCE
+========================================
+
+The source code of the FLTK library is available at the "Download" item of http://www.fltk.org/.
+- Get the stable release source archive, currently fltk-1.3.2-source.tar.gz
+- Compile the FLTK library on your system:
+   cd fltk-1.3.2
+   ./configure
+   make
+It's not necessary to do "make install".
+
+II COMPILING THE SEAVIEW PROGRAM
+================================
+
+First unpack the seaview source archive (seaview.tar.gz).
+
+IIa Preparing the seaview makefile
+
+If the FLTK library is installed on your system (i.e., include files in /usr/include/FL,
+and libraries at /usr/lib/libfltk*), go to step IIb.
+Otherwise, edit Makefile from the seaview source directory which contains these 5 lines:
+FLTK = /usr/include
+#uncomment the next 3 lines to use custom installed FLTK library
+#FLTK = $(HOME)/fltk-1.3.2
+#IFLTK = -I$(FLTK)
+#LFLTK = -L$(FLTK)/lib
+
+Transform these lines into:
+#FLTK = /usr/include
+#uncomment the next 3 lines to use custom installed FLTK library
+FLTK = $(HOME)/fltk-1.3.2
+IFLTK = -I$(FLTK)
+LFLTK = -L$(FLTK)/lib
+and also change the FLTK = $(HOME)/fltk-1.3.2 line so it gives the location in your system
+of the top of the FLTK source tree.
+
+IIb Compile/link the seaview program
+
+In the seaview source directory, run
+make
+
+III Install seaview external programs
+=====================================
+
+Seaview drives 4 external programs (clustalo, muscle, Gblocks, phyml). Linux executables
+of these are available from the linux items of http://pbil.univ-lyon1.fr/software/seaview.html
+They are also available as packages of most Linux distributions.
+
+These programs should be put in your PATH or in the same directory as the seaview
+executable for seaview to drive them.
+
+By default seaview searches for the phyml executable under the names PhyML-3.1_linux32
+or PhyML-3.1_linux64. If they are installed under other names on your system, seaview 
+will ask you for their name and location which are remembered for subsequent runs.
+

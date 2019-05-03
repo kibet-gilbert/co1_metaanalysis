@@ -651,14 +651,40 @@ pasta_aln() { #MSA alignment using pasta
 			echo "input error: file $i is non-existent!"
 		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa) ) ]]
 		then
-			rename
-			echo -e "\nproceeding with file `basename $i`..."
-			${PYTHON3_EXEC} ${runpasta} --aligner=mafft -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
-			cp ${pasta_dest}\jobs/*.${output_filename}.aln ${pasta_dest}aligned/ && mv ${pasta_dest}aligned/{*.${output_filename}.aln,${output_filename}.aln}
-			cp ${pasta_dest}\jobs/${output_filename}.tre ${pasta_dest}aligned/${output_filename}.tre
+			select type_of_alignment in mafft_linsi mafft_ginsi none_exit
+			do
+				case $type_of_alignment in
+					mafft_linsi)
+						rename
+						echo -e "\nproceeding with file `basename $i`..."
+						${PYTHON3_EXEC} ${runpasta} --aligner=mafft -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
+						cp ${pasta_dest}\jobs/*.${output_filename}.aln ${pasta_dest}aligned/ && mv ${pasta_dest}aligned/{*.${output_filename}.aln,${output_filename}.aln}
+						cp ${pasta_dest}\jobs/${output_filename}.tre ${pasta_dest}aligned/${output_filename}.tre
+						break
+						;;
+					mafft_ginsi)
+						rename
+		       				echo -e "\nproceeding with file `basename $i`..."
+						${PYTHON3_EXEC} ${runpasta} --aligner=ginsi -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
+						cp ${pasta_dest}\jobs/*.${output_filename}.aln ${pasta_dest}aligned/ && mv ${pasta_dest}aligned/{*.${output_filename}.aln,${output_filename}.aln}
+						cp ${pasta_dest}\jobs/${output_filename}.tre ${pasta_dest}aligned/${output_filename}.tre
+						break
+						;;
+					none_exit)
+						break
+						;;
+					*)
+						echo "error: Invalid selection!"
+				esac
+			done
                 else
                         echo "input file error in `basename $i`: input file should be a .fasta file format"
                         continue
                 fi
         done
 }
+
+
+
+#removing gappy columns with at most n residues.
+#python3 ../../../../code/tools/pasta_code/pasta/run_seqtools.py -infile jobs/eafroCOI_all_data2_temp_iteration_2_seq_unmasked_alignment -informat COMPACT3 -outfile eafroCOI_all_iter2.fasta -outformat FASTA -masksites 20 -rename jobs/eafroCOI_all_data2_temp_name_translation.txt

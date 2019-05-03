@@ -1,0 +1,751 @@
+#NEXUS
+[saved by seaview on Thu Mar 19 11:25:58 2015]
+BEGIN DATA;
+  DIMENSIONS NTAX=54 NCHAR=456;
+  FORMAT DATATYPE=DNA
+  GAP=-
+  ;
+MATRIX
+[1] D82069.PE1
+---------atgaagcctgaggaaatttcaagaggaaaagcttttggactgctgaaagcc
+caacaggaagagaggttggatgggatcaacaagcacttcctcgatgatcccaagtacagc
+agtgatgaggatctgcagtccaaactggaggccttcaagacgaagtacatggagtttgat
+ctgaatggcaatggagatatcgatattatgtccttgaagcgaatgctggagaaacttggg
+gttcccaagacccatctagagctgaagaaattaattagagaggtgtccagtggc---tcc
+gaggagacgttcagttactctgactttctcagaatgatgctgggcaagagatctgccatc
+ttgagaatgattctgatgtatgaggagaaaaacaaagaacaccag---aagccaactggt
+cccccagccaagaaagctatttctgagttgccctaa
+[2] 'AB019540.AIF-1'
+------------atggacagcacagctcaaggaggtaaagcatttggtcttctcaagtct
+caccaggaagaaaaattgaactctatcaatgaggcttttctctcagatccccaatatgca
+gaagaggaagacctcagctcaaagcttgaagcatttaaaaagaaatacatggagtttgat
+cttaacgacaaaggagaaatagatattatgggtttgaaacggatgctggaaaaactcgga
+ttggccaagactcacttggagctgaaaaagatgatgtcagaggtctgtggaggaacatcg
+aaagaaactttcggctaccacgacttcctgaatatgatgctgggaaaaagaaatgcaatt
+ctaaaactgatcttgatgtttgaaggcatgggaaaggagcacgagtccaaagatgcggca
+ccacctcctcgcaaaaccttttcagacctgccctga
+[3] AB000818.PE1
+------atgagccagagcaaggatttgcagggaggaaaagcttttggactgctgaaagcc
+cagcaggaagagaggttggatgggatcaacaagcacttcctcgatgatcccaagtacagc
+agtgatgaggatctgcagtccaaactggaggccttcaagacgaagtacatggagtttgat
+ctgaatggcaatggagatatcgatattatgtccttgaagcgaatgctggagaaacttggg
+gttcccaagacccatctagagctgaagaaattaattagagaggtgtccagtggc---tcc
+gaggagacgttcagttactctgactttctcagaatgatgctgggcaagagatctgccatc
+ttgagaatgattctgatgtatgaggagaaaaacaaagaacaccag---aagccaactggt
+cccccagccaagaaagctatttctgagttgccctaa
+[4] AB012309.PE1
+------atgccttccaaccagaatttacaaggcgggaaagccttcgggttactcaaagca
+cagcagagggagaagctggatgaaatcaataaggagtttatggaagatcagaagtaccgg
+gatgaagaggatttgcaagagaagctagattcttttaaaaataaatatgctgagtttgac
+ctgaacgatcagggggatatcgacatgatgggcttgaagcgaatgatggagaagttgggt
+gtgccaaagactcacctggagatgaagaaaatgatctcagaggtgacaggaggt---tgc
+agcgacaccatcaactacagggactttgtgaaaatgatgcttggcaagcgatcagctgtt
+ctcaaactggttatgatgtttgaagacaaagctaatgaggccagcggtaaacccgatgga
+cccccacccaagcgtgacatcaccacccttccataa
+[5] 'AB013745.AIF-1'
+------atgagccaaagcagggatttgcagggaggaaaagcttttggactgctgaaggcc
+cagcaggaagagaggctggaggggatcaacaagcaattcctcgatgatcccaaatacagc
+aatgatgaggatctgccgtccaaacttgaagccttcaaggtgaagtacatggagtttgat
+ctgaatggaaatggagatatcgatattatgtccttgaagcgaatgctggagaaacttggg
+gttcccaagacccacctagagctgaagagattaattagagaggtgtccagtggc---tcc
+gaggagacgttcagctactctgactttctcagaatgatgctgggcaagagatctgccatc
+ttgagaatgattctgatgtatgaggagaaaaacaaagaacacaag---aggccaactggt
+cccccagccaagaaagctatctccgagctgccctga
+[6] AB035322
+atgtcggtcgcactcagcaacaggttccaaggagggaaggcgttcggtttgctcaaagcc
+cggcaggagaagaggctcgaggagatcaatcgggagttcctctgtgaccagaagtacagt
+gatgaagagaacctgccggaaaagctcgcagccttcaaagagaaatacatggagtttgac
+ctgaataatgaaggcgagattgatctgatgtctttaaagaggatgatggagaagctgggg
+gtccccaagacccacctggagatgaagaagatgatctcggaggtgacagggggt---gtc
+agtgacaccatctcctaccgagactttgtgaatatgatgctgggcaagcggtcggctgtc
+ctcaagctggtcatgatgtttgaaggaaaagccaacgagagcagcccgaagccagctggc
+ccacctccagagcgagacatcgccagcctgccttga
+[7] AB036423.IBA1
+---------atgaagcctgaggagatttcaagaggaaaagcttttggactgctgaaggcc
+cagcaggaagagaggctggaggggatcaacaagcaattcctcgatgatcccaaatacagc
+aatgatgaggatctgccgtccaaacttgaagccttcaaggtgaagtacatggagtttgat
+ctgaatggaaatggagatatcgatattatgtccttgaagcgaatgctggagaaacttggg
+gttcccaagacccacctagagctgaagagattaattagagaggtgtccagtggc---tcc
+gaggagacgttcagctactctgactttctcagaatgatgctgggcaagagatctgccatc
+ttgagaatgattctgatgtatgaggagaaaaacaaagaacacaag---aggccaactggt
+cccccagccaagaaagctatctccgagctgccctga
+[8] AB036423.PE2
+------atgagccaaagcagggatttgcagggaggaaaagcttttggactgctgaaggcc
+cagcaggaagagaggctggaggggatcaacaagcaattcctcgatgatcccaaatacagc
+aatgatgaggatctgccgtccaaacttgaagccttcaaggtgaagtacatggagtttgat
+ctgaatggaaatggagatatcgatattatgtccttgaagcgaatgctggagaaacttggg
+gttcccaagacccacctagagctgaagagattaattagagaggtgtccagtggc---tcc
+gaggagacgttcagctactctgactttctcagaatgatgctgggcaagagatctgccatc
+ttgagaatgattctgatgtatgaggagaaaaacaaagaacacaag---aggccaactggt
+cccccagccaagaaagctatctccgagctgccctga
+[9] AB094629.IBA2
+atgtcggtcgcactcagcaacaggttccaaggagggaaggcgttcggtttgctcaaagcc
+cggcaggagaagaggctcgaggagatcaatcgggagttcctctgtgaccagaagtacagt
+gatgaagagaacctgccggaaaagctcgcagccttcaaagagaaatacatggagtttgac
+ctgaataatgaaggcgagattgatctgatgtctttaaagaggatgatggagaagctgggg
+gtccccaagacccacctggagatgaagaagatgatctcggaggtgacagggggt---gtc
+agtgacaccatctcctaccgagactttgtgaatatgatgctgggcaagcggtcggctgtc
+ctcaagctggtcatgatgtttgaaggaaaagccaacgagagcagcccgaagccagctggc
+ccacctccagagcgagacatcgccagcctgccttga
+[10] AB128049.AIF1
+------atgagccaaaccagggatttacagggaggaaaagctttcggactgctgaaggcc
+cagcaggaagagaggctggatgagatcaacaagcaatttctagatgatcccaaatacagc
+agtgatgaggatctgctctccaaactggaaggcttcaaagagaaatacatggagtttgac
+cttaatggaaacggcgatattgatatcatgtccctgaagcgaatgctggagaaacttggg
+gtccccaagactcacctagagctaaagaaattaattggagaggtgtccagtggc---tcc
+ggggagacgttcagctaccctgactttctcaggatgatgctgggcaagagatctgccatt
+ctaaaaatgatcctgatgtatgaggaaaaagcgagagaaaaggaa---aagccaacaggc
+cccccagccaagaaagctatttctgagttgccctga
+[11] AF074959.PE1
+------atgagccaaagcagggatttgcagggaggaaaagcttttggactgctgaaggcc
+cagcaggaagagaggctggaggggatcaacaagcaattcctcgatgatcccaaatacagc
+aatgatgaggatctgccgtccaaacttgaagccttcaaggtgaagtacatggagtttgat
+ctgaatggaaatggagatatcgatattatgtccttgaagcgaatgctggagaaacttggg
+gttcccaagacccacctagagctgaagagattaattagagaggtgtccagtggc---tcc
+gaggagacgttcagctactctgactttctcagaatgatgctgggcaagagatctgccatc
+ttgagaatgattctgatgtatgaggagaaaaacaaagaacacaag---aggccaactggt
+cccccagccaagaaagctatctccgagctgccctga
+[12] AF109719.PE7
+------atgagccaaagcagggatttgcagggaggaaaagcttttggactgctgaaggcc
+cagcaggaagagaggctggaggggatcaacaagcaattcctcgatgatcccaaatacagc
+aatgatgaggatctgccgtccaaacttgaagccttcaaggtgaagtacatggagtttgat
+ctgaatggaaatggagatatcgatattatgtccttgaagcgaatgctggagaaacttggg
+gttcccaagacccacctagagctgaagagattaattagagaggtgtccagtggc---tcc
+gaggagacgttcagctactctgactttctcagaatgatgctgggcaagagatctgccatc
+ttgagaatgattctgatgtatgaggagaaaaacaaagaacacaag---aggccaactggt
+cccccagccaagaaagctatctccgagctgccctga
+[13] AF129756.PE18
+------atgagccaaaccagggatttacagggaggaaaagctttcagactgctgaaggcc
+cagcaggaagagaggctggatgagatcaacaagcaattcctagacgatcccaaatatagc
+agtgatgaggatctgccctccaaactggaaggcttcaaagagaaatacatggagtttgac
+cttaatggaaatggcgatattgatatcatgtccctgaaacgaatgctggagaaacttgga
+gtccccaagactcacctagagctaaagaaattaattggagaggtgtccagtggc---tcc
+ggggagacgttcagctaccctgactttctcaggatgatgctgggcaagagatctgccatc
+ctaaaaatgatcctgatgtatgaggaaaaagcgagagaaaaggaa---aagccaacaggc
+cccccagccaagaaagctatctctgagttgccctga
+[14] AF348450.PE1
+------atgagcgaaactagggatttacagggaggaaaagcctttgggctgcggaaagcc
+cagcaggaagagagaatcaatgaaatcaaccagcaattcctggatgatcccaaatacagc
+agtgatgaggacctgccctccaaactggaagccttcaagaagaaatacatggagtttgac
+ctgaatgaagatggaggtatcgatatcatgtccctgaagcgaatgatggagaaacttggg
+gttcccaagacccacctggagctaaagaaattaatcatggaggtatccagtggc---cct
+ggggagactttcagctactctgactttctcaagatgatgttgggcaagagatctgccatt
+ctaaaaatgatcctgatgtatgaagagaaagcaagagaacaggag---aagccaacaggt
+ctcccagccaagaaagctatctctgagttgccctga
+[15] AJ506968.AIF1
+------------atggagaaaaatgttcaaggaggcaaagcgtatggacttctcaaaagt
+caccaggaagagaaactgaactcgatcaatgaggcttttcagtcagatcctcaatatgcc
+gaagaggaggaccttggctccaaacttgaaatgtttaaaaataaatacatggagtttgat
+ctcaatgatcaaggagacatagacataatggggttaaaacggatgcttgaaaaacttgga
+gtggccaagactcacctagaactgaaaaagatgatgtcagaggtgattggtggggcctcg
+aaagacacaatcagctaccacgacttcctaaatatgatgctggggaaaagaaatgcaatt
+ctcaaactgatcctgatgtttgaaggaatggggaaggagcaggagtcaaaagtcgttggt
+ccacctggtcgcaaaaccttttcagacctgccctga
+[16] AK006184.PE1
+------atgagccaaagcagggatttgcagggaggaaaagcttttggactgctgaaggcc
+cagcaggaagagaggctggaggggatcaacaagcaattcctcgatgatcccaaatacagc
+aatgatgaggatctgccgtccaaacttgaagccttcaaggtgaagtacatggagtttgat
+ctgaatggaaatggagatatcgatattatgtccttgaagcgaatgctggagaaacttggg
+gttcccaagacccacctagagctgaagagattaattagagaggtgtccagtggc---tcc
+gaggagacgttcagctactctgactttctcagaatgatgctgggcaagagatctgccatc
+ttgagaatgattctgatgtatgaggagaaaaacaaagaacacaag---aggccaactggt
+cccccagccaagaaagctatctccgagctgccctga
+[17] AK006562.PE1
+------atgagccaaagcagggatttgcagggaggaaaagcttttggactgctgaaggcc
+cagcaggaagagaggctggaggggatcaacaagcaattcctcgatgatcccaaatacagc
+aatgatgaggatctgccgtccaaacttgaagccttcaaggtgaagtacatggagtttgat
+ctgaatggaaatggagatatcgatattatgtccttgaagcgaatgctggagaaacttggg
+gttcccaagacccacctagagctgaagagattaattagagaggtgtccagtggc---tcc
+gaggagacgttcagctactctgactttctcagaatgatgctgggcaagagatctgccatc
+ttgagaatgattctgatgtatgaggagaaaaacaaagaacacaag---aggccaactggt
+cccccagccaagaaagctatctccgagctgccctga
+[18] AK022845.PE1
+atgtcgggcgagctcagcaacaggttccaaggagggaaggcgttcggcttgctcaaagcc
+cggcaggagaggaggctggccgagatcaaccgggagcttctgtgtgaccagaagtacagt
+gatgaagagaaccttccagaaaagctcacagccttcaaagagaagtacatggagtttgac
+ctgaacaatgaaggcgagattgacctgatgtctttaaagaggatgatggagaagcttggt
+gtccccaagacccacctggagatgaagaagatgatctcagaggtgacaggaggg---gtc
+agtgacactatatcctaccgagactttgtgaacatgatgctggggaaacggtcggctgtc
+ctcaagttagtcatgatgtttgaaggaaaagccaacgagagcagccccaagccagttggc
+ccccctccagagagagacattgctagcctgccctga
+[19] AK028955.PE1
+atgtcggtcgcactcagcaacaggttccaaggagggaaggcgttcggtttgctcaaagcc
+cggcaggagaagaggctcgaggagatcaatcgggagttcctctgtgaccagaagtacagt
+gatgaagagaacctgccggaaaagctcgcagccttcaaagagaaatacatggagtttgac
+ctgaataatgaaggcgagattgatctgatgtctttaaagaggatgatggagaagctgggg
+gtccccaagacccacctggagatgaagaagatgatctcggaggtgacagggggt---gtc
+agtgacaccatctcctaccgagactttgtgaataagatgctgggcaagcggtcggctgtc
+ctcaagctggtcatgatgtttgaaggaaaagccaacgagagcagcccgaagccagctggc
+ccacctccagagcgagacatcgccagcctgccttga
+[20] AK045539.PE1
+atgtcggtcgcactcagcaacaggttccaaggagggaaggcgttcggtttgctcaaagcc
+cggcaggagaagaggctcgaggagatcaatcgggagttcctctgtgaccagaagtacagt
+gatgaagagaacctgccggaaaagctcgcagccttcaaagagaaatacatggagtttgac
+ctgaataatgaaggcgagattgatctgatgtctttaaagaggatgatggagaagctgggg
+gtccccaagacccacctggagatgaagaagatgatctcggaggtgacagggggt---gtc
+agtgacaccatctcctaccgagactttgtgaatatgatgctgggcaagcggtcggctgtc
+ctcaagctggtcatgatgtttgaaggaaaagccaacgagagcagcccgaagccagctggc
+ccacctccagagcgagacatcgccagcctgccttga
+[21] AK091912.PE1
+atgtcgggcgagctcagcaacaggttccaaggagggaaggcgttcggcttgctcaaagcc
+cggcaggagaggaggctggccgagatcaaccgggagtttctgtgtgaccagaagtacagt
+gatgaagagaaccttccagaaaagctcacagccttcaaagagaagtacatggagtttgac
+ctg------------------------atgtctttaaagaggatgatggagaagcttggt
+gtccccaagacccacctggagatgaagaagatgatctcagaggtgacaggaggg---gtc
+agtgacactatatcctaccgagactttgtgaacatgatgctggggaaacggtcggctgtc
+ctcaagttagtcatgatgtttgaaggaaaagccaacgagagcagccccaagccagttggc
+ccccctccagagagagacattgctagcctgccctga
+[22] AL136566.PE1
+atgtcgggcgagctcagcaacaggttccaaggagggaaggcgttcggcttgctcaaagcc
+cggcaggagaggaggctggccgagatcaaccgggagtttctgtgtgaccagaagtacagt
+gatgaagagaaccttccagaaaagctcacagccttcaaagagaagtacatggagtttgac
+ctgaacaatgaaggcgagattgacctgatgtctttaaagaggatgatggagaagcttggt
+gtccccaagacccacctggagatgaagaagatgatctcagaggtgacaggaggg---gtc
+agtgacactatatcctaccgagactttgtgaacatgatgctggggaaacggtcggctgtc
+ctcaagttagtcatgatgtttgaaggaaaagccaacgagagcagccccaagccagttggc
+ccccctccagagagagacattgctagcctgccctga
+[23] AL157938.PE2
+atgtcgggcgagctcagcaacaggttccaaggagggaaggcgttcggcttgctcaaagcc
+cggcaggagaggaggctggccgagatcaaccgggagtttctgtgtgaccagaagtacagt
+gatgaagagaaccttccagaaaagctcacagccttcaaagagaagtacatggagtttgac
+ctgaacaatgaaggcgagattgacctgatgtctttaaagaggatgatggagaagcttggt
+gtccccaagacccacctggagatgaagaagatgatctcagaggtgacaggaggg---gtc
+agtgacactatatcctaccgagactttgtgaacatgatgctggggaaacggtcggctgtc
+ctcaagttagtcatgatgtttgaaggaaaagccaacgagagcagccccaagccagttggc
+ccccctccagagagagacattgctagcctgccctga
+[24] AL157938.PE3
+atgtcgggcgagctcagcaacaggttccaaggagggaaggcgttcggcttgctcaaagcc
+cggcaggagaggaggctggccgagatcaaccgggagtttctgtgtgaccagaagtacagt
+gatgaagagaaccttccagaaaagctcacagccttcaaagagaagtacatggagtttgac
+ctg------------------------atgtctttaaagaggatgatggagaagcttggt
+gtccccaagacccacctggagatgaagaagatgatctcagaggtgacaggaggg---gtc
+agtgacactatatcctaccgagactttgtgaacatgatgctggggaaacggtcggctgtc
+ctcaagttagtcatgatgtttgaaggaaaagccaacgagagcagccccaagccagttggc
+ccccctccagagagagacattgctagcctgccctga
+[25] AL662801.PE45
+------atgagccaaaccagggatttacagggaggaaaagctttcggactgctgaaggcc
+cagcaggaagagaggctggatgagatcaacaagcaattcctagacgatcccaaatatagc
+agtgatgaggatctgccctccaaactggaaggcttcaaagagaaatacatggagtttgac
+cttaatggaaatggcgatattgatatcatgtccctgaaacgaatgctggagaaacttgga
+gtccccaagactcacctagagctaaagaaattaattggagaggtgtccagtggc---tcc
+ggggagacgttcagctaccctgactttctcaggatgatgctgggcaagagatctgccatc
+ctaaaaatgatcctgatgtatgaggaaaaagcgagagaaaaggaa---aagccaacaggc
+cccccagccaagaaagctatctctgagttgccctga
+[26] AL662847.AIF1
+------atgagccaaaccagggatttacagggaggaaaagctttcggactgctgaaggcc
+cagcaggaagagaggctggatgagatcaacaagcaattcctagacgatcccaaatatagc
+agtgatgaggatctgccctccaaactggaaggcttcaaagagaaatacatggagtttgac
+cttaatggaaatggcgatattgatatcatgtccctgaaacgaatgctggagaaacttgga
+gtccccaagactcacctagagctaaagaaattaattggagaggtgtccagtggc---tcc
+ggggagacgttcagctaccctgactttctcaggatgatgctgggcaagagatctgccatc
+ctaaaaatgatcctgatgtatgaggaaaaagcgagagaaaaggaa---aagccaacaggc
+cccccagccaagaaagctatctctgagttgccctga
+[27] AL805934.AIF1
+------atgagccaaaccagggatttacagggaggaaaagctttcggactgctgaaggcc
+cagcaggaagagaggctggatgagatcaacaagcaattcctagacgatcccaaatatagc
+agtgatgaggatctgccctccaaactggaaggcttcaaagagaaatacatggagtttgac
+cttaatggaaatggcgatattgatatcatgtccctgaaacgaatgctggagaaacttgga
+gtccccaagactcacctagagctaaagaaattaattggagaggtgtccagtggc---tcc
+ggggagacgttcagctaccctgactttctcaggatgatgctgggcaagagatctgccatc
+ctaaaaatgatcctgatgtatgaggaaaaagcgagagaaaaggaa---aagccaacaggc
+cccccagccaagaaagctatctctgagttgccctga
+[28] AL833896.PE1
+atgtcgggcgagctcagcaacaggttccaaggagggaaggcgttcggcttgctcaaagcc
+cggcaggagaggaggctggccgagatcaaccgggagtttctgtgtgaccagaagtacagt
+gatgaagagaaccttccagaaaagctcacagccttcaaagagaagtacatggagtttgac
+ctgaacaatgaaggcgagattgacctgatgtctttaaagaggatgatggagaagcttggt
+gtccccaagacccacctggagatgaagaagatgatctcagaggtgacaggaggg---gtc
+agtgacactatatcctaccgagactttgtgaacatgatgctggggaaacggtcggctgtc
+ctcaagttagtcatgatgtttgaaggaaaagccaacgagagcagccccaagccagttggc
+ccccctccagagagagacattgctagcctgccctga
+[29] AL928893.PE3
+atgtcggtcgcactcagcaacaggttccaaggagggaaggcgttcggtttgctcaaagcc
+cggcaggagaagaggctcgaggagatcaatcgggagttcctctgtgaccagaagtacagt
+gatgaagagaacctgccggaaaagctcgcagccttcaaagagaaatacatggagtttgac
+ctgaataatgaaggcgagattgatctgatgtctttaaagaggatgatggagaagctgggg
+gtccccaagacccacctggagatgaagaagatgatctcggaggtgacagggggt---gtc
+agtgacaccatctcctaccgagactttgtgaatatgatgctgggcaagcggtcggctgtc
+ctcaagctggtcatgatgtttgaaggaaaagccaacgagagcagcccgaagccagctggc
+ccacctccagagcgagacatcgccagcctgccttga
+[30] AY359067.PE1
+atgtcgggcgagctcagcaacaggttccaaggagggaaggcgttcggcttgctcaaagcc
+cggcaggagaggaggctggccgagatcaaccgggagtttctgtgtgaccagaagtacagt
+gatgaagagaaccttccagaaaagctcacagccttcaaagagaagtacatggagtttgac
+ctgaacaatgaaggcgagattgacctgatgtctttaaagaggatgatggagaagcttggt
+gtccccaagacccacctggagatgaagaagatgatctcagaggtgacaggaggg---gtc
+agtgacactatatcctaccgagactttgtgaacatgatgctggggaaacggtcggctgtc
+ctcaagttagtcatgatgtttgaaggaaaagccaacgagagcagccccaagccagttggc
+ccccctccagagagagacattgctagcctgccctga
+[31] BA000025.AIF1
+------atgagccaaaccagggatttacagggaggaaaagctttcggactgctgaaggcc
+cagcaggaagagaggctggatgagatcaacaagcaattcctagacgatcccaaatatagc
+agtgatgaggatctgccctccaaactggaaggcttcaaagagaaatacatggagtttgac
+cttaatggaaatggcgatattgatatcatgtccctgaaacgaatgctggagaaacttgga
+gtccccaagactcacctagagctaaagaaattaattggagaggtgtccagtggc---tcc
+ggggagacgttcagctaccctgactttctcaggatgatgctgggcaagagatctgccatc
+ctaaaaatgatcctgatgtatgaggaaaaagcgagagaaaaggaa---aagccaacaggc
+cccccagccaagaaagctatctctgagttgccctga
+[32] BC009474.AIF1
+------atgagccaaaccagggatttacagggaggaaaagctttcggactgctgaaggcc
+cagcaggaagagaggctggatgagatcaacaagcaattcctagacgatcccaaatatagc
+agtgatgaggatctgccctccaaactggaaggcttcaaagagaaatacatggagtttgac
+cttaatggaaatggcgatattgatatcatgtccctgaaacgaatgctggagaaacttgga
+gtccccaagactcacctagagctaaagaaattaattggagaggtgtccagtggc---tcc
+ggggagacgttcagctaccctgactttctcaggatgatgctgggcaagagatctgccatc
+ctaaaaatgatcctgatgtatgaggaaaaagcgagagaaaaggaa---aagccaacaggc
+cccccagccaagaaagctatctctgagttgccctga
+[33] BC021539.PE1
+------atgagccaaagcagggatttgcagggaggaaaagcttttggactgctgaaggcc
+cagcaggaagagaggctggaggggatcaacaagcaattcctcgatgatcccaaatacagc
+aatgatgaggatctgccgtccaaacttgaagccttcaaggtgaaatacatggagtttgat
+ctgaatggaaatggagatatcgatattatgtccttgaagcgaatgctggagaaacttggg
+gttcccaagacccacctagagctgaagagattaattagagaggtgtccagtggc---tcc
+gaggagacgttcagctactctgactttctcagaatgatgctgggcaagagatctgccatc
+ttgagaatgattctgatgtatgaggagaaaaacaaagaacacaag---aggccaactggt
+cccccagccaagaaagctatctccgagctgccctga
+[34] BC024599.PE1
+atgtcggtcgcactcagcaacaggttccaaggagggaaggcgttcggtttgctcaaagcc
+cggcaggagaagaggctcgaggagatcaatcgggagttcctctgtgaccagaagtacagt
+gatgaagagaacctgccggaaaagctcgcagccttcaaagagaaatacatggagtttgac
+ctgaataatgaaggcgagattgatctgatgtctttaaagaggatgatggagaagctgggg
+gtccccaagacccacctggagatgaagaagatgatctcggaggtgacagggggt---gtc
+agtgacaccatctcctaccgagactttgtgaatatgatgctgggcaagcggtcggctgtc
+ctcaagctggtcatgatgtttgaaggaaaagccaacgagagcagcccgaagccagctggc
+ccacctccagagcgagacatcgccagcctgccttga
+[35] BC073304.MGC8069
+------atgtcttctaataacattaaacaaggtggcaaagctttcgtgatccaaaaggca
+cagcaggagcacagactagaggaggtgaacaaggagttccttaaagatgaaaaatacaag
+gatgatgaggacttggataaaaaactgatgtcctttaaaaaaaagtacatggaatttgac
+cttaaccaacaaggagagctggatatgatgggcctcaagaaaatgttggagaatctggga
+gccgctaagacccatttagaagttaagaaattgatatatgaagtgacaggaggc---aaa
+agtgaggcaatcagctatcaggattttgtaaccatgatgcttggaaaacgttcagccata
+atgaaatttatcatgatgtttgagggaaaaaatgaagtcacaagtcccaagcccatgggt
+ccaccaccaaagagagacatcagcagcctaccctga
+[36] BC074259.MGC8401
+------atgtcttccaataacattaaacaaggtggcaaagctttcgtgatccaaaaggcg
+cagcaggagcacagactggaggaggtgaacaaggagttccttaaagatgaaaaatacaag
+gatgacgaggacttggataaaaaactgatgtcctttaaaaaaaagtacatggaatttgac
+cttaaccaccaaggagagctggatatgatgggcctgaagaaaatgatggagaacctggga
+gctgctaaaacccatttagaagttaagaaactgatatatgaagtgacgggaggc---aaa
+agtgaggcaatcagctaccgggattttgtaaccatgatgctgggaaaacgttctgccgtg
+atgaaatttatcatgatgtttgagggaaaaaatgaagtcacatgtcccaagccaaagggt
+ccaccacccaagagagacatcagcagccttccctga
+[37] BC084814.MGC8401
+------atgtcttccaataacattaaacaaggtggcaaagctttcgtgatccaaaaggcg
+cagcaggagcacagactggaggaggtgaacaaggagttccttaaagatgaaaaatacaag
+gatgacgaggacttggataaaaaactgatgtcctttaaaaaaaagtacatggaatttgac
+cttaaccaccaaggagagctggatatgatgggcctgaagaaaatgatggagaacctggga
+gctgctaaaacccatttagaagttaagaaactgatatatgaagtgacgggaggc---aaa
+agtgaggcaatcagctaccgggattttgtaaccatgatgctgggaaaacgttctgccgtg
+atgaaatttatcatgatgtttgagggaaaaaatgaagtcacatgtcccaagccaaagggt
+ccaccacccaagagagacatcagcagccttccctga
+[38] BC102890.AIF1
+------atgagcgaaactagggatttacagggaggaaaagcctttgggctgcggaaagcc
+cagcaggaagagagaatcaatgaaatcaaccagcaattcctggatgatcccaaatacagc
+agtgatgaggacctgccctccaaactggaagccttcaagaagaaatacatggagtttgac
+ctgaatgaagatggaggtatcgatatcatgtccctgaagcgaatgatggagaaacttggg
+gttcccaagacccacctggagctaaagaaattaatcatggaggtatccagtggc---cct
+ggggagactttcagctactctgactttctcaagatgatgttgggcaagagatctgccatt
+ctaaaaatgatcctgatgtatgaagagaaagcaagagaacaggag---aagccaacaggt
+ctcccagccaagaaagctatctctgagttgccctga
+[39] BC126840.C9ORF58
+atgtcggtcgcgttcagcaacaggttccaaggagggaaagccttcggtttgctcaaagcc
+cggcaggagaggaggctggccgagatcaaccgggagttcctctgcgaccaaaagtacagt
+gatgaagagaacctgccggaaaagctcacagcctttaaagagaagtacatggagtttgac
+ctgaacaatgagggagagattgatctgatgtctttgaagaggatgatggagaagcttggg
+gtccccaagacccacctggagatgaagaagatgatctcggaggtgacaggtggg---gtc
+agcgacaccatctcctaccgagacttcgtgaacatgatgctggggaagcggtcggcggtc
+cttaagctagtcatgatgtttgaaggaaaagccaacgaaggcagctccaagccagtcggg
+ccccctccagagagagacatcgccagcctgccctga
+[40] BX248305.PE3
+------atgagccaaaccagggatttacagggaggaaaagctttcggactgctgaaggcc
+cagcaggaagagaggctggatgagatcaacaagcaattcctagacgatcccaaatatagc
+agtgatgaggatctgccctccaaactggaaggcttcaaagagaaatacatggagtttgac
+cttaatggaaatggcgatattgatatcatgtccctgaaacgaatgctggagaaacttgga
+gtccccaagactcacctagagctaaagaaattaattggagaggtgtccagtggc---tcc
+ggggagacgttcagctaccctgactttctcaggatgatgctgggcaagagatctgccatc
+ctaaaaatgatcctgatgtatgaggaaaaagcgagagaaaaggaa---aagccaacaggc
+cccccagccaagaaagctatctctgagttgccctga
+[41] BX571730.PE3
+------atgccttccaacatggacttacaaggcggaaaagccttcgggttgctcaaagct
+cagcagagggacaagctggaggaaatcaataaggagttcatggaagatcagaagtacaga
+gacgaagaggacttgcctgaaaagctggattcttttaaaaataaatatgcagagtttgac
+ctgaacgatcaaggggaaatcgacatgatgggcttgaagcgaatgatggagaagttgggt
+gtgccaaaaactcatctgcagatgaagaaaatgatctctgaggtgacaggaggc---tgc
+agtgacaccatcaactacagggattttgtgaaaatgatgctcggcaagcgatcagctgtt
+ctcaaactggttatgatgtttgaagacaaagctaatgggtccagctgtaagcctgatggg
+cctccacccaaacgtgacatcaccagcctaccatag
+[42] BX883046.AIF1
+------atgagccagagcaaggatttgcagggaggaaaagcttttggactgctgaaagcc
+caacaggaagagaggttggatgggatcaacaagcacttcctcgatgatcccaagtacagc
+agtgatgaggatctgcagtccaaactggaggccttcaagacgaagtacatggagtttgat
+ctgaatggcaatggagatatcgatattatgtccttgaagcgaatgctggagaaacttggg
+gttcccaagacccatctagagctgaagaaattaattagagaggtgtccagtggc---tcc
+gaggagacgttcagttactctgactttctcagaatgatgctgggcaagagatctgccatc
+ttgagaatgattctgatgtatgaggagaaaaacaaagaacaccag---aagccaactggt
+cccccagccaagaaagctatttctgagttgccctaa
+[43] CR762385.PE3
+------atgccttccaacatggacttacaaggcggaaaagccttcgggttgctcaaagct
+cagcagagggacaagctggaggaaatcaataaggagttcatggaagatcagaagtacaga
+gacgaagaggacttgcctgaaaagctggattcttttaaaaataaatatgcagagtttgac
+ctgaacgatcaaggggaaatcgacatgatgggcttgaagcgaatgatggagaagttgggt
+gtgccaaaaactcatctgcagatgaagaaaatgatctctgaggtgacaggaggc---tgc
+agtgacaccatcaactacagggattttgtgaaaatgatgctcggcaagcgatcagctgtt
+ctcaaactggttatgatgtttgaagacaaagctaatgggtccagctgtaagcctgatggg
+cctccacccaaacgtgacatcaccagcctaccatag
+[44] CR857925.PE1
+atgtcgggcgagctcagcaacaggttccaaggagggaaggcgttcggcttgctcaaagcc
+cggcaggagaggaggctggccgagatcgaccgggagtttctctgtgaccagaagtacagt
+gatgaagagaaccttccagaaaagctcacagccttcaaagagaagtacatggagtttgac
+ctgaacaatgaaggcgagattgacctaatgtctttaaagaggatgatggagaagcttggt
+gtccccaagacccacctggagatgaagaagatgatctcagaggtgacaggaggg---gtc
+agtgacaccatatcctaccgagactttgtgaacatgatgctggggaaacggtcggctgtc
+ctcaagctagtcatgatgtttgaaggaaaggccaacgagagcagccccaagccagttggc
+ccccctccagagagagacattgctagcctgccctga
+[45] CT010265
+------atgagccaaagcagggatttgcagggaggaaaagcttttggactgctgaaggcc
+cagcaggaagagaggctggaggggatcaacaagcaattcctcgatgatcccaaatacagc
+aatgatgaggatctgccgtccaaacttgaagccttcaaggtgaagtacatggagtttgat
+ctgaatggaaatggagatatcgatattatgtccttgaagcgaatgctggagaaacttggg
+gttcccaagacccacctagagctgaagagattaattagagaggtgtccagtggc---tcc
+gaggagacgttcagctactctgactttctcagaatgatgctgggcaagagatctgccatc
+ttgagaatgattctgatgtatgaggagaaaaacaaagaacacaag---aggccaactggt
+cccccagccaagaaagctatctccgagctgccctag
+[46] CT010385
+------atgagccaaagcagggatttgcagggaggaaaagcttttggactgctgaaggcc
+cagcaggaagagaggctggaggggatcaacaagcaattcctcgatgatcccaaatacagc
+aatgatgaggatctgccgtccaaacttgaagccttcaaggtgaaatacatggagtttgat
+ctgaatggaaatggagatatcgatattatgtccttgaagcgaatgctggagaaacttggg
+gttcccaagacccacctagagctgaagagattaattagagaggtgtccagtggc---tcc
+gaggagacgttcagctactctgactttctcagaatgatgctgggcaagagatctgccatc
+ttgagaatgattctgatgtatgaggagaaaaacaaagaacacaag---aggccaactggt
+cccccagccaagaaagctatctccgagctgccctag
+[47] D86382.IBA1
+------atgagccaaagcagggatttgcagggaggaaaagcttttggactgctgaaggcc
+cagcaggaagagaggctggaggggatcaacaagcaattcctcgatgatcccaaatacagc
+aatgatgaggatctgccgtccaaacttgaagccttcaaggtgaagtacatggagtttgat
+ctgaatggaaatggagatatcgatattatgtccttgaagcgaatgctggagaaacttggg
+gttcccaagacccacctagagctgaagagattaattagagaggtgtccagtggc---tcc
+gaggagacgttcagctactctgactttctcagaatgatgctgggcaagagatctgccatc
+ttgagaatgattctgatgtatgaggagaaaaacaaagaacacaag---aggccaactggt
+cccccagccaagaaagctatctccgagctgccctga
+[48] D86438.IBA1
+------atgagccaaaccagggatttacagggaggaaaagctttcggactgctgaaggcc
+cagcaggaagagaggctggatgagatcaacaagcaattcctagacgatcccaaatatagc
+agtgatgaggatctgccctccaaactggaaggcttcaaagagaaatacatggagtttgac
+cttaatggaaatggcgatattgatatcatgtccctgaaacgaatgctggagaaacttgga
+gtccccaagactcacctagagctaaagaaattaattggagaggtgtccagtggc---tcc
+ggggagacgttcagctaccctgactttctcaggatgatgctgggcaagagatctgccatc
+ctaaaaatgatcctgatgtatgaggaaaaagcgagagaaaaggaa---aagccaacaggc
+cccccagccaagaaagctatctctgagttgccctga
+[49] EF070983.PE1
+------atgagccaaaccagggatttacagggaggaaaagctttcggactgctgaaggcc
+cagcaggaagagaggctggatgagatcaacaagcaattcctagacgatcccaaatatagc
+agtgatgaggatctgccctccaaactggaaggcttcaaagagaaatacatggagtttgac
+cttaatggaaatggcgatattgatatcatgtccctgaaacgaatgctggagaaacttgga
+gtccccaagactcacctagagctaaagaaattaattggagaggtgtccagtggc---tcc
+ggggagacgttcagctaccctgactttctcaggatgatgctgggcaagagatctgccatc
+ctaaaaatgatcctgatgtatgaggaaaaagcgagagaaaaggaa---aagccaacaggc
+cccccagccaagaaagctatctctgagttgccctga
+[50] U17919.PE1
+------atgagccagagcaaggatttgcagggaggaaaagcttttggactgctgaaagcc
+cagcaggaagagaggttggatgggatcaacaagcacttcctcgatgatcccaagtacagc
+agtgatgaggatctgcagtccaaactggaggccttcaagacgaagtacatggagtttgat
+ctgaatggcaatggagatatcgatattatgtccttgaagcgaatgctggagaaacttggg
+gttcccaagacccatctagagctgaagaaattaattagagaggtgtccagtggc---tcc
+gaggagacgttcagttactctgactttctcagaatgatgctgggcaagagatctgccatc
+ttgagaatgattctgatgtatgaggagaaaaacaaagaacaccag---aagccaactggt
+cccccagccaagaaagctatttctgagttgccctaa
+[51] U19713.PE1
+------atgagccaaaccagggatttacagggaggaaaagctttcggactgctgaaggcc
+cagcaggaagagaggctggatgagatcaacaagcaattcctagacgatcccaaatatagc
+agtgatgaggatctgccctccaaactggaaggcttcaaagagaaatacatggagtttgac
+cttaatggaaatggcgatattgatatcatgtccctgaaacgaatgctggagaaacttgga
+gtccccaagactcacctagagctaaagaaattaattggagaggtgtccagtggc---tcc
+ggggagacgttcagctaccctgactttctcaggatgatgctgggcaagagatctgccatc
+ctaaaaatgatcctgatgtatgaggaaaaagcgagagaaaaggaa---aagccaacaggc
+cccccagccaagaaagctatctctgagttgccctga
+[52] 'U49392.AIF-1'
+------atgagccaaaccagggatttacagggaggaaaagctttcggactgctgaaggcc
+cagcaggaagagaggctggatgagatcaacaagcaattcctacacgatcccaaatatagc
+agtgatgaggatctgccctccaaactggaaggcttcaaagagaaatacatggagtttgac
+cttaatggaaatggcgatattgatatcatgtccttgaaacgaatgctggagaaacttgga
+gtccccaagactcacctagagctaaagaaattaattggagaggtgtccagtggc---tcc
+ggggagacgttcagctaccctgactttctcaggatgatgctgggcaagagatctgccatc
+ctaaaaatgatcctgatgtatgaggaaaaagcgagagaaaggaaa---accaacacgccc
+cccagccaagaaagccctatctga------------
+[53] U82792.PE1
+------atgagccaaagcagggatttgcagggaggaaaagcttttggactgctgaaggcc
+cagcaggaagagaggctggaggggatcaacaagcaattcctcgatgatcccaaatacagc
+aatgatgaggatctgccgtccaaacttgaagccttcaaggtgaagtacatggagtttgat
+ctgaatggaaatggagatatcgatattatgtccttgaagcgaatgctggagaaacttggg
+gttcccaagacccacctagagctgaagagattaattagagaggtgtccagtggc---tcc
+gaggagacgttcagctactctgactttctcagaatgatgctgggcaagagatctgccatc
+ttgagaatgattctgatgtatgaggagaaaaacaaagaacacaag---aggccaactggt
+cccccagccaagaaagctatctccgagctgccctga
+[54] Y14768.PE3
+------atgagccaaaccagggatttacagggaggaaaagctttcggactgctgaaggcc
+cagcaggaagagaggctggatgagatcaacaagcaattcctagacgatcccaaatatagc
+agtgatgaggatctgccctccaaactggaaggcttcaaagagaaatacatggagtttgac
+cttaatggaaatggcgatattgatatcatgtccctgaaacgaatgctggagaaacttgga
+gtccccaagactcacctagagctaaagaaattaattggagaggtgtccagtggc---tcc
+ggggagacgttcagctaccctgactttctcaggatgatgctgggcaagagatctgccatc
+ctaaaaatgatcctgatgtatgaggaaaaagcgagagaaaaggaa---aagccaacaggc
+cccccagccaagaaagctatctctgagttgccctga
+;
+END;
+BEGIN NOTES;
+  TEXT TAXON=1 TEXT='D82069.PE1 CDS /codon_start=1 /product="iba1, ionized calcium binding adapter mo
+';
+  TEXT TAXON=2 TEXT='AB019540.AIF-1 CDS /codon_start=1 /transl_table=1 /gene="AIF-1" /product="allogr
+';
+  TEXT TAXON=3 TEXT='AB000818.PE1 CDS /codon_start=1 /transl_table=1 /product="MRF-1" /db_xref="GOA:P
+';
+  TEXT TAXON=4 TEXT='AB012309.PE1 CDS /codon_start=1 /transl_table=1 /product="allograft inflammatory
+';
+  TEXT TAXON=5 TEXT='AB013745.AIF-1 CDS /codon_start=1 /transl_table=1 /gene="AIF-1" /product="allogr
+';
+  TEXT TAXON=6 TEXT='AB035322 Mus musculus mRNA for ionized calcium binding adapter molecule 2 (Iba2)
+';
+  TEXT TAXON=7 TEXT='AB036423.IBA1 CDS /codon_start=1 /transl_table=1 /gene="iba1" /product="ionized 
+';
+  TEXT TAXON=8 TEXT='AB036423.PE2 CDS /codon_start=1 /transl_table=1 /gene="iba1" /product="ionized c
+';
+  TEXT TAXON=9 TEXT='AB094629.IBA2 CDS /codon_start=1 /transl_table=1 /gene="iba2" /product="ionized 
+';
+  TEXT TAXON=10 TEXT='AB128049.AIF1 CDS /codon_start=1 /transl_table=1 /gene="AIF1" /product="allograf
+';
+  TEXT TAXON=11 TEXT='AF074959.PE1 CDS /codon_start=1 /product="allograft inflammatory factor-1" /note
+';
+  TEXT TAXON=12 TEXT='AF109719.PE7 CDS /codon_start=1 /product="AIF-1" /note="allograft inflammatory f
+';
+  TEXT TAXON=13 TEXT='AF129756.PE18 CDS /codon_start=1 /product="AIF-1" /note="anti-inflammatory facto
+';
+  TEXT TAXON=14 TEXT='AF348450.PE1 CDS /codon_start=1 /product="allograft inflammatory factor-1" /note
+';
+  TEXT TAXON=15 TEXT='AJ506968.AIF1 CDS /gene="aif1" /product="allograft inflammatory factor 1" /db_xr
+';
+  TEXT TAXON=16 TEXT='AK006184.PE1 CDS /codon_start=1 /transl_table=1 /note="ALLOGRAFT INFLAMMATORY FA
+';
+  TEXT TAXON=17 TEXT='AK006562.PE1 CDS /codon_start=1 /transl_table=1 /note="ALLOGRAFT INFLAMMATORY FA
+';
+  TEXT TAXON=18 TEXT='AK022845.PE1 CDS /codon_start=1 /db_xref="GOA:Q9BQI0" /db_xref="HGNC:28904" /db_
+';
+  TEXT TAXON=19 TEXT='AK028955.PE1 CDS /codon_start=1 /transl_table=1 /note="IONIZED CALCIUM BINDING A
+';
+  TEXT TAXON=20 TEXT='AK045539.PE1 CDS /codon_start=1 /transl_table=1 /note="IONIZED CALCIUM BINDING A
+';
+  TEXT TAXON=21 TEXT='AK091912.PE1 CDS /codon_start=1 /db_xref="GOA:Q9BQI0" /db_xref="HGNC:28904" /db_
+';
+  TEXT TAXON=22 TEXT='AL136566.PE1 CDS /codon_start=1 /gene="DKFZp761J191" /product="hypothetical prot
+';
+  TEXT TAXON=23 TEXT='AL157938.PE2 CDS /gene="C9orf58" /locus_tag="RP11-544A12.2-001" /standard_name="
+';
+  TEXT TAXON=24 TEXT='AL157938.PE3 CDS /gene="C9orf58" /locus_tag="RP11-544A12.2-003" /standard_name="
+';
+  TEXT TAXON=25 TEXT='AL662801.PE45 CDS /gene="AIF1" /locus_tag="XXbac-BPG296P20.11-001" /standard_nam
+';
+  TEXT TAXON=26 TEXT='AL662847.AIF1 CDS /gene="AIF1" /locus_tag="XXbac-BCX270M2.5-001" /standard_name=
+';
+  TEXT TAXON=27 TEXT='AL805934.AIF1 CDS /gene="AIF1" /locus_tag="DAQB-195H10.2-001" /standard_name="OT
+';
+  TEXT TAXON=28 TEXT='AL833896.PE1 CDS /codon_start=1 /gene="DKFZp761N011" /product="hypothetical prot
+';
+  TEXT TAXON=29 TEXT='AL928893.PE3 CDS /locus_tag="RP23-55I14.2-001" /standard_name="OTTMUSP0000001316
+';
+  TEXT TAXON=30 TEXT='AY359067.PE1 CDS /codon_start=1 /locus_tag="UNQ672" /product="SGEL672" /note="PR
+';
+  TEXT TAXON=31 TEXT='BA000025.AIF1 CDS /codon_start=1 /transl_table=1 /gene="AIF1" /product="Allograf
+';
+  TEXT TAXON=32 TEXT='BC009474.AIF1 CDS /codon_start=1 /gene="AIF1" /product="allograft inflammatory f
+';
+  TEXT TAXON=33 TEXT='BC021539.PE1 CDS /codon_start=1 /product="Aif1 protein" /db_xref="GOA:O70200"
+';
+  TEXT TAXON=34 TEXT='BC024599.PE1 CDS /codon_start=1 /gene="2810003C17Rik" /product="RIKEN cDNA 28100
+';
+  TEXT TAXON=35 TEXT='BC073304.MGC8069 CDS /codon_start=1 /gene="MGC80699" /product="MGC80699 protein"
+';
+  TEXT TAXON=36 TEXT='BC074259.MGC8401 CDS /codon_start=1 /gene="MGC84014" /product="MGC84014 protein"
+';
+  TEXT TAXON=37 TEXT='BC084814.MGC8401 CDS /codon_start=1 /gene="MGC84014" /product="MGC84014 protein"
+';
+  TEXT TAXON=38 TEXT='BC102890.AIF1 CDS /codon_start=1 /gene="AIF1" /product="allograft inflammatory f
+';
+  TEXT TAXON=39 TEXT='BC126840.C9ORF58 CDS /codon_start=1 /gene="C9orf58" /product="ionized calcium bi
+';
+  TEXT TAXON=40 TEXT='BX248305.PE3 CDS /gene="AIF1" /locus_tag="DASS-82G15.2-001" /standard_name="OTTH
+';
+  TEXT TAXON=41 TEXT='BX571730.PE3 CDS /gene="DKEY-35I22.4" /locus_tag="DKEY-35I22.4-001" /standard_na
+';
+  TEXT TAXON=42 TEXT='BX883046.AIF1 CDS /codon_start=1 /gene="Aif1" /product="allograft inflammatory f
+';
+  TEXT TAXON=43 TEXT='CR762385.PE3 CDS /gene="DKEY-35I22.4" /locus_tag="DKEY-35I22.4-001" /standard_na
+';
+  TEXT TAXON=44 TEXT='CR857925.PE1 CDS /codon_start=1 /gene="DKFZp469A1629" /product="hypothetical pro
+';
+  TEXT TAXON=45 TEXT='CT010265 Mus musculus full open reading frame cDNA clone RZPDo836F0551D for gene
+';
+  TEXT TAXON=46 TEXT='CT010385 Mus musculus full open reading frame cDNA clone RZPDo836E0453D for gene
+';
+  TEXT TAXON=47 TEXT='D86382.IBA1 CDS /transl_table=1 /gene="iba1" /product="Iba1 (ionized calcium bin
+';
+  TEXT TAXON=48 TEXT='D86438.IBA1 CDS /codon_start=1 /transl_table=1 /gene="iba1" /product="Iba1 (ioni
+';
+  TEXT TAXON=49 TEXT='EF070983.PE1 CDS /codon_start=1 /product="allograft inflammatory factor 1 isofor
+';
+  TEXT TAXON=50 TEXT='U17919.PE1 CDS /codon_start=1 /product="allograft inflammatory factor-1" /note="
+';
+  TEXT TAXON=51 TEXT='U19713.PE1 CDS /codon_start=1 /product="allograft-inflammatory factor-1" /db_xre
+';
+  TEXT TAXON=52 TEXT='U49392.AIF-1 CDS /codon_start=1 /gene="AIF-1" /product="allograft inflammatory f
+';
+  TEXT TAXON=53 TEXT='U82792.PE1 CDS /codon_start=1 /product="allograft inflammatory factor-1" /note="
+';
+  TEXT TAXON=54 TEXT='Y14768.PE3 CDS /gene="AIF1" /product="allograft inflamatory factor-1" /note="U19
+';
+END;
+BEGIN SETS;
+  TAXSET 'good seqs' = 1-14;
+  TAXSET 'good seqs2' = 1 4 7 15 29 35 38 44 52;
+END;
+BEGIN TREES;
+ TREE 'BioNJ_tree'= [BioNJ 402 sites J-C]((((((((U19713.PE1:-0.00000,(EF070983.PE1:-0.00000,
+(D86438.IBA1:-0.00000,(BX248305.PE3:-0.00000,(BC009474.AIF1:-0.00000,(BA000025.AIF1:-0.00000,
+(AL805934.AIF1:-0.00001,(AL662847.AIF1:-0.00001,(AL662801.PE45:-0.00002,
+AF129756.PE18:0.00251):0.00001):0.00001):0.00000):0.00000):0.00000):0.00000)
+:0.00000):0.00000):0.00000,Y14768.PE3:-0.00000):0.00283,U49392.AIF-1:0.07301)
+:0.00924,AB128049.AIF1:0.00825):0.03358,(BC102890.AIF1:0.00000,AF348450.PE1:0.00000)
+:0.07375):0.00504,((((U82792.PE1:0.00000,(D86382.IBA1:0.00000,(CT010265:0.00000,
+(AK006562.PE1:0.00000,(AK006184.PE1:0.00000,(AF109719.PE7:0.00000,(AF074959.PE1:0.00000,
+(AB036423.PE2:0.00000,AB013745.AIF-1:0.00000):0.00000):0.00000):0.00000)
+:0.00000):0.00000):0.00000):0.00000):0.00234,(CT010385:0.00000,BC021539.PE1:0.00000)
+:0.00015):0.00182,AB036423.IBA1:0.03390):0.00963,((U17919.PE1:0.00000,AB000818.PE1:0.00000)
+:0.00081,(BX883046.AIF1:0.00176,D82069.PE1:0.02870):0.00174):0.02772):0.05044)
+:0.11939,(AJ506968.AIF1:0.08043,AB019540.AIF-1:0.10168):0.20641):0.03579,
+(((((CR857925.PE1:0.01059,(AY359067.PE1:-0.00003,(AL833896.PE1:-0.00005,
+(AL157938.PE3:-0.00010,(AL157938.PE2:-0.00020,(AL136566.PE1:-0.00040,(AK091912.PE1:-0.00077,
+AK022845.PE1:0.00327):0.00040):0.00020):0.00010):0.00005):0.00003):0.00449)
+:0.04524,BC126840.C9ORF58:0.02583):0.01190,(BC024599.PE1:-0.00006,(AL928893.PE3:-0.00011,
+(AK045539.PE1:-0.00021,((AK028955.PE1:0.00330,AB035322:-0.00081):0.00042,
+AB094629.IBA2:-0.00042):0.00021):0.00011):0.00006):0.02880):0.10555,((CR762385.PE3:0.00000,
+BX571730.PE3:0.00000):0.05262,AB012309.PE1:0.03992):0.12386):0.03135,(BC073304.MGC8069:0.03323,
+(BC084814.MGC8401:0.00000,BC074259.MGC8401:0.00000):0.01825):0.21336):0.03264)
+;
+ TREE 'PhyML_tree'= [PhyML ln(L)=-2269.6 456 sites GTR](((((((AF074959.PE1:0.00000,AF109719.PE7:0.00000)
+:0.00000,(AB036423.PE2:0.00000,AB013745.AIF-1:0.00000):0.00000):0.00000,
+AB036423.IBA1:0.03730):0.01864,(AB000818.PE1:0.00000,D82069.PE1:0.03507)
+:0.03518):0.06236,AB128049.AIF1:0.04232):0.14213,(AB012309.PE1:0.18990,
+(AB094629.IBA2:0.00000,AB035322:0.00000):0.13348):0.13688):0.03873,AB019540.AIF-1:0.28594)
+;
+ TREE 'Dnapars_tree'= [Dnapars, 4 best trees (100% consensus), 653 steps, 402 sites (246 informative)
+](((((((D82069.PE1:0.03234,AB000818.PE1:0.00000):0.00000,BX883046.AIF1:0.00249)
+:0.00000,U17919.PE1:0.00000):0.02778,((((((((((AB013745.AIF-1:0.00000,AB036423.PE2:0.00000)
+:0.00000,AF074959.PE1:0.00000):0.00000,AF109719.PE7:0.00000):0.00000,AK006184.PE1:0.00000)
+:0.00000,AK006562.PE1:0.00000):0.00000,(BC021539.PE1:0.00000,CT010385:0.00000)
+:0.00249):0.00000,CT010265:0.00000):0.00000,D86382.IBA1:0.00000):0.00000,
+U82792.PE1:0.00000):0.00560,AB036423.IBA1:0.02923):0.01907):0.04490,((AB128049.AIF1:0.00746,
+(((((((((((AF129756.PE18:0.00249,AL662801.PE45:0.00000):0.00000,AL662847.AIF1:0.00000)
+:0.00000,AL805934.AIF1:0.00000):0.00000,BA000025.AIF1:0.00000):0.00000,
+BC009474.AIF1:0.00000):0.00000,BX248305.PE3:0.00000):0.00000,D86438.IBA1:0.00000)
+:0.00000,EF070983.PE1:0.00000):0.00000,U19713.PE1:0.00000):0.00000,U49392.AIF-1:0.06219)
+:0.00000,Y14768.PE3:0.00000):0.01244):0.03664,(AF348450.PE1:0.00000,BC102890.AIF1:0.00000)
+:0.06598):0.02990):0.10853,(AB019540.AIF-1:0.09301,AJ506968.AIF1:0.07118)
+:0.16838):0.04076,(((AB012309.PE1:0.04316,(BX571730.PE3:0.00000,CR762385.PE3:0.00000)
+:0.04620):0.08564,((((((AB035322:0.00000,AB094629.IBA2:0.00000):0.00000,
+AK028955.PE1:0.00249):0.00000,AK045539.PE1:0.00000):0.00000,AL928893.PE3:0.00000)
+:0.00000,BC024599.PE1:0.00000):0.01928,((((((((AK022845.PE1:0.00249,AK091912.PE1:0.00000)
+:0.00000,AL136566.PE1:0.00000):0.00000,AL157938.PE2:0.00000):0.00000,AL157938.PE3:0.00000)
+:0.00000,AL833896.PE1:0.00000):0.00000,AY359067.PE1:0.00000):0.00746,CR857925.PE1:0.00498)
+:0.02920,BC126840.C9ORF58:0.03548):0.02860):0.11595):0.06342,(BC073304.MGC8069:0.03321,
+(BC074259.MGC8401:0.00000,BC084814.MGC8401:0.00000):0.02233):0.16910):0.05504)
+;[equally best tree #1]((((BC084814.MGC8401:0.00000,BC074259.MGC8401:0.00000)
+:0.02233,BC073304.MGC8069:0.03321):0.16894,(((BC126840.C9ORF58:0.03540,
+(CR857925.PE1:0.00498,((((((AY359067.PE1:0.00000,AL833896.PE1:0.00000):0.00000,
+AL157938.PE3:0.00000):0.00000,AL157938.PE2:0.00000):0.00000,AL136566.PE1:0.00000)
+:0.00000,AK091912.PE1:0.00000):0.00000,AK022845.PE1:0.00249):0.00746):0.02928)
+:0.02860,(((((BC024599.PE1:0.00000,AL928893.PE3:0.00000):0.00000,AK045539.PE1:0.00000)
+:0.00000,AK028955.PE1:0.00249):0.00000,AB094629.IBA2:0.00000):0.00000,AB035322:0.00000)
+:0.01936):0.11604,((CR762385.PE3:0.00000,BX571730.PE3:0.00000):0.04620,
+AB012309.PE1:0.04316):0.08548):0.06342):0.05478,((AJ506968.AIF1:0.07118,
+AB019540.AIF-1:0.09301):0.16673,(((BC102890.AIF1:0.00000,AF348450.PE1:0.00000)
+:0.06559,((((((((((((Y14768.PE3:0.00000,U49392.AIF-1:0.06219):0.00000,U19713.PE1:0.00000)
+:0.00000,EF070983.PE1:0.00000):0.00000,D86438.IBA1:0.00000):0.00000,BX248305.PE3:0.00000)
+:0.00000,BC009474.AIF1:0.00000):0.00000,BA000025.AIF1:0.00000):0.00000,
+AL805934.AIF1:0.00000):0.00000,AL662847.AIF1:0.00000):0.00000,AL662801.PE45:0.00000)
+:0.00000,AF129756.PE18:0.00249):0.01244,AB128049.AIF1:0.00746):0.03740)
+:0.03149,((AB036423.IBA1:0.02331,(((((((((U82792.PE1:0.00000,D86382.IBA1:0.00000)
+:0.00000,CT010265:0.00000):0.00000,(CT010385:0.00000,BC021539.PE1:0.00000)
+:0.00249):0.00000,AK006562.PE1:0.00000):0.00000,AK006184.PE1:0.00000):0.00000,
+AF109719.PE7:0.00000):0.00000,AF074959.PE1:0.00000):0.00000,AB036423.PE2:0.00000)
+:0.00000,AB013745.AIF-1:0.00000):0.01151):0.01907,(((U17919.PE1:0.00000,
+BX883046.AIF1:0.00249):0.00000,AB000818.PE1:0.00000):0.00654,D82069.PE1:0.02580)
+:0.02716):0.04283):0.10725):0.04234);[equally best tree #2]((((BC084814.MGC8401:0.00000,
+BC074259.MGC8401:0.00000):0.02233,BC073304.MGC8069:0.03321):0.16894,(((BC126840.C9ORF58:0.03540,
+(CR857925.PE1:0.00498,((((((AY359067.PE1:0.00000,AL833896.PE1:0.00000):0.00000,
+AL157938.PE3:0.00000):0.00000,AL157938.PE2:0.00000):0.00000,AL136566.PE1:0.00000)
+:0.00000,AK091912.PE1:0.00000):0.00000,AK022845.PE1:0.00249):0.00746):0.02928)
+:0.02860,(((((BC024599.PE1:0.00000,AL928893.PE3:0.00000):0.00000,AK045539.PE1:0.00000)
+:0.00000,AK028955.PE1:0.00249):0.00000,AB094629.IBA2:0.00000):0.00000,AB035322:0.00000)
+:0.01936):0.11604,((CR762385.PE3:0.00000,BX571730.PE3:0.00000):0.04620,
+AB012309.PE1:0.04316):0.08548):0.06342):0.05478,((AJ506968.AIF1:0.07118,
+AB019540.AIF-1:0.09301):0.16673,(((BC102890.AIF1:0.00000,AF348450.PE1:0.00000)
+:0.06559,((((((((((((Y14768.PE3:0.00000,U49392.AIF-1:0.06219):0.00000,U19713.PE1:0.00000)
+:0.00000,EF070983.PE1:0.00000):0.00000,D86438.IBA1:0.00000):0.00000,BX248305.PE3:0.00000)
+:0.00000,BC009474.AIF1:0.00000):0.00000,BA000025.AIF1:0.00000):0.00000,
+AL805934.AIF1:0.00000):0.00000,AL662847.AIF1:0.00000):0.00000,AL662801.PE45:0.00000)
+:0.00000,AF129756.PE18:0.00249):0.01244,AB128049.AIF1:0.00746):0.03740)
+:0.03149,((AB036423.IBA1:0.02331,(((((((((U82792.PE1:0.00000,D86382.IBA1:0.00000)
+:0.00000,CT010265:0.00000):0.00000,(CT010385:0.00000,BC021539.PE1:0.00000)
+:0.00249):0.00000,AK006562.PE1:0.00000):0.00000,AK006184.PE1:0.00000):0.00000,
+AF109719.PE7:0.00000):0.00000,AF074959.PE1:0.00000):0.00000,AB036423.PE2:0.00000)
+:0.00000,AB013745.AIF-1:0.00000):0.01151):0.01907,((BX883046.AIF1:0.00124,
+(U17919.PE1:0.00000,AB000818.PE1:0.00000):0.00124):0.00654,D82069.PE1:0.02456)
+:0.02840):0.04283):0.10725):0.04234);[equally best tree #3]((((BC084814.MGC8401:0.00000,
+BC074259.MGC8401:0.00000):0.02233,BC073304.MGC8069:0.03321):0.16910,(((BC126840.C9ORF58:0.03548,
+(CR857925.PE1:0.00498,((((((AY359067.PE1:0.00000,AL833896.PE1:0.00000):0.00000,
+AL157938.PE3:0.00000):0.00000,AL157938.PE2:0.00000):0.00000,AL136566.PE1:0.00000)
+:0.00000,AK091912.PE1:0.00000):0.00000,AK022845.PE1:0.00249):0.00746):0.02920)
+:0.02860,(((((BC024599.PE1:0.00000,AL928893.PE3:0.00000):0.00000,AK045539.PE1:0.00000)
+:0.00000,AK028955.PE1:0.00249):0.00000,AB094629.IBA2:0.00000):0.00000,AB035322:0.00000)
+:0.01928):0.11595,((CR762385.PE3:0.00000,BX571730.PE3:0.00000):0.04620,
+AB012309.PE1:0.04316):0.08564):0.06342):0.05504,((AJ506968.AIF1:0.07118,
+AB019540.AIF-1:0.09301):0.16838,(((BC102890.AIF1:0.00000,AF348450.PE1:0.00000)
+:0.06598,((((((((((((Y14768.PE3:0.00000,U49392.AIF-1:0.06219):0.00000,U19713.PE1:0.00000)
+:0.00000,EF070983.PE1:0.00000):0.00000,D86438.IBA1:0.00000):0.00000,BX248305.PE3:0.00000)
+:0.00000,BC009474.AIF1:0.00000):0.00000,BA000025.AIF1:0.00000):0.00000,
+AL805934.AIF1:0.00000):0.00000,AL662847.AIF1:0.00000):0.00000,AL662801.PE45:0.00000)
+:0.00000,AF129756.PE18:0.00249):0.01244,AB128049.AIF1:0.00746):0.03664)
+:0.02990,((AB036423.IBA1:0.02923,(((((((((U82792.PE1:0.00000,D86382.IBA1:0.00000)
+:0.00000,CT010265:0.00000):0.00000,(CT010385:0.00000,BC021539.PE1:0.00000)
+:0.00249):0.00000,AK006562.PE1:0.00000):0.00000,AK006184.PE1:0.00000):0.00000,
+AF109719.PE7:0.00000):0.00000,AF074959.PE1:0.00000):0.00000,AB036423.PE2:0.00000)
+:0.00000,AB013745.AIF-1:0.00000):0.00560):0.01907,((U17919.PE1:0.00000,
+AB000818.PE1:0.00000):0.00000,(BX883046.AIF1:0.00000,D82069.PE1:0.02985)
+:0.00249):0.02778):0.04490):0.10853):0.04076);[equally best tree #4]((((BC084814.MGC8401:0.00000,
+BC074259.MGC8401:0.00000):0.02233,BC073304.MGC8069:0.03321):0.16910,(((BC126840.C9ORF58:0.03548,
+(CR857925.PE1:0.00498,((((((AY359067.PE1:0.00000,AL833896.PE1:0.00000):0.00000,
+AL157938.PE3:0.00000):0.00000,AL157938.PE2:0.00000):0.00000,AL136566.PE1:0.00000)
+:0.00000,AK091912.PE1:0.00000):0.00000,AK022845.PE1:0.00249):0.00746):0.02920)
+:0.02860,(((((BC024599.PE1:0.00000,AL928893.PE3:0.00000):0.00000,AK045539.PE1:0.00000)
+:0.00000,AK028955.PE1:0.00249):0.00000,AB094629.IBA2:0.00000):0.00000,AB035322:0.00000)
+:0.01928):0.11595,((CR762385.PE3:0.00000,BX571730.PE3:0.00000):0.04620,
+AB012309.PE1:0.04316):0.08564):0.06342):0.05504,((AJ506968.AIF1:0.07118,
+AB019540.AIF-1:0.09301):0.16838,(((BC102890.AIF1:0.00000,AF348450.PE1:0.00000)
+:0.06598,((((((((((((Y14768.PE3:0.00000,U49392.AIF-1:0.06219):0.00000,U19713.PE1:0.00000)
+:0.00000,EF070983.PE1:0.00000):0.00000,D86438.IBA1:0.00000):0.00000,BX248305.PE3:0.00000)
+:0.00000,BC009474.AIF1:0.00000):0.00000,BA000025.AIF1:0.00000):0.00000,
+AL805934.AIF1:0.00000):0.00000,AL662847.AIF1:0.00000):0.00000,AL662801.PE45:0.00000)
+:0.00000,AF129756.PE18:0.00249):0.01244,AB128049.AIF1:0.00746):0.03664)
+:0.02965,((AB036423.IBA1:0.02886,(((((((((U82792.PE1:0.00000,D86382.IBA1:0.00000)
+:0.00000,CT010265:0.00000):0.00000,(CT010385:0.00000,BC021539.PE1:0.00000)
+:0.00249):0.00000,AK006562.PE1:0.00000):0.00000,AK006184.PE1:0.00000):0.00000,
+AF109719.PE7:0.00000):0.00000,AF074959.PE1:0.00000):0.00000,AB036423.PE2:0.00000)
+:0.00000,AB013745.AIF-1:0.00000):0.00597):0.01907,((U17919.PE1:0.00000,
+AB000818.PE1:0.00000):0.00050,(BX883046.AIF1:0.00050,D82069.PE1:0.02935)
+:0.00249):0.02765):0.04465):0.10866):0.04076);
+END;
+BEGIN seaview;
+  TEXT HEADER TEXT=' saved by seaview on Tue Feb 19 15:24:41 2013
+ saved by seaview on Mon Feb 11 17:21:33 2013
+';
+END;

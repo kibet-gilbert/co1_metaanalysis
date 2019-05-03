@@ -1,11 +1,10 @@
-
-This document explain an alternative way of setting up the suitable environment using a list of all packages and their versions in my environment.
+This document explains alternative ways of setting up the suitable anaconda environment using a list of all packages and their versions from my working environment.
 
 Option1: 
-I generated a list of urls that conda can use to install packages and setup and environment as follows:
+I generated and provided a list of urls that conda can use to install packages and setup and environment as follows:
 
->conda activate <env_name>
->conda list --explicit > spec-file.txt
+>conda activate <myenv_name> #activated my environment
+>conda list --explicit > spec-file.txt #generated a list of installed packages urls and saved it in spec-file.txt, to be used in setting up a mirror environment
 
 Now create an environment and install as follows:
 
@@ -15,16 +14,17 @@ Or install directly in a created environment as follows:
 
 >conda install --name <env_name> --file spec-file.txt
 
+some packages may not be supported by the Operating system or may no longer be existent. for this packages comment out, "#", their urls.
+
 Option2:
-This how i generated the list of all packages in my conda environment in a linux=64 platform computer.
+I also generated the list of all packages in my conda environment in a linux=64 platform computer as follows:
 
 >conda list | awk 'BEGIN {FS=" *"} ; {print $1 "=" $2 }' > packages.txt
 
 To install this packages in a new environment do as follows:
 copy the packages.txt file to a desired directory.
-Activate conda environment
 
->conda activate <enviroment_name>
+>conda activate <enviroment_name> #activate your environment
 
 Add channels
 
@@ -37,3 +37,5 @@ Then install the packages as follows:
 
 >cat packages.txt | xargs #generate a space separated string of all packages in packages.txt
 >conda install <paste here the output of the command above>
+Or just do:
+>conda install `cat packages.txt | xargs`

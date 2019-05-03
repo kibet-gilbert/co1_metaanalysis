@@ -1,0 +1,3 @@
+#!/bin/bash
+
+java -jar /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/SuiteMSA_Package1.3.22B/SuiteMSA-1.3.22B/SuiteMSA-1.3.22B.jar

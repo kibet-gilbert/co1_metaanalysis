@@ -1,0 +1,47 @@
+
+
+###################################
+Simulation run time: 2013-02-17 08:19:35
+Command:     ./indel-seq-gen -m PAM -p /Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.21B/SuiteMSA_Package1.3.21B/indel-seq-gen-2.1.06/data -j trs -o f -e /Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.21B/SuiteMSA_Package1.3.21B/indel-seq-gen-2.1.06/data/lipocalin_ma_out -d 011110 < /Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.21B/SuiteMSA_Package1.3.21B/indel-seq-gen-2.1.06/data/lipocalin_ma.tree
+
+Messages from indel-seq-gen:
+    WARNINGS: 
+      Input alignment "/Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.21B/SuiteMSA_Package1.3.21B/indel-seq-gen-2.1.06/data/lipocalin_ma" has undefined motif placed: 'b'.
+      Input alignment "/Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.21B/SuiteMSA_Package1.3.21B/indel-seq-gen-2.1.06/data/lipocalin_ma" has undefined motif placed: '7'.
+    Time taken: 0.066456 seconds
+    
+
+###################################
+Simulation run time: 2013-02-17 08:27:18
+Command:     ./indel-seq-gen -m PAM -p /Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.21B/SuiteMSA_Package1.3.21B/indel-seq-gen-2.1.06/data -j trs -o f -e /Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.21B/SuiteMSA_Package1.3.21B/indel-seq-gen-2.1.06/data/lipocalin_ma_out -d 011110 < /Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.21B/SuiteMSA_Package1.3.21B/indel-seq-gen-2.1.06/data/lipocalin_ma.tree
+
+Messages from indel-seq-gen:
+    WARNINGS: 
+      Input alignment "/Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.21B/SuiteMSA_Package1.3.21B/indel-seq-gen-2.1.06/data/lipocalin_ma" has undefined motif placed: 'b'.
+      Input alignment "/Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.21B/SuiteMSA_Package1.3.21B/indel-seq-gen-2.1.06/data/lipocalin_ma" has undefined motif placed: '7'.
+      Output MSAs contain columns consisting of all gaps.
+    Time taken: 0.064897 seconds
+    
+
+###################################
+Simulation run time: 2013-02-17 08:28:07
+Command:     ./indel-seq-gen -m PAM -p /Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.21B/SuiteMSA_Package1.3.21B/indel-seq-gen-2.1.06/data -j trs -o f -e /Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.21B/SuiteMSA_Package1.3.21B/indel-seq-gen-2.1.06/data/lipocalin_ma_out -d 011110 < /Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.21B/SuiteMSA_Package1.3.21B/indel-seq-gen-2.1.06/data/lipocalin_ma.tree
+
+Messages from indel-seq-gen:
+    WARNINGS: 
+      Input alignment "/Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.21B/SuiteMSA_Package1.3.21B/indel-seq-gen-2.1.06/data/lipocalin_ma" has undefined motif placed: 'b'.
+      Input alignment "/Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.21B/SuiteMSA_Package1.3.21B/indel-seq-gen-2.1.06/data/lipocalin_ma" has undefined motif placed: '7'.
+    Time taken: 0.059765 seconds
+    
+
+###################################
+Simulation run time: 2013-02-17 09:36:51
+Command:     ./indel-seq-gen -m PAM -p /Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.21B/SuiteMSA_Package1.3.21B/indel-seq-gen-2.1.06/data -j trs -o f -e /Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.21B/SuiteMSA_Package1.3.21B/indel-seq-gen-2.1.06/data/lipocalin_out -d 011110 < /Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.21B/SuiteMSA_Package1.3.21B/indel-seq-gen-2.1.06/data/lipocalin.tree
+
+Messages from indel-seq-gen:
+    WARNINGS: 
+      Input alignment "/Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.21B/SuiteMSA_Package1.3.21B/indel-seq-gen-2.1.06/data/lipocalin" has undefined motif placed: 'b'.
+      Input alignment "/Users/canderson/SuiteMSA_project/SuiteMSA_Package1.3.21B/SuiteMSA_Package1.3.21B/indel-seq-gen-2.1.06/data/lipocalin" has undefined motif placed: '0'.
+      Output MSAs contain columns consisting of all gaps.
+    Time taken: 0.064619 seconds
+    
