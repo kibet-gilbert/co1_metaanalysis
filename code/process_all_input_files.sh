@@ -190,3 +190,30 @@ clean_sort_tsv() { #This function cleans the .tsv files, sort the records into d
                 fi
         done
 }
+
+
+
+#genereting headers from csv files with inputs.
+#awk 'BEGIN { FS=","; OFS="|" } ; { for(i=1; i<=NF; i++) if($i ~ /^ *$/) $i = "NA" }; { print  ">" $1, $4, "gs-"$5, "sp-"$6, "subsp-"$7, "country-"$8,"exactsite-"$9, "lat_"$10, "lon_"$11, "elev-"$12 }' bold.csv | less
+
+replacing_headers() { #This function takes an input of edited .fasta file headers and searches through a fasta format sequence and replace their headers if their uniq IDs match
+ 	if [ $# -lt 2 ]
+	then
+		echo "Input error..."
+      		echo "Usage: $0 headers_file seq.fasta"
+      		return
+        fi
+
+	for line in `cat $1`
+	do
+		#x=$( head -10 idrck_headers | tail -1 | awk 'BEGIN { FS="|"; }{print $1;}') && echo $x
+		x=`echo "$line" | ${AWK_EXEC} 'BEGIN { RS="\n"; FS="|"; }{ x = $1; print x; }'`
+		y=`echo "$line" | ${AWK_EXEC} 'BEGIN { RS="\n"; FS="|"; }{ y = $0; print y; }'`
+		#echo -e "\n $x \n $y"
+		
+		z=`grep "$x" $2`
+		#echo "$z"
+		sed -i "s/${z}/${y}/g" $2
+	done
+}
+
