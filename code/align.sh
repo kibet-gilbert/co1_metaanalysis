@@ -651,12 +651,14 @@ pasta_aln() { #MSA alignment using pasta
 			echo "input error: file $i is non-existent!"
 		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa) ) ]]
 		then
+			echo -e "\tProceeding with `basename $i`" 
+			echo -e "\tPlease select the mafft alignment method;\n\tlocal[mafft_linsi] or global[mafft_ginsi]:"
 			select type_of_alignment in mafft_linsi mafft_ginsi none_exit
 			do
 				case $type_of_alignment in
 					mafft_linsi)
 						rename
-						echo -e "\nproceeding with file `basename $i`..."
+						echo -e "\nDoing local alignment of `basename $i`..."
 						${PYTHON3_EXEC} ${runpasta} --aligner=mafft -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
 						cp ${pasta_dest}\jobs/*.${output_filename}.aln ${pasta_dest}aligned/ && mv ${pasta_dest}aligned/{*.${output_filename}.aln,${output_filename}.aln}
 						cp ${pasta_dest}\jobs/${output_filename}.tre ${pasta_dest}aligned/${output_filename}.tre
@@ -664,7 +666,7 @@ pasta_aln() { #MSA alignment using pasta
 						;;
 					mafft_ginsi)
 						rename
-		       				echo -e "\nproceeding with file `basename $i`..."
+		       				echo -e "\nDoing global alignment of `basename $i`..."
 						${PYTHON3_EXEC} ${runpasta} --aligner=ginsi -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
 						cp ${pasta_dest}\jobs/*.${output_filename}.aln ${pasta_dest}aligned/ && mv ${pasta_dest}aligned/{*.${output_filename}.aln,${output_filename}.aln}
 						cp ${pasta_dest}\jobs/${output_filename}*.tre ${pasta_dest}aligned/${output_filename}.tre

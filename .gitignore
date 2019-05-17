@@ -6,6 +6,10 @@ code/tools/pasta_code/pasta/bin
 *.xml
 .ipynb_checkpoints/
 *.tar.gz
+data/input/input_data/clean_africa/afroCOI_all_data.tsv
+data/input/input_data/clean_africa/afroCOI_500to700_data.tsv
+data/input/input_data/clean_africa/afroCOI_650to660_data.tsv
+data/input/input_data/clean_africa/afroCOI_Over499_data.tsv
 data/output/alignment/mafft_output/addfragments/*
 data/output/alignment/mafft_output/addprofile/*
 data/output/alignment/mafft_output/addseq/*
@@ -16,8 +20,8 @@ data/output/alignment/muscle_output/merged/*
 data/output/alignment/muscle_output/refined/*
 data/output/alignment/t_coffee_output/aligned/*
 data/output/alignment/t_coffee_output/trees/*
-data/output/pasta_output/*
-data/output/sate_output/*
+data/output/alignment/pasta_output/*
+data/output/alignment/sate_output/*
 *.Rhistory
 *.swj
 *.swk
