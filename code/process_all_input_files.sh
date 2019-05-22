@@ -1,5 +1,5 @@
 #!/bin/bash
-# this script will run the awk script on all its arguments
+# this script performs may functions including: run awk script to generate .fasta format files, delete repeated seqs, trim seqs ...
 
 AWK_EXEC=$( which gawk )
 PYTHON_EXEC=$( which python )
@@ -305,8 +305,14 @@ delete_unwanted() { #this function copys a record that fits a provided pattern, 
 
         fi
 
-	unset $pattern_name
-	read -p "Please enter string pattern to be searched:: " pattern_name
+	unset pattern_name
+
+	regexp='^[a-zA-Z0-9/_-\ ]+$'
+	until [[ "$pattern_name" =~ $regexp ]]
+	do
+		read -p "Please enter string pattern to be searched:: " pattern_name
+	done
+
 	echo -e "\n\tDeleting all records with description '$pattern_name'..."
 
 	for i in "$@"
@@ -322,7 +328,7 @@ delete_unwanted() { #this function copys a record that fits a provided pattern, 
 }
 
 
-trimming_seqaln() { #This function trims aligned sequences in a file on both ends and retains a desired region based on input field values.
+trimming_seqaln() { #This function trims aligned sequences in a file on both ends and retains a desired region based on input field (sequence position) values.
 
 	if [ $# -eq 0 ]
         then
@@ -341,13 +347,24 @@ trimming_seqaln() { #This function trims aligned sequences in a file on both end
 			input_src=`dirname "$( realpath "${i}" )"`
 			rename $i
 			echo -e "\tThis function will trim your sequences at specific positions and output the desired columns. Proceed and enter the desired start and end positions of the blocks to extract.\n\tTrimming `basename -- $i`..."
-			read -p "Please enter the start position: " start_pos
-			read -p "Please enter the end position: " end_pos
+			unset start_pos
+			unset end_pos
+			regexp='^[0-9]+$'
+			until [[ "$start_pos" =~ $regexp ]]
+			do
+				read -p "Please enter the start position: " start_pos
+			done
+
+			until [[ "$end_pos" =~ $regexp ]]
+			do
+				read -p "Please enter the end position: " end_pos
+			done
+
 			echo -e "\tYou are trimming `basename -- ${i}` at position ${start_pos} to ${end_pos}"
 			$AWK_EXEC -v start_p=$start_pos -v end_p=$end_pos \
-				'BEGIN{FS=""; OFS=""; }; /^>/ { print "\n" $0 }; !/^>/ { for(v=start_p; v<=end_p; v++) { printf "%s", $v; if (v <= end_p) { printf "%s", OFS; } else { printf "\n"; } }}' $input > ${input_src}/${output_filename}_trmmd.aln
+				'BEGIN{FS=""; OFS=""; }; /^>/ { print "\n" $0 }; !/^>/ { for(v=start_p; v<=end_p; v++) { printf "%s", $v; if (v <= end_p) { printf "%s", OFS; } else { printf "\n"; } }}' $i > ${input_src}/${output_filename}_trmmd.aln
 			#awk 'BEGIN {FS=""; OFS=""; }; /^>/ {print "\n" $0 }; !/^>/ { for(i=1087; i<=2574; i++) { printf "%s", $i; if (i <= 2574) { printf "%s", OFS; } else { printf "\n"; } }}' input.aln | less
-			echo -e "\n\tDONE. All trimmed records have been stored in $input > ${input_src}/${output_filename}_trmmd.aln\n"
+			echo -e "\n\tDONE. All trimmed records have been stored in ${input_src}/${output_filename}_trmmd.aln\n"
 		else
 			echo "input file error in `basename $i`: input file should be a .fasta file format"
                         continue
@@ -373,15 +390,26 @@ delete_shortseqs() { #This function identifies and removes sequences that have s
                 then
                         input_src=`dirname "$( realpath "${i}" )"`
                         rename $i
-                        echo -e "\tThis function will remove sequences that havea specified number of gaps at the start or end of the sequence. Proceed and enter the desired number of gaps at the start and end positions of the sequences.\n\tRemoving seqeunces in `basename -- $i`..."
-                        read -p "Please enter the number of gaps at start position: " start_gaps
-                        read -p "Please enter the number of gaps at the end position: " end_gaps
-                        echo -e "\tRemoving sequences in `basename -- ${i}` that have ${start_gaps} gaps in start position and ${end_gaps} in end position"
-                        $AWK_EXEC -v start_g=$start_gaps -v end_g=$end_gaps \
-                                'BEGIN{RS="\n>"; FS="\n"; ORS="\n>"; OFS="\n"; }; '#'BEGIN{FS=""; OFS=""; }; /^>/ { print "\n" $0 }; !/^>/ { for(v=start_p; v<=end_p; v++) { printf "%s", $v; if (v <= end_p) { printf "%s", OFS; } else { printf "\n"; } }}' $input > ${input_src}/${output_filename}_trmmd.aln
+			echo -e "\tThis function will remove sequences that have a specified number of gaps, '-', at the start or end of the sequence. Proceed and enter the accepted maximum number of gaps at the start and end positions of the sequences.\n\tIntegers only accepted!!!"
+			unset start_gaps
+			unset end_gaps
+			regexp='^[0-9]+$'
+                        until [[ "$start_gaps" =~ $regexp ]]
+                        do
+				read -p "Please enter the muximum number of gaps allowed at start position: " start_gaps
+			done
+
+                        until [[ "$end_gaps" =~ $regexp ]]
+                        do
+				read -p "Please enter the maximum number of gaps allowed at the end position: " end_gaps
+			done
+
+                        echo -e "\tRemoving sequences in `basename -- ${i}` that have more than ${start_gaps} gaps in start position and ${end_gaps} in end position"
+			$AWK_EXEC -v start_g=$start_gaps -v end_g=$end_gaps 'BEGIN{RS="\n>"; FS="\n"; ORS="\n>"; OFS="\n"; }; $2~/^--/ && $2~/--$/ { print }' $i > ${input_src}/${output_filename}_st${start_gaps}-en${end_gaps}.aln
+			# { for(v=start_p; v<=end_p; v++) { printf "%s", $v; if (v <= end_p) { printf "%s", OFS; } else { printf "\n"; } }}' $input > ${input_src}/${output_filename}_trmmd.aln
                         echo -e "\n\tDONE. All removed records have been stored in $input > ${input_src}/${output_filename}_short.aln\n"
                 else
-                        echo "input file error in `basename $i`: input file should be a .fasta file format"
+                        echo "input file error in `basename $i`: input file should be a .aln file format"
                         continue
                 fi
         done
