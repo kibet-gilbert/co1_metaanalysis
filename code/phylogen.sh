@@ -41,7 +41,7 @@ phylo_fastree() { #
                 if [ ! -f $i ]
                 then
                         echo "input error: file $i is non-existent!"
-                elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa) ) ]]
+                elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa) ) ]]
                 then
                         rename
                         echo -e "\nproceeding with file `basename $i`..."

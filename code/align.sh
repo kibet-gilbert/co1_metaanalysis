@@ -68,7 +68,7 @@ muscle_refine() {
 		if [ ! -f $i ]
 		then
 			echo "input error: file $i is non-existent!"
-		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa) ) ]]
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa|aln) ) ]]
 		then
 			rename
 			echo -e "\nproceeding with file `basename $i`..."
@@ -649,11 +649,11 @@ pasta_aln() { #MSA alignment using pasta
 		if [ ! -f $i ]
 		then
 			echo "input error: file $i is non-existent!"
-		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa) ) ]]
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa|aln) ) ]]
 		then
 			echo -e "\tProceeding with `basename $i`" 
 			echo -e "\tPlease select the mafft alignment method;\n\tlocal[mafft_linsi] or global[mafft_ginsi]:"
-			select type_of_alignment in mafft_linsi mafft_ginsi none_exit
+			select type_of_alignment in mafft_linsi mafft_ginsi mafft_linsi_with_starting_tree mafft_ginsi_with_starting_tree none_exit
 			do
 				case $type_of_alignment in
 					mafft_linsi)
@@ -670,6 +670,34 @@ pasta_aln() { #MSA alignment using pasta
 						${PYTHON3_EXEC} ${runpasta} --aligner=ginsi -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
 						cp ${pasta_dest}\jobs/*.${output_filename}.aln ${pasta_dest}aligned/ && mv ${pasta_dest}aligned/{*.${output_filename}.aln,${output_filename}.aln}
 						cp ${pasta_dest}\jobs/${output_filename}*.tre ${pasta_dest}aligned/${output_filename}.tre
+						break
+						;;
+					mafft_linsi_with_starting_tree)
+						rename
+						unset start_tree
+                                                echo -e "\nDoing local alignment of `basename $i` using a starting tree..."
+						until [[ ( -f "$start_tree" ) && ( `basename -- "$start_tree"` =~ .*\.(tre) ) ]]
+						do
+							echo -e "\n\tFor the starting tree provide the full path to the file, the filename included."
+							read -p "Please enter the file to be used as the starting tree: " start_tree
+						done
+                                                ${PYTHON3_EXEC} ${runpasta} --aligner=mafft -i $i -t $start_tree -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
+                                                cp ${pasta_dest}\jobs/*.${output_filename}.aln ${pasta_dest}aligned/ && mv ${pasta_dest}aligned/{*.${output_filename}.aln,${output_filename}.aln}
+                                                cp ${pasta_dest}\jobs/${output_filename}.tre ${pasta_dest}aligned/${output_filename}.tre
+						break
+						;;
+					mafft_ginsi_with_starting_tree)
+						rename
+						unset start_tree
+                                                echo -e "\nDoing global alignment of `basename $i` using a starting tree..."
+						until [[ ( -f "$start_tree" ) && ( `basename -- "$start_tree"` =~ .*\.(tre) ) ]]
+                                                do
+							echo -e "\n\tFor the starting tree provide the full path to the file, the filename included."
+                                                        read -p "Please enter the file to be used as the starting tree: " start_tree
+                                                done
+                                                ${PYTHON3_EXEC} ${runpasta} --aligner=ginsi -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
+                                                cp ${pasta_dest}\jobs/*.${output_filename}.aln ${pasta_dest}aligned/ && mv ${pasta_dest}aligned/{*.${output_filename}.aln,${output_filename}.aln}
+                                                cp ${pasta_dest}\jobs/${output_filename}*.tre ${pasta_dest}aligned/${output_filename}.tre
 						break
 						;;
 					none_exit)

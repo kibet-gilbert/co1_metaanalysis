@@ -238,6 +238,8 @@ replacing_headers() { #This function takes an input file of edited_fasta_format_
 
 
 delete_repeats() { #This function takes a fasta_format_sequences file and deletes repeats of sequences based on identical headers.
+	#in multiple files at once: awk -F'[|]' 'FNR%2{f=seen[$1]++} !f' *
+	#in each file: awk -F'[|]' 'FNR==1{delete seen} FNR%2{f=seen[$1]++} !f' *
 	if [ $# -eq 0 ]
         then
                 echo "Input error..."
@@ -253,7 +255,7 @@ delete_repeats() { #This function takes a fasta_format_sequences file and delete
 		duplicate_headers=`grep ">" $i | $AWK_EXEC 'BEGIN { FS="|"; }; {print $1; }' | sort | uniq -d`
 		if [ ! -z "$duplicate_headers" ]
 		then
-			echo -e "\t`echo -e "$duplicate_headers" | wc -l` records are repeated in $i,\n\twould you like to proceed and delete any repeats?"
+			echo -e "\t`echo -e "$duplicate_headers" | wc -l` records are repeated in $i,\n\twould you like to proceed and delete all repeats?"
 			read -p "Please enter [Yes] or [No] to proceed: " choice
 		else
 			choice="No"
@@ -362,8 +364,8 @@ trimming_seqaln() { #This function trims aligned sequences in a file on both end
 
 			echo -e "\tYou are trimming `basename -- ${i}` at position ${start_pos} to ${end_pos}"
 			$AWK_EXEC -v start_p=$start_pos -v end_p=$end_pos \
-				'BEGIN{FS=""; OFS=""; }; /^>/ { print "\n" $0 }; !/^>/ { for(v=start_p; v<=end_p; v++) { printf "%s", $v; if (v <= end_p) { printf "%s", OFS; } else { printf "\n"; } }}' $i > ${input_src}/${output_filename}_trmmd.aln
-			#awk 'BEGIN {FS=""; OFS=""; }; /^>/ {print "\n" $0 }; !/^>/ { for(i=1087; i<=2574; i++) { printf "%s", $i; if (i <= 2574) { printf "%s", OFS; } else { printf "\n"; } }}' input.aln | less
+				'BEGIN{FS=""; OFS=""; }; /^>/ {if (FNR==1) {print $0; } else { print "\n" $0 }}; !/^>/ { for(v=start_p; v<=end_p; v++) { printf "%s", $v; if (v <= end_p) { printf "%s", OFS; } }}' $i > ${input_src}/${output_filename}_trmmd.aln
+			#awk 'BEGIN {FS=""; OFS=""; }; /^>/ {print "\n" $0 }; !/^>/ { for(v=1087; v<=2574; v++) { printf "%s", $v; if (v <= 2574) { printf "%s", OFS; } else { printf "\n"; } }}' input.aln | less
 			echo -e "\n\tDONE. All trimmed records have been stored in ${input_src}/${output_filename}_trmmd.aln\n"
 		else
 			echo "input file error in `basename $i`: input file should be a .fasta file format"
@@ -405,9 +407,9 @@ delete_shortseqs() { #This function identifies and removes sequences that have s
 			done
 
                         echo -e "\tRemoving sequences in `basename -- ${i}` that have more than ${start_gaps} gaps in start position and ${end_gaps} in end position"
-			$AWK_EXEC -v start_g=$start_gaps -v end_g=$end_gaps 'BEGIN{RS="\n>"; FS="\n"; ORS="\n>"; OFS="\n"; }; $2~/^--/ && $2~/--$/ { print }' $i > ${input_src}/${output_filename}_st${start_gaps}-en${end_gaps}.aln
-			# { for(v=start_p; v<=end_p; v++) { printf "%s", $v; if (v <= end_p) { printf "%s", OFS; } else { printf "\n"; } }}' $input > ${input_src}/${output_filename}_trmmd.aln
-                        echo -e "\n\tDONE. All removed records have been stored in $input > ${input_src}/${output_filename}_short.aln\n"
+			$AWK_EXEC -v start_g=$start_gaps -v end_g=$end_gaps ' /^>/ { hdr=$0; next }; match($0,/^-*/) && RLENGTH<=start_g && match($0,/-*$/) && RLENGTH<=end_g { print hdr; print }' $i > ${input_src}/${output_filename}_st${start_gaps}-en${end_gaps}.aln
+			#awk -v start_g=$start_gaps -v end_g=$end_gaps ' /^>/ { hdr=$0; next }; (x="^-{"start_g+1",}")(y="-{"end_g+1",}$") !match($0, x) && !match($0, y)  {print x y hdr; print }' input_trmmd.aln | wc -l #Does not remove all as needed
+			echo -e "\n\tDONE. All removed records have been stored in $input > ${input_src}/${output_filename}_sh${start_gaps}-en${end_gaps}.aln\n"
                 else
                         echo "input file error in `basename $i`: input file should be a .aln file format"
                         continue

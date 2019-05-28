@@ -19,3 +19,6 @@
 [submodule "code/tools/figtree"]
 	path = code/tools/figtree
 	url = https://github.com/rambaut/figtree
+[submodule "code/tools/archaeopteryx"]
+	path = code/tools/archaeopteryx
+	url = https://github.com/cmzmasek/forester
