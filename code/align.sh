@@ -718,3 +718,73 @@ pasta_aln() { #MSA alignment using pasta
 
 #removing gappy columns with at most n residues.
 #python3 ../../../../code/tools/pasta_code/pasta/run_seqtools.py -infile jobs/eafroCOI_all_data2_temp_iteration_2_seq_unmasked_alignment -informat COMPACT3 -outfile eafroCOI_all_iter2.fasta -outformat FASTA -masksites 20 -rename jobs/eafroCOI_all_data2_temp_name_translation.txt
+
+
+#=====================================================================================
+upp_align() { #UPP stands for Ultra-large alignments using Phylogeny-aware Profiles. A modification of SEPP, SATé-Enabled Phylogenetic Placement, for performing alignments of ultra-large and fragmentary datasets.
+	#Usage: $ python <bin>/run_upp.py -s <unaligned_sequences>
+	#To run UPP with a pre-computed backbone alignment and tree, run
+	#	$ python <bin>/run_upp.py -s input.fas -a <alignment_file> -t <tree_file>
+	#To run the parallelized version of UPP, run
+	#	$ python <bin>/run_upp.py -s input.fas -x <cpus>
+	usage $@
+	echo "UPP starting alinment..."
+
+	PYTHON3_EXEC=$( which python3 )
+	run_upp=${co1_path}code/tools/pasta_code/sepp/run_upp.py
+	
+	for i in $@
+	do
+		if [ ! -f $i ]
+		then
+			echo "input error: file $i is non-existent!"
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa|aln) ) ]]
+		then
+			echo -e "\tProceeding with `basename $i`"
+			echo -e "\tPlease select the type of alignment method;\n\tUsing unaligned sequences only[using_sequences_only] or using a backbone[using_precomputed_backbone]:"
+			select type_of_alignment in using_sequences_only using_precomputed_backbone none_exit
+			do
+				case $type_of_alignment in
+					using_sequences_only)
+		 				rename
+						echo -e "\nDoing Multiple Sequence Alignment of `basename $i` based on the fragmentary sequences alone"
+						${PYTHON3_EXEC} ${run_upp} -s $i -o ${output_filename} --tempdir ${pasta_dest}temporaries/sepp/ -d ${pasta_dest}jobs_upp/ -x 32
+						cp ${pasta_dest}\jobs/*.${output_filename}_alignment.fasta ${pasta_dest}aligned/
+						break
+						;;
+					using_precomputed_backbone)
+						rename
+						unset backbone
+						unset start_tree
+						echo -e "\nDoing Multiple Sequence Alignment of `basename $i` using a backbone alignment and a starting tree..."
+
+						until [[ ( -f "$start_tree" ) && ( `basename -- "$start_tree"` =~ .*\.(tre) ) ]]
+						do
+							echo -e "\n\tFor the starting tree provide the full path to the file, the filename included."
+							read -p "Please enter the file to be used as the starting tree: " start_tree
+						done
+
+						until [[ ( -f "$backbone" ) && ( `basename -- "$start_tree"` =~ .*\.(aln|fasta|fa|afa) ) ]]
+						do
+							echo -e "\n\tFor the starting tree provide the full path to the file, the filename included."
+							read -p "Please enter the file to be used as the starting tree: " backbone
+						done
+
+						${PYTHON3_EXEC} ${run_upp} -s $i -a ${backbone} -t ${start_tree} -o ${output_filename} --tempdir ${pasta_dest}temporaries/sepp/ -d ${pasta_dest}jobs_upp/ -x 32
+						cp ${pasta_dest}\jobs/*.${output_filename}_alignment.fasta ${pasta_dest}aligned/
+                                                break
+                                                ;;
+                                        none_exit)
+                                                break
+                                                ;;
+                                        *)
+                                                echo "error: Invalid selection!"
+                                esac
+                        done
+                else
+                        echo "input file error in `basename $i`: input file should be a .fasta file format"
+                        continue
+                fi
+        done
+
+}

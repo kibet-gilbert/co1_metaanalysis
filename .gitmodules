@@ -22,3 +22,6 @@
 [submodule "code/tools/archaeopteryx"]
 	path = code/tools/archaeopteryx
 	url = https://github.com/cmzmasek/forester
+[submodule "code/tools/sepp"]
+	path = code/tools/sepp
+	url = https://github.com/smirarab/sepp

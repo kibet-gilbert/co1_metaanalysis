@@ -232,8 +232,8 @@ replacing_headers() { #This function takes an input file of edited_fasta_format_
 				#sed -i "s/^.*\b${x}\b.*$/${y}/g" $2
 			fi
 		done
-		echo -e "\n\tCongratulations...Operation done."
 	done
+	echo -e "\n\tCongratulations...Operation done."
 }
 
 
@@ -364,7 +364,7 @@ trimming_seqaln() { #This function trims aligned sequences in a file on both end
 
 			echo -e "\tYou are trimming `basename -- ${i}` at position ${start_pos} to ${end_pos}"
 			$AWK_EXEC -v start_p=$start_pos -v end_p=$end_pos \
-				'BEGIN{FS=""; OFS=""; }; /^>/ {if (FNR==1) {print $0; } else { print "\n" $0 }}; !/^>/ { for(v=start_p; v<=end_p; v++) { printf "%s", $v; if (v <= end_p) { printf "%s", OFS; } }}' $i > ${input_src}/${output_filename}_trmmd.aln
+				'BEGIN{FS=""; OFS=""; }; /^>/ {if (FNR==1) {print $0; } else { print "\n" $0 }}; !/^>/ { for(v=start_p; v<=end_p; v++) { printf "%s", $v; if (v <= end_p) { printf "%s", OFS; } }}' $i > ${input_src}/${output_filename}_trmmd${start_pos}-${end_pos}.aln
 			#awk 'BEGIN {FS=""; OFS=""; }; /^>/ {print "\n" $0 }; !/^>/ { for(v=1087; v<=2574; v++) { printf "%s", $v; if (v <= 2574) { printf "%s", OFS; } else { printf "\n"; } }}' input.aln | less
 			echo -e "\n\tDONE. All trimmed records have been stored in ${input_src}/${output_filename}_trmmd.aln\n"
 		else
@@ -415,4 +415,34 @@ delete_shortseqs() { #This function identifies and removes sequences that have s
                         continue
                 fi
         done
+}
+
+remove_gaps() { # Removing gaps, "-" in a sequnce.
+	# Works only for singular line header and sequence lines, i.e does not concatenate separate lines of the same sequence.
+	#awk 'BEGIN{ RS="\n";ORS="\n" }/^>/{print}; !/^>/{ gsub("-","",$0); print $0 }' enafroCOI_500to700_data-650to660_st22n1006-en1474n3479.aln | less -S
+	if [ $# -eq 0 ]
+	then
+		echo "Input error..."
+		echo "Usage: $0 file1.*[file2.* file3.* ...]"
+		return 1
+	fi
+
+	for i in "$@"
+	do
+		if [ ! -f $i ]
+		then
+			echo "input error: file '$i' is non-existent!"
+   		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa) ) ]]
+		then
+			input_src=`dirname "$( realpath "${i}" )"`
+			rename $i
+			echo -e "\n\tRemoving gaps, '-', from `basename -- ${i}`"
+
+			$AWK_EXEC 'BEGIN{ RS="\n";ORS="\n" }/^>/{print}; !/^>/{ gsub("-","",$0); print $0 }' $i > ${input_src}/${output_filename}_dgpd.fasta
+		else
+			echo "input file error in `basename $i`: input file should be a .aln file format"
+			continue
+		fi
+	done
+
 }
