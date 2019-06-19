@@ -731,7 +731,7 @@ upp_align() { #UPP stands for Ultra-large alignments using Phylogeny-aware Profi
 	echo "UPP starting alinment..."
 
 	PYTHON3_EXEC=$( which python3 )
-	run_upp=${co1_path}code/tools/pasta_code/sepp/run_upp.py
+	run_upp=${co1_path}code/tools/sepp/run_upp.py
 	
 	for i in $@
 	do
@@ -748,7 +748,7 @@ upp_align() { #UPP stands for Ultra-large alignments using Phylogeny-aware Profi
 					using_sequences_only)
 		 				rename
 						echo -e "\nDoing Multiple Sequence Alignment of `basename $i` based on the fragmentary sequences alone"
-						${PYTHON3_EXEC} ${run_upp} -s $i -o ${output_filename} --tempdir ${pasta_dest}temporaries/sepp/ -d ${pasta_dest}jobs_upp/ -x 32
+						${PYTHON3_EXEC} ${run_upp} -s $i -o ${output_filename} --tempdir ${pasta_dest}temporaries/sepp/ -d ${pasta_dest}jobs_upp/ #-x 32
 						cp ${pasta_dest}\jobs/*.${output_filename}_alignment.fasta ${pasta_dest}aligned/
 						break
 						;;
@@ -764,13 +764,13 @@ upp_align() { #UPP stands for Ultra-large alignments using Phylogeny-aware Profi
 							read -p "Please enter the file to be used as the starting tree: " start_tree
 						done
 
-						until [[ ( -f "$backbone" ) && ( `basename -- "$start_tree"` =~ .*\.(aln|fasta|fa|afa) ) ]]
+						until [[ ( -f "$backbone" ) && ( `basename -- "$backbone"` =~ .*\.(aln|fasta|fa|afa) ) ]]
 						do
-							echo -e "\n\tFor the starting tree provide the full path to the file, the filename included."
-							read -p "Please enter the file to be used as the starting tree: " backbone
+							echo -e "\n\tFor the backbone alignment provide the full path to the file, the filename included."
+							read -p "Please enter the file to be used as the backbone alignment: " backbone
 						done
 
-						${PYTHON3_EXEC} ${run_upp} -s $i -a ${backbone} -t ${start_tree} -o ${output_filename} --tempdir ${pasta_dest}temporaries/sepp/ -d ${pasta_dest}jobs_upp/ -x 32
+						${PYTHON3_EXEC} ${run_upp} -s $i -a ${backbone} -t ${start_tree} -o ${output_filename} --tempdir ${pasta_dest}temporaries/sepp/ -d ${pasta_dest}jobs_upp/ #-x 32
 						cp ${pasta_dest}\jobs/*.${output_filename}_alignment.fasta ${pasta_dest}aligned/
                                                 break
                                                 ;;

@@ -1,3 +1,66 @@
 Version   Dendroscope (version 3.5.10, built 14 Nov 2018)
 Copyright (C) 2017 Daniel H. Huson. This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, licensed under the terms of the GNU General Public License, Version 3.
+Executing: open file='/home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/pasta_output/aligned/enafroCOI_all_clean5.tre';
+Input contains the special character '#', will try to interpret as extended-Newick
+;
+Caught:
+java.io.IOException: Expected '(' at position 0
+	at jloda.phylo.PhyloTree.parseBracketNotationRecursively(Unknown Source)
+	at jloda.phylo.PhyloTree.parseBracketNotation(Unknown Source)
+	at dendroscope.core.TreeData.parseBracketNotation(Unknown Source)
+	at jloda.phylo.PhyloTree.parseBracketNotation(Unknown Source)
+	at dendroscope.io.Newick.read(Unknown Source)
+	at dendroscope.io.IOBase.read(Unknown Source)
+	at dendroscope.commands.OpenFileCommand.apply(Unknown Source)
+	at jloda.gui.commands.CommandManager.execute(Unknown Source)
+	at jloda.gui.commands.CommandManager.execute(Unknown Source)
+	at dendroscope.core.Director$2.run(Unknown Source)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Command usage: open file=<filename>; - Opens a file
+Executing: open file='/home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/pasta_output/aligned/enafroCOI_all_clean5.tre';
+Input contains the special character '#', will try to interpret as extended-Newick
+;
+Caught:
+java.io.IOException: Expected '(' at position 0
+	at jloda.phylo.PhyloTree.parseBracketNotationRecursively(Unknown Source)
+	at jloda.phylo.PhyloTree.parseBracketNotation(Unknown Source)
+	at dendroscope.core.TreeData.parseBracketNotation(Unknown Source)
+	at jloda.phylo.PhyloTree.parseBracketNotation(Unknown Source)
+	at dendroscope.io.Newick.read(Unknown Source)
+	at dendroscope.io.IOBase.read(Unknown Source)
+	at dendroscope.commands.OpenFileCommand.apply(Unknown Source)
+	at jloda.gui.commands.CommandManager.execute(Unknown Source)
+	at jloda.gui.commands.CommandManager.execute(Unknown Source)
+	at dendroscope.core.Director$2.run(Unknown Source)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Command usage: open file=<filename>; - Opens a file
+Executing: open file='/home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/pasta_output/aligned/enafroCOI_all_clean5.tre';
+Input contains the special character '#', will try to interpret as extended-Newick
+;
+Caught:
+java.io.IOException: Expected '(' at position 0
+	at jloda.phylo.PhyloTree.parseBracketNotationRecursively(Unknown Source)
+	at jloda.phylo.PhyloTree.parseBracketNotation(Unknown Source)
+	at dendroscope.core.TreeData.parseBracketNotation(Unknown Source)
+	at jloda.phylo.PhyloTree.parseBracketNotation(Unknown Source)
+	at dendroscope.io.Newick.read(Unknown Source)
+	at dendroscope.io.IOBase.read(Unknown Source)
+	at dendroscope.commands.OpenFileCommand.apply(Unknown Source)
+	at jloda.gui.commands.CommandManager.execute(Unknown Source)
+	at jloda.gui.commands.CommandManager.execute(Unknown Source)
+	at dendroscope.core.Director$2.run(Unknown Source)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Command usage: open file=<filename>; - Opens a file

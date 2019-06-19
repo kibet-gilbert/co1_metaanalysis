@@ -1,0 +1,78 @@
+
+
+Using BFGS method to optimize GTR rate parameters, to disable this specify "--no-bfgs" 
+
+
+
+This is RAxML version 8.2.12 released by Alexandros Stamatakis on May 2018.
+
+With greatly appreciated code contributions by:
+Andre Aberer      (HITS)
+Simon Berger      (HITS)
+Alexey Kozlov     (HITS)
+Kassian Kobert    (HITS)
+David Dao         (KIT and HITS)
+Sarah Lutteropp   (KIT and HITS)
+Nick Pattengale   (Sandia)
+Wayne Pfeiffer    (SDSC)
+Akifumi S. Tanabe (NRIFS)
+Charlie Taylor    (UF)
+
+
+Alignment has 619 distinct alignment patterns
+
+Proportion of gaps and completely undetermined characters in this alignment: 55.46%
+
+RAxML rapid hill-climbing mode
+
+Using 1 distinct models/data partitions with joint branch length optimization
+
+
+Executing 20 non-parametric bootstrap inferences
+
+All free model parameters will be estimated by RAxML
+GAMMA model of rate heterogeneity, ML estimate of alpha-parameter
+
+GAMMA Model parameters will be estimated up to an accuracy of 0.1000000000 Log Likelihood units
+
+Partition: 0
+Alignment Patterns: 619
+Name: No Name Provided
+DataType: DNA
+Substitution Matrix: GTR
+
+
+
+
+RAxML was called as follows:
+
+raxmlHPC-HYBRID-AVX2 -T 2 -m GTRGAMMA -p 12345 -# 20 -b 12345 -# 20 -s COI_testa00_data.aln -w /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/phylogen/raxml_output/ -n COI_testa00_data 
+
+
+Bootstrap[0]: Time 31.770489 seconds, bootstrap likelihood -27685.219356, best rearrangement setting 10
+Bootstrap[1]: Time 30.973224 seconds, bootstrap likelihood -24888.738468, best rearrangement setting 15
+Bootstrap[2]: Time 16.466660 seconds, bootstrap likelihood -29210.234937, best rearrangement setting 10
+Bootstrap[3]: Time 26.594415 seconds, bootstrap likelihood -26446.273825, best rearrangement setting 15
+Bootstrap[4]: Time 22.150290 seconds, bootstrap likelihood -27723.099198, best rearrangement setting 15
+Bootstrap[5]: Time 18.087179 seconds, bootstrap likelihood -26024.065102, best rearrangement setting 15
+Bootstrap[6]: Time 26.662393 seconds, bootstrap likelihood -26455.567159, best rearrangement setting 15
+Bootstrap[7]: Time 26.528895 seconds, bootstrap likelihood -26558.250725, best rearrangement setting 10
+Bootstrap[8]: Time 19.838120 seconds, bootstrap likelihood -27743.588548, best rearrangement setting 15
+Bootstrap[9]: Time 17.232574 seconds, bootstrap likelihood -26358.702070, best rearrangement setting 10
+Bootstrap[10]: Time 22.507230 seconds, bootstrap likelihood -28499.417231, best rearrangement setting 15
+Bootstrap[11]: Time 28.203148 seconds, bootstrap likelihood -24816.050535, best rearrangement setting 15
+Bootstrap[12]: Time 36.175093 seconds, bootstrap likelihood -26816.553551, best rearrangement setting 15
+Bootstrap[13]: Time 25.558883 seconds, bootstrap likelihood -26986.562677, best rearrangement setting 15
+Bootstrap[14]: Time 19.792265 seconds, bootstrap likelihood -27049.940909, best rearrangement setting 15
+Bootstrap[15]: Time 21.691679 seconds, bootstrap likelihood -27911.936207, best rearrangement setting 10
+Bootstrap[16]: Time 22.788852 seconds, bootstrap likelihood -27200.772857, best rearrangement setting 10
+Bootstrap[17]: Time 36.147012 seconds, bootstrap likelihood -27665.000853, best rearrangement setting 15
+Bootstrap[18]: Time 18.751621 seconds, bootstrap likelihood -27326.964415, best rearrangement setting 15
+Bootstrap[19]: Time 32.459460 seconds, bootstrap likelihood -27301.183406, best rearrangement setting 15
+
+
+Overall Time for 20 Bootstraps 500.389163
+
+
+Average Time per Bootstrap 25.019458
+All 20 bootstrapped trees written to: /home/kibet/bioinformatics/github/co1_metaanalysis/data/output/phylogen/raxml_output/RAxML_bootstrap.COI_testa00_data

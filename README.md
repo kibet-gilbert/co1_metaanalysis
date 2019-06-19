@@ -22,27 +22,31 @@ Further analyses focus on identification of potential disease vector species amo
 ## Data acquisition
 The co1 barcode sequence metadata will be exported from the [boldsystems public data portal](http://www.boldsystems.org/index.php/Public_BINSearch?searchtype=records) using the following search syntax (criteria) in the search box:
 ```
-arthropods Kenya Uganda Tanzania Rwanda Burundi
+arthropoda Kenya Uganda Tanzania Rwanda Burundi Ethiopia "South Sudan"
 ```
- This results in [over 36000 published records](http://www.boldsystems.org/index.php/Public_SearchTerms)
-
+ This results in [over 36000 published records](http://www.boldsystems.org/index.php/Public_SearchTerms) from East Africa.
 **With the following summary (NB: as of Mon Nov 12, 2018, 14:58:44):**
 
 >_Found 36,436 published records, with 36,436 records with sequences, forming 10,210 BINs (clusters), with specimens from 6 countries, deposited in 126 institutions._
 >_Of these records, 8,865 have species names, and represent 2,241 species._
 
-To quickly download the latest of data set in .tsv format click [**API link**](http://www.boldsystems.org/index.php/API_Public/combined?geo=Kenya|Uganda|Tanzania|Rwanda|Burundi&taxon=arthropoda&format=tsv)
+To quickly download the latest of data set from East Africa in .tsv format click [**API link**](http://www.boldsystems.org/index.php/API_Public/combined?geo=Kenya|Uganda|Tanzania|Rwanda|Burundi&taxon=arthropoda&format=tsv)
 
 Other datasets that have not been shared publicly will be sought from individual Project Managers (_The list will be provided soon_).
+  1. DS-KENFRUIT dataset (1427) managed by Dr. Scott Miller (Kenya (1410), Madagascar (10), Nigeria (5), Burkina Faso (1), United States (1))
+  2. DS-MPALALEP dataset (2472) managed by Dr. Scott miller (All kenyan)
+  3. IDRCK IDRC kenya dataset (1704) managed by Dr. Daniel Masiga
+
+To download all any datasets from select countries in the file co1_metaanalysis/code/countries we used the command
+>source ./code/process_all_input_files.sh && bolddata_retrival ./code/countries
 
 ## Workflow
 ![Workflow](https://github.com/kibet-gilbert/co1_metaanalysis/blob/master/workflow.png)
 
-## Tools
 ### Programming languages:
-1. R
+1. R : tidyverse and r-essentials
 2. Bash (and awk)
-3. Python (Python2, Python3 and ipython)
+3. Python (Python2, Python3 and ipython): BeautifulSoup4, lxml, pandas
 
 ### Multiple Sequence Alignment
 1. [Muscle.](http://www.drive5.com/muscle/)
@@ -52,18 +56,19 @@ It is problematic to align large number of sequences using global alignment algo
 4. [SATé](https://github.com/sate-dev/sate-core) for [sate-tools-linux](https://github.com/sate-dev/sate-tools-linux)
 5. [PASTA](https://github.com/smirarab/pasta) [(Tutorial)](https://github.com/smirarab/pasta/blob/master/pasta-doc/pasta-tutorial.md)
 6. Other tools; [SEPP](https://github.com/smirarab/sepp), [HMMER](http://hmmer.org/)
+7. To view the multiple sequence alignments use [jalview](http://www.jalview.org/download) for datasets upto a few thousands but for bigger data sets use [Seaview](http://doua.prabi.fr/software/seaview) by [Gouy et al.](https://academic.oup.com/mbe/article/27/2/221/970247). Seaview uses the FLTK (installed separately) project for its user interface.
 
 #### MSA evaluation:
 This is can be done based on two approaches: 1. Based on a reference MSA (which we don't have) or 2. Based on analysing the alignments themselves. In the later we use the following [sequence based methods](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#sequence-based-methods):
 1. [Computing the CORE index of any alignment
 ](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#computing-the-local-core-index).
-2. Evaluating the [Transitive Consistency Score (TCS)](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#transitive-consistency-score-tcs) of an MSA.
+2. Evaluating the [Transitive Consistency Score (TCS)](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#transitive-consistency-score-tcs) of an MSA. The scores generated here are usefull in filtering our sequences and in phylogenetic inference based on herogenous site evolutionary rates.
 
 ### Phylogenetic Inference
 1. [RAxML](https://cme.h-its.org/exelixis/web/software/raxml/index.html)
 2. [FastTree](http://www.microbesonline.org/fasttree/)
 
-The available/applicable computer readable formats of the phylogenetic trees are [Newick](http://evolution.genetics.washington.edu/phylip/newicktree.html), [NEXUS](http://en.wikipedia.org/wiki/Nexus_file) and [PhyloXML](http://en.wikipedia.org/wiki/PhyloXML)
+The available/applicable computer readable formats of the phylogenetic trees are [Newick](http://evolution.genetics.washington.edu/phylip/newicktree.html), [NEXUS](http://en.wikipedia.org/wiki/Nexus_file) and [PhyloXML](http://en.wikipedia.org/wiki/PhyloXML).
 
 Programs to be used to visualize and edit phylogenetic trees:
 [FigTree](http://tree.bio.ed.ac.uk/software/figtree/).
@@ -82,11 +87,14 @@ COI sequences preparation protocol;
 ### Data
 Both input and output (results) are found in './data/'
 
-The metadata downloaded and stored in './data/input/eafro_data' as
->bold_data.tsv (bold2.tsv is just an exact copy of bold_data.tsv file that we are working with as a test data set file)
-or bold_data.xml or bold_fasta.fas
+The metadata downloaded and stored in './data/input/input_data/bold_africa' each file comes from a country it is named after. The test dataset, from East Africa, is stored in './data/input/test_data/' as bold_data.tsv (bold2.tsv is just an exact copy of bold_data.tsv. Other formats of the same test dataset are bold_data.xml or bold_fasta.fas (a fasta file with sequences)
 
-Reference sequences from other select african countries are stored in './data/input/afro_data'
+All the downloaded data is stored in bold_africa, parsed using BeautifulSoup4 and lxml in python3, converted to a pandas dataframe and saved as raw .tsv text files in same directory using the './code/xml_to_tsv.py' script via './code/process_all_input_files.sh' script function 'build_tsv'. Reference sequences from other select african countries are sorted, cleaned and stored in './data/input/input_data/clean_africa' while East African data is processed and stored in './data/input/input_data/clean_eafrica/' using '.code/data_cleanup.R' Rscript via './code/process_all_input_files.sh' script function 'clean_sort_tsv'
+
+Finally additional cleaning is done in Vim to remove sequnces with errors and dublicates, by listing dublicates using the command:
+>grep ">" <filename\> | sort | uniq -cd #prints the whole header if repeated
+
+>grep ">" afroCOI_Under500_data.fasta| awk 'BEGIN{ FS="|" } {print $1 } {echo $1 }' | sort | uniq -cd #prints only the identifier (processID) if repeated
 
 ### Code
 The scripts and some cloned tools (edited) are found in './code/'

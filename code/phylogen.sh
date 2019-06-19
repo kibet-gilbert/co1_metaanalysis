@@ -7,20 +7,21 @@ co1_path=~/bioinformatics/github/co1_metaanalysis/
 fasttree_dest=${co1_path}data/output/phylogen/fasttree_output/
 raxml_dest=${co1_path}data/output/phylogen/raxml_output/
 
-usage() { #checks if the positional arguments (input files) for execution of the script are defined
-        if [ $# -eq 0 ]
-        then
-                echo "Input error..."
-                echo "Usage: $0 file1.fasta[file2.fasta file3.fasta ...]"
-                exit 1
-
-        fi
-}
-
-rename() { #generates output file names with same input filename prefix. The suffix (".suffix") is set in individual functions.
-        input_filename=`basename $i`
-        output_filename=${input_filename%.*}
-}
+source ${co1_path}code/process_all_input_files.sh
+#usage() { #checks if the positional arguments (input files) for execution of the script are defined
+#        if [ $# -eq 0 ]
+#        then
+#                echo "Input error..."
+#                echo "Usage: ${FUNCNAME[1]} file1.fasta[file2.fasta file3.fasta ...]"
+#                exit 1
+#
+#        fi
+#}
+#
+#rename() { #generates output file names with same input filename prefix. The suffix (".suffix") is set in individual functions.
+#        input_filename=`basename $i`
+#        output_filename=${input_filename%.*}
+#}
 
 #=====================================================================================
 #Using FastTree to infer a tree for a nucleotide alignment with the GTR+CAT model, use
@@ -32,9 +33,9 @@ rename() { #generates output file names with same input filename prefix. The suf
 
 
 
-phylo_fastree() { #
+fastree_phylo() { #
 	usage $@
-        echo "fasttree starting alinment..."
+        echo "fasttree starting Phylogenetic tree inference..."
 
         for i in $@
         do
@@ -69,20 +70,59 @@ phylo_fastree() { #
 
 #	This call will produce to output files that can be visualized with Dendroscope: RAxML_bipartitions.T15 (support values assigned to nodes) and RAxML_bipartitionsBranchLabels.T15 (support values assigned to branches of the tree). Note that, for unrooted trees the correct representation is actually the one with support values assigned to branches and not nodes of the tree!
 
-#Rapid Bootstrapping: use -x instead of -b to provide a bootstrap random number seed
-#	raxmlHPC -m GTRGAMMA -p 12345 -x 12345 -# 100 -s dna.phy -n T19 
+#a hybrid/combined PThreads ↔ MPI parallelization that uses MPI to distribute bootstrap replicates or independent tree searches to different shared memory nodes in a cluster while it uses PThreads to parallelize the likelihood calculations of single tree searches. We call this coarse grain (MPI) and fine-grain (PThreads) parallelism: Define the exact number of CPUs avilable in the system via the -T option. (this will run nicely on my laptop that has two cores) the parallel efficiency of the PThreads version of RAxML depends on the alignment length (number of distinct patterns in your alignment); use one core/thread per 500 DNA
+#	raxmlHPC-HYBRID-AVX2 -T 2 -m GTRGAMMA -p 12345 -# 20 -b 12345 -# autoMRE -s dna.phy
+#CAT approximation of  rate heterogneity  works very well on datasets with more than 50 taxa.
+#       raxmlHPC-HYBRID-AVX2 -T 2 -o outgroup1,outgroup2 -m GTRCAT -p 12345 -# 20 -b 12345 -# 100 -s dna.phy
 
-#rapid bootstrapping allows you to do a complete analysis (ML search + Bootstrapping) in one single step. To do 100 rapid Bootstrap searches, 20 ML searches and return the best ML tree with support values to you by typing: 
-#	raxmlHPC -f a -m GTRGAMMA -p 12345 -# 20 -x 12345 -# 100 -s dna.phy -n T20 
+raxml_phylo(){ # This function performs a maximum likelihood search of the phylogenetic trees. It starts by conducting multiple (20) searches for the best starting tree (-p 12345 -s indna.phy -# 20).
+	usage $@
+	echo "RAxML starting Phylogenetic tree inference..."
+
+	for i in $@
+	do
+		if [ ! -f $i ]
+		then
+			echo "input error: file $i is non-existent!"
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa) ) ]]
+		then
+			rename
+			echo -e "\nDeleting unwanten records from `basename $i`.
+..\n"
+			unset Choice
+			read -p "Please enter Yes or NO:: " Choice
+			regexp1='^[n|N|No|NO|no|]$'
+			until [[ "$Choice" =~ $regexp1 ]]
+			do
+				read -p "Please enter Yes or NO:: " Choice
+				delete_unwanted $i
+			done
+
+			select bootstrap_option in autoMRE 20 100 1000
+			do
+				echo -e "\nProceeding with file `basename $i`...\nBeginning best starting tree search and bootstrap search, This may take a while...\n"
+				raxmlHPC-HYBRID-AVX2 -T 2 -m GTRGAMMA -p 12345 -# 20 -b 12345 -# ${bootstrap_option} -s $i -w ${raxml_dest} -n ${output_filename}
+			done
+			echo -e "\nBest stating tree search and bootstrap search DONE...\nBest tree written to ${raxml_dest}RAxML_bestTree.${output_filename} \nAnd Bootstrap replicate trees written to ${raxml_dest}RAxML_bootstrap.${output_filename}\nProceeding with drawing bipartitions on the best ML tree...\n"
+			raxmlHPC-AVX2 -m GTRCAT -p 12345 -f b -t ${raxml_dest}RAxML_bestTree.${output_filename} -z ${raxml_dest}RAxML_bootstrap.${output_filename} -w ${raxml_dest} -n${output_filename}1
+			echo -e "\nThe best tree ${raxml_dest}RAxML_bestTree.${output_filename} annotated with support values has been generated and printed to ${raxml_dest}RAxML_bipartitions.${output_filename}1 for nodes and ${raxml_dest}RAxML_bipartitionsBranchLabels.${output_filename}1 for branches\nProceeding to build a consensus tree...\n"
+			raxmlHPC-AVX2 -m GTRCAT -J MRE -z ${raxml_dest}RAxML_bootstrap.${output_filename} -w ${raxml_dest} -n MRE_CONS
+			echo -e "\nDONE generating the consensus tree and printed to ${raxml_dest}RAxML_bootstrap.MRE_CONS\n"
+		else
+			echo "input file error in `basename $i`: input file should be a FASTA or relaxed or interleaved PHYLIP file format"
+			continue
+		fi
+	done	
+}
 
 #outgroups: allow the tree to be rooted at the branch leading to the outgroup. can contain one or more than one taxon and if the outgroups ceases to be monophyletic RAxML prints out a respective warning:
-#	raxmlHPC-SSE3 -p 12345 -o Mouse -m GTRGAMMA -s dna.phy -n T30 #one outgroup
-#	raxmlHPC-SSE3 -p 12345 -o Mouse,Rat -m GTRGAMMA -s dna.phy -n T31 #two
+#       raxmlHPC-AVX2 -p 12345 -o Mouse -m GTRGAMMA -s dna.phy -n T30 #one outgroup
+#       raxmlHPC-AVX2 -p 12345 -o Mouse,Rat -m GTRGAMMA -s dna.phy -n T31 #two
 
-#In order to run the Pthreads version you just need to use the correct executable (raxmlHPC-PTHREADS or raxmlHPC-PTHREADS-SSE3) and specify one additional parameter, the number of threads you want to use via -T, e.g.:(this will run nicely on my laptop that has two cores)
-#	raxmlHPC-PTHREADS-SSE3 -T 2 -p 12345 -o Mouse,Rat -m PROTGAMMAWAG -s protein.phy -n T27
+#Rapid Bootstrapping: use -x instead of -b to provide a bootstrap random number seed
+#       raxmlHPC -m GTRGAMMA -p 12345 -x 12345 -# 100 -s dna.phy -n T19
 
-#a hybrid/combined PThreads ↔ MPI parallelization that uses MPI to distribute bootstrap replicates or independent tree searches to different shared memory nodes in a cluster while it uses PThreads to parallelize the likelihood calculations of single tree searches. We call this coarse grain (MPI) and fine-grain (PThreads) parallelism
-#	raxmlHPC-HYBRID-SSE3 -T 2 -o outgroup1,outgroup2 -m GTRGAMMA -p 12345 -# 20 -b 12345 -# 100 -s dna.phy
-#CAT approximation of  rate heterogeneity  works very well on datasets with more than 50 taxa.
-#       raxmlHPC-HYBRID-SSE3 -T 2 -o outgroup1,outgroup2 -m GTRCAT -p 12345 -# 20 -b 12345 -# 100 -s dna.phy
+#rapid bootstrapping allows you to do a complete analysis (ML search + Bootstrapping) in one single step. To do 100 rapid Bootstrap searches, 20 ML searches and return the best ML tree with support values to you by typing:
+#       raxmlHPC -f a -m GTRGAMMA -p 12345 -# 20 -x 12345 -# 100 -s dna.phy -n T20
+
+
