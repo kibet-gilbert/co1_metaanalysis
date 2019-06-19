@@ -107,6 +107,7 @@ raxml_phylo(){ # This function performs a maximum likelihood search of the phylo
 			do
 				echo -e "\nProceeding with file `basename $i`...\nBeginning best starting tree search and bootstrap search, This may take a while...\n"
 				raxmlHPC-HYBRID-AVX2 -T 2 -m GTRGAMMA -p 12345 -# 20 -b 12345 -# ${bootstrap_option} -s $i -w ${raxml_dest} -n ${output_filename}
+				break
 			done
 			echo -e "\nBest stating tree search and bootstrap search DONE...\nBest tree written to ${raxml_dest}RAxML_bestTree.${output_filename} \nAnd Bootstrap replicate trees written to ${raxml_dest}RAxML_bootstrap.${output_filename}\nProceeding with drawing bipartitions on the best ML tree...\n"
 			raxmlHPC-AVX2 -m GTRCAT -p 12345 -f b -t ${raxml_dest}RAxML_bestTree.${output_filename} -z ${raxml_dest}RAxML_bootstrap.${output_filename} -w ${raxml_dest} -n${output_filename}1
