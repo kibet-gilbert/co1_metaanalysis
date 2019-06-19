@@ -91,11 +91,16 @@ raxml_phylo(){ # This function performs a maximum likelihood search of the phylo
 ..\n"
 			unset Choice
 			read -p "Please enter Yes or NO:: " Choice
-			regexp1='^[n|N|No|NO|no|]$'
+			regexp1='^[n|N|No|NO|no]$'
+			#regexp2='^[y|Y|Yes|YES|yes]$'
 			until [[ "$Choice" =~ $regexp1 ]]
 			do
+				#read -p "Please enter Yes or NO:: " Choice
+				if [[ "${Choice}"=="y" || "${Choice}"=="Y" || "${Choice}"=="Yes" || "${Choice}"=="YES" || "${Choice}"=="yes" ]]
+				then
+					delete_unwanted $i
+				fi
 				read -p "Please enter Yes or NO:: " Choice
-				delete_unwanted $i
 			done
 
 			select bootstrap_option in autoMRE 20 100 1000
