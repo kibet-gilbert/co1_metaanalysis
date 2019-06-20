@@ -25,7 +25,7 @@ source ${co1_path}code/process_all_input_files.sh
 
 #=====================================================================================
 #Using FastTree to infer a tree for a nucleotide alignment with the GTR+CAT model, use
-#syntax:	FastTree -gtr -gamma -nt alignment_file > tree_file 
+#syntax:	$FastTree -gtr -gamma -nt alignment_file > tree_file 
 
 #To quickly estimate the reliability of each split in the tree, FastTree uses the Shimodaira-Hasegawa test on the three alternate topologies (NNIs) around that split.
 #Input formats: FastTree reads multiple sequence alignments in fasta format or in interleaved phylip format.
@@ -59,23 +59,24 @@ fastree_phylo() { #
 
 # Using RAxML (Randomized Axelerated Maximum Likelihood) to infer a phylogenetic tree from MSA nucleotide sequences alignment
 
-#Syntax:	raxmlHPC -m GTRGAMMA -p 12345 -# 20 [-b 12345 -# 100] -s dna.phy -n T6 
+#Syntax:	$raxmlHPC -m GTRGAMMA -p 12345 -# 20 [-b 12345 -# 100] -s dna.phy -n T6 
 
 #	:-m -defines the model of evolution, GTR and the variable evolutionary rate per site approximation, CAT or model GAMMA
 #	:-n -defines file name appendix, all output files; RAxML_FileTypeName.T6
 #	:-p 12345 -forces starting trees by providing a fixed random number seed (RAxML uses randomized stepwise addition parsimony trees, it will not generate the same starting tree every time); OR -t startingTree.txt -to pass a starting tree OR;-p 12345 -s dna.phy -# 20 conducts multiple searches for the best tree.
 #	:-s dna.phy - defines the input sequences; -s protein.phy or -s binary.phy
+#	:-w relative path to the output Directory
 #	:-b 12345 -# 100 -provides a bootstrap random number seed via -b 12345 and the number of bootstrap replicates we want to compute via -# 100. For automatic determination of a sufficient number of bootstrap replicates; replace -# 100 by one of bootstrap convergence criteria: -# autoFC, -# autoMRE, -# autoMR, -# autoMRE_IGN #The computed bootstrap replicate trees will be printed to a file called RAxML_bootstrap.T14 and can used to draw bipartitions on the best ML tree as follows:
-#	raxmlHPC -m GTRCAT -p 12345 -f b -t RAxML_bestTree.T13 -z RAxML_bootstrap.T14 -n T15
+#	$raxmlHPC -m GTRCAT -p 12345 -f b -t RAxML_bestTree.T13 -z RAxML_bootstrap.T14 -n T15
 
 #	This call will produce to output files that can be visualized with Dendroscope: RAxML_bipartitions.T15 (support values assigned to nodes) and RAxML_bipartitionsBranchLabels.T15 (support values assigned to branches of the tree). Note that, for unrooted trees the correct representation is actually the one with support values assigned to branches and not nodes of the tree!
 
 #a hybrid/combined PThreads ↔ MPI parallelization that uses MPI to distribute bootstrap replicates or independent tree searches to different shared memory nodes in a cluster while it uses PThreads to parallelize the likelihood calculations of single tree searches. We call this coarse grain (MPI) and fine-grain (PThreads) parallelism: Define the exact number of CPUs avilable in the system via the -T option. (this will run nicely on my laptop that has two cores) the parallel efficiency of the PThreads version of RAxML depends on the alignment length (number of distinct patterns in your alignment); use one core/thread per 500 DNA
-#	raxmlHPC-HYBRID-AVX2 -T 2 -m GTRGAMMA -p 12345 -# 20 -b 12345 -# autoMRE -s dna.phy
+#	$raxmlHPC-HYBRID-AVX2 -T 2 -m GTRGAMMA -p 12345 -# 20 -b 12345 -# autoMRE -s dna.phy
 #CAT approximation of  rate heterogneity  works very well on datasets with more than 50 taxa.
-#       raxmlHPC-HYBRID-AVX2 -T 2 -o outgroup1,outgroup2 -m GTRCAT -p 12345 -# 20 -b 12345 -# 100 -s dna.phy
+#       $raxmlHPC-HYBRID-AVX2 -T 2 -o outgroup1,outgroup2 -m GTRCAT -p 12345 -# 20 -b 12345 -# 100 -s dna.phy
 
-raxml_phylo(){ # This function performs a maximum likelihood search of the phylogenetic trees. It starts by conducting multiple (20) searches for the best starting tree (-p 12345 -s indna.phy -# 20).
+raxml_phylo_hard(){ # This function performs a maximum likelihood search of the phylogenetic trees. It starts by conducting a given number -# multiple searches for the best starting tree (-p 12345 -s indna.phy -# 20). Then conducts a given number bootstrap searches. and finally writes confidence values to the best tree besides computing a consensus tree.
 	usage $@
 	echo "RAxML starting Phylogenetic tree inference..."
 
@@ -87,12 +88,12 @@ raxml_phylo(){ # This function performs a maximum likelihood search of the phylo
 		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa) ) ]]
 		then
 			rename
-			echo -e "\nDeleting unwanten records from `basename $i`.
-..\n"
+
+			#Deleting unwanted records
+			echo -e "\nDeleting unwanted records from `basename $i`..."
 			unset Choice
-			read -p "Please enter Yes or NO:: " Choice
+			read -p "Please enter [Yes] or [NO] to proceed:: " Choice
 			regexp1='^[n|N|No|NO|no]$'
-			#regexp2='^[y|Y|Yes|YES|yes]$'
 			until [[ "$Choice" =~ $regexp1 ]]
 			do
 				#read -p "Please enter Yes or NO:: " Choice
@@ -100,20 +101,39 @@ raxml_phylo(){ # This function performs a maximum likelihood search of the phylo
 				then
 					delete_unwanted $i
 				fi
-				read -p "Please enter Yes or NO:: " Choice
+				read -p "Please enter [Yes] or [NO] to delete more unwanted records:: " Choice
 			done
 
-			select bootstrap_option in autoMRE 20 100 1000
+			#Maximum Likelihood tree search
+			echo -e "\nFinding the Best-Known Likelihood tree on `basename $i` MSA...\nSelect the number of ML searches to be conducted for best scoring tree..."
+			select MLtree_searches in 10 20 100 200
 			do
-				echo -e "\nProceeding with file `basename $i`...\nBeginning best starting tree search and bootstrap search, This may take a while...\n"
-				raxmlHPC-HYBRID-AVX2 -T 2 -m GTRGAMMA -p 12345 -# 20 -b 12345 -# ${bootstrap_option} -s $i -w ${raxml_dest} -n ${output_filename}
+				echo -e "\nProceeding with file `basename $i`...\nFinding the best-scoring ML tree for the DNA alignment.."
+				raxmlHPC-HYBRID-AVX2 -f d -T 2 -m GTRGAMMA -p 12345 -# ${MLtree_searches} -s $i -w ${raxml_dest} -n ${output_filename}
 				break
 			done
-			echo -e "\nBest stating tree search and bootstrap search DONE...\nBest tree written to ${raxml_dest}RAxML_bestTree.${output_filename} \nAnd Bootstrap replicate trees written to ${raxml_dest}RAxML_bootstrap.${output_filename}\nProceeding with drawing bipartitions on the best ML tree...\n"
-			raxmlHPC-AVX2 -m GTRCAT -p 12345 -f b -t ${raxml_dest}RAxML_bestTree.${output_filename} -z ${raxml_dest}RAxML_bootstrap.${output_filename} -w ${raxml_dest} -n${output_filename}1
-			echo -e "\nThe best tree ${raxml_dest}RAxML_bestTree.${output_filename} annotated with support values has been generated and printed to ${raxml_dest}RAxML_bipartitions.${output_filename}1 for nodes and ${raxml_dest}RAxML_bipartitionsBranchLabels.${output_filename}1 for branches\nProceeding to build a consensus tree...\n"
-			raxmlHPC-AVX2 -m GTRCAT -J MRE -z ${raxml_dest}RAxML_bootstrap.${output_filename} -w ${raxml_dest} -n MRE_CONS
-			echo -e "\nDONE generating the consensus tree and printed to ${raxml_dest}RAxML_bootstrap.MRE_CONS\n"
+			echo -e "\nBest-scoring ML tree search DONE...\nThe best scoring ML tree written to ${raxml_dest}RAxML_bestTree.${output_filename}\n\nProceeding with bootsrap search..."
+			
+			#Bootsrap search
+			echo -e "Please select the number of bootstrap_runs or selection method from the following options:"
+			select bootstrap_option in autoMRE autoMRE_ING 20 100 1000
+			do
+				echo -e "\nBegining bootstrap search, This may take a while...\n"
+				raxmlHPC-HYBRID-AVX2 -f d -T 2 -m GTRGAMMA -p 12345 -b 12345 -# ${bootstrap_option} -s $i -w ${raxml_dest} -n ${output_filename}1
+				break
+			done
+			echo -e "\nBootstrap search DONE..."
+
+			#Obtaining Confidence Values
+			echo -e "\nProceeding with drawing bipartitions on the best ML tree to obtain a topology with support values...\n"
+
+			raxmlHPC-AVX2 -m GTRCAT -p 12345 -f b -t ${raxml_dest}RAxML_bestTree.${output_filename} -z ${raxml_dest}RAxML_bootstrap.${output_filename}1 -w ${raxml_dest} -n ${output_filename}_BS_tree
+
+			#Computing Extended Majority Rule (MRE) Consensus tree
+			echo -e "\nProceeding to build a consensus tree...\n"
+
+			raxmlHPC-AVX2 -m GTRCAT -J MRE -z ${raxml_dest}RAxML_bootstrap.${output_filename}1 -w ${raxml_dest} -n ${output_filename}_MRE-CONS
+			echo -e "DONE generating the consensus tree"
 		else
 			echo "input file error in `basename $i`: input file should be a FASTA or relaxed or interleaved PHYLIP file format"
 			continue
@@ -128,7 +148,54 @@ raxml_phylo(){ # This function performs a maximum likelihood search of the phylo
 #Rapid Bootstrapping: use -x instead of -b to provide a bootstrap random number seed
 #       raxmlHPC -m GTRGAMMA -p 12345 -x 12345 -# 100 -s dna.phy -n T19
 
-#rapid bootstrapping allows you to do a complete analysis (ML search + Bootstrapping) in one single step. To do 100 rapid Bootstrap searches, 20 ML searches and return the best ML tree with support values to you by typing:
-#       raxmlHPC -f a -m GTRGAMMA -p 12345 -# 20 -x 12345 -# 100 -s dna.phy -n T20
 
 
+#====================================================================================
+
+#rapid bootstrapping allows you to do a complete analysis (ML search + Bootstrapping) in one single step. To do 100 rapid Bootstrap searches, 20 ML searches (using every 5th BS tree) and return the best ML tree with support values to you by typing:
+#       raxmlHPC -f a -m GTRGAMMA -p 12345 -x 12345 -# 100 -s dna.phy -n T20
+
+raxml_phylo_easy(){ # This function conduct a full ML analysis, i.e., a certain number of BS replicates and a search for a best-scoring tree on the original alignment and output the bootstrapped trees (RAxML_bootstrap.TEST), the best scoring ML tree (RAxML_bestTree.TEST) and the BS support values drawn on the best-scoring tree as node labels (RAxML_bipartitions.TEST) as well as, more correctly since support values refer to branches as branch labels (RAxML_bipartitionsBranchLabels.
+	usage $@
+	echo "RAxML starting Phylogenetic tree inference..."
+
+	for i in $@
+	do
+		if [ ! -f $i ]
+		then
+			echo "input error: file $i is non-existent!"
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa) ) ]]
+		then
+			rename
+
+			#Deleting unwanted records
+			echo -e "\nDeleting unwanted records from `basename $i`..."
+			unset Choice
+			read -p "Please enter [Yes] or [NO] to proceed:: " Choice
+			regexp1='^[n|N|No|NO|no]$'
+			until [[ "$Choice" =~ $regexp1 ]]
+			do
+				if [[ "${Choice}"=="y" || "${Choice}"=="Y" || "${Choice}"=="Yes" || "${Choice}"=="YES" || "${Choice}"=="yes" ]]
+				then
+					delete_unwanted $i
+				fi
+				read -p "Please enter [Yes] or [NO] to delete more unwanted records:: " Choice
+			done
+
+			#Full analysis rapid Bootstrapping and Maximum Likelihood search
+			echo -e "Please select the number of bootstrap_runs or selection method from the following options:"
+			select bootstrap_option in autoMRE autoMRE_ING 20 100 1000
+			do
+				echo -e "\nBegining complete analysis (ML search + Bootstrapping) for `basename $i` in one step..."
+				raxmlHPC-HYBRID-AVX2 -f a -T 2 -m GTRGAMMA -p 12345 -x 12345 -# ${bootstrap_option} -s $i -w ${raxml_dest} -n ${output_filename}
+				#raxmlHPC-HYBRID-AVX2 -f a -T 2 -m GTRGAMMA -p 12345 -x 12345 -# ${bootstrap_option}­-s $i -w ${raxml_dest} -n ${output_filename}
+				break
+			done
+
+			echo -e "\nComplete analysis done"
+		else
+			echo "input file error in `basename $i`: input file should be a FASTA or relaxed or interleaved PHYLIP file format"
+			continue
+		fi
+	done
+}
