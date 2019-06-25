@@ -33,7 +33,7 @@ source ${co1_path}code/process_all_input_files.sh
 
 
 
-fastree_phylo() { #
+fasttree_phylo() { #
 	usage $@
         echo "fasttree starting Phylogenetic tree inference..."
 
@@ -104,36 +104,43 @@ raxml_phylo_hard(){ # This function performs a maximum likelihood search of the 
 				read -p "Please enter [Yes] or [NO] to delete more unwanted records:: " Choice
 			done
 
-			#Maximum Likelihood tree search
-			echo -e "\nFinding the Best-Known Likelihood tree on `basename $i` MSA...\nSelect the number of ML searches to be conducted for best scoring tree..."
-			select MLtree_searches in 10 20 100 200
+			unset rate_heterogeneity
+			echo -e "Please select the rate heterogeneity model or approximation to use from the following options, enter [1] or [2]:"
+			select rate_heterogeneity in GTRGAMMA GTRCAT
 			do
-				echo -e "\nProceeding with file `basename $i`...\nFinding the best-scoring ML tree for the DNA alignment.."
-				raxmlHPC-HYBRID-AVX2 -f d -T 2 -m GTRGAMMA -p 12345 -# ${MLtree_searches} -s $i -w ${raxml_dest} -n ${output_filename}
+	
+				#Maximum Likelihood tree search
+				echo -e "\nFinding the Best-Known Likelihood tree on `basename $i` MSA...\nSelect the number of ML searches to be conducted for best scoring tree..."
+				select MLtree_searches in 10 20 100 200
+				do
+					echo -e "\nProceeding with file `basename $i`...\nFinding the best-scoring ML tree for the DNA alignment.."
+					raxmlHPC-HYBRID-AVX2 -f d -T 2 -m ${rate_heterogeneity} -p 12345 -# ${MLtree_searches} -s $i -w ${raxml_dest} -n ${output_filename}
+					break
+				done
+				echo -e "\nBest-scoring ML tree search DONE...\nThe best scoring ML tree written to ${raxml_dest}RAxML_bestTree.${output_filename}\n\nProceeding with bootsrap search..."
+				
+				#Bootsrap search
+				echo -e "Please select the number of bootstrap_runs or selection method from the following options:"
+				select bootstrap_option in autoMRE autoMRE_ING 20 100 1000
+				do
+					echo -e "\nBegining bootstrap search, This may take a while...\n"
+					raxmlHPC-HYBRID-AVX2 -f d -T 2 -m ${rate_heterogeneity} -p 12345 -b 12345 -# ${bootstrap_option} -s $i -w ${raxml_dest} -n ${output_filename}1
+					break
+				done
+				echo -e "\nBootstrap search DONE..."
+				
+				#Obtaining Confidence Values
+				echo -e "\nProceeding with drawing bipartitions on the best ML tree to obtain a topology with support values...\n"
+				
+				raxmlHPC-AVX2 -m ${rate_heterogeneity} -p 12345 -f b -t ${raxml_dest}RAxML_bestTree.${output_filename} -z ${raxml_dest}RAxML_bootstrap.${output_filename}1 -w ${raxml_dest} -n ${output_filename}_BS_tree
+				
+				#Computing Extended Majority Rule (MRE) Consensus tree
+				echo -e "\nProceeding to build a consensus tree...\n"
+				
+				raxmlHPC-AVX2 -m ${rate_heterogeneity} -J MRE -z ${raxml_dest}RAxML_bootstrap.${output_filename}1 -w ${raxml_dest} -n ${output_filename}_MRE-CONS
+				echo -e "DONE generating the consensus tree"
 				break
 			done
-			echo -e "\nBest-scoring ML tree search DONE...\nThe best scoring ML tree written to ${raxml_dest}RAxML_bestTree.${output_filename}\n\nProceeding with bootsrap search..."
-			
-			#Bootsrap search
-			echo -e "Please select the number of bootstrap_runs or selection method from the following options:"
-			select bootstrap_option in autoMRE autoMRE_ING 20 100 1000
-			do
-				echo -e "\nBegining bootstrap search, This may take a while...\n"
-				raxmlHPC-HYBRID-AVX2 -f d -T 2 -m GTRGAMMA -p 12345 -b 12345 -# ${bootstrap_option} -s $i -w ${raxml_dest} -n ${output_filename}1
-				break
-			done
-			echo -e "\nBootstrap search DONE..."
-
-			#Obtaining Confidence Values
-			echo -e "\nProceeding with drawing bipartitions on the best ML tree to obtain a topology with support values...\n"
-
-			raxmlHPC-AVX2 -m GTRCAT -p 12345 -f b -t ${raxml_dest}RAxML_bestTree.${output_filename} -z ${raxml_dest}RAxML_bootstrap.${output_filename}1 -w ${raxml_dest} -n ${output_filename}_BS_tree
-
-			#Computing Extended Majority Rule (MRE) Consensus tree
-			echo -e "\nProceeding to build a consensus tree...\n"
-
-			raxmlHPC-AVX2 -m GTRCAT -J MRE -z ${raxml_dest}RAxML_bootstrap.${output_filename}1 -w ${raxml_dest} -n ${output_filename}_MRE-CONS
-			echo -e "DONE generating the consensus tree"
 		else
 			echo "input file error in `basename $i`: input file should be a FASTA or relaxed or interleaved PHYLIP file format"
 			continue
@@ -141,16 +148,10 @@ raxml_phylo_hard(){ # This function performs a maximum likelihood search of the 
 	done	
 }
 
-#outgroups: allow the tree to be rooted at the branch leading to the outgroup. can contain one or more than one taxon and if the outgroups ceases to be monophyletic RAxML prints out a respective warning:
-#       raxmlHPC-AVX2 -p 12345 -o Mouse -m GTRGAMMA -s dna.phy -n T30 #one outgroup
-#       raxmlHPC-AVX2 -p 12345 -o Mouse,Rat -m GTRGAMMA -s dna.phy -n T31 #two
 
+#=====================================================================================
 #Rapid Bootstrapping: use -x instead of -b to provide a bootstrap random number seed
 #       raxmlHPC -m GTRGAMMA -p 12345 -x 12345 -# 100 -s dna.phy -n T19
-
-
-
-#====================================================================================
 
 #rapid bootstrapping allows you to do a complete analysis (ML search + Bootstrapping) in one single step. To do 100 rapid Bootstrap searches, 20 ML searches (using every 5th BS tree) and return the best ML tree with support values to you by typing:
 #       raxmlHPC -f a -m GTRGAMMA -p 12345 -x 12345 -# 100 -s dna.phy -n T20
@@ -181,18 +182,91 @@ raxml_phylo_easy(){ # This function conduct a full ML analysis, i.e., a certain 
 				fi
 				read -p "Please enter [Yes] or [NO] to delete more unwanted records:: " Choice
 			done
-
+			
 			#Full analysis rapid Bootstrapping and Maximum Likelihood search
 			echo -e "Please select the number of bootstrap_runs or selection method from the following options:"
 			select bootstrap_option in autoMRE autoMRE_ING 20 100 1000
 			do
-				echo -e "\nBegining complete analysis (ML search + Bootstrapping) for `basename $i` in one step..."
-				raxmlHPC-HYBRID-AVX2 -f a -T 2 -m GTRGAMMA -p 12345 -x 12345 -# ${bootstrap_option} -s $i -w ${raxml_dest} -n ${output_filename}
-				#raxmlHPC-HYBRID-AVX2 -f a -T 2 -m GTRGAMMA -p 12345 -x 12345 -# ${bootstrap_option}­-s $i -w ${raxml_dest} -n ${output_filename}
+				unset rate_heterogeneity
+				echo -e "Please select the rate heterogeneity model or approximation to use from the following options, enter [1] or [2]:"
+				select rate_heterogeneity in GTRGAMMA GTRCAT
+				do
+					echo -e "\nBegining complete analysis (ML search + Bootstrapping) for `basename $i` in one step..."
+					raxmlHPC-HYBRID-AVX2 -f a -T 2 -m ${rate_heterogeneity} -p 12345 -x 12345 -# ${bootstrap_option} -s $i -w ${raxml_dest} -n ${output_filename}
+					#raxmlHPC-HYBRID-AVX2 -f a -T 2 -m GTRGAMMA -p 12345 -x 12345 -# ${bootstrap_option}­-s $i -w ${raxml_dest} -n ${output_filename}
+					break
+				done
 				break
 			done
-
+			
 			echo -e "\nComplete analysis done"
+		else
+			echo "input file error in `basename $i`: input file should be a FASTA or relaxed or interleaved PHYLIP file format"
+			continue
+		fi
+	done
+}
+
+
+#=====================================================================================
+# OUTGROUPS: allow the tree to be rooted at the branch leading to the outgroup.
+#There are two options:
+#	1. Add outgroups before ML and bootstrap analysis: can contain one or more than one taxon and if the outgroups ceases to be monophyletic RAxML prints out a respective warning:
+#	$raxmlHPC-AVX2 -p 12345 -o Mouse -m GTRGAMMA -s dna.phy -n T30 #one outgroup
+#	$raxmlHPC-AVX2 -p 12345 -o Mouse,Rat -m GTRGAMMA -s dna.phy -n T31 #two
+
+#	2. Avoid outgroups in the initial ML and Bootstrap analyses: First build a tree (ML+BS search)for only the ingroup, then, use EPA (2011) to place outgroups. Many advantages: can test/use different outgroups; if the outgroup pertubs the ingroup analysis, no need to re-run; avoid ougroup affecting branch lengths of the ingroups, resulting from how evolutionary placement algorithm has been built and; outputs placement probabilities (likelihood weights) for each outgroup
+# Evolutoinary placement algorithm (EPA);
+#	$raxmlHPC­-f v -s alg -t referenceTree -m GTRCAT -n TEST
+# To insert different sequences into same refence tree frequently and efficiently, avoiding estimation of model parameters and branch lengths everytime do:
+# Generate a model file containing the model parameters for th reference tree: stored in RAxML_binaryModelParameters.PARAMS, which can be read into EPA
+#	$raxmlHPC -f e -m GTRGAMMA -s referenceAlignment -t refenceTree -n PARAMS
+#	$raxmlHPC -f v -R RAxML_binaryModelParameters.PARAMS -t RAxML_results.PARAMS -s alg -m GTRGAMMA -n TEST2
+# For binary model files, the models of rate heterogeneity must be the same. Anwhen using GTRCAT, disable pattern compression using -H flag in both runs.
+
+raxml_rooting(){ # This funtion generates a model filewith model parameters for reference tree then places the outgroup/s in the tree
+	usage $@
+	echo "RAxML starting Phylogenetic tree inference..."
+
+	for i in $@
+	do
+		if [ ! -f $i ]
+		then
+			echo "input error: file $i is non-existent!"
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa) ) ]]
+		then
+ 			rename
+
+			unset rate_heterogeneity
+			echo -e "Please select the rate heterogeneity model or approximation to use from the following options, enter [1] or [2]:"
+			select rate_heterogeneity in GTRGAMMA GTRCAT
+			do
+				unset tree
+				unset outgroup
+				echo -e "\nBeginning rerooting of the tree. Please enter the path to the tree file to be  rerooted..."
+				read -p "Please enter the phylogenetic tree::  " tree
+				case $rate_heterogeneity in
+					GTRGAMMA)
+						echo -e "\nBeginning rooting based on ${rate_heterogeneity} rate heterogeneity model...\nGenerating reference tree model parameters binary file..."
+						raxmlHPC-AVX2 -f e -m ${rate_heterogeneity} -s ${i} -t ${tree} -w ${raxml_dest} -n ${output_filename}_PARAMS
+						echo -e "\nBinary files generation DONE.\nProceeding with outgroup insertion...\nPlease enter the path to the file containing the outgroup, it should be a single sequence/record..."
+						read -p "Please enter the outgroup file:: " outgroup
+						raxmlHPC-AVX2 -f v -m ${rate_heterogeneity} -R ${raxml_dest}RAxML_binaryModelParameters.${output_filename}_PARAMS -t ${raxml_dest}RAxML_results.${output_filename}_PARAMS -s ${outgroup} -n ${output_filename}_rooted
+						echo -e "Thorough outgroup insertion DONE."
+						break
+						;;
+					GTRCAT)
+						echo -e "\nBeginning rooting based on ${rate_heterogeneity} rate heterogeneity model...\nGenerating reference tree model parameters binary file..."
+						raxmlHPC-AVX2 -f e -H -m ${rate_heterogeneity} -s ${i} -t ${tree} -w ${raxml_dest} -n ${output_filename}_PARAMS
+						echo -e "\nBinary files generation DONE.\nProceeding with outgroup insertion...\nPlease enter the path to the file containing the outgroup, it should be a single sequence/record..."
+						read -p "Please enter the outgroup file:: " outgroup
+						raxmlHPC-AVX2 -f v -H -m ${rate_heterogeneity} -R ${raxml_dest}RAxML_binaryModelParameters.${output_filename}_PARAMS -t ${raxml_dest}RAxML_results.${output_filename}_PARAMS -s ${outgroup} -n ${output_filename}_rooted
+						echo -e "Thorough outgroup insertion DONE."
+						break
+						;;
+				esac
+			done
+
 		else
 			echo "input file error in `basename $i`: input file should be a FASTA or relaxed or interleaved PHYLIP file format"
 			continue
