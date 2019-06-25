@@ -3,7 +3,7 @@
 ## Preview
 The co1_metaanalysis is a Master's of science in Molecular Biology and Bioinformatics project, Department of Biochemistry, [Jomo Kenyatta University of Agriculture and Technology(Jkuat)](http://www.jkuat.ac.ke/)
 
-It is conducted at the **[international centre for insect physiology and ecology(_icipe_)](http://www.icipe.org/)**  in collaboration with [BOLD Systems](http://www.boldsystems.org/)
+It is conducted at the **[international centre for insect physiology and ecology(_icipe_)](http://www.icipe.org/)**  based on data from [BOLD Systems](http://www.boldsystems.org/)
 
 This project is conducted with the supervision and support of:
 1. [Dr Scott Miller](https://entomology.si.edu/StaffPages/MillerS.html)
@@ -20,7 +20,7 @@ The aim of the study is to determine the phylogenetic diversity and phylogeograp
 Further analyses focus on identification of potential disease vector species among biting flies (Order Diptera) and crop pest species such as fruit flies (family Tephriditae) that have not yet been implicated with but may have an impact on human, animal and crop health.
 
 ## Data acquisition
-The co1 barcode sequence metadata will be exported from the [boldsystems public data portal](http://www.boldsystems.org/index.php/Public_BINSearch?searchtype=records) using the following search syntax (criteria) in the search box:
+The test data to COI barcode sequences and metadata are exported from the [boldsystems public data portal](http://www.boldsystems.org/index.php/Public_BINSearch?searchtype=records) using the following search syntax (criteria) in the search box:
 ```
 arthropoda Kenya Uganda Tanzania Rwanda Burundi Ethiopia "South Sudan"
 ```
@@ -37,10 +37,9 @@ Other datasets that have not been shared publicly will be sought from individual
   2. DS-MPALALEP dataset (2472) managed by Dr. Scott miller (All kenyan)
   3. IDRCK IDRC kenya dataset (1704) managed by Dr. Daniel Masiga
 
-To download all any datasets from select countries in the file co1_metaanalysis/code/countries we used the command
->source ./code/process_all_input_files.sh && bolddata_retrival ./code/countries
+To download the COI-5P datasets from countries listed in the file `countries`, we used the `bolddata_retrival` function in the `process_all_input_files.sh` script. The downloaded data are in .XML format files.
 
-## Workflow
+## Workflow.
 ![Workflow](https://github.com/kibet-gilbert/co1_metaanalysis/blob/master/workflow.png)
 
 ### Programming languages:
@@ -48,36 +47,45 @@ To download all any datasets from select countries in the file co1_metaanalysis/
 2. Bash (and awk)
 3. Python (Python2, Python3 and ipython): BeautifulSoup4, lxml, pandas
 
-### Multiple Sequence Alignment
+### Multiple Sequence Alignment tools.
 1. [Muscle.](http://www.drive5.com/muscle/)
 It is problematic to align large number of sequences using global alignment algorithims used by muscle as explained in [Very large alignments are usually a bad idea](http://www.drive5.com/muscle/manual/bigalignments.html). Clustering highly identical (95% or 90% identity) help reduce the the sequences and challanges faced.
 2. [T_Coffee](https://github.com/cbcrg/tcoffee). [The regressive mode of T-Coffee](https://github.com/cbcrg/tcoffee/blob/master/docs/tcoffee_quickstart_regressive.rst) is [described as most suitable for large datasets](https://www.biorxiv.org/content/10.1101/490235v1.full) by E. G. Nogales et. al (2018).
 3. [MAFFT Version 7](https://mafft.cbrc.jp/alignment/software/). For large datasets: [Tips for handling a large dataset](https://mafft.cbrc.jp/alignment/software/tips.html). More published by [T. Nakamura et. al (2018)](https://academic.oup.com/bioinformatics/article/34/14/2490/4916099)
 4. [SATé](https://github.com/sate-dev/sate-core) for [sate-tools-linux](https://github.com/sate-dev/sate-tools-linux)
 5. [PASTA](https://github.com/smirarab/pasta) [(Tutorial)](https://github.com/smirarab/pasta/blob/master/pasta-doc/pasta-tutorial.md)
-6. Other tools; [SEPP](https://github.com/smirarab/sepp), [HMMER](http://hmmer.org/)
-7. To view the multiple sequence alignments use [jalview](http://www.jalview.org/download) for datasets upto a few thousands but for bigger data sets use [Seaview](http://doua.prabi.fr/software/seaview) by [Gouy et al.](https://academic.oup.com/mbe/article/27/2/221/970247). Seaview uses the FLTK (installed separately) project for its user interface.
+6. Other tools; [SEPP](https://github.com/smirarab/sepp), [UPP](https://github.com/smirarab/sepp/blob/master/README.UPP.md) and [HMMER](http://hmmer.org/)
+7. Visualized the multiple sequence alignments using [jalview](http://www.jalview.org/download) for datasets upto a few thousands and [Seaview](http://doua.prabi.fr/software/seaview) by [Gouy et al.](https://academic.oup.com/mbe/article/27/2/221/970247) for bigger data sets. Seaview uses the FLTK project (installed separately) for its user interface.
 
-#### MSA evaluation:
-This is can be done based on two approaches: 1. Based on a reference MSA (which we don't have) or 2. Based on analysing the alignments themselves. In the later we use the following [sequence based methods](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#sequence-based-methods):
+#### MSA evaluation methods used in T_Coffee:
+We used the following [sequence based methods](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#sequence-based-methods) to evaluate our MSAs:
 1. [Computing the CORE index of any alignment
 ](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#computing-the-local-core-index).
 2. Evaluating the [Transitive Consistency Score (TCS)](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#transitive-consistency-score-tcs) of an MSA. The scores generated here are usefull in filtering our sequences and in phylogenetic inference based on herogenous site evolutionary rates.
 
-### Phylogenetic Inference
-1. [RAxML](https://cme.h-its.org/exelixis/web/software/raxml/index.html)
-2. [FastTree](http://www.microbesonline.org/fasttree/)
+### Phylogenetic Inference tools.
+1. [RAxML](https://cme.h-its.org/exelixis/web/software/raxml/index.html): Highly accurate, computer intensive but, a little slow. Removes duplicate sequences (Headers/nucleotide-sequences) then infers the tree. Descriped in [Stamakis et. al. (2014)](https://academic.oup.com/bioinformatics/article/30/9/1312/238053)
+2. [FastTree](http://www.microbesonline.org/fasttree/): Fast, less computer intensive, but, not so accurate.
 
-The available/applicable computer readable formats of the phylogenetic trees are [Newick](http://evolution.genetics.washington.edu/phylip/newicktree.html), [NEXUS](http://en.wikipedia.org/wiki/Nexus_file) and [PhyloXML](http://en.wikipedia.org/wiki/PhyloXML).
+The resultant computer readable formats of the phylogenetic trees are either of the following [Newick](http://evolution.genetics.washington.edu/phylip/newicktree.html), [NEXUS](http://en.wikipedia.org/wiki/Nexus_file) and [PhyloXML](http://en.wikipedia.org/wiki/PhyloXML).
 
 Programs to be used to visualize and edit phylogenetic trees:
-[FigTree](http://tree.bio.ed.ac.uk/software/figtree/).
-Other options being; [Archaeopteryx](http://www.phylosoft.org/archaeopteryx/), [Dendroscope](http://ab.inf.uni-tuebingen.de/software/dendroscope/),
-[Jstree](http://lh3lh3.users.sourceforge.net/jstree.shtml) or [PhyloWidget](http://www.phylowidget.org/)
+1. [Archaeopteryx](http://www.phylosoft.org/archaeopteryx/), See Archaeopteryx documentation [here](https://sites.google.com/site/cmzmasek/home/software/archaeopteryx/documentation).
+2. [FigTree](http://tree.bio.ed.ac.uk/software/figtree/).
+3. Also attempted these other options: [(i) Dendroscope](http://ab.inf.uni-tuebingen.de/software/dendroscope/),
+[(ii) Jstree](http://lh3lh3.users.sourceforge.net/jstree.shtml) or [(iii) PhyloWidget](http://www.phylowidget.org/) can be used.
 
-### Phylogeographic Analysis
+### Phylogenetic Tree Analysis Tools:
+1. [Evolutionary Placement Algorithm (EPA)](https://academic.oup.com/sysbio/article/60/3/291/1667010): Used to root a tree (adding outgroups). Integrated into RAxML, it can classify a bunch of environmental sequences into a reference tree using thorough read insertions given a non-comprehensive reference tree and an alignment containing all sequences (reference + query)
+2. [Bio.Phylo](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-13-209): Biopython's Phylo package as descriped in the [Phylo Cookbook](https://biopython.org/wiki/Phylo_cookbook) and [tutorial](http://biopython.org/DIST/docs/tutorial/Tutorial.html#htoc204), uses other Python packages; MatPlotlib and NetworkX. Can be used to study the tree and manipulate it's nodes
+
+### Phylogeographic Analysis tools.
 1. BASTA [(BEAST2 bayesian Package)](http://www.beast2.org/)
 2. Other tools; [geocoding script(Gratton et al., 2017)](https://github.com/paolo-gratton/Gratton_et_al_JBiogeogr_2016)
+
+### Other tools
+Besides tools mentioned above, the tools below proved useful:
+1. [PGDSpider](http://www.cmpg.unibe.ch/software/PGDSpider/): Very useful in molecular sequence format convertion/transformation i.e FASTA, phylip interleaved or sequential.
 
 ## Resources
 COI sequences preparation protocol;
@@ -85,13 +93,13 @@ COI sequences preparation protocol;
 2. [Wilson 2012 DNA barcoding insects](https://github.com/kibet-gilbert/co1_metaanalysis/blob/master/Wilson_2012_DNA_barcoding_insects.pdf)
 
 ### Data
-Both input and output (results) are found in './data/'
+Both input and output (results) are found in './data/' directory
 
-The metadata downloaded and stored in './data/input/input_data/bold_africa' each file comes from a country it is named after. The test dataset, from East Africa, is stored in './data/input/test_data/' as bold_data.tsv (bold2.tsv is just an exact copy of bold_data.tsv. Other formats of the same test dataset are bold_data.xml or bold_fasta.fas (a fasta file with sequences)
+The metadata downloaded and stored in './data/input/input_data/bold_africa' each file comes from a country it is named after. The test dataset, from East Africa, is stored in './data/input/test_data/' as bold_data.tsv ( Other formats of the same test dataset are bold_data.xml or bold_fasta.fas (a fasta file with sequences)
 
 All the downloaded data is stored in bold_africa, parsed using BeautifulSoup4 and lxml in python3, converted to a pandas dataframe and saved as raw .tsv text files in same directory using the './code/xml_to_tsv.py' script via './code/process_all_input_files.sh' script function 'build_tsv'. Reference sequences from other select african countries are sorted, cleaned and stored in './data/input/input_data/clean_africa' while East African data is processed and stored in './data/input/input_data/clean_eafrica/' using '.code/data_cleanup.R' Rscript via './code/process_all_input_files.sh' script function 'clean_sort_tsv'
 
-Finally additional cleaning is done in Vim to remove sequnces with errors and dublicates, by listing dublicates using the command:
+Finally, additional double-checking and some cleaning is done in Vim to remove sequnces with errors and dublicates, after listing dublicates using the command:
 >grep ">" <filename\> | sort | uniq -cd #prints the whole header if repeated
 
 >grep ">" afroCOI_Under500_data.fasta| awk 'BEGIN{ FS="|" } {print $1 } {echo $1 }' | sort | uniq -cd #prints only the identifier (processID) if repeated

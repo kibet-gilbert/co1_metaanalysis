@@ -35,3 +35,4 @@ code/tools/sate/satesrc-v2.2.7-2013Feb15/linux1/
 *.odp
 *.swd
 *.swc
+.~lock*
