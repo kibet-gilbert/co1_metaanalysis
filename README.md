@@ -30,7 +30,7 @@ arthropoda Kenya Uganda Tanzania Rwanda Burundi Ethiopia "South Sudan"
 >_Found 36,436 published records, with 36,436 records with sequences, forming 10,210 BINs (clusters), with specimens from 6 countries, deposited in 126 institutions._
 >_Of these records, 8,865 have species names, and represent 2,241 species._
 
-To quickly download the latest of data set from East Africa in .tsv format click [**API link**](http://www.boldsystems.org/index.php/API_Public/combined?geo=Kenya|Uganda|Tanzania|Rwanda|Burundi|Ethiopia|"South Sudan"&taxon=arthropoda&format=tsv)
+To quickly download the latest of data set from East Africa in .tsv format click [**API link**](http://www.boldsystems.org/index.php/API_Public/combined?geo=Kenya|Uganda|Tanzania|Rwanda|Burundi|Ethiopia|"South%20Sudan"&taxon=arthropoda&format=tsv)
 
 Other datasets that have not been shared publicly will be sought from individual Project Managers (_The list will be provided soon_).
   1. DS-KENFRUIT dataset (1427) managed by Dr. Scott Miller (Kenya (1410), Madagascar (10), Nigeria (5), Burkina Faso (1), United States (1))
