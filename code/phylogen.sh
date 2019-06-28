@@ -8,20 +8,6 @@ fasttree_dest=${co1_path}data/output/phylogen/fasttree_output/
 raxml_dest=${co1_path}data/output/phylogen/raxml_output/
 
 source ${co1_path}code/process_all_input_files.sh
-#usage() { #checks if the positional arguments (input files) for execution of the script are defined
-#        if [ $# -eq 0 ]
-#        then
-#                echo "Input error..."
-#                echo "Usage: ${FUNCNAME[1]} file1.fasta[file2.fasta file3.fasta ...]"
-#                exit 1
-#
-#        fi
-#}
-#
-#rename() { #generates output file names with same input filename prefix. The suffix (".suffix") is set in individual functions.
-#        input_filename=`basename $i`
-#        output_filename=${input_filename%.*}
-#}
 
 #=====================================================================================
 #Using FastTree to infer a tree for a nucleotide alignment with the GTR+CAT model, use
@@ -193,7 +179,7 @@ raxml_phylo_easy(){ # This function conduct a full ML analysis, i.e., a certain 
 				do
 					echo -e "\nBegining complete analysis (ML search + Bootstrapping) for `basename $i` in one step..."
 					raxmlHPC-HYBRID-AVX2 -f a -T 2 -m ${rate_heterogeneity} -p 12345 -x 12345 -# ${bootstrap_option} -s $i -w ${raxml_dest} -n ${output_filename}
-					#raxmlHPC-HYBRID-AVX2 -f a -T 2 -m GTRGAMMA -p 12345 -x 12345 -# ${bootstrap_option}­-s $i -w ${raxml_dest} -n ${output_filename}
+					##raxmlHPC-HYBRID-AVX2 -f a -T 2 -m GTRGAMMA -p 12345 -x 12345 -# ${bootstrap_option}­-s $i -w ${raxml_dest} -n ${output_filename}
 					break
 				done
 				break
