@@ -39,9 +39,10 @@ build_fasta() { #This function generates .fasta files from .tsv files using an a
 			echo "input error: file '$i' is non-existent!"
 		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(tsv) ) ]]
 		then
+			input_src=`dirname "$( realpath "${i}" )"`
 			rename
 			echo -e "\nLet us proceed with file '${input_filename}'..."
-			${AWK_EXEC} -f ${AWK_SCRIPT} "$i" > ${output_filename}.fasta
+			${AWK_EXEC} -f ${AWK_SCRIPT} "$i" > ${input_src}/${output_filename}.fasta
 		else
 			echo "input file error in `basename -- $i`: input file should be a .tsv file format"
 			continue
@@ -208,7 +209,7 @@ clean_sort_tsv() { #This function cleans the .tsv files, sort the records into d
 #comm -12 file1 file2 > repeats && less repeats
 
 replacing_headers() { #This function takes an input file of edited_fasta_format_headers and searches through a fasta_format_sequence file and substitute their headers if their uniq IDs match
- 	if [ $# -lt 2 ]
+ 	if [ $# -eq 0 ]
 	then
 		echo "Input error..."
       		echo "Usage: ${FUNCNAME[0]} seq.fasta [seq2.fasta seq3.fasta ...]"
@@ -216,37 +217,52 @@ replacing_headers() { #This function takes an input file of edited_fasta_format_
         fi
 	
 	unset headers
-	until [[ ( -f "$headers" ) && ( `basename -- "$headers"` =~ .*\.(aln|fasta|fa|afa) ) ]]
+	until [[ ( -f "$headers" ) && ( `basename -- "$headers"` =~ .*\.(fasta|fa|afa) ) ]]
 	do
-		echo -e "\n\tFor the headers.aln|fasta|fa|afa input provide the full path to the file, the filename included."
+		echo -e "\nFor the headers.aln|fasta|fa|afa input provide the full path to the file, the filename included."
 		read -p "Please enter the file to be used as the FASTA headers source: " headers
 	done
 	
 	echo -e "\n\tStarting operation....\n\tPlease wait, this may take a while...."
-	for line in `cat ${headers}`
+	for i in "$@"
 	do
-		#x=$( head -10 idrck_headers | tail -1 | awk 'BEGIN { FS="|"; }{print $1;}') && echo $x
-		x=`echo "$line" | ${AWK_EXEC} 'BEGIN { RS="\n"; FS="|"; }{ x = $1; print x; }'`
-		y=`echo "$line" | ${AWK_EXEC} 'BEGIN { RS="\n"; FS="|"; }{ y = $0; print y; }'`
-		#echo -e "\n $x \n $y"
-		
-		z=`grep "$x" $2`
-		#echo "$z"
-		for one_z in `echo -e "${z}"`
+		number_of_replacements=0
+		unset x
+		unset y
+		unset z
+		echo -e "\nProceeding with `basename -- $i`..."
+		for line in `cat ${headers}`
 		do
-			if [ $one_z == $y ]
-			then
-				return 0
-			else
-				#echo ${one_z}
-				sed -i "s/${one_z}/${y}/g" $2
-				#sed -i "s/^.*\b${x}\b.*$/${y}/g" $2
-			fi
+			#x=$( head -10 idrck_headers | tail -1 | awk 'BEGIN { FS="|"; }{print $1;}') && echo $x
+			x=`echo "$line" | ${AWK_EXEC} 'BEGIN { RS="\n"; FS="|"; }{ x = $1; print x; }'`
+			y=`echo "$line" | ${AWK_EXEC} 'BEGIN { RS="\n"; FS="|"; }{ y = $0; print y; }'`
+			#echo -e "\n $x \n $y"
+
+			#Characters to replace from the headers as they will affect the performance of sed: carriage Returns (), white spaces ( ), back slashes (/), and ampersand '&' characters; they greately hamper the next step of header substitution.
+			sed -i 's/\r$//g; s/ /_/g; s/\&/_n_/g; s/\//\\&/g' $i
+
+			z=`grep "$x" $i`
+			#echo "$z"
+			for one_z in `echo -e "${z}"`
+			do
+				if [ $one_z == $y ]
+				then
+					echo -e "Change for ${x} already in place..."
+					continue
+				else
+					echo -e "\nSubstituting header for ${x}..."
+					sed -i "s/${one_z}/${y}/g" $i
+					#sed -i "s/^.*\b${x}\b.*$/${y}/g" $i
+				fi
+				number_of_replacements=$( expr $number_of_replacements + 1 )
+			done
 		done
+		echo -e "\nDONE. $number_of_replacements replacements done in `basename -- $i`"
 	done
 	echo -e "\n\tCongratulations...Operation done."
 }
 
+#===============================================================================================================================================================
 
 delete_repeats() { #This function takes a fasta_format_sequences file and deletes repeats of sequences based on identical headers.
 	#in multiple files at once: awk -F'[|]' 'FNR%2{f=seen[$1]++} !f' *
@@ -306,6 +322,7 @@ delete_repeats() { #This function takes a fasta_format_sequences file and delete
 
 }
 
+#===============================================================================================================================================================
 
 delete_unwanted() { #this function copys a record that fits a provided pattern, i.e a name that may be from a non-insect class based on the taxon_name_description; the arguments provided, are the files to be searched for the patterns
 	# To get the list of orders in description_taxon_names and their frequencies, from  which to select the undesired patterns (names), do: 
@@ -319,31 +336,45 @@ delete_unwanted() { #this function copys a record that fits a provided pattern, 
 
         fi
 
-	unset pattern_name
-
-	regexp='^[a-zA-Z0-9/_-\ ]+$'
-	until [[ "$pattern_name" =~ $regexp ]]
+	echo -e "To delete sequences with specific words in the headers please choose [Yes] to proceed or [No] to cancel"
+	PS3='Select option YES to delete, [1] or NO to exit, [2]: '	
+	select option in YES NO
 	do
-		read -p "Please enter string pattern to be searched:: " pattern_name
+		unset pattern_name
+
+		regexp='^[a-zA-Z0-9/_-\ ]+$'
+
+		case $option in
+			YES)
+				until [[ "$pattern_name" =~ $regexp ]]
+				do
+					read -p "Please enter string pattern to be searched:: " pattern_name
+				done
+				
+				echo -e "\n\tDeleting all records with description '$pattern_name'..."
+				
+				for i in "$@"
+				do
+					echo -e "\n\tProceeding with `basename -- $i`..."
+					rename
+					input_src=`dirname "$( realpath "${i}" )"`
+					
+					#awk -v name="$input_r" 'BEGIN {RS="\n>"; ORF="\n>"}; $0 ~ name {print ">"$0}' test_all.fasta | less
+					
+					concatenate_fasta_seqs $i
+					$AWK_EXEC -v pattern="$pattern_name" 'BEGIN { RS="\n>"; ORS="\n"; FS="\n"; OFS="\n" }; $1 ~ pattern {print ">"$0;}' $i >> ${input_src}/${output_filename}_undesired.fasta
+					sed -i "/$pattern_name/,+1 d" $i
+				done
+				echo -e "\n\tDONE. All deleted records have been stored in '${output_filename}_undesired.fasta'"
+				;;
+			NO)
+				echo -e "Exiting deletion of unwanted sequences..."
+				break
+		esac
 	done
-
-	echo -e "\n\tDeleting all records with description '$pattern_name'..."
-
-	for i in "$@"
-	do
-		echo -e "\n\tProceeding with `basename -- $i`..."
-		rename
-		input_src=`dirname "$( realpath "${i}" )"`
-
-		#awk -v name="$input_r" 'BEGIN {RS="\n>"; ORF="\n>"}; $0 ~ name {print ">"$0}' test_all.fasta | less
-
-		concatenate_fasta_seqs $i
-		$AWK_EXEC -v pattern="$pattern_name" 'BEGIN { RS="\n>"; ORS="\n"; FS="\n"; OFS="\n" }; $0 ~ pattern {print ">"$0;}' $i >> ${input_src}/${output_filename}_undesired.fasta
-		sed -i "/$pattern_name/,+1 d" $i
-	done
-	echo -e "\n\tDONE. All deleted records have been stored in '${output_filename}_undesired.fasta'"
 }
 
+#===============================================================================================================================================================
 
 trimming_seqaln() { #This function trims aligned sequences in a file on both ends and retains a desired region based on input field (sequence position) values.
 
@@ -391,7 +422,10 @@ trimming_seqaln() { #This function trims aligned sequences in a file on both end
 	done
 }
 
-delete_shortseqs() { #This function identifies and removes sequences that have specified number of gaps at the ends. It stores the removed sequences.
+
+#===============================================================================================================================================================
+
+delete_shortseqs() { #This function identifies and removes sequences that have specified number of gaps at the ends. It stores the cleaned sequences.
 
 	if [ $# -eq 0 ]
         then
@@ -409,6 +443,8 @@ delete_shortseqs() { #This function identifies and removes sequences that have s
                 then
                         input_src=`dirname "$( realpath "${i}" )"`
                         rename $i
+			concatenate_fasta_seqs $i
+
 			echo -e "\tThis function will remove sequences that have a specified number of gaps, '-', at the start or end of the sequence. Proceed and enter the accepted maximum number of gaps at the start and end positions of the sequences.\n\tIntegers only accepted!!!"
 			unset start_gaps
 			unset end_gaps
@@ -424,17 +460,64 @@ delete_shortseqs() { #This function identifies and removes sequences that have s
 			done
 
                         echo -e "\tRemoving sequences in `basename -- ${i}` that have more than ${start_gaps} gaps in start position and ${end_gaps} in end position"
-			concatenate_fasta_seqs $i
 
-			$AWK_EXEC -v start_g=$start_gaps -v end_g=$end_gaps ' /^>/ { hdr=$0; next }; match($0,/^-*/) && RLENGTH<=start_g && match($0,/-*$/) && RLENGTH<=end_g { print hdr; print }' $i > ${input_src}/${output_filename}_st${start_gaps}-en${end_gaps}.aln
+			$AWK_EXEC -v start_g=$start_gaps -v end_g=$end_gaps ' /^>/ { hdr=$0; next }; match($0,/^-*/) && RLENGTH<=start_g && match($0,/-*$/) && RLENGTH<=end_g { print hdr; print }' $i > ${input_src}/${output_filename}_sn${start_gaps}-eg${end_gaps}.aln
 			#awk -v start_g=$start_gaps -v end_g=$end_gaps ' /^>/ { hdr=$0; next }; (x="^-{"start_g+1",}")(y="-{"end_g+1",}$") !match($0, x) && !match($0, y)  {print x y hdr; print }' input_trmmd.aln | wc -l #Does not remove all as needed
-			echo -e "\n\tDONE. All removed records have been stored in $input > ${input_src}/${output_filename}_sh${start_gaps}-en${end_gaps}.aln\n"
+			echo -e "\n\tDONE. All cleaned records have been stored in $input > ${input_src}/${output_filename}_sg${start_gaps}-eg${end_gaps}.aln\n"
                 else
                         echo "input file error in `basename $i`: input file should be a .aln file format"
                         continue
                 fi
         done
 }
+
+#===============================================================================================================================================================
+
+
+delete_shortseqs_N() { #This function identifies and removes sequences that have specified number of Ns at the ends. It stores the cleaned sequences.
+	if [ $# -eq 0 ]
+	then
+		echo "Input error..."
+		echo "Usage: ${FUNCNAME[0]} file1.*[file2.* file3.* ...]"
+		return 1
+	fi
+	
+	for i in "$@"
+	do
+		if [ ! -f $i ]
+		then
+			echo "input error: file '$i' is non-existent!"
+		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa) ) ]]
+		then
+			input_src=`dirname "$( realpath "${i}" )"`
+			rename $i
+			concatenate_fasta_seqs $i
+			
+			echo -e "\tThis function will remove sequences that have a specified number of undefined nucleotides, 'N', or gaps, '-', at the start or end of the sequence. Proceed and enter the accepted maximum number of Ns or '-'s at the start and end positions of the sequences.\n\tIntegers only accepted!!!"
+			unset start_Ns
+			unset end_Ns
+			regexp='^[0-9]+$'
+			until [[ "$start_Ns" =~ $regexp ]]
+			do
+				read -p "Please enter the muximum number of Ns or '-'s allowed at start position: " start_Ns
+			done
+			
+			until [[ "$end_Ns" =~ $regexp ]]
+			do
+				read -p "Please enter the maximum number of Ns or '-'s allowed at the end position: " end_Ns
+			done
+			
+			echo -e "\tRemoving sequences in `basename -- ${i}` that have more than ${start_Ns} Ns or '-'s in start position and ${end_Ns} in end position"
+			
+			$AWK_EXEC -v start_N=$start_Ns -v end_N=$end_Ns ' /^>/ { hdr=$0; next }; match($0,/^[-Nn]*/) && RLENGTH<=start_N && match($0,/[-Nn]*$/) && RLENGTH<=end_N { print hdr; print }' $i > ${input_src}/${output_filename}_sN${start_Ns}-eN${end_Ns}.aln
+			echo -e "\n\tDONE. All cleaned records have been stored in $input > ${input_src}/${output_filename}_sN${start_Ns}-eN${end_Ns}.aln\n"
+		else
+			echo "input file error in `basename $i`: input file should be a .aln file format"
+			continue
+		fi
+	done
+}
+#===============================================================================================================================================================
 
 remove_gaps() { # Removing gaps, "-" in a sequnce.
 	# Works only for singular line header and sequence lines, i.e does not concatenate separate lines of the same sequence.
@@ -466,6 +549,9 @@ remove_gaps() { # Removing gaps, "-" in a sequnce.
 
 }
 
+
+#===============================================================================================================================================================
+
 concatenate_fasta_seqs() { # This function converts a multiple line FASTA format sequence into a two line record of a header and a sequnce lines.
 	#awk '/^>/ {if (FNR==1) print $0; else print "\n" $0; }; !/^>/ {gsub("\n","",$0); printf $0}' renafroCOI_500to700_data-650to660_st22n1006-en1474n3479_head25000_tail125001.afa | less -S
 
@@ -496,7 +582,7 @@ concatenate_fasta_seqs() { # This function converts a multiple line FASTA format
 
 
 retrive_original_seqs() { # Retriving a subset of unaligned sequences from original parent file
-	if [ $# -eq 0 ]
+	if [ $# -ne 2 ]
 	then
 		echo "Input error..."
 		echo "Usage: ${FUNCNAME[0]} seqfile.fasta parentfile.fasta"

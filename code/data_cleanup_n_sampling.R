@@ -7,7 +7,7 @@ install.packages("tidyverse") ## installs tidyverse
 suppressMessages(library(dplyr));suppressMessages(library(magrittr))## loads dplyr and magrittr packages
 
 
-bold_dataframe = read.delim("../data/input/eafro_data/bold_data.tsv", stringsAsFactors = F, header = T, na.strings = "") ## loads bold2.tsv as a dataframe object. works ok, bold2.tsv does not contain any '\r' characters
+bold_dataframe = read.delim("../data/input/test_data/bold_data.tsv", stringsAsFactors = F, header = T, na.strings = "") ## loads bold2.tsv as a dataframe object. works ok, bold2.tsv does not contain any '\r' characters
 
 str(bold_dataframe) ## structure summary of bold_dataframe data
 
@@ -65,5 +65,5 @@ COI_teste07_data <- COI_Over700_data[sample(nrow(COI_Over700_data), 100), ]#from
 
 ### Printing copies of the final tidy files as dataframes in .tsv format
 datalist = lapply(c("COI_all_data", "COI_Over499_data", "COI_500to700_data", "COI_650to660_data", "COI_Over700_data", "COI_Under500_data", "COI_testa00_data", "COI_testb01_data", "COI_testb02_data", "COI_testb03_data", "COI_testc04_data", "COI_testc05_data", "COI_testd06_data", "COI_teste07_data"), get)
-names(datalist) <- (c("../data/input/eafro_data/COI_all_data", "../data/input/eafro_data/COI_Over499_data", "../data/input/eafro_data/COI_500to700_data", "../data/input/eafro_data/COI_650to660_data", "../data/input/eafro_data/COI_Over700_data", "../data/input/eafro_data/COI_Under500_data", "../data/input/eafro_data/COI_testa00_data", "../data/input/eafro_data/COI_testb01_data", "../data/input/eafro_data/COI_testb02_data", "../data/input/eafro_data/COI_testb03_data", "../data/input/eafro_data/COI_testc04_data", "../data/input/eafro_data/COI_testc05_data", "../data/input/eafro_data/COI_testd06_data", "../data/input/eafro_data/COI_teste07_data"))
+names(datalist) <- (c("../data/input/test_data/COI_all_data", "../data/input/test_data/COI_Over499_data", "../data/input/test_data/COI_500to700_data", "../data/input/test_data/COI_650to660_data", "../data/input/test_data/COI_Over700_data", "../data/input/test_data/COI_Under500_data", "../data/input/test_data/COI_testa00_data", "../data/input/test_data/COI_testb01_data", "../data/input/test_data/COI_testb02_data", "../data/input/test_data/COI_testb03_data", "../data/input/test_data/COI_testc04_data", "../data/input/test_data/COI_testc05_data", "../data/input/test_data/COI_testd06_data", "../data/input/test_data/COI_teste07_data"))
 for (i in 1:length(datalist)) {write.table(datalist[i], file = paste(names(datalist[i]), ".tsv", sep = ""), row.names = FALSE, col.names= TRUE, sep = "\t", quote=FALSE)}

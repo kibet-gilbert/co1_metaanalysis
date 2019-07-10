@@ -51,9 +51,9 @@ COI_all_data %>% filter(seqlen2 > 700) -> COI_Over700_data; cat("\n\t",length(CO
 
 
 ### Printing copies of the final tidy files as dataframes in .tsv format
-data_path = '~/bioinformatics/github/co1_metaanalysis/data/input/input_data/clean_africa/'
-output_list = c("COI_all_data", "COI_Over499_data", "COI_500to700_data", "COI_650to660_data", "COI_Over700_data", "COI_Under500_data")
+#data_path = '~/bioinformatics/github/co1_metaanalysis/data/input/input_data/clean_africa/'
+#output_list = c("COI_all_data", "COI_Over499_data", "COI_500to700_data", "COI_650to660_data", "COI_Over700_data", "COI_Under500_data")
 
-datalist = lapply(output_list, get)
-names(datalist) <- paste(data_path, output_list, sep= "" )
-for (i in 1:length(datalist)) {write.table(datalist[i], file = paste(names(datalist[i]), ".tsv", sep = ""), row.names = FALSE, col.names= TRUE, sep = "\t", quote=FALSE)}
+#datalist = lapply(output_list, get)
+#names(datalist) <- paste(data_path, output_list, sep= "" )
+#for (i in 1:length(datalist)) {write.table(datalist[i], file = paste(names(datalist[i]), ".tsv", sep = ""), row.names = FALSE, col.names= TRUE, sep = "\t", quote=FALSE)}

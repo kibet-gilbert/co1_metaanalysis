@@ -1,0 +1,39 @@
+# spid-file generated: Fri Jun 21 13:32:11 EAT 2019
+
+# PHYLIP (RAxML) Parser questions
+PARSER_FORMAT=PHYLIP
+
+# Do you want to load an additional file with sequence partitions separating loci?
+PHYLIP_PARSER_PARTITION_QUESTION=false
+# Is it a relaxed PHYLIP format (e.g. from RAxML)?
+PHYLIP_PARSER_RELAXED_QUESTION=true
+# Save partition file
+PHYLIP_PARSER_PARTITION_FILE_QUESTION=
+# Specify the format of the distance matrix:
+PHYLIP_PARSER_MATRIX_FORMAT_QUESTION=LOWER
+# What type of data is listed in the PHYLIP (RAxML) file?
+PHYLIP_PARSER_DATA_TYPE_QUESTION=SEQUENCE
+# Specify the format of the data:
+PHYLIP_PARSER_DATA_FORMAT_QUESTION=SEQUENTIAL
+
+# FASTA Writer questions
+WRITER_FORMAT=FASTA
+
+# Numeric SNP data: enter the integer that codes for nucleotide A:
+FASTA_WRITER_CODE_A_QUESTION=
+# Specify the locus you want to write to the FASTA file:
+FASTA_WRITER_LOCUS_COMBINATION_QUESTION=
+# Numeric SNP data: enter the integer that codes for nucleotide G:
+FASTA_WRITER_CODE_G_QUESTION=
+# Numeric SNP data: enter the integer that codes for nucleotide C:
+FASTA_WRITER_CODE_C_QUESTION=
+# Do you want to save sequences on a single line?
+FASTA_SINGLE_LINE_QUESTION=false
+# Numeric SNP data: enter the integer that codes for nucleotide T:
+FASTA_WRITER_CODE_T_QUESTION=
+# Specify the DNA locus you want to write to the FASTA file, write "CONCAT" for concatenation or "SEPARATE" to separate the loci:
+FASTA_WRITER_CONCATENATE_QUESTION=
+# Specify which data type should be included in the FASTA file  (FASTA can only analyze one data type per file):
+FASTA_WRITER_DATA_TYPE_QUESTION=DNA
+# Do you want to save haploid sequences (consensus sequence with ambiguity codes is taken if ploidy is higher)?
+FASTA_WRITER_HAPLOID_QUESTION=false

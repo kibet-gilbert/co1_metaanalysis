@@ -1,0 +1,25 @@
+# spid-file generated: Fri Jun 21 13:22:54 EAT 2019
+
+# PHYLIP (RAxML) Parser questions
+PARSER_FORMAT=PHYLIP
+
+# Do you want to load an additional file with sequence partitions separating loci?
+PHYLIP_PARSER_PARTITION_QUESTION=false
+# Is it a relaxed PHYLIP format (e.g. from RAxML)?
+PHYLIP_PARSER_RELAXED_QUESTION=true
+# Save partition file
+PHYLIP_PARSER_PARTITION_FILE_QUESTION=
+# Specify the format of the distance matrix:
+PHYLIP_PARSER_MATRIX_FORMAT_QUESTION=LOWER
+# What type of data is listed in the PHYLIP (RAxML) file?
+PHYLIP_PARSER_DATA_TYPE_QUESTION=SEQUENCE
+# Specify the format of the data:
+PHYLIP_PARSER_DATA_FORMAT_QUESTION=SEQUENTIAL
+
+# extended FASTA (XMFA) Writer questions
+WRITER_FORMAT=XMFA
+
+# Do you want to save sequences on a single line?
+XMFA_SINGLE_LINE_QUESTION=false
+# Specify which data type should be included in the extended FASTA (XMFA) file  (extended FASTA (XMFA) can only analyze one data type per file):
+XMFA_WRITER_DATA_TYPE_QUESTION=DNA

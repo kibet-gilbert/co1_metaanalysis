@@ -36,3 +36,4 @@ code/tools/sate/satesrc-v2.2.7-2013Feb15/linux1/
 *.swd
 *.swc
 .~lock*
+data/input/input_data/unpublished/sed*
