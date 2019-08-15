@@ -660,6 +660,7 @@ pasta_aln() { #MSA alignment using pasta
 						rename
 						echo -e "\nDoing local alignment of `basename $i`..."
 						${PYTHON3_EXEC} ${runpasta} --aligner=mafft -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
+						#${PYTHON3_EXEC} ${runpasta} --num-cpus=32 --aligner=mafft -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
 						cp ${pasta_dest}\jobs/*.${output_filename}.aln ${pasta_dest}aligned/ && mv ${pasta_dest}aligned/{*.${output_filename}.aln,${output_filename}.aln}
 						cp ${pasta_dest}\jobs/${output_filename}.tre ${pasta_dest}aligned/${output_filename}.tre
 						break
@@ -668,6 +669,7 @@ pasta_aln() { #MSA alignment using pasta
 						rename
 		       				echo -e "\nDoing global alignment of `basename $i`..."
 						${PYTHON3_EXEC} ${runpasta} --aligner=ginsi -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
+						#${PYTHON3_EXEC} ${runpasta} --num-cpus=32 --aligner=ginsi -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
 						cp ${pasta_dest}\jobs/*.${output_filename}.aln ${pasta_dest}aligned/ && mv ${pasta_dest}aligned/{*.${output_filename}.aln,${output_filename}.aln}
 						cp ${pasta_dest}\jobs/${output_filename}*.tre ${pasta_dest}aligned/${output_filename}.tre
 						break
@@ -682,6 +684,7 @@ pasta_aln() { #MSA alignment using pasta
 							read -p "Please enter the file to be used as the starting tree: " start_tree
 						done
                                                 ${PYTHON3_EXEC} ${runpasta} --aligner=mafft -i $i -t $start_tree -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
+						#${PYTHON3_EXEC} ${runpasta} --num-cpus=32 --aligner=mafft -i $i -t $start_tree -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
                                                 cp ${pasta_dest}\jobs/*.${output_filename}.aln ${pasta_dest}aligned/ && mv ${pasta_dest}aligned/{*.${output_filename}.aln,${output_filename}.aln}
                                                 cp ${pasta_dest}\jobs/${output_filename}.tre ${pasta_dest}aligned/${output_filename}.tre
 						break
@@ -696,6 +699,7 @@ pasta_aln() { #MSA alignment using pasta
                                                         read -p "Please enter the file to be used as the starting tree: " start_tree
                                                 done
                                                 ${PYTHON3_EXEC} ${runpasta} --aligner=ginsi -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
+						#${PYTHON3_EXEC} ${runpasta} --num-cpus=32 --aligner=ginsi -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
                                                 cp ${pasta_dest}\jobs/*.${output_filename}.aln ${pasta_dest}aligned/ && mv ${pasta_dest}aligned/{*.${output_filename}.aln,${output_filename}.aln}
                                                 cp ${pasta_dest}\jobs/${output_filename}*.tre ${pasta_dest}aligned/${output_filename}.tre
 						break

@@ -42,6 +42,19 @@ fasttree_phylo() { #
 }
 
 #=====================================================================================
+#Handling Gappy sites and entropy using BMGe
+#Syntax $ java Xmx2048m -jar BMGE-1.12/BMGE.jar -i enafroCOI_all_clean_sN10-eN10.aln -t DNA -g 0.95 -b 1 -h 0:1 -of without_gappy.fasta : the actual run
+#	$ java -jar BMGE-1.12/BMGE.jar -? :For help
+#	-i : Defines the input file: FASTA or PHYLIP format
+#	-t [AA|DNA|CODON]: Defines input sequence coding
+#	-o [-op,-of,-on,-oh]: Defines the output file format: PHYLIP, FASTA, NEXUS, HTML. For NCBI-formatted FASTA input sequences the number of fields in the header of PHYLIP or NEXUS output files can be altered using -oppp* or -onnn*
+#	-h [max|min:max]: Entropy score cut-off; (range from 0 to 1; default: 0:0.5): The higher the score the more the disorder
+#	-g [col_rate|raw_rate:col_rate]: Gap rate cut-off; gap rate per site (col (ranges from 0 to 1; default: 0.2); remove sites with > 5% gaps, -g 0.05); gap rate per sequence (row)
+#	-b integer : Minimum block size; determines conserved-regions-size to be used. equal or greater than integer. default is 5.
+#	$ egrep -B 1 'N{20,}' without_gappy.fasta : Those with more than 10 strings of "N"s
+#	$ 
+
+#=====================================================================================
 
 # Using RAxML (Randomized Axelerated Maximum Likelihood) to infer a phylogenetic tree from MSA nucleotide sequences alignment
 
@@ -74,6 +87,7 @@ raxml_phylo_hard(){ # This function performs a maximum likelihood search of the 
 		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa) ) ]]
 		then
 			rename
+			sed -i "s/\[//g; s/\]//g; s/ /_/g; s/://g; s/;//g; s/,/__/g; s/(/__/g; s/)//g; s/'//g" $i
 
 			#Deleting unwanted records
 			echo -e "\nDeleting unwanted records from `basename $i`..."
@@ -168,6 +182,9 @@ raxml_phylo_easy(){ # This function conduct a full ML analysis, i.e., a certain 
 				fi
 				read -p "Please enter [Yes] or [NO] to delete more unwanted records:: " Choice
 			done
+
+			#Substituting Illegal characters in taxon-names are: tabulators, carriage returns, spaces, ":", ",", ")", "(", ";", "]", "[", "'" that affect the interpretation in RAxML
+			sed -i "s/\[//g; s/\]//g; s/ /_/g; s/://g; s/;//g; s/,/__/g; s/(/__/g; s/)//g; s/'//g" $i
 			
 			#Full analysis rapid Bootstrapping and Maximum Likelihood search
 			echo -e "Please select the number of bootstrap_runs or selection method from the following options:"
@@ -222,6 +239,7 @@ raxml_rooting(){ # This funtion generates a model filewith model parameters for 
 		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa) ) ]]
 		then
  			rename
+			sed -i "s/\[//g; s/\]//g; s/ /_/g; s/://g; s/;//g; s/,/__/g; s/(/__/g; s/)//g; s/'//g" $i
 
 			unset rate_heterogeneity
 			echo -e "Please select the rate heterogeneity model or approximation to use from the following options, enter [1] or [2]:"

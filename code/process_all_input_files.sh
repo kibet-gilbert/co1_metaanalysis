@@ -217,16 +217,19 @@ replacing_headers() { #This function takes an input file of edited_fasta_format_
         fi
 	
 	unset headers
-	until [[ ( -f "$headers" ) && ( `basename -- "$headers"` =~ .*\.(fasta|fa|afa) ) ]]
+	until [[ ( -f "$headers" ) && ( `basename -- "$headers"` =~ .*_(fasta|fa|afa) ) ]]
 	do
-		echo -e "\nFor the headers.aln|fasta|fa|afa input provide the full path to the file, the filename included."
+		echo -e "\nFor the headers_[aln|fasta|fa|afa] input provide the full path to the file, the filename included."
 		read -p "Please enter the file to be used as the FASTA headers source: " headers
+		sed -i 's/\r$//g; s/ /_/g; s/\&/_n_/g; s/\//\\&/g' $headers
 	done
 	
 	echo -e "\n\tStarting operation....\n\tPlease wait, this may take a while...."
 	for i in "$@"
 	do
+		unset records
 		number_of_replacements=0
+		records=$( grep ">" $i | wc -l )
 		unset x
 		unset y
 		unset z
@@ -239,7 +242,7 @@ replacing_headers() { #This function takes an input file of edited_fasta_format_
 			#echo -e "\n $x \n $y"
 
 			#Characters to replace from the headers as they will affect the performance of sed: carriage Returns (), white spaces ( ), back slashes (/), and ampersand '&' characters; they greately hamper the next step of header substitution.
-			sed -i 's/\r$//g; s/ /_/g; s/\&/_n_/g; s/\//\\&/g' $i
+			sed -i 's/\r$//g; s/ /_/g; s/\&/_n_/g; s/\//+/g' $i
 
 			z=`grep "$x" $i`
 			#echo "$z"
@@ -250,14 +253,14 @@ replacing_headers() { #This function takes an input file of edited_fasta_format_
 					echo -e "Change for ${x} already in place..."
 					continue
 				else
-					echo -e "\nSubstituting header for ${x}..."
+					echo -e "Substituting header for ${x}..."
 					sed -i "s/${one_z}/${y}/g" $i
 					#sed -i "s/^.*\b${x}\b.*$/${y}/g" $i
 				fi
 				number_of_replacements=$( expr $number_of_replacements + 1 )
 			done
 		done
-		echo -e "\nDONE. $number_of_replacements replacements done in `basename -- $i`"
+		echo -e "\nDONE. $number_of_replacements replacements done in `basename -- $i` out of $records records it has"
 	done
 	echo -e "\n\tCongratulations...Operation done."
 }
@@ -341,6 +344,7 @@ delete_unwanted() { #this function copys a record that fits a provided pattern, 
 	select option in YES NO
 	do
 		unset pattern_name
+		matching_records=0
 
 		regexp='^[a-zA-Z0-9/_-\ ]+$'
 
@@ -352,20 +356,25 @@ delete_unwanted() { #this function copys a record that fits a provided pattern, 
 				done
 				
 				echo -e "\n\tDeleting all records with description '$pattern_name'..."
+				matching_records=`grep $pattern_name $i | wc -l`
+				echo -e "\t${matching_records} records match the pattern: $pattern_name"
 				
 				for i in "$@"
 				do
-					echo -e "\n\tProceeding with `basename -- $i`..."
+					echo -e "\nProceeding with `basename -- $i`..."
+					matching_records=`grep $pattern_name $i | wc -l`
+					echo -e "${matching_records} records match the pattern: $pattern_name"
 					rename
 					input_src=`dirname "$( realpath "${i}" )"`
 					
 					#awk -v name="$input_r" 'BEGIN {RS="\n>"; ORF="\n>"}; $0 ~ name {print ">"$0}' test_all.fasta | less
 					
 					concatenate_fasta_seqs $i
-					$AWK_EXEC -v pattern="$pattern_name" 'BEGIN { RS="\n>"; ORS="\n"; FS="\n"; OFS="\n" }; $1 ~ pattern {print ">"$0;}' $i >> ${input_src}/${output_filename}_undesired.fasta
+					echo -e "\tRemoving any records with '$pattern_name' from file..."
+					$AWK_EXEC -v pattern="$pattern_name" 'BEGIN { RS="\n>"; ORS="\n"; FS="\n"; OFS="\n" }; $1 ~ pattern {print ">"$0;}' $i >> ${input_src}/${output_filename}_${pattern_name}.fasta
 					sed -i "/$pattern_name/,+1 d" $i
 				done
-				echo -e "\n\tDONE. All deleted records have been stored in '${output_filename}_undesired.fasta'"
+				echo -e "\n\tDONE. All deleted records have been stored in '${output_filename}_${pattern_name}.fasta'"
 				;;
 			NO)
 				echo -e "Exiting deletion of unwanted sequences..."
@@ -474,7 +483,7 @@ delete_shortseqs() { #This function identifies and removes sequences that have s
 #===============================================================================================================================================================
 
 
-delete_shortseqs_N() { #This function identifies and removes sequences that have specified number of Ns at the ends. It stores the cleaned sequences.
+delete_shortseqs_N() { #This function identifies and removes sequences that have specified number of gaps "-" and Ns at the ends or Ns strings within. It stores the cleaned sequences.
 	if [ $# -eq 0 ]
 	then
 		echo "Input error..."
@@ -493,22 +502,29 @@ delete_shortseqs_N() { #This function identifies and removes sequences that have
 			rename $i
 			concatenate_fasta_seqs $i
 			
-			echo -e "\tThis function will remove sequences that have a specified number of undefined nucleotides, 'N', or gaps, '-', at the start or end of the sequence. Proceed and enter the accepted maximum number of Ns or '-'s at the start and end positions of the sequences.\n\tIntegers only accepted!!!"
+			echo -e "\tThis function will remove sequences that have a specified number of undefined nucleotides, 'N', or gaps, '-', at the start or end and specific maximum length of N-string within the sequence. Proceed and enter the accepted maximum number of Ns or '-'s at the start, within and end positions of the sequences.\n\tIntegers only accepted!!!"
 			unset start_Ns
 			unset end_Ns
+			unset mid_Ns
 			regexp='^[0-9]+$'
 			until [[ "$start_Ns" =~ $regexp ]]
 			do
 				read -p "Please enter the muximum number of Ns or '-'s allowed at start position: " start_Ns
 			done
 			
+			until [[ "$mid_Ns" =~ $regexp ]]
+			do
+				read -p "Please enter the maximum length of N-string allowed within the sequence:" mid_Ns
+			done
+
 			until [[ "$end_Ns" =~ $regexp ]]
 			do
 				read -p "Please enter the maximum number of Ns or '-'s allowed at the end position: " end_Ns
 			done
 			
-			echo -e "\tRemoving sequences in `basename -- ${i}` that have more than ${start_Ns} Ns or '-'s in start position and ${end_Ns} in end position"
-			
+			echo -e "\tRemoving sequences in `basename -- ${i}` that have more than ${start_Ns} Ns or '-'s in start position, ${mid_Ns} length N string within  and ${end_Ns} in end position"
+
+			#$AWK_EXEC -v start_N=$start_Ns -v mid_N=$mid_Ns -v end_N=$end_Ns ' /^>/ { hdr=$0; next }; match($0,/^[-Nn]*/) && RLENGTH<=start_N && match($0,/[Nn]*/) && RLENGTH<=mid_N && match($0,/[-Nn]*$/) && RLENGTH<=end_N { print hdr; print }' $i > ${input_src}/${output_filename}_sN${start_Ns}-eN${end_Ns}.aln			
 			$AWK_EXEC -v start_N=$start_Ns -v end_N=$end_Ns ' /^>/ { hdr=$0; next }; match($0,/^[-Nn]*/) && RLENGTH<=start_N && match($0,/[-Nn]*$/) && RLENGTH<=end_N { print hdr; print }' $i > ${input_src}/${output_filename}_sN${start_Ns}-eN${end_Ns}.aln
 			echo -e "\n\tDONE. All cleaned records have been stored in $input > ${input_src}/${output_filename}_sN${start_Ns}-eN${end_Ns}.aln\n"
 		else
@@ -569,7 +585,7 @@ concatenate_fasta_seqs() { # This function converts a multiple line FASTA format
 			echo "input error: file '$i' is non-existent!"
 		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa|fst) ) ]]
 		then
-			echo -e "\n\t concatinating sequence lines for each record in `basename -- ${i}`..."
+			echo -e "\t concatinating sequence lines for each record in `basename -- ${i}`..."
 			input_src=`dirname "$( realpath "${i}" )"`
 			$AWK_EXEC '/^>/ {if (FNR==1) print $0; else print "\n" $0; }; !/^>/ {gsub("\n","",$0); printf $0}' $i > ${input_src}/outfile.afa && mv ${input_src}/outfile.afa ${i}
 		else
