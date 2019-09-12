@@ -29,6 +29,7 @@ data/output/alignment/pasta_output/*
 data/output/alignment/sate_output/*
 data/output/phylogen/raxml_output/*
 data/output/phylogen/fasttree_output/*
+data/input/input_data/diptera/*
 data/input/input_data/coleoptera/*
 data/input/input_data/hemiptera/*
 data/input/input_data/hymenoptera/*
