@@ -64,8 +64,9 @@ We used the following [sequence based methods](https://tcoffee.readthedocs.io/en
 2. Evaluating the [Transitive Consistency Score (TCS)](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#transitive-consistency-score-tcs) of an MSA. The scores generated here are usefull in filtering our sequences and in phylogenetic inference based on herogenous site evolutionary rates.
 
 ### Phylogenetic Inference tools.
-1. [RAxML](https://cme.h-its.org/exelixis/web/software/raxml/index.html): Highly accurate, computer intensive but, a little slow. Removes duplicate sequences (Headers/nucleotide-sequences) then infers the tree. Descriped in [Stamakis et. al. (2014)](https://academic.oup.com/bioinformatics/article/30/9/1312/238053)
-2. [FastTree](http://www.microbesonline.org/fasttree/): Fast, less computer intensive, but, not so accurate.
+1. [BMGE (Block Mapping and Gathering with Entropy)](ftp://ftp.pasteur.fr/pub/gensoft/projects/BMGE/): A tool for selection of phylogenetic informative regions from MSAs as documented [**HERE**]( http://gensoft.pasteur.fr/docs/BMGE/1.12/BMGE_doc.pdf). Removes ambiguously aligned regions, highly variable (saturated) characters altimately improving overall performance of the phylogenetic reconstruction  method as described by [Criscuolo et. al. (2010)](https://doi.org/10.1186/1471-2148-10-210)
+2. [RAxML (Randomized Axelerated Maximum Likelihood)](https://cme.h-its.org/exelixis/web/software/raxml/index.html): Highly accurate, computer intensive but, a little slow. Removes duplicate sequences (Headers/nucleotide-sequences) then infers the tree. described in [Stamakis et. al. (2014)]( https://doi.org/10.1093/bioinformatics/btu033)
+3. [FastTree](http://www.microbesonline.org/fasttree/): Fast, less computer intensive, but, not so accurate.
 
 The resultant computer readable formats of the phylogenetic trees are either of the following [Newick](http://evolution.genetics.washington.edu/phylip/newicktree.html), [NEXUS](http://en.wikipedia.org/wiki/Nexus_file) and [PhyloXML](http://en.wikipedia.org/wiki/PhyloXML).
 
@@ -77,11 +78,11 @@ Programs to be used to visualize and edit phylogenetic trees:
 
 ### Phylogenetic Tree Analysis Tools:
 1. [Evolutionary Placement Algorithm (EPA)](https://academic.oup.com/sysbio/article/60/3/291/1667010): Used to root a tree (adding outgroups). Integrated into RAxML, it can classify a bunch of environmental sequences into a reference tree using thorough read insertions given a non-comprehensive reference tree and an alignment containing all sequences (reference + query)
-2. [Bio.Phylo](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-13-209): Biopython's Phylo package as descriped in the [Phylo Cookbook](https://biopython.org/wiki/Phylo_cookbook) and [tutorial](http://biopython.org/DIST/docs/tutorial/Tutorial.html#htoc204), uses other Python packages; MatPlotlib and NetworkX. Can be used to study the tree and manipulate it's nodes
+2. [Bio.Phylo](https://doi.org/10.1186/1471-2105-13-209): Biopython's Phylo package as descriped in the [Phylo Cookbook](https://biopython.org/wiki/Phylo_cookbook) and [tutorial](http://biopython.org/DIST/docs/tutorial/Tutorial.html#htoc204), uses other Python packages; MatPlotlib and NetworkX. Can be used to study the tree and manipulate it's nodes
 
 ### Phylogeographic Analysis tools.
 1. BASTA [(BEAST2 bayesian Package)](http://www.beast2.org/)
-2. Other tools; [geocoding script(Gratton et al., 2017)](https://github.com/paolo-gratton/Gratton_et_al_JBiogeogr_2016)
+2. Other tools; [geocoding script](https://github.com/paolo-gratton/Gratton_et_al_JBiogeogr_2016) by [Gratton et al., 2017]( https://doi.org/10.1111/jbi.12786)
 
 ### Other tools
 Besides tools mentioned above, the tools below proved useful:
@@ -89,8 +90,8 @@ Besides tools mentioned above, the tools below proved useful:
 
 ## Resources
 COI sequences preparation protocol;
-1. [Prosser et.al. 2016](https://github.com/kibet-gilbert/co1_metaanalysis/blob/master/Prosser_et-al_2016_NGS_DNA_type_specimens_MER.pdf)
-2. [Wilson 2012 DNA barcoding insects](https://github.com/kibet-gilbert/co1_metaanalysis/blob/master/Wilson_2012_DNA_barcoding_insects.pdf)
+1. [Prosser et.al. 2016](https://doi.org/10.1111/1755-0998.12474)
+2. [Wilson 2012 DNA barcoding insects](https://doi.org/10.1007/978-1-61779-591-6_3)
 
 ### Data
 Both input and output (results) are found in './data/' directory

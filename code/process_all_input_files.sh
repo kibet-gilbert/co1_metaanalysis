@@ -23,6 +23,7 @@ usage() { #checks if the positional arguments (input files) for execution of the
 rename() { #generates output file names with same input filename prefix. The suffix (".suffix") is set in individual functions that perform different tasks.
         input_filename=`basename -- $i`
         output_filename=${input_filename%.*}
+	filename_ext=${input_filename##*.}
 }
 
 
@@ -196,6 +197,56 @@ clean_sort_tsv() { #This function cleans the .tsv files, sort the records into d
         done
 }
 
+#=====================================================================================
+subset_seqs(){ #This function takes a faster sequence file and split it into multiple files simply based on nucleotide sequence length
+	if [ $# -eq 0 ]
+	then
+		echo "Input error..."
+		echo "Usage: ${FUNCNAME[0]} file1.*[file2.* file3.* ...]"
+		return 1
+	fi
+
+	for i in "$@"
+	do
+		if [ ! -f $i ]
+		then
+			echo "input error: file '$i' is non-existent!"
+		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa|fst) ) ]]
+		then
+			input_src=`dirname "$( realpath "${i}" )"`
+			rename $i
+
+			echo -e "\n\tProceeding with `basename -- ${i}`...\nThe file will be split into four files based on nucleotide sequence length: len under 500; len over 700; len of 650to660; len of 500to700 - 650to660."
+			#Concatenating the fasta nucleotide sequences
+			concatenate_fasta_seqs $i
+			#Removing gaps
+			remove_gaps $i
+			i=${input_src}/${output_filename}_dgpd.fasta
+			$AWK_EXEC -v output_filename=$output_filename -v filename_ext=$filename_ext -v input_src=$input_src 'BEGIN{FS="|";}; /^>/{
+			hdr=$0; next} {
+				seq=$0 } match(seq,/^.*$/) { len=RLENGTH }; {
+				if(len<500){
+					print hdr"\n" seq > input_src"/"output_filename"_Under500."filename_ext
+				}
+				else if (len>700){
+					print hdr"\n" seq > input_src"/"output_filename"_Over700."filename_ext
+				}
+				else if (len>=650 && len<=660){
+					print hdr"\n" seq > input_src"/"output_filename"_650to660."filename_ext
+				}
+				else {
+					print hdr"\n" seq > input_src"/"output_filename"_500to700_data-650to660."filename_ext
+				}
+			}' $i
+			
+			echo -e "\n\tCongratulations. OPERATION DONE!\n\tRecords with less than 500 nucleotides have been saved in '${input_src}/${output_filename}_Under500.${filename_ext}'\n\tRecords with over 700 nucleotides have been saved in '${input_src}/${output_filename}_Over700.${filename_ext}'\n\tRecords with 650 to 660 nucleotides have been saved in '${input_src}/${output_filename}_650to660.${filename_ext}'\n\tAnd records with 500 to 700 nucleotides excluding those with 650 to 660 nucleotides have been saved in '${input_src}/${output_filename}_500to700_data-650to660.${filename_ext}'"
+		else
+			echo "input file error in `basename $i`: input file should be a .fasta file format"
+			continue
+		fi
+	done
+}
+
 
 #======================================================================================
 #genereting headers from csv files with inputs...
@@ -208,7 +259,7 @@ clean_sort_tsv() { #This function cleans the .tsv files, sort the records into d
 #grep ">" seq2.fasta | awk 'BEGIN { FS="|"}; {print $1}' > file2
 #comm -12 file1 file2 > repeats && less repeats
 
-replacing_headers() { #This function takes an input file of edited_fasta_format_headers and searches through a fasta_format_sequence file and substitute their headers if their uniq IDs match
+replacing_headers() { #This function takes an input file of edited_fasta_format_headers and searches through a fasta_format_sequence file and substitute it's headers if their uniq IDs match
  	if [ $# -eq 0 ]
 	then
 		echo "Input error..."
@@ -221,7 +272,8 @@ replacing_headers() { #This function takes an input file of edited_fasta_format_
 	do
 		echo -e "\nFor the headers_[aln|fasta|fa|afa] input provide the full path to the file, the filename included."
 		read -p "Please enter the file to be used as the FASTA headers source: " headers
-		sed -i 's/\r$//g; s/ /_/g; s/\&/_n_/g; s/\//\\&/g' $headers
+		#$.*/[\]'^
+		sed -i "s/\r$//g; s/ /_/g; s/\&/_n_/g; s/\//+/g; s/'//g; s/\[//g; s/\]//g" $headers
 	done
 	
 	echo -e "\n\tStarting operation....\n\tPlease wait, this may take a while...."
@@ -242,7 +294,7 @@ replacing_headers() { #This function takes an input file of edited_fasta_format_
 			#echo -e "\n $x \n $y"
 
 			#Characters to replace from the headers as they will affect the performance of sed: carriage Returns (), white spaces ( ), back slashes (/), and ampersand '&' characters; they greately hamper the next step of header substitution.
-			sed -i 's/\r$//g; s/ /_/g; s/\&/_n_/g; s/\//+/g' $i
+			sed -i "s/\r$//g; s/ /_/g; s/\&/_n_/g; s/\//+/g; s/'//g; s/\[//g; s/\]//g" $i
 
 			z=`grep "$x" $i`
 			#echo "$z"
@@ -355,10 +407,6 @@ delete_unwanted() { #this function copys a record that fits a provided pattern, 
 					read -p "Please enter string pattern to be searched:: " pattern_name
 				done
 				
-				echo -e "\n\tDeleting all records with description '$pattern_name'..."
-				matching_records=`grep $pattern_name $i | wc -l`
-				echo -e "\t${matching_records} records match the pattern: $pattern_name"
-				
 				for i in "$@"
 				do
 					echo -e "\nProceeding with `basename -- $i`..."
@@ -369,12 +417,15 @@ delete_unwanted() { #this function copys a record that fits a provided pattern, 
 					
 					#awk -v name="$input_r" 'BEGIN {RS="\n>"; ORF="\n>"}; $0 ~ name {print ">"$0}' test_all.fasta | less
 					
-					concatenate_fasta_seqs $i
-					echo -e "\tRemoving any records with '$pattern_name' from file..."
-					$AWK_EXEC -v pattern="$pattern_name" 'BEGIN { RS="\n>"; ORS="\n"; FS="\n"; OFS="\n" }; $1 ~ pattern {print ">"$0;}' $i >> ${input_src}/${output_filename}_${pattern_name}.fasta
-					sed -i "/$pattern_name/,+1 d" $i
+					if [ $matching_records -gt 0 ]
+					then
+						concatenate_fasta_seqs $i
+						echo -e "\tRemoving any records with '$pattern_name' description in header from file..."
+						$AWK_EXEC -v pattern="$pattern_name" 'BEGIN { RS="\n>"; ORS="\n"; FS="\n"; OFS="\n" }; $1 ~ pattern {print ">"$0;}' $i >> ${input_src}/${output_filename}_${pattern_name}.fasta
+						sed -i "/$pattern_name/,+1 d" $i
+						echo -e "\n\tDONE. All deleted records have been stored in '${output_filename}_${pattern_name}.fasta'"
+					fi
 				done
-				echo -e "\n\tDONE. All deleted records have been stored in '${output_filename}_${pattern_name}.fasta'"
 				;;
 			NO)
 				echo -e "Exiting deletion of unwanted sequences..."
@@ -434,7 +485,7 @@ trimming_seqaln() { #This function trims aligned sequences in a file on both end
 
 #===============================================================================================================================================================
 
-delete_shortseqs() { #This function identifies and removes sequences that have specified number of gaps at the ends. It stores the cleaned sequences.
+delete_shortseqs_gaps() { #This function identifies and removes sequences that have specified number of gaps at the ends. It stores the cleaned sequences.
 
 	if [ $# -eq 0 ]
         then
@@ -482,8 +533,27 @@ delete_shortseqs() { #This function identifies and removes sequences that have s
 
 #===============================================================================================================================================================
 
+regexp='^[0-9]+$'
+set_start_Ngaps() { # This functions sets the value of the variable "start_Ngaps"
+	until [[ "$start_Ngaps" =~ $regexp ]]
+	do
+		read -p "Please enter the muximum number of '-'s or Ns allowed at start position: " start_Ngaps
+	done
+}
+set_end_Ngaps() { #This function sets the value of the variable "end_Ngaps"
+	until [[ "$end_Ngaps" =~ $regexp ]]
+	do
+		read -p "Please enter the maximum number of '-'s or Ns allowed at the end position: " end_Ngaps
+	done
+}
+set_mid_Ns() { #This function sets the value of the variable "mid_Ns"
+	 until [[ "$mid_Ns" =~ $regexp ]]
+	 do
+		 read -p "Please enter the maximum length of N-string allowed within the sequence: " mid_Ns
+	 done
+}
 
-delete_shortseqs_N() { #This function identifies and removes sequences that have specified number of gaps "-" and Ns at the ends or Ns strings within. It stores the cleaned sequences.
+delete_shortseqs() { #This function identifies and removes sequences that have specified number of gaps "-" and Ns at the ends or Ns strings within. It stores the cleaned sequences.
 	if [ $# -eq 0 ]
 	then
 		echo "Input error..."
@@ -502,31 +572,72 @@ delete_shortseqs_N() { #This function identifies and removes sequences that have
 			rename $i
 			concatenate_fasta_seqs $i
 			
-			echo -e "\tThis function will remove sequences that have a specified number of undefined nucleotides, 'N', or gaps, '-', at the start or end and specific maximum length of N-string within the sequence. Proceed and enter the accepted maximum number of Ns or '-'s at the start, within and end positions of the sequences.\n\tIntegers only accepted!!!"
-			unset start_Ns
-			unset end_Ns
-			unset mid_Ns
-			regexp='^[0-9]+$'
-			until [[ "$start_Ns" =~ $regexp ]]
+			echo -e "\tYou are going to remove sequences that have more than a specific number of undefined nucleotides, 'N', or gaps, '-', at the beginning and end or specific maximum length of N character-string within the sequence."
+			echo -e "\tWhich type of characters are to consider?"
+			PS3='Select a choice from the following options, Enter [1] or [2] or [3] or [4]: '
+			options=("Gaps at the ends only" "Ns and gaps at the ends only" "Gaps & Ns in the entire sequence only" "Quit")
+			select opt in "${options[@]}"
 			do
-				read -p "Please enter the muximum number of Ns or '-'s allowed at start position: " start_Ns
-			done
-			
-			until [[ "$mid_Ns" =~ $regexp ]]
-			do
-				read -p "Please enter the maximum length of N-string allowed within the sequence:" mid_Ns
-			done
+				unset start_Ngaps
+				unset end_Ngaps
+				unset mid_Ns
 
-			until [[ "$end_Ns" =~ $regexp ]]
-			do
-				read -p "Please enter the maximum number of Ns or '-'s allowed at the end position: " end_Ns
-			done
-			
-			echo -e "\tRemoving sequences in `basename -- ${i}` that have more than ${start_Ns} Ns or '-'s in start position, ${mid_Ns} length N string within  and ${end_Ns} in end position"
+				case $opt in
+					"Gaps at the ends only")
+						echo -e "\tProceed and enter the accepted maximum number of '-'s at the start and end positions of the sequences.\n\tIntegers only accepted!!!"
+						set_start_Ngaps
 
-			#$AWK_EXEC -v start_N=$start_Ns -v mid_N=$mid_Ns -v end_N=$end_Ns ' /^>/ { hdr=$0; next }; match($0,/^[-Nn]*/) && RLENGTH<=start_N && match($0,/[Nn]*/) && RLENGTH<=mid_N && match($0,/[-Nn]*$/) && RLENGTH<=end_N { print hdr; print }' $i > ${input_src}/${output_filename}_sN${start_Ns}-eN${end_Ns}.aln			
-			$AWK_EXEC -v start_N=$start_Ns -v end_N=$end_Ns ' /^>/ { hdr=$0; next }; match($0,/^[-Nn]*/) && RLENGTH<=start_N && match($0,/[-Nn]*$/) && RLENGTH<=end_N { print hdr; print }' $i > ${input_src}/${output_filename}_sN${start_Ns}-eN${end_Ns}.aln
-			echo -e "\n\tDONE. All cleaned records have been stored in $input > ${input_src}/${output_filename}_sN${start_Ns}-eN${end_Ns}.aln\n"
+						set_end_Ngaps
+
+						$AWK_EXEC -v start_g=$start_Ngaps -v end_g=$end_Ngaps ' /^>/ { hdr=$0; next }; match($0,/^-*/) && RLENGTH<=start_g && match($0,/-*$/) && RLENGTH<=end_g { print hdr; print }' $i > ${input_src}/${output_filename}_sg${start_Ngaps}-e${end_Ngaps}.aln
+						
+						echo -e "\n\tDONE. All cleaned records have been stored in ${input_src}/${output_filename}_sg${start_Ngaps}-e${end_Ngaps}.aln\n"
+						break
+						;;
+					"Ns and gaps at the ends only")
+						echo -e "\tProceed and enter the accepted maximum number of Ns or '-'s at the start and end positions of the sequences.\n\tIntegers only accepted!!!"
+						set_start_Ngaps
+
+						set_end_Ngaps
+
+						$AWK_EXEC -v start_N=$start_Ngaps -v end_N=$end_Ngaps ' /^>/ { hdr=$0; next }; match($0,/^[-Nn]*/) && RLENGTH<=start_N && match($0,/[-Nn]*$/) && RLENGTH<=end_N { print hdr; print }' $i > ${input_src}/${output_filename}_s${start_Ngaps}-e${end_Ngaps}.aln
+						echo -e "\n\tDONE. All cleaned records have been stored in $input > ${input_src}/${output_filename}_s${start_Ngaps}-e${end_Ngaps}.aln\n"
+						break
+						;;
+					"Gaps & Ns in the entire sequence only")
+						echo -e "\tProceed and enter the accepted maximum number of Ns or '-'s at the start, within and end positions of the sequences.\n\tIntegers only accepted!!!"
+						set_start_Ngaps
+
+						set_mid_Ns
+						
+						set_end_Ngaps
+						
+						echo -e "\tRemoving sequences in `basename -- ${i}` that have more than ${start_Ngaps} Ns or '-'s in start position, ${mid_Ns} length N string within  and ${end_Ngaps} in end position"
+						#substr(s, i [, n])
+						#awk -v start_N=10 -v mid_N=11 -v end_N=10 '/^>/{hdr=$0; next} { seq=$0 } match(seq,/^[-Nn]*/) && RLENGTH > start_N { next } { seq=substr(seq,RSTART+RLENGTH) } match(seq,/[-Nn]*$/) && RLENGTH > end_N { next } { seq=substr(seq,1,RSTART-1) } { while (match(seq,/[-Nn]+/)) { if(RLENGTH>mid_N) next seq=substr(seq,RSTART+RLENGTH) } } { print hdr; print $0 }' file
+						$AWK_EXEC -v start_N=$start_Ngaps -v mid_N=$mid_Ns -v end_N=$end_Ngaps '
+						/^>/{hdr=$0; next}
+						{ seq=$0 }
+						match(seq,/^[-Nn]*/) && RLENGTH > start_N { next }
+						{ seq=substr(seq,RSTART+RLENGTH) }
+						match(seq,/[-Nn]*$/) && RLENGTH > end_N { next }
+						{ seq=substr(seq,1,RSTART-1) }
+						{ while (match(seq,/[-Nn]+/)) {
+							if(RLENGTH>mid_N) next
+							seq=substr(seq,RSTART+RLENGTH)
+							}
+						}
+						{ print hdr; print $0 }' $i > ${input_src}/${output_filename}_s${start_Ngaps}-${mid_Ns}-e${end_Ngaps}.aln
+						echo -e "\n\tDONE. All cleaned records have been stored in $input > ${input_src}/${output_filename}_s${start_Ngaps}-${mid_Ns}-e${end_Ngaps}.aln\n"
+						break
+						;;
+					"Quit")
+						break
+						;;
+					*) echo "INVALID choice $REPLY"
+						;;
+				esac
+			done
 		else
 			echo "input file error in `basename $i`: input file should be a .aln file format"
 			continue

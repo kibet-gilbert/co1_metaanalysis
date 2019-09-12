@@ -4,6 +4,7 @@
 
 
 co1_path=~/bioinformatics/github/co1_metaanalysis/
+bmge_path=${co1_path}code/tools/BMGE-1.12/
 fasttree_dest=${co1_path}data/output/phylogen/fasttree_output/
 raxml_dest=${co1_path}data/output/phylogen/raxml_output/
 
@@ -43,7 +44,7 @@ fasttree_phylo() { #
 
 #=====================================================================================
 #Handling Gappy sites and entropy using BMGe
-#Syntax $ java Xmx2048m -jar BMGE-1.12/BMGE.jar -i enafroCOI_all_clean_sN10-eN10.aln -t DNA -g 0.95 -b 1 -h 0:1 -of without_gappy.fasta : the actual run
+#Syntax $ java -Xmx2048m -jar BMGE-1.12/BMGE.jar -i enafroCOI_all_clean_sN10-eN10.aln -t DNA -g 0.95 -b 1 -h 0:1 -of without_gappy.fasta : the actual run
 #	$ java -jar BMGE-1.12/BMGE.jar -? :For help
 #	-i : Defines the input file: FASTA or PHYLIP format
 #	-t [AA|DNA|CODON]: Defines input sequence coding
@@ -53,7 +54,39 @@ fasttree_phylo() { #
 #	-b integer : Minimum block size; determines conserved-regions-size to be used. equal or greater than integer. default is 5.
 #	$ egrep -B 1 'N{20,}' without_gappy.fasta : Those with more than 10 strings of "N"s
 #	$ 
+bmge_cleanup() { 
+	usage $@
+	echo "BMGe starting Multiple sequence alignment cleanup..."
 
+	for i in $@
+	do
+		if [ ! -f $i ]
+		then
+			echo "input error: file $i is non-existent!"
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa) ) ]]
+		then
+			input_src=`dirname "$( realpath "${i}" )"`
+			rename
+			regexg='^(1|0\.[0-9][1-9])$'
+			unset g_rate
+
+			echo -e "\n\tProceed and enter the accepted maximum degree of gap rates parcentage in decimal values between 0.01 and 1, recommended is 0.95, default is 0.05;"
+			until [[ "$g_rate" =~ $regexg ]]
+			do
+				read -p "Please enter the muximum gap rate per site in up to two decimal places: " g_rate
+			done
+
+			echo -e "\nproceeding with file `basename $i`..."
+			concatenate_fasta_seqs $i
+			g_ratee=`echo $g_rate | sed 's/0\.//g'`
+			java -Xmx2048m -jar ${bmge_path}BMGE.jar -i ${i} -t DNA -g ${g_rate} -b 1 -h 0:1 -of ${input_src}/${output_filename}_${g_ratee}g.${filename_ext}
+		else
+			echo "input file error in `basename $i`: input file should be a .(aln|afa|fasta|fa) file format and extension"
+			continue
+		fi
+	done
+
+}
 #=====================================================================================
 
 # Using RAxML (Randomized Axelerated Maximum Likelihood) to infer a phylogenetic tree from MSA nucleotide sequences alignment
