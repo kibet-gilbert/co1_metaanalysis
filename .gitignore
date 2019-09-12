@@ -6,10 +6,7 @@ code/tools/pasta_code/pasta/bin
 *.xml
 .ipynb_checkpoints/
 *.tar.gz
-data/input/input_data/clean_africa/afroCOI_all_data.tsv
-data/input/input_data/clean_africa/afroCOI_500to700_data.*
-data/input/input_data/clean_africa/afroCOI_650to660_data.tsv
-data/input/input_data/clean_africa/afroCOI_Over499_data.tsv
+data/input/input_data/clean_africa/afroCOI*
 data/input/input_data/clean_africa/COI*
 data/input/input_data/clean_africa/enafroCOI_500to700_data.fasta
 data/input/input_data/clean_africa/enafroCOI_Over499_data.fasta
