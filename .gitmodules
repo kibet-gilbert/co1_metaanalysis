@@ -28,3 +28,9 @@
 [submodule "code/tools/standard-RAxML"]
 	path = code/tools/standard-RAxML
 	url = https://github.com/stamatak/standard-RAxML.git
+[submodule "code/tools/CO1Classifierv3.2/CO1Classifier"]
+	path = code/tools/CO1Classifierv3.2/CO1Classifier
+	url = https://github.com/terrimporter/CO1Classifier.git
+[submodule "code/tools/RDPTools"]
+	path = code/tools/RDPTools
+	url = https://github.com/rdpstaff/RDPTools.git
