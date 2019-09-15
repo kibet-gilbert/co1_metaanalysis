@@ -34,3 +34,6 @@
 [submodule "code/tools/RDPTools"]
 	path = code/tools/RDPTools
 	url = https://github.com/rdpstaff/RDPTools.git
+[submodule "code/tools/beast2"]
+	path = code/tools/beast2
+	url = https://github.com/CompEvol/beast2.git
