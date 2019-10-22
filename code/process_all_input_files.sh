@@ -76,7 +76,7 @@ build_tsv() { #This function generates .tsv files from .xml files using python s
 
 	for i in "$@"
 	do
-		if [ ! -f $i ]
+		if [ ! -f $i ]append_tsvfile
 		then
 			echo "input error: file '$i' is non-existent!"
 		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(xml)$ ) ]]
@@ -296,7 +296,7 @@ replacing_headers() { #This function takes an input file of edited_fasta_format_
         fi
 	
 	unset headers
-	until [[ ( -f "$headers" ) && ( `basename -- "$headers"` =~ .*_(fasta|fa|afa)$ ) ]]
+	until [[ ( -f "$headers" ) && ( `basename -- "$headers"` =~ .*_(headers|fasta|fa|afa|aln)$ ) ]]
 	do
 		echo -e "\nFor the headers_[aln|fasta|fa|afa] input, provide the full path to the file, the filename included."
 		read -p "Please enter the file to be used as the FASTA headers source: " headers
@@ -427,8 +427,8 @@ move_unwanted() { #
 	done
 }
 
-delete_unwanted() { #this function copys a record that fits a provided pattern, i.e a name that may be from a non-insect class based on the taxon_name_description; the arguments provided, are the files to be searched for the patterns
-	# To get the list of orders in description_taxon_names and their frequencies, from  which to select the undesired patterns (names), do: 
+delete_unwanted() { #this function copys a record that fits a provided pattern, e.g a non-insect class taxon_name_description; the arguments provided, are the files to be searched for the patterns
+	# LOGIC behind the code: To get the list of orders in description_taxon_names and their frequencies, from  which to select the undesired patterns (names), do: 
 	#grep ">" seqs.fasta | awk 'BEGIN {FS="|"; OFS="|" ; }; {print $2}' |sort | uniq -c > seqs_orders && less seqs_orders
 
 	if [ $# -eq 0 ]

@@ -1,0 +1,6 @@
+--2019-10-14 10:50:29--  https://software-download.microsoft.com/sg/Win10_1903_V2_EnglishInternational_x64.iso?t=f9422af8-ae6c-480b-82da-4d8d9d5e6685
+Resolving software-download.microsoft.com (software-download.microsoft.com)... 152.199.19.160
+Connecting to software-download.microsoft.com (software-download.microsoft.com)|152.199.19.160|:443... connected.
+HTTP request sent, awaiting response... 403 Forbidden
+2019-10-14 10:50:30 ERROR 403: Forbidden.
+

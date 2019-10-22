@@ -1,4 +1,4 @@
-#!/bin/bashRDPcoiresults2tsv
+#!/bin/bash
 
 source ~/bioinformatics/github/co1_metaanalysis/code/process_all_input_files.sh
 
@@ -112,13 +112,15 @@ RDPcoiheaders() { # This function will take raw RDPClassiffier results of COI se
 		if [ ! -f $i ]
 		then
 			echo "input error: file '$i' is non-existent!"
-		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*(\.tsv|_taxa)$ ) ]]
+		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*(.tsv|_taxa)$ ) ]]
 		then
 			input_src=`dirname "$( realpath "${i}" )"`
-			if [[ `basename -- "$i"` =~ .*_taxa ]]
+			if [[ `basename -- "$i"` =~ .*_taxa$ ]]
 			then
 				RDPcoiresults2tsv ${i}
 				i=${input_src}/${output_filename}.tsv
+			else
+				i=${i}
 			fi
 			
 			rename ${i}
