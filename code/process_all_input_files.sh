@@ -8,7 +8,7 @@ co1_path=~/bioinformatics/github/co1_metaanalysis/
 AWK_SCRIPT=${co1_path}code/buildfasta_jb.awk
 xml_to_tsv=${co1_path}code/xml_to_tsv.py
 data_cleanup=${co1_path}code/data_cleanup.R
-inputdata_path=${co1_path}data/input/input_data/
+inputdata_path=${co1_path}data/input/
 
 usage() { #checks if the positional arguments (input files) for execution of the script are defined
         if [ $# -eq 0 ]
@@ -38,7 +38,7 @@ build_fasta() { #This function generates .fasta files from .tsv files using an a
 		if [ ! -f $i ]
 		then
 			echo "input error: file '$i' is non-existent!"
-		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(tsv) ) ]]
+		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(tsv)$ ) ]]
 		then
 			input_src=`dirname "$( realpath "${i}" )"`
 			rename
@@ -79,7 +79,7 @@ build_tsv() { #This function generates .tsv files from .xml files using python s
 		if [ ! -f $i ]
 		then
 			echo "input error: file '$i' is non-existent!"
-		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(xml) ) ]]
+		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(xml)$ ) ]]
 		then
 			rename 
 			echo -e "\nLet us proceed with file '${input_filename}'..."
@@ -131,7 +131,7 @@ clean_sort_tsv() { #This function cleans the .tsv files, sort the records into d
                 if [ ! -f $i ]
 		then
                         echo "input error: file '$i' is non-existent!"
-                elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(tsv) ) ]]
+                elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(tsv)$ ) ]]
                 then
                         rename
                         echo -e "\nLet us proceed with file '${input_filename}'..."
@@ -163,7 +163,7 @@ clean_sort_tsv() { #This function cleans the .tsv files, sort the records into d
 					output=${output_files_africa[5]}
 					append_tsvfile
 					;;
-				*)
+				Kenya|Tanzania|Uganda|Rwanda|Burundi|South_Sudan|Ethiopia)
 					input=${inputdata_path}clean_africa/COI_500to700_data.tsv
 					output=${output_files_eafrica[0]}
 					append_tsvfile
@@ -189,6 +189,9 @@ clean_sort_tsv() { #This function cleans the .tsv files, sort the records into d
 					append_tsvfile
 					
 					;;
+				*)
+					echo -e "The file $output_filename \b.tsv is not in the list of African countries or is not in the right format."
+					;;
 			esac
 		 else
                         echo "input file error in `basename -- $i`: input file should be a .tsv file format"
@@ -211,7 +214,7 @@ subset_seqs(){ #This function takes a faster sequence file and split it into mul
 		if [ ! -f $i ]
 		then
 			echo "input error: file '$i' is non-existent!"
-		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa|fst) ) ]]
+		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa|fst)$ ) ]]
 		then
 			input_src=`dirname "$( realpath "${i}" )"`
 			rename $i
@@ -222,6 +225,31 @@ subset_seqs(){ #This function takes a faster sequence file and split it into mul
 			#Removing gaps
 			remove_gaps $i
 			i=${input_src}/${output_filename}_dgpd.fasta
+			#Introducing a field "l-xxx" that has the length of the sequence in the header
+			echo -e "\tWould you like to introduce a field 'l-xxx* in the header that denotes the length of the sequence?'"
+			read -p "Please enter [Yes] or [No] to proceed: " choice
+			case $choice in
+				YES|Yes|yes|Y|y)
+					echo -e "Adding a seq. length field, ';l-xxx*' in the header to denote the sequence length..."
+					$AWK_EXEC '/^>/{
+					hdr=$0; next} {
+					seq=$0 } match(seq,/^.*$/) { 
+					LEN=RLENGTH }{
+					print hdr"|l-"LEN; print seq }' $i > ${input_src}/${output_filename}_dgpd_len.fasta
+					mv ${input_src}/${output_filename}_dgpd_len.fasta ${input_src}/${output_filename}_dgpd.fasta
+					echo -e "\tDONE adding seq. length to the header."
+					;;
+				No|NO|no|N|n)
+					echo -e "\tSequence length field will not be added to the header..."
+					;;
+				*)
+					echo "ERROR!!! Invalid selection"
+					;;
+			esac
+
+			i=${input_src}/${output_filename}_dgpd.fasta
+			echo -e "\tProceeding with subsetting the file..."
+
 			$AWK_EXEC -v output_filename=$output_filename -v filename_ext=$filename_ext -v input_src=$input_src 'BEGIN{FS="|";}; /^>/{
 			hdr=$0; next} {
 				seq=$0 } match(seq,/^.*$/) { len=RLENGTH }; {
@@ -268,9 +296,9 @@ replacing_headers() { #This function takes an input file of edited_fasta_format_
         fi
 	
 	unset headers
-	until [[ ( -f "$headers" ) && ( `basename -- "$headers"` =~ .*_(fasta|fa|afa) ) ]]
+	until [[ ( -f "$headers" ) && ( `basename -- "$headers"` =~ .*_(fasta|fa|afa)$ ) ]]
 	do
-		echo -e "\nFor the headers_[aln|fasta|fa|afa] input provide the full path to the file, the filename included."
+		echo -e "\nFor the headers_[aln|fasta|fa|afa] input, provide the full path to the file, the filename included."
 		read -p "Please enter the file to be used as the FASTA headers source: " headers
 		#$.*/[\]'^
 		sed -i "s/\r$//g; s/ /_/g; s/\&/_n_/g; s/\//+/g; s/'//g; s/\[//g; s/\]//g" $headers
@@ -337,16 +365,17 @@ delete_repeats() { #This function takes a fasta_format_sequences file and delete
 		duplicate_headers=`grep ">" $i | $AWK_EXEC 'BEGIN { FS="|"; }; {print $1; }' | sort | uniq -d`
 		if [ ! -z "$duplicate_headers" ]
 		then
-			echo -e "\t`echo -e "$duplicate_headers" | wc -l` records are repeated in $i,\n\twould you like to proceed and delete all repeats?"
+			echo -e "\t...`echo -e "$duplicate_headers" | wc -l` records are repeated in $( basename -- ${i} ),\n\t...would you like to proceed and delete all repeats?"
 			read -p "Please enter [Yes] or [No] to proceed: " choice
 		else
 			choice="No"
 		fi
 		case $choice in
 			YES|Yes|yes|Y|y)
+				echo -e "\t...Will proceed with deleting duplicates in $( basename -- ${i} )"
 				concatenate_fasta_seqs $i
 				$AWK_EXEC -F'[>|]' 'FNR==1{delete seen} FNR%2{f=seen[$2]++} !f' $i > ${input_src}/${output_filename}_cleaned && mv ${input_src}/${output_filename}_cleaned $( realpath "${i}" )
-				echo -e "\tDuplicate records deleted\n"
+				echo -e "\t...Duplicate records deleted"
 				;;
 			No|NO|no|N|n)
 				if [ ! -z "$duplicate_headers" ]
@@ -378,6 +407,25 @@ delete_repeats() { #This function takes a fasta_format_sequences file and delete
 }
 
 #===============================================================================================================================================================
+move_unwanted() { #	
+	for i in "$@"
+	do
+		echo -e "\nProceeding with `basename -- $i`..."
+		matching_records=`grep $pattern_name $i | wc -l`
+		echo -e "${matching_records} records match the pattern '$pattern_name'"
+		rename
+		input_src=`dirname "$( realpath "${i}" )"`
+                                        
+		if [ $matching_records -gt 0 ]
+		then
+			concatenate_fasta_seqs $i
+			echo -e "\tRemoving any records with '$pattern_name' description in header from file..."
+			$AWK_EXEC -v pattern="$pattern_name" 'BEGIN { RS="\n>"; ORS="\n"; FS="\n"; OFS="\n" }; $1 ~ pattern {print ">"$0;}' $i >> ${input_src}/${output_filename}_${unwanted}.fasta
+			sed -i "/$pattern_name/,+1 d" $i
+			echo -e "\n\tDONE. All deleted records have been stored in '${output_filename}_${unwanted}.fasta'"
+		fi
+	done
+}
 
 delete_unwanted() { #this function copys a record that fits a provided pattern, i.e a name that may be from a non-insect class based on the taxon_name_description; the arguments provided, are the files to be searched for the patterns
 	# To get the list of orders in description_taxon_names and their frequencies, from  which to select the undesired patterns (names), do: 
@@ -391,45 +439,66 @@ delete_unwanted() { #this function copys a record that fits a provided pattern, 
 
         fi
 
-	echo -e "To delete sequences with specific words in the headers please choose [Yes] to proceed or [No] to cancel"
-	PS3='Select option YES to delete, [1] or NO to exit, [2]: '	
-	select option in YES NO
+	echo -e "To delete sequences with specific words in the headers please select one of the options [1|2|3] to proceed or [4] to cancel"
+	options[0]="Move records with word patterns specified in a file into one file"
+	options[1]="Move records with word patterns specified in a file into individual word specific file"
+	options[2]="Move records with specific single word into word specific file"
+	options[3]="Exit"
+	PS3='Select option [1|2|3] to delete, or [4] to exit: '	
+	select option in "${options[@]}"
 	do
 		unset pattern_name
+		unset input_pattern_file
+	
 		matching_records=0
 
 		regexp='^[a-zA-Z0-9/_-\ ]+$'
 
 		case $option in
-			YES)
+			${options[0]})
+				#echo "no error"
+				until [[ -f ${input_pattern_file}  ]]
+				do
+					read -p "Please enter the path to the file with pattern names to be removed:: " input_pattern_file
+					#cat ${input_pattern_file}
+				done
+
+				for line in `cat ${input_pattern_file}`
+				do
+					pattern_name=${line}
+					unwanted="unwanted"
+					#echo ${pattern_name}
+					move_unwanted "$@"
+				done
+				;;
+			${options[1]})
+				until [[ -f ${input_pattern_file} ]]
+				do
+					read -p "Please enter the path to the file with pattern names to be removed:: " input_pattern_file
+				done
+
+				for line in `cat ${input_pattern_file}`
+				do
+					pattern_name=${line}
+					unwanted=${pattern_name}
+					move_unwanted "$@"
+				done
+				;;
+			${options[2]})
 				until [[ "$pattern_name" =~ $regexp ]]
 				do
 					read -p "Please enter string pattern to be searched:: " pattern_name
 				done
-				
-				for i in "$@"
-				do
-					echo -e "\nProceeding with `basename -- $i`..."
-					matching_records=`grep $pattern_name $i | wc -l`
-					echo -e "${matching_records} records match the pattern: $pattern_name"
-					rename
-					input_src=`dirname "$( realpath "${i}" )"`
-					
-					#awk -v name="$input_r" 'BEGIN {RS="\n>"; ORF="\n>"}; $0 ~ name {print ">"$0}' test_all.fasta | less
-					
-					if [ $matching_records -gt 0 ]
-					then
-						concatenate_fasta_seqs $i
-						echo -e "\tRemoving any records with '$pattern_name' description in header from file..."
-						$AWK_EXEC -v pattern="$pattern_name" 'BEGIN { RS="\n>"; ORS="\n"; FS="\n"; OFS="\n" }; $1 ~ pattern {print ">"$0;}' $i >> ${input_src}/${output_filename}_${pattern_name}.fasta
-						sed -i "/$pattern_name/,+1 d" $i
-						echo -e "\n\tDONE. All deleted records have been stored in '${output_filename}_${pattern_name}.fasta'"
-					fi
-				done
+				unwanted=${pattern_name}
+				move_unwanted "$@"
 				;;
-			NO)
+			${options[3]})
 				echo -e "Exiting deletion of unwanted sequences..."
 				break
+				;;
+			*)
+				echo "INVALID choice $REPLY"
+				;;
 		esac
 	done
 }
@@ -441,7 +510,7 @@ trimming_seqaln() { #This function trims aligned sequences in a file on both end
 	if [ $# -eq 0 ]
         then
                 echo "Input error..."
-                echo "Usage: ${FUNCNAME[0]} file1.*[file2.* file3.* ...]"
+                echo "Usage: ${FUNCNAME[0]} file1.*[file2.* file3.* ...]\nInput files must be well aligned files"
                 return 1
         fi
 
@@ -450,7 +519,7 @@ trimming_seqaln() { #This function trims aligned sequences in a file on both end
 		if [ ! -f $i ]
                 then
                         echo "input error: file '$i' is non-existent!"
-                elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa|fst) ) ]]
+                elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa|fst)$ ) ]]
                 then
 			input_src=`dirname "$( realpath "${i}" )"`
 			rename $i
@@ -499,7 +568,7 @@ delete_shortseqs_gaps() { #This function identifies and removes sequences that h
                 if [ ! -f $i ]
                 then
                         echo "input error: file '$i' is non-existent!"
-                elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa) ) ]]
+                elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa)$ ) ]]
                 then
                         input_src=`dirname "$( realpath "${i}" )"`
                         rename $i
@@ -566,7 +635,7 @@ delete_shortseqs() { #This function identifies and removes sequences that have s
 		if [ ! -f $i ]
 		then
 			echo "input error: file '$i' is non-existent!"
-		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa) ) ]]
+		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa)$ ) ]]
 		then
 			input_src=`dirname "$( realpath "${i}" )"`
 			rename $i
@@ -646,7 +715,7 @@ delete_shortseqs() { #This function identifies and removes sequences that have s
 }
 #===============================================================================================================================================================
 
-remove_gaps() { # Removing gaps, "-" in a sequnce.
+remove_gaps() { # Removing gaps, "-" in a sequence.
 	# Works only for singular line header and sequence lines, i.e does not concatenate separate lines of the same sequence.
 	#awk 'BEGIN{ RS="\n";ORS="\n" }/^>/{print}; !/^>/{ gsub("-","",$0); print $0 }' enafroCOI_500to700_data-650to660_st22n1006-en1474n3479.aln | less -S
 	if [ $# -eq 0 ]
@@ -661,12 +730,13 @@ remove_gaps() { # Removing gaps, "-" in a sequnce.
 		if [ ! -f $i ]
 		then
 			echo "input error: file '$i' is non-existent!"
-   		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa) ) ]]
+   		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa)$ ) ]]
 		then
 			input_src=`dirname "$( realpath "${i}" )"`
 			rename $i
-			echo -e "\n\tRemoving gaps, '-', from `basename -- ${i}`"
 			concatenate_fasta_seqs $i
+
+			echo -e "\tRemoving gaps, '-', from `basename -- ${i}`"
 			$AWK_EXEC 'BEGIN{ RS="\n";ORS="\n" }/^>/{print}; !/^>/{ gsub("-","",$0); print $0 }' $i > ${input_src}/${output_filename}_dgpd.fasta
 		else
 			echo "input file error in `basename $i`: input file should be a .aln file format"
@@ -694,9 +764,9 @@ concatenate_fasta_seqs() { # This function converts a multiple line FASTA format
 		if [ ! -f $i ]
 		then
 			echo "input error: file '$i' is non-existent!"
-		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa|fst) ) ]]
+		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa|fst)$ ) ]]
 		then
-			echo -e "\t concatinating sequence lines for each record in `basename -- ${i}`..."
+			echo -e "\t...Concatinating sequence lines for each record in `basename -- ${i}`..."
 			input_src=`dirname "$( realpath "${i}" )"`
 			$AWK_EXEC '/^>/ {if (FNR==1) print $0; else print "\n" $0; }; !/^>/ {gsub("\n","",$0); printf $0}' $i > ${input_src}/outfile.afa && mv ${input_src}/outfile.afa ${i}
 		else
@@ -707,26 +777,70 @@ concatenate_fasta_seqs() { # This function converts a multiple line FASTA format
 }
 
 
+#===============================================================================================================================================================
 
-retrive_original_seqs() { # Retriving a subset of unaligned sequences from original parent file
-	if [ $# -ne 2 ]
+retrive_originalseqs() { # Retriving a subset of unaligned sequences from original parent file. The input is an FASTA file that has been modified (trimmed or Ns or gaps removed).
+	if [ $# -eq 0 ]
 	then
 		echo "Input error..."
-		echo "Usage: ${FUNCNAME[0]} seqfile.fasta parentfile.fasta"
+		echo "Usage: ${FUNCNAME[0]} seqfile1.fasta [seqfile2.fasta seqfile3.fasta seqfile4.fasta]"
 		return 1
 	fi
+	
+	for i in "$@"
+	do
+		if [ ! -f $i ]
+		then
+			echo "input error: file '$i' is non-existent!"
+		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa) ) ]]
+		then
+			inputfile=${i}
+			unset parentfile
+			until [[ ( -f $parentfile ) && ( `basename -- "$parentfile"` =~ .*\.(aln|afa|fasta|fa)$ ) ]]
+			do
+				read -p "Please enter the path to the parent file with the orginal sequences:: " parentfile
+			done
 
-	cat $1 > ./in_put.fasta
-	cat $2 >> ./in_put.fasta
-	delete_repeats ./in_put.fasta
-	x=`wc -l $1`
-	$AWK_EXEC -v x=$x '{if ( NRF<=x ) {next} else {print $0} }' ./in_put.fasta > in_put1.fasta
-	cat ./in_put1.fasta > ./in_put.fasta
-	cat $2 >> ./in_put.fasta
-	delete_repeats ./in_put.fasta
-	y=`wc -l ./in_put1.fasta`
-	$AWK_EXEC -v y=$y '{if ( NRF<=y ) {next} else {print $0} }' ./input1.fasta > out_put.fasta 
-	mv out_put.fasta $1
+			rename ${inputfile}
+			outputfilename=${output_filename}
+			concatenate_fasta_seqs ${inputfile} ${parentfile}
+			# lets open and save both files using an editor i.e vim to ensure all lines have an "newline" ending.
+			vim ${inputfile} <<- EOF
+			^[
+			:wq!
+			EOF
+			vim ${parentfile} <<- EOF
+			^[
+			:wq!
+			EOF
+			input_src=`dirname "$( realpath "${inputfile}" )"`
+			echo -e "\t...Copying ${inputfile} to ./retrinput.fasta"
+			cat ${inputfile} > ${input_src}/retrinput.fasta
+			echo -e "\t...Appending ${parentfile} to ./retrinput.fasta"
+			cat ${parentfile} >> ${input_src}/retrinput.fasta
+			delete_repeats ${input_src}/retrinput.fasta <<- EOF
+			y
+			EOF
+			x=$( cat ${inputfile} | wc -l )
+			echo -e "\t...Extracting records from ./retrinput.fasta not found in ${inputfile} to ./retrinput1.fasta"
+			$AWK_EXEC -v x=$x '{if ( FNR<=x ) {next} else {print $0} }' ${input_src}/retrinput.fasta > ${input_src}/retrinput1.fasta
+			echo -e "\t...Copying ./retrinput1.fasta to ./retrinput2.fasta"
+			cat ${input_src}/retrinput1.fasta > ${input_src}/retrinput2.fasta
+			echo -e "\t...Appending ${parentfile} to ./retrinput2.fasta"
+			cat ${parentfile} >> ${input_src}/retrinput2.fasta 
+			delete_repeats ${input_src}/retrinput2.fasta <<- EOF
+			y
+			EOF
+			y=$( cat ${input_src}/retrinput1.fasta | wc -l )
+			echo -e "\t...Extracting records from ./retrinput2.fasta not found in ./retrinput1.fasta to .${outputfilename}_original.fasta"
+			$AWK_EXEC -v y=$y '{if ( FNR<=y ) {next} else {print $0} }' ${input_src}/retrinput2.fasta > ${input_src}/${outputfilename}_original.fasta
+			rm ${input_src}/retrinput2.fasta ${input_src}/retrinput1.fasta ${input_src}/retrinput.fasta 
+			echo -e "The retrived original records are saved in ${input_src}/${outputfilename}_original.fasta"
+		else
+			echo "input file error in `basename $i`: input file should be a .aln file format"
+			continue
+		fi
+	done
 }
 
 

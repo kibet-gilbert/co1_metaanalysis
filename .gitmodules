@@ -37,3 +37,12 @@
 [submodule "code/tools/beast2"]
 	path = code/tools/beast2
 	url = https://github.com/CompEvol/beast2.git
+[submodule "code/tools/The-Structured-Coalescent"]
+	path = code/tools/The-Structured-Coalescent
+	url = https://github.com/nicfel/The-Structured-Coalescent.git
+[submodule "code/tools/basta-bayesian-structured-coalescent-approximation"]
+	path = code/tools/basta-bayesian-structured-coalescent-approximation
+	url = https://bitbucket.org/nicofmay/basta-bayesian-structured-coalescent-approximation.git
+[submodule "code/tools/popart-current"]
+	path = code/tools/popart-current
+	url = https://github.com/jessicawleigh/popart-current.git

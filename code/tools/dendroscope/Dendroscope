@@ -136,12 +136,8 @@ test_jvm() {
   if [ "$ver_major" = "" ]; then
     return;
   fi
-  if [ "$ver_major" -lt "1" ]; then
+  if [ "$ver_major" -lt "11" ]; then
     return;
-  elif [ "$ver_major" -eq "1" ]; then
-    if [ "$ver_minor" -lt "7" ]; then
-      return;
-    fi
   fi
 
   if [ "$ver_major" = "" ]; then
@@ -153,6 +149,12 @@ test_jvm() {
 add_class_path() {
   if [ -n "$1" ] && [ `expr "$1" : '.*\*'` -eq "0" ]; then
     local_classpath="$local_classpath${local_classpath:+:}$1"
+  fi
+}
+
+add_module_path() {
+  if [ -n "$1" ] && [ `expr "$1" : '.*\*'` -eq "0" ]; then
+    local_modulepath="$local_modulepath${local_modulepath:+:}$1"
   fi
 }
 
@@ -229,7 +231,7 @@ read_vmoptions() {
 unpack_file() {
   if [ -f "$1" ]; then
     jar_file=`echo "$1" | awk '{ print substr($0,1,length-5) }'`
-    bin/unpack200 -r "$1" "$jar_file"
+    bin/unpack200 -r "$1" "$jar_file" > /dev/null 2>&1
 
     if [ $? -ne 0 ]; then
       echo "Error unpacking jar files. The architecture or bitness (32/64)"
@@ -418,7 +420,7 @@ fi
 fi
 if [ -z "$app_java_home" ]; then
   echo No suitable Java Virtual Machine could be found on your system.
-  echo The version of the JVM must be at least 1.7.
+  echo The version of the JVM must be at least 11.
   echo Please define INSTALL4J_JAVA_HOME to point to a suitable JVM.
   exit 83
 fi
@@ -426,16 +428,10 @@ fi
 
 i4j_classpath="$app_home/.install4j/i4jruntime.jar"
 local_classpath=""
-add_class_path "$i4j_classpath"
-for i in `ls "$app_home/jars" 2> /dev/null | egrep "\.(jar|zip)$"`
-do
-  add_class_path "$app_home/jars/$i"
-done
-add_class_path "$app_home/class"
-for i in `ls "$app_home/jars/batik-1.8" 2> /dev/null | egrep "\.(jar|zip)$"`
-do
-  add_class_path "$app_home/jars/batik-1.8/$i"
-done
+local_modulepath=""
+add_module_path "$i4j_classpath"
+add_module_path "$app_home/jars"
+add_module_path "$app_home/openjfx/unix/lib"
 
 vmoptions_val=""
 read_vmoptions "$prg_dir/$progname.vmoptions"
@@ -465,7 +461,7 @@ if [ "W$vmov_5" = "W" ]; then
 fi
 
 return_code=0
-$INSTALL4J_JAVA_PREFIX exec "$app_java_home/bin/java" -Dinstall4j.jvmDir="$app_java_home" -Dexe4j.moduleName="$prg_dir/$progname" "-Dapple.laf.useScreenMenuBar=true" "-server" "-Xmx400M" "-Duser.language=en" "-Duser.region=US" "-Dinstall4j.launcherId=1691242142" "-Dinstall4j.swt=false" "$vmov_1" "$vmov_2" "$vmov_3" "$vmov_4" "$vmov_5" $INSTALL4J_ADD_VM_PARAMS -classpath "$local_classpath" com.install4j.runtime.launcher.UnixLauncher launch be003e81 "$prg_dir/error.log" 0 dendroscope.main.Dendroscope -d "$@"
+$INSTALL4J_JAVA_PREFIX exec "$app_java_home/bin/java" -Dinstall4j.jvmDir="$app_java_home" -Dexe4j.moduleName="$prg_dir/$progname" "-Dapple.laf.useScreenMenuBar=true" "-Xmx400M" "-Duser.language=en" "-Duser.region=US" "--add-modules=dendroscope" "-Dinstall4j.launcherId=1691242142" "-Dinstall4j.swt=false" "$vmov_1" "$vmov_2" "$vmov_3" "$vmov_4" "$vmov_5" $INSTALL4J_ADD_VM_PARAMS -classpath "$local_classpath" -p "$local_modulepath" --add-opens dendroscope/dendroscope.main=com.install4j.runtime --add-modules dendroscope -m com.install4j.runtime launch be003e81 "$prg_dir/error.log" 0 /dendroscope/dendroscope.main.Dendroscope -d "$@"
 return_code=$?
 
 

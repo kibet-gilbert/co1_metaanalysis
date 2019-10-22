@@ -136,12 +136,8 @@ test_jvm() {
   if [ "$ver_major" = "" ]; then
     return;
   fi
-  if [ "$ver_major" -lt "1" ]; then
+  if [ "$ver_major" -lt "11" ]; then
     return;
-  elif [ "$ver_major" -eq "1" ]; then
-    if [ "$ver_minor" -lt "7" ]; then
-      return;
-    fi
   fi
 
   if [ "$ver_major" = "" ]; then
@@ -229,7 +225,7 @@ read_vmoptions() {
 unpack_file() {
   if [ -f "$1" ]; then
     jar_file=`echo "$1" | awk '{ print substr($0,1,length-5) }'`
-    bin/unpack200 -r "$1" "$jar_file"
+    bin/unpack200 -r "$1" "$jar_file" > /dev/null 2>&1
 
     if [ $? -ne 0 ]; then
       echo "Error unpacking jar files. The architecture or bitness (32/64)"
@@ -417,7 +413,7 @@ fi
 fi
 if [ -z "$app_java_home" ]; then
   echo No suitable Java Virtual Machine could be found on your system.
-  echo The version of the JVM must be at least 1.7.
+  echo The version of the JVM must be at least 11.
   echo Please define INSTALL4J_JAVA_HOME to point to a suitable JVM.
   exit 83
 fi

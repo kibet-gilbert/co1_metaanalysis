@@ -44,7 +44,7 @@ muscle_large() { #muscle aligment of large datasets, long execution times is an 
 		if [ ! -f $i ]
 		then
 			echo "input error: file $i is non-existent!"
-		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa) ) ]]
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa)$ ) ]]
 		then
 			rename
 			echo -e "\nproceeding with file `basename $i`..."
@@ -68,7 +68,7 @@ muscle_refine() {
 		if [ ! -f $i ]
 		then
 			echo "input error: file $i is non-existent!"
-		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa|aln) ) ]]
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa|aln)$ ) ]]
 		then
 			rename
 			echo -e "\nproceeding with file `basename $i`..."
@@ -147,7 +147,7 @@ mafft_GlINS1() {
                 if [ ! -f $i ]
                 then
                         echo "input error: file $i is non-existent!"
-                elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa) ) ]]
+                elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa)$ ) ]]
                 then
                         rename
                         echo -e "\nmafft G-large-INS-1 MSA: proceeding with file `basename $i`..."
@@ -202,7 +202,7 @@ mafft_local() {
                 if [ ! -f $i ]
                 then
                         echo "input error: file $i is non-existent!"
-                elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa) ) ]]
+                elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa)$ ) ]]
                 then
                         rename
                         echo -e "\nmafft G-large-INS-1 MSA: proceeding with file `basename $i`..."
@@ -259,7 +259,7 @@ inputfiletest() { #test files if they exist, if they are the right format and ge
                 then
                         echo "input file error: only two or more input files are allowed!"
                         break
-                elif [[ ( -f $i ) && ( `basename $i` == *.fasta) ]]
+                elif [[ ( -f $i ) && ( `basename $i` == *.fasta$) ]]
                 then
                         if [ -z $in1_outname ]
                         then
@@ -454,7 +454,7 @@ tcoffee_large() {
 		if [ ! -f $i ]
 		then
 			echo "input error: file $i is non-existent!"
-		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa) ) ]]
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa)$ ) ]]
 		then
 			rename
 			echo -e "\nproceeding with file `basename $i`..."
@@ -505,7 +505,7 @@ COREindex() { #Evaluating an existing alignment with the CORE index
 		if [ ! -f $i ]
 		then
 			echo "input error: file $i is non-existent!"
-		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa|aln) ) ]]
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa|aln)$ ) ]]
 		then
 			rename
 			outfile_dest
@@ -564,7 +564,7 @@ TCSeval() { #Evaluating an existing alignment with the TCS
                 if [ ! -f $i ]
                 then
                         echo "input error: file $i is non-existent!"
-                elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa|aln) ) ]]
+                elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa|aln)$ ) ]]
                 then
                         rename
 			outfile_dest
@@ -649,7 +649,7 @@ pasta_aln() { #MSA alignment using pasta
 		if [ ! -f $i ]
 		then
 			echo "input error: file $i is non-existent!"
-		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa|aln) ) ]]
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa|aln)$ ) ]]
 		then
 			echo -e "\tProceeding with `basename $i`" 
 			echo -e "\tPlease select the mafft alignment method;\n\tlocal[mafft_linsi] or global[mafft_ginsi]:"
@@ -749,7 +749,7 @@ upp_align() { #UPP stands for Ultra-large alignments using Phylogeny-aware Profi
 		if [ ! -f $i ]
 		then
 			echo "input error: file $i is non-existent!"
-		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa|aln) ) ]]
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa|aln)$ ) ]]
 		then
 			echo -e "\tProceeding with `basename $i`"
 			echo -e "\tPlease select the type of alignment method;\n\tUsing unaligned sequences only[using_sequences_only] or using a backbone[using_precomputed_backbone]:"
@@ -776,13 +776,13 @@ upp_align() { #UPP stands for Ultra-large alignments using Phylogeny-aware Profi
 						unset start_tree
 						echo -e "\nDoing Multiple Sequence Alignment of `basename $i` using a backbone alignment and a starting tree..."
 
-						until [[ ( -f "$start_tree" ) && ( `basename -- "$start_tree"` =~ .*\.(tre) ) ]]
+						until [[ ( -f "$start_tree" ) && ( `basename -- "$start_tree"` =~ .*\.(tre)$ ) ]]
 						do
 							echo -e "\n\tFor the starting tree provide the full path to the file, the filename included."
 							read -p "Please enter the file to be used as the starting tree: " start_tree
 						done
 
-						until [[ ( -f "$backbone" ) && ( `basename -- "$backbone"` =~ .*\.(aln|fasta|fa|afa) ) ]]
+						until [[ ( -f "$backbone" ) && ( `basename -- "$backbone"` =~ .*\.(aln|fasta|fa|afa)$ ) ]]
 						do
 							echo -e "\n\tFor the backbone alignment provide the full path to the file, the filename included."
 							read -p "Please enter the file to be used as the backbone alignment: " backbone

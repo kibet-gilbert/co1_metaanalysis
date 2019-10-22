@@ -1,72 +1,71 @@
-[INFO] logger started at Tue Feb 26 17:24:27 EAT 2019
-[INFO] executable name: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/Dendroscope_unix_3_5_10.sh
-[INFO] install4j version: 7.0.8 (build 7248)
+[INFO] logger started at Fri Sep 27 15:55:43 EAT 2019
+[INFO] executable name: /home/kibet/Dendroscope_unix_3_6_3.sh
+[INFO] install4j version: 7.0.12 (build 7365)
 [INFO] Properties: 
 -- listing properties --
-java.runtime.name=OpenJDK Runtime Environment
-exe4j.moduleName=/home/kibet/bioinformatics/github/co1...
-sun.boot.library.path=/home/kibet/bioinformatics/anaconda3/...
-java.vm.version=25.144-b01
-java.vm.vendor=Azul Systems, Inc.
-java.vendor.url=http://www.azulsystems.com/
-path.separator=:
-java.vm.name=OpenJDK 64-Bit Server VM
-file.encoding.pkg=sun.io
-user.country=GB
+sun.desktop=gnome
+awt.toolkit=sun.awt.X11.XToolkit
+java.specification.version=11
+sun.cpu.isalist=
+sun.jnu.encoding=UTF-8
+java.class.path=i4jruntime.jar
+sun.awt.enableExtraMouseButtons=true
+java.vm.vendor=Ubuntu
+sun.arch.data.model=64
+install4j.exeDir=/home/kibet/
+sun.font.fontmanager=sun.awt.X11FontManager
+java.vendor.url=https://ubuntu.com/
+user.timezone=Africa/Nairobi
+os.name=Linux
+java.vm.specification.version=11
 sun.java.launcher=SUN_STANDARD
-sun.os.patch.level=unknown
-install4j.exeDir=/home/kibet/bioinformatics/github/co1...
-java.vm.specification.name=Java Virtual Machine Specification
-user.dir=/home/kibet/bioinformatics/github/co1...
-java.runtime.version=1.8.0_144-b01
-java.awt.graphicsenv=sun.awt.X11GraphicsEnvironment
-i4jv=0
-java.endorsed.dirs=/home/kibet/bioinformatics/anaconda3/...
-os.arch=amd64
-java.io.tmpdir=/tmp
+user.country=GB
+sun.boot.library.path=/usr/lib/jvm/java-11-openjdk-amd64/lib
+sun.java.command=com.install4j.runtime.launcher.UnixLa...
+jdk.debug=release
+sun.cpu.endian=little
+user.home=/home/kibet
+user.language=en
+java.specification.vendor=Oracle Corporation
+java.version.date=2019-07-16
+java.home=/usr/lib/jvm/java-11-openjdk-amd64
+file.separator=/
+java.vm.compressedOopsMode=32-bit
 line.separator=
 
-java.vm.specification.vendor=Oracle Corporation
-os.name=Linux
-exe4j.totalDataLength=16167432
-sun.java2d.noddraw=true
-sun.jnu.encoding=UTF-8
-java.library.path=/home/kibet/bioinformatics/github/co1...
-sun.awt.enableExtraMouseButtons=true
 java.specification.name=Java Platform API Specification
-java.class.version=52.0
+java.vm.specification.vendor=Oracle Corporation
+java.awt.graphicsenv=sun.awt.X11GraphicsEnvironment
+exe4j.moduleName=/home/kibet/Dendroscope_unix_3_6_3.sh
 sun.management.compiler=HotSpot 64-Bit Tiered Compilers
-os.version=4.15.0-45-generic
-i4j.vpt=true
-user.home=/home/kibet
-install4j.cwd=/home/kibet/bioinformatics/github/co1...
-user.timezone=Africa/Nairobi
-java.awt.printerjob=sun.print.PSPrinterJob
-java.specification.version=1.8
-install4j.jvmDir=/home/kibet/bioinformatics/anaconda3
-file.encoding=UTF-8
+i4jv=0
+java.runtime.version=11.0.4+11-post-Ubuntu-1ubuntu218.04.3
 user.name=kibet
-java.class.path=i4jruntime.jar
-java.vm.specification.version=1.8
-sun.arch.data.model=64
-java.home=/home/kibet/bioinformatics/anaconda3/jre
-sun.java.command=com.install4j.runtime.launcher.UnixLa...
-java.specification.vendor=Oracle Corporation
-user.language=en
-awt.toolkit=sun.awt.X11.XToolkit
-java.vm.info=mixed mode
-java.version=1.8.0_144
-java.ext.dirs=/home/kibet/bioinformatics/anaconda3/...
-sun.boot.class.path=/home/kibet/bioinformatics/anaconda3/...
-java.vendor=Azul Systems, Inc.
-install4j.appDir=/home/kibet/bioinformatics/github/co1...
-file.separator=/
-java.vendor.url.bug=http://www.azulsystems.com/support/
-sun.cpu.endian=little
+path.separator=:
+os.version=5.0.0-29-generic
+java.runtime.name=OpenJDK Runtime Environment
+sun.java2d.noddraw=true
+file.encoding=UTF-8
+java.vm.name=OpenJDK 64-Bit Server VM
+install4j.jvmDir=/usr/lib/jvm/default-java
+install4j.cwd=/home/kibet
+install4j.appDir=/home/kibet/
+java.vendor.url.bug=https://bugs.launchpad.net/ubuntu/+so...
+java.io.tmpdir=/tmp
+java.version=11.0.4
+user.dir=/home/kibet/Dendroscope_unix_3_6_3.sh...
+os.arch=amd64
+java.vm.specification.name=Java Virtual Machine Specification
+exe4j.totalDataLength=57700346
+java.awt.printerjob=sun.print.PSPrinterJob
+sun.os.patch.level=unknown
+java.library.path=/home/kibet/Dendroscope_unix_3_6_3.sh...
+java.vendor=Ubuntu
+java.vm.info=mixed mode, sharing
+java.vm.version=11.0.4+11-post-Ubuntu-1ubuntu218.04.3
 sun.io.unicode.encoding=UnicodeLittle
-sun.font.fontmanager=sun.awt.X11FontManager
-sun.desktop=gnome
-sun.cpu.isalist=
+java.class.version=55.0
+i4j.vpt=true
 [INFO] Variable changed: sys.resolveUserSpecificInstallationDir=false[class java.lang.String]
 [INFO] com.install4j.runtime.beans.actions.misc.RequestPrivilegesAction [ID 1691242262]: Execute action
        Property allRequested: false
@@ -80,7 +79,7 @@ sun.cpu.isalist=
        Property rollbackSupported: false
        Property updateInstallationDirectory: true
        Variable changed: sys.resolveUserSpecificInstallationDir=true[class java.lang.Boolean]
-       Execute action successful after 9 ms
+       Execute action successful after 2 ms
 [INFO] com.install4j.runtime.beans.screens.StartupScreen [ID 15]: command: move 1 screens, executing actions, checking condition
 [INFO] com.install4j.runtime.beans.screens.WelcomeScreen [ID 1691242162]: Show screen
 [INFO] checking writable with maximum
@@ -90,7 +89,7 @@ sun.cpu.isalist=
        Property file: null
        Property overwriteStrategy: Do not overwrite command line
        Property registerForResponseFile: true
-       Property rollbackSupported: true
+       Property rollbackSupported: false
        Variable changed: sys.component.1691242184=true[class java.lang.Boolean]
        Variable changed: sys.component.1691242261=true[class java.lang.Boolean]
        Variable changed: sys.adminRights=false[class java.lang.Boolean]
@@ -100,7 +99,7 @@ sun.cpu.isalist=
        Variable changed: sys.component.1691242183=true[class java.lang.Boolean]
        Variable changed: sys.installationDir=/home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope[class java.lang.String]
        Variable changed: myXmx=600[class java.lang.Integer]
-       Execute action successful after 72 ms
+       Execute action successful after 24 ms
 [INFO] com.install4j.runtime.beans.screens.WelcomeScreen [ID 1691242162]: command: move 1 screens, executing actions, checking condition
 [INFO] com.install4j.runtime.beans.screens.LicenseScreen [ID 1691242163]: Show screen
 [INFO] com.install4j.runtime.beans.screens.LicenseScreen [ID 1691242163]: command: move 1 screens, executing actions, checking condition
@@ -122,11 +121,12 @@ sun.cpu.isalist=
        see uninstallPrevious.log for the log file of the uninstaller
        Variable changed: sys.undeletedUninstallFiles=null
        finished
-       Execute action successful after 4052 ms
+       Execute action successful after 3617 ms
 [INFO] com.install4j.runtime.beans.actions.InstallFilesAction [ID 1691242169]: Execute action
        Property directoryResolverScript: null
        Property fileFilterScript: null
        Property sizeCalculatorScript: null
+       Property acceptAllCertificates: false
        Property checkFreeSpace: true
        Property delay: false
        Property installRuntime: true
@@ -139,109 +139,140 @@ sun.cpu.isalist=
        Component Dendroscope Program[1691242261]; Selected: true
        Component Manual[1691242184]; Selected: true
        Component Examples[1691242183]; Selected: true
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/2bfa42ba.lprop; size: 68 bytes; exists: false
-       File options set to: [fileTime: Wed Nov 14 17:47:54 EAT 2018, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/2bfa42ba.lprop; size: 77 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 01 08:27:26 EAT 2019, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, delayIfNecessary: false]
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/Dendroscope.png; size: 3211 bytes; exists: false
-       File options set to: [fileTime: Wed Nov 14 17:47:54 EAT 2018, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: Always, delayIfNecessary: false]
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/automaticUpdater; size: 13408 bytes; exists: false
-       File options set to: [fileTime: Wed Nov 14 17:47:54 EAT 2018, mode: 755, overwriteMode: If newer otherwise ask, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       File options set to: [fileTime: Thu Aug 01 08:27:26 EAT 2019, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: Always, delayIfNecessary: false]
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/automaticUpdater; size: 13328 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 01 08:27:26 EAT 2019, mode: 755, overwriteMode: If newer otherwise ask, shared: false, uninstallMode: If created, delayIfNecessary: false]
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/automaticUpdater.png; size: 1884 bytes; exists: false
-       File options set to: [fileTime: Wed Nov 14 17:47:54 EAT 2018, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: Always, delayIfNecessary: false]
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/be003e81.lprop; size: 68 bytes; exists: false
-       File options set to: [fileTime: Wed Nov 14 17:47:54 EAT 2018, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, delayIfNecessary: false]
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/c67b37b5.lprop; size: 68 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 01 08:27:26 EAT 2019, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: Always, delayIfNecessary: false]
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/be003e81.lprop; size: 77 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 01 08:27:26 EAT 2019, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/c67b37b5.lprop; size: 77 bytes; exists: false
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/uninstall.png; size: 6648 bytes; exists: false
-       File options set to: [fileTime: Wed Nov 14 17:47:54 EAT 2018, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: Always, delayIfNecessary: false]
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/uninstall; size: 13533 bytes; exists: false
-       File options set to: [fileTime: Wed Nov 14 17:47:54 EAT 2018, mode: 700, overwriteMode: If newer otherwise ask, shared: false, uninstallMode: If created, delayIfNecessary: false]
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/manual.pdf; size: 1265149 bytes; exists: false
-       File options set to: [fileTime: Wed Nov 14 17:47:54 EAT 2018, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, delayIfNecessary: false]
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/examples/fishes/first.nexml; size: 27460 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/examples/fishes/second.nexml; size: 20038 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/examples/grasses/GBSS-original.nexml; size: 17389 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/examples/grasses/ITS-original.nexml; size: 38990 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/examples/grasses/ndhF-original.nexml; size: 57237 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/examples/grasses/phyB-original.nexml; size: 35410 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/examples/grasses/rbcL-original.nexml; size: 9110 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/examples/grasses/rpoC2-original.nexml; size: 28212 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/examples/nymphoides/its.nexml; size: 33998 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/examples/nymphoides/matK_trnK.nexml; size: 28761 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/Dendroscope; size: 13159 bytes; exists: false
-       File options set to: [fileTime: Wed Nov 14 17:47:54 EAT 2018, mode: 755, overwriteMode: If newer otherwise ask, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       File options set to: [fileTime: Thu Aug 01 08:27:26 EAT 2019, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: Always, delayIfNecessary: false]
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/uninstall; size: 13453 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 01 08:27:26 EAT 2019, mode: 700, overwriteMode: If newer otherwise ask, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/manual.pdf; size: 1264569 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 01 08:27:26 EAT 2019, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/Examples/fishes/first.nexml; size: 27460 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/Examples/fishes/second.nexml; size: 20038 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/Examples/grasses/GBSS-original.nexml; size: 17389 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/Examples/grasses/ITS-original.nexml; size: 38990 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/Examples/grasses/ndhF-original.nexml; size: 57237 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/Examples/grasses/phyB-original.nexml; size: 35410 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/Examples/grasses/rbcL-original.nexml; size: 9110 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/Examples/grasses/rpoC2-original.nexml; size: 28212 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/Examples/nymphoides/its.nexml; size: 33998 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/Examples/nymphoides/matK_trnK.nexml; size: 28761 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/Dendroscope; size: 13177 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 01 08:27:26 EAT 2019, mode: 755, overwriteMode: If newer otherwise ask, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/Dendroscope.vmoptions; size: 243 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 01 08:27:26 EAT 2019, mode: 644, overwriteMode: Never, shared: false, uninstallMode: If created, but not for update, delayIfNecessary: false]
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/License.txt; size: 968 bytes; exists: false
-       File options set to: [fileTime: Wed Nov 14 17:47:54 EAT 2018, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, delayIfNecessary: false]
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/Dendroscope.jar; size: 2292135 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/Jama-1.0.3.jar; size: 35981 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/Jama-NOTICE.txt; size: 602 bytes; exists: false
+       File options set to: [fileTime: Thu Aug 01 08:27:26 EAT 2019, mode: 644, overwriteMode: Always ask except for update, shared: false, uninstallMode: If created, delayIfNecessary: false]
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/LICENSE-commons-collections-3.2.1.txt; size: 11358 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/LICENSE.dom-documentation.txt; size: 4003 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/LICENSE.dom-software.txt; size: 3554 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/LICENSE.fop-transcoder-allinone-1.1.txt; size: 158 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/LICENSE.js.txt; size: 46909 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/LICENSE.sax.txt; size: 779 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/LICENSE.xalan-2.7.0.txt; size: 142 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/LICENSE.xerces_2_5_0.txt; size: 2892 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/LICENSE.xmlgraphics-commons-2.0.txt; size: 11362 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/README.fop-transcoder-allinone-1.1.txt; size: 357 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/README.js.txt; size: 743 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/README.xalan-2.7.0.txt; size: 216 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/README.xerces_2_5_0.txt; size: 214 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/README.xml-apis-1.3.04.txt; size: 872 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/README.xml-apis-ext-1.3.04.txt; size: 593 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/Squiggle.icns; size: 49249 bytes; exists: false
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/VectorGraphics2D-0.11.jar; size: 101185 bytes; exists: false
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/VectorGraphics2D-License.txt; size: 7446 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-LICENSE.txt; size: 11361 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-NOTICE.txt; size: 684 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-anim-1.8.jar; size: 377041 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-awt-util-1.8.jar; size: 301026 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-bridge-1.8.jar; size: 529673 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-codec-1.8.jar; size: 108571 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-css-1.8.jar; size: 256539 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-dom-1.8.jar; size: 140057 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-ext-1.8.jar; size: 10344 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-extension-1.8.jar; size: 54734 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-gui-util-1.8.jar; size: 152268 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-gvt-1.8.jar; size: 144226 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-parser-1.8.jar; size: 55267 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-script-1.8.jar; size: 17155 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-svg-dom-1.8.jar; size: 217197 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-svggen-1.8.jar; size: 177874 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-swing-1.8.jar; size: 155148 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-transcoder-1.8.jar; size: 92512 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-util-1.8.jar; size: 107736 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-xml-1.8.jar; size: 26776 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-all-1.11.jar; size: 4259412 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-all-licenses/LICENSE.dom-documentation.txt; size: 3996 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-all-licenses/LICENSE.dom-software.txt; size: 3545 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-all-licenses/LICENSE.fop-transcoder-allinone-2.3.txt; size: 158 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-all-licenses/LICENSE.js.txt; size: 46904 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-all-licenses/LICENSE.sax.txt; size: 780 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-all-licenses/LICENSE.xalan-2.7.0.txt; size: 142 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-all-licenses/LICENSE.xerces_2_5_0.txt; size: 2892 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/batik-all-licenses/LICENSE.xmlgraphics-commons-2.3.txt; size: 11368 bytes; exists: false
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/commons-collections-3.2.1.jar; size: 575389 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/fop-transcoder-allinone-1.1.jar; size: 1477961 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/js.jar; size: 504741 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/make-squiggle-app.sh; size: 2859 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/controlsfx-11.0.0.jar; size: 932275 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/controlsfx-license.txt; size: 1559 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/dendroscope3.jar; size: 1839641 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/jloda.jar; size: 1297229 bytes; exists: false
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/nexml.jar; size: 85932 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/serializer.jar; size: 276420 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/xalan-2.7.2.jar; size: 3154938 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/xercesImpl.jar; size: 1367760 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/xerces_2_5_0.jar; size: 934835 bytes; exists: false
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/xml-apis-ext-1.3.04.jar; size: 85686 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/xml-apis.jar; size: 220536 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/jars/xmlgraphics-commons-2.0.jar; size: 632499 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/inst_jre.cfg; size: 41 bytes; exists: false
-       File options set to: [fileTime: Tue Feb 26 17:24:44 EAT 2019, mode: 644, overwriteMode: Always, shared: false, uninstallMode: If created, delayIfNecessary: false]
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4jruntime.jar; size: 1919891 bytes; exists: false
-       File options set to: [fileTime: Tue Feb 26 17:24:44 EAT 2019, mode: 644, overwriteMode: Always, shared: false, uninstallMode: Always, delayIfNecessary: false]
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/MessagesDefault; size: 33678 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4jparams.conf; size: 106144 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/stats.properties; size: 1032 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/uninstallPrevious.log; size: 4499 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.base/ADDITIONAL_LICENSE_INFO; size: 2114 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.base/ASSEMBLY_EXCEPTION; size: 1522 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.base/LICENSE; size: 19274 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.controls/ADDITIONAL_LICENSE_INFO; size: 2114 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.controls/ASSEMBLY_EXCEPTION; size: 1522 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.controls/LICENSE; size: 19274 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.fxml/ADDITIONAL_LICENSE_INFO; size: 2114 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.fxml/ASSEMBLY_EXCEPTION; size: 1522 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.fxml/LICENSE; size: 19274 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.graphics/ADDITIONAL_LICENSE_INFO; size: 2114 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.graphics/ASSEMBLY_EXCEPTION; size: 1522 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.graphics/LICENSE; size: 19274 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.graphics/jpeg_fx.md; size: 2161 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.media/ADDITIONAL_LICENSE_INFO; size: 2114 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.media/ASSEMBLY_EXCEPTION; size: 1522 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.media/LICENSE; size: 19274 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.media/applecoreaudio.md; size: 2580 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.media/glib.md; size: 27550 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.media/gstreamer.md; size: 27584 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.media/libffi.md; size: 1185 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.swing/ADDITIONAL_LICENSE_INFO; size: 2114 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.swing/ASSEMBLY_EXCEPTION; size: 1522 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.swing/LICENSE; size: 19274 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.web/ADDITIONAL_LICENSE_INFO; size: 2114 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.web/ASSEMBLY_EXCEPTION; size: 1522 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.web/LICENSE; size: 19274 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.web/icu_web.md; size: 21088 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.web/libxml2.md; size: 1089 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.web/libxslt.md; size: 1126 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/legal/javafx.web/webkit.md; size: 27513 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/javafx-swt.jar; size: 36682 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/javafx.base.jar; size: 744471 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/javafx.controls.jar; size: 2508235 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/javafx.fxml.jar; size: 125617 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/javafx.graphics.jar; size: 4349318 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/javafx.media.jar; size: 263871 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/javafx.properties; size: 77 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/javafx.swing.jar; size: 87713 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/javafx.web.jar; size: 702070 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/libavplugin-54.so; size: 51512 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/libavplugin-56.so; size: 51530 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/libavplugin-57.so; size: 51530 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/libavplugin-ffmpeg-56.so; size: 51663 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/libavplugin-ffmpeg-57.so; size: 51530 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/libdecora_sse.so; size: 74618 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/libfxplugins.so; size: 51215 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/libglass.so; size: 12810 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/libglassgtk2.so; size: 359330 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/libglassgtk3.so; size: 359645 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/libgstreamer-lite.so; size: 2205991 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/libjavafx_font.so; size: 16825 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/libjavafx_font_freetype.so; size: 27263 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/libjavafx_font_pango.so; size: 25274 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/libjavafx_iio.so; size: 256191 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/libjfxmedia.so; size: 434596 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/libjfxwebkit.so; size: 88610824 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/libprism_common.so; size: 59144 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/libprism_es2.so; size: 63740 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/libprism_sw.so; size: 71335 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/openjfx/unix/lib/src.zip; size: 6646232 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/inst_jre.cfg; size: 35 bytes; exists: false
+       File options set to: [fileTime: Fri Sep 27 15:56:00 EAT 2019, mode: 644, overwriteMode: Always, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4jruntime.jar; size: 1938156 bytes; exists: false
+       File options set to: [fileTime: Fri Sep 27 15:56:00 EAT 2019, mode: 644, overwriteMode: Always, shared: false, uninstallMode: Always, delayIfNecessary: false]
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/MessagesDefault; size: 33730 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4jparams.conf; size: 110900 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/stats.properties; size: 1212 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4jempty.ttf; size: 1004 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/uninstallPrevious.log; size: 4497 bytes; exists: false
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/launchers.xml; size: 275 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/user.jar; size: 26588 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4j_extf_0_jg1g94.utf8; size: 33678 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4j_extf_5_jg1g94_18gg8kx.png; size: 9202 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4j_extf_3_jg1g94_vd2dea.png; size: 1187 bytes; exists: false
-       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4j_extf_2_jg1g94_x7nby6.png; size: 756 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/user.jar; size: 26537 bytes; exists: false
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4j_extf_4_jg1g94_un9apv.png; size: 1884 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4j_extf_5_jg1g94_18gg8kx.png; size: 9202 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/libi4jinst.dylib; size: 108000 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4j_extf_3_jg1g94_vd2dea.png; size: 1187 bytes; exists: false
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4j_extf_5_jg1g94_18gg8kx@2x.png; size: 15419 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4j_extf_0_jg1g94.utf8; size: 33730 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/libi4jinst2.dylib; size: 46036 bytes; exists: false
+       Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4j_extf_2_jg1g94_x7nby6.png; size: 756 bytes; exists: false
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4j_extf_1_jg1g94.txt; size: 968 bytes; exists: false
        Backing up /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/response.varfile
-       Execute action successful after 424 ms
+       Execute action successful after 1364 ms
 [INFO] com.install4j.runtime.beans.actions.desktop.CreateProgramGroupAction [ID 1691242170]: Execute action
        Property categories: Application
        Property linkDirectory: /usr/local/bin
@@ -257,15 +288,15 @@ sun.cpu.isalist=
        Property unixSymlinks: true
        Variable changed: sys.programGroupName=Dendroscope[class java.lang.String]
        Install file: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/Dendroscope.desktop; size: 297 bytes; exists: false
-       File options set to: [fileTime: Tue Feb 26 17:24:44 EAT 2019, mode: 755, overwriteMode: Always, shared: false, uninstallMode: Always, delayIfNecessary: false]
+       File options set to: [fileTime: Fri Sep 27 15:56:00 EAT 2019, mode: 755, overwriteMode: Always, shared: false, uninstallMode: Always, delayIfNecessary: false]
        Install file: /home/kibet/.local/share/applications/Dendroscope-1.desktop; size: 297 bytes; exists: false
-       File options set to: [fileTime: Tue Feb 26 17:24:44 EAT 2019, mode: 644, overwriteMode: Always, shared: false, uninstallMode: Always, delayIfNecessary: false]
+       File options set to: [fileTime: Fri Sep 27 15:56:00 EAT 2019, mode: 644, overwriteMode: Always, shared: false, uninstallMode: Always, delayIfNecessary: false]
 [ERROR] com.install4j.runtime.beans.actions.desktop.CreateProgramGroupAction [ID 1691242170]: /usr/local/bin/Dendroscope
-[INFO] com.install4j.runtime.beans.actions.desktop.CreateProgramGroupAction [ID 1691242170]: Execute action successful after 16 ms
+[INFO] com.install4j.runtime.beans.actions.desktop.CreateProgramGroupAction [ID 1691242170]: Execute action successful after 5 ms
 [INFO] com.install4j.runtime.beans.actions.desktop.RegisterAddRemoveAction [ID 1691242171]: Execute action
        Property icon: null
        Property iconSource: Installer icon
-       Property itemName: Dendroscope 3.5.10
+       Property itemName: Dendroscope 3.6.3
        Property persistentProperties: {}
        Property rollbackSupported: true
        Execute action successful after 0 ms
@@ -280,7 +311,8 @@ sun.cpu.isalist=
        Property macosVmOptionsType: Contained in the application bundle
        Property vmOptions: [-Xmx600M]
        Property rollbackSupported: true
-       Execute action successful after 1 ms
+       Backing up /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/Dendroscope.vmoptions
+       Execute action successful after 4 ms
 [INFO] com.install4j.runtime.beans.screens.FormScreen [ID 1691242423]: command: move 1 screens, executing actions, checking condition
 [INFO] com.install4j.runtime.beans.screens.FinishedScreen [ID 1691242172]: Show screen
 [INFO] com.install4j.runtime.beans.screens.FinishedScreen [ID 1691242172]: command: finish

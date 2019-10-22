@@ -29,7 +29,7 @@ fasttree_phylo() { #
                 if [ ! -f $i ]
                 then
                         echo "input error: file $i is non-existent!"
-                elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa) ) ]]
+                elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa)$ ) ]]
                 then
                         rename
                         echo -e "\nproceeding with file `basename $i`..."
@@ -63,7 +63,7 @@ bmge_cleanup() {
 		if [ ! -f $i ]
 		then
 			echo "input error: file $i is non-existent!"
-		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa) ) ]]
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa)$ ) ]]
 		then
 			input_src=`dirname "$( realpath "${i}" )"`
 			rename
@@ -117,7 +117,7 @@ raxml_phylo_hard(){ # This function performs a maximum likelihood search of the 
 		if [ ! -f $i ]
 		then
 			echo "input error: file $i is non-existent!"
-		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa) ) ]]
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa)$ ) ]]
 		then
 			rename
 			sed -i "s/\[//g; s/\]//g; s/ /_/g; s/://g; s/;//g; s/,/__/g; s/(/__/g; s/)//g; s/'//g" $i
@@ -198,7 +198,7 @@ raxml_phylo_easy(){ # This function conduct a full ML analysis, i.e., a certain 
 		if [ ! -f $i ]
 		then
 			echo "input error: file $i is non-existent!"
-		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa) ) ]]
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa)$ ) ]]
 		then
 			rename
 
@@ -258,7 +258,7 @@ raxml_phylo_easy(){ # This function conduct a full ML analysis, i.e., a certain 
 # Generate a model file containing the model parameters for th reference tree: stored in RAxML_binaryModelParameters.PARAMS, which can be read into EPA
 #	$raxmlHPC -f e -m GTRGAMMA -s referenceAlignment -t refenceTree -n PARAMS
 #	$raxmlHPC -f v -R RAxML_binaryModelParameters.PARAMS -t RAxML_results.PARAMS -s alg -m GTRGAMMA -n TEST2
-# For binary model files, the models of rate heterogeneity must be the same. Anwhen using GTRCAT, disable pattern compression using -H flag in both runs.
+# For binary model files, the models of rate heterogeneity must be the same. And when using GTRCAT, disable pattern compression using -H flag in both runs.
 
 raxml_rooting(){ # This funtion generates a model filewith model parameters for reference tree then places the outgroup/s in the tree
 	usage $@
@@ -269,9 +269,10 @@ raxml_rooting(){ # This funtion generates a model filewith model parameters for 
 		if [ ! -f $i ]
 		then
 			echo "input error: file $i is non-existent!"
-		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa) ) ]]
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa)$ ) ]]
 		then
  			rename
+			input_src=`dirname "$( realpath "${i}" )"`
 			sed -i "s/\[//g; s/\]//g; s/ /_/g; s/://g; s/;//g; s/,/__/g; s/(/__/g; s/)//g; s/'//g" $i
 
 			unset rate_heterogeneity
@@ -288,7 +289,10 @@ raxml_rooting(){ # This funtion generates a model filewith model parameters for 
 						raxmlHPC-AVX2 -f e -m ${rate_heterogeneity} -s ${i} -t ${tree} -w ${raxml_dest} -n ${output_filename}_PARAMS
 						echo -e "\nBinary files generation DONE.\nProceeding with outgroup insertion...\nPlease enter the path to the file containing the outgroup, it should be a single sequence/record..."
 						read -p "Please enter the outgroup file:: " outgroup
-						raxmlHPC-AVX2 -f v -m ${rate_heterogeneity} -R ${raxml_dest}RAxML_binaryModelParameters.${output_filename}_PARAMS -t ${raxml_dest}RAxML_results.${output_filename}_PARAMS -s ${outgroup} -n ${output_filename}_rooted
+						cp ${i} ${input_src}/rooting_inputfile.fas
+						cat ${outgroup} >> ${input_src}/rooting_inputfile.fas
+						sed -i '/^[[:space:]]*$/d' ${input_src}/rooting_inputfile.fas
+						raxmlHPC-AVX2 -f v -m ${rate_heterogeneity} -R ${raxml_dest}RAxML_binaryModelParameters.${output_filename}_PARAMS -t ${raxml_dest}RAxML_results.${output_filename}_PARAMS -s ${input_src}/rooting_inputfile.fas -w ${raxml_dest} -n ${output_filename}_rooted
 						echo -e "Thorough outgroup insertion DONE."
 						break
 						;;
@@ -297,7 +301,10 @@ raxml_rooting(){ # This funtion generates a model filewith model parameters for 
 						raxmlHPC-AVX2 -f e -H -m ${rate_heterogeneity} -s ${i} -t ${tree} -w ${raxml_dest} -n ${output_filename}_PARAMS
 						echo -e "\nBinary files generation DONE.\nProceeding with outgroup insertion...\nPlease enter the path to the file containing the outgroup, it should be a single sequence/record..."
 						read -p "Please enter the outgroup file:: " outgroup
-						raxmlHPC-AVX2 -f v -H -m ${rate_heterogeneity} -R ${raxml_dest}RAxML_binaryModelParameters.${output_filename}_PARAMS -t ${raxml_dest}RAxML_results.${output_filename}_PARAMS -s ${outgroup} -n ${output_filename}_rooted
+						cp ${i} ${input_src}/rooting_inputfile.fas
+						cat ${outgroup} >> ${input_src}/rooting_inputfile.fas
+						sed -i '/^[[:space:]]*$/d' ${input_src}/rooting_inputfile.fas
+						raxmlHPC-AVX2 -f v -H -m ${rate_heterogeneity} -R ${raxml_dest}RAxML_binaryModelParameters.${output_filename}_PARAMS -t ${raxml_dest}RAxML_result.${output_filename}_PARAMS -s ${input_src}/rooting_inputfile.fas -w ${raxml_dest} -n ${output_filename}_rooted
 						echo -e "Thorough outgroup insertion DONE."
 						break
 						;;

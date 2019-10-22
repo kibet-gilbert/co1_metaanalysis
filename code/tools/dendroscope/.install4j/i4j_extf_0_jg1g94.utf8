@@ -546,3 +546,4 @@ StatusRunProgramExecute=Finishing execution ...
 SelectFile=Select File
 # Text for a button that selects something
 ButtonSelect=Select
+CreateUserErrorBadUserName=The user name is invalid.
