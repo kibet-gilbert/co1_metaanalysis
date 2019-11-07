@@ -7,8 +7,14 @@ co1_path=~/bioinformatics/github/co1_metaanalysis/
 bmge_path=${co1_path}code/tools/BMGE-1.12/
 fasttree_dest=${co1_path}data/output/phylogen/fasttree_output/
 raxml_dest=${co1_path}data/output/phylogen/raxml_output/
+PYTHON_EXEC=$( which python )
 
 source ${co1_path}code/process_all_input_files.sh
+
+
+realpath() { #
+	${PYTHON_EXEC} -c "import os,sys; print(os.path.realpath(sys.argv[1]))" $1
+}
 
 #=====================================================================================
 #Using FastTree to infer a tree for a nucleotide alignment with the GTR+CAT model, use

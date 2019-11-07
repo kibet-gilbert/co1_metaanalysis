@@ -15,7 +15,7 @@ usage() { #checks if the positional arguments (input files) for execution of the
         then
                 echo "Input error..."
                 echo "Usage: ${FUNCNAME[1]} file1.*[file2.* file3.* ...]"
-                return 1
+                exit 1
 
         fi
 }
@@ -24,6 +24,10 @@ rename() { #generates output file names with same input filename prefix. The suf
         input_filename=`basename -- $i`
         output_filename=${input_filename%.*}
 	filename_ext=${input_filename##*.}
+}
+
+realpath() { #
+	${PYTHON_EXEC} -c "import os,sys; print(os.path.realpath(sys.argv[1]))" $1
 }
 
 
@@ -53,16 +57,73 @@ build_fasta() { #This function generates .fasta files from .tsv files using an a
 
 
 bolddata_retrival() { # This fuction retrives data belonging to a list of country names given. Input can be a file containing names of select countries or idividual country names
+	if [[ ( $# -eq 0 ) || ! ( `echo $1` =~ -.*$ ) ]]
+	then
+		echo "Input error..."
+		echo "function usage: ${FUNCNAME[0]} [-a] [-c <name of country>] [-f <a file with list of countries>]"
+		return 1
+	fi
 
-	usage $@
-	echo -e "\n\tDownloading data of countries named in $@ from www.boldsystems.org"
+	local OPTIND=1
+	countries=()
 
-	IFS=$'\n'
-	
-	for i in `cat $@`
+	while getopts 'ac:f:' key
 	do
-		wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${inputdata_path}bold_africa/"${i}".xml -a ${inputdata_path}wget_log http://www.boldsystems.org/index.php/API_Public/combined?geo="${i}"&taxon=arthropoda&format=tsv
+		case "${key}" in
+			f)
+				if [ ! -f $OPTARG ]
+				then
+					echo "input error: file $OPTARG is non-existent!"
+				elif [[ ( -f $OPTARG ) && ( `basename $OPTARG` =~ ^countries$ ) ]]
+				then
+					countries+=("$(while IFS="\n" read -r line || [[ "$line" ]]; do geography+=("`echo $line | sed 's/ /%20/g'`"); done < $OPTARG)")
+				else
+					echo "input file error in `basename $OPTARG`: input file should be name countries"
+				fi
+				;;
+			c)
+				countries+=(`echo $OPTARG | sed 's/ /%20/g'`)
+				;;
+			a)
+				countries=("all")
+				;;
+			?)
+				echo "Input error..."
+				echo "function usage: ${FUNCNAME[0]} [-a] [-c <name of country>] [-f <a file with list of countries>]"
+				return 1
+				;;
+		esac
 	done
+
+	echo -e "\n\tDownloading data of countries named in ${countries[@]} from www.boldsystems.org"
+	unset taxon_nam
+	regexp='^[a-zA-Z0-9/_-\ ]+$'
+	
+	until [[ "$taxon_nam" =~ $regexp ]]
+	do
+		read -p "Please enter taxon name to be searched, ensure the spelling is right otherise you get everything downloaded:: " taxon_nam
+	done
+
+	taxon_name=`echo $taxon_nam | sed 's/ /%20/g'`
+	
+	wgetoutput_dir=${inputdata_path}bold_africa/${taxon_name}
+	until [[ -d ${wgetoutput_dir} ]]
+	do
+		echo "Creating output directory '${wgetoutput_dir}'"
+		mkdir ${wgetoutput_dir}
+	done
+	
+	IFS=$'\n'
+	if [[ ! ( `echo ${countries[0]}` =~ "all" ) ]]
+	then
+		for i in ${countries[@]}
+		do
+			wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${i}".xml -a ${inputdata_path}${taxon_name}_wget_log "http://www.boldsystems.org/index.php/API_Public/combined?geo=${i}&taxon=${taxon_name}&format=xml"
+		done
+	elif [[ ( `echo ${countries[0]}` =~ "all" ) ]]
+	then
+		wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${i}".xml -a ${inputdata_path}${taxon_name}_wget_log "http://www.boldsystems.org/index.php/API_Public/combined?taxon=${taxon_name}&format=xml"
+	fi
 }
 
 

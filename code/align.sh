@@ -12,6 +12,7 @@ run_pasta=${co1_path}code/tools/pasta_code/pasta/run_pasta.py
 sate_dest=${co1_path}data/output/alignment/sate_output/
 MPIRUN=$( which mpirun )
 mpionly=${co1_path}code/mpionly.noscheduler
+PYTHON_EXEC=$( which python )
 
 usage() { #checks if the positional arguments (input files) for execution of the script are defined
 	if [ $# -eq 0 ]
@@ -21,6 +22,10 @@ usage() { #checks if the positional arguments (input files) for execution of the
 		return 1
 		
 	fi
+}
+
+realpath() { #
+	${PYTHON_EXEC} -c "import os,sys; print(os.path.realpath(sys.argv[1]))" $1
 }
 
 rename() { #generates output file names with same input filename prefix. The suffix (".suffix") is set in individual functions.
@@ -757,8 +762,9 @@ upp_align() { #UPP stands for Ultra-large alignments using Phylogeny-aware Profi
 			select type_of_alignment in using_sequences_only using_precomputed_backbone none_exit
 			do
 				echo -e "\n\tSet the number of threads used, otherwise UPP will use all available cpus. ( icipe only: use 4 for pc and 32 for hpc)"
-                                regexp='^[0-9]+$'
-                                until [[ "$start_pos" =~ $regexp ]]
+				unset num_cpus
+				regexp='^[0-9]\d*$'
+                                until [[ "$num_cpus" =~ $regexp ]]
                                 do
                                         read -p "Please enter the number of cpus to be used: " num_cpus
                                 done
