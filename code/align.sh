@@ -656,8 +656,9 @@ pasta_aln() { #MSA alignment using pasta
 			select type_of_alignment in mafft_linsi mafft_ginsi mafft_linsi_with_starting_tree mafft_ginsi_with_starting_tree none_exit
 			do
 				echo -e "\n\tSet the number of threads used, otherwise PASTA will use all available cpus. ( icipe only: use 4 for pc and 32 for hpc)"
-				regexp='^[0-9]+$'
-				until [[ "$start_pos" =~ $regexp ]]
+				unset num_cpus
+				regexp='^[0-9]\d*$'
+				until [[ "$num_cpus" =~ $regexp ]]
 				do
 					read -p "Please enter the number of cpus to be used: " num_cpus
 				done
