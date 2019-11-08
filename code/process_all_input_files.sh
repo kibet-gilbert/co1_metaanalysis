@@ -118,11 +118,11 @@ bolddata_retrival() { # This fuction retrives data belonging to a list of countr
 	then
 		for i in ${countries[@]}
 		do
-			wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${i}".xml -a ${inputdata_path}${taxon_name}_wget_log "http://www.boldsystems.org/index.php/API_Public/combined?geo=${i}&taxon=${taxon_name}&format=xml"
+			wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${i}".xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/combined?geo=${i}&taxon=${taxon_name}&format=xml"
 		done
 	elif [[ ( `echo ${countries[0]}` =~ "all" ) ]]
 	then
-		wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${i}".xml -a ${inputdata_path}${taxon_name}_wget_log "http://www.boldsystems.org/index.php/API_Public/combined?taxon=${taxon_name}&format=xml"
+		wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${taxon_nam}".xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/combined?taxon=${taxon_name}&format=xml"
 	fi
 }
 
@@ -133,21 +133,23 @@ build_tsv() { #This function generates .tsv files from .xml files using python s
 	
 	TAB=$(printf '\t')
 	
-	echo "generating .tsv files from .xml downloads"
+	echo -e "\n\tgenerating .tsv files from .xml downloads"
 
 	for i in "$@"
 	do
-		if [ ! -f $i ]append_tsvfile
+		if [ ! -f $i ]
 		then
-			echo "input error: file '$i' is non-existent!"
+			echo -e "\n\t!!!input error: file '$i' is non-existent!"
 		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(xml)$ ) ]]
 		then
+			input_src=`dirname "$( realpath "${i}" )"`
 			rename 
-			echo -e "\nLet us proceed with file '${input_filename}'..."
+			echo -e "\tLet us proceed with file '${input_filename}'..."
 			sed 's/class/Class/g' "$i" | sed "s/$TAB/,/g" > ${inputdata_path}bold_africa/input.xml
-			${PYTHON_EXEC} ${xml_to_tsv} ${inputdata_path}bold_africa/input.xml && mv output.tsv ${inputdata_path}bold_africa/${output_filename}.tsv
+			${PYTHON_EXEC} ${xml_to_tsv} ${inputdata_path}bold_africa/input.xml && mv output.tsv ${input_src}/${output_filename}.tsv
+			echo -e "\n\tDONE. The output file has been stored in ${input_src}/${output_filename}.tsv"
 		else
-			echo "input file error in `basename -- '$i'`: input file should be a .xml file format"
+			echo -e "\n\tinput file error in `basename -- '$i'`: input file should be a .xml file format"
 			continue
 		fi
 	done
@@ -195,57 +197,59 @@ clean_sort_tsv() { #This function cleans the .tsv files, sort the records into d
                 elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(tsv)$ ) ]]
                 then
                         rename
+			input_src=`dirname "$( realpath "${i}" )"`
+			outfilename=`echo "${input_src}/${output_filename}"`
                         echo -e "\nLet us proceed with file '${input_filename}'..."
                         ${RSCRIPT_EXEC} --vanilla ${data_cleanup} $i
 
 			case $output_filename in
 				Algeria|Madagascar|Angola|Malawi|Benin|Mali|Botswana|Mauritania|Burkina_Faso|Mauritius|Morocco|Cameroon|Mozambique|Cape_Verde|Namibia|Central_African_Republic|Nigeria|Chad|Niger|Comoros|Republic_of_the_Congo|Cote_d_Ivoire|Reunion|Democratic_republic_of_the_Congo|Djibouti|Sao_Tome_and_Principe|Egypt|Senegal|Equatorial_Guinea|Seychelles|Eritrea|Sierra_Leone|Somalia|Gabon|South_Africa|Gambia|Ghana|Sudan|Guinea-Bissau|Swaziland|Guinea|Togo|Tunisia|Lesotho|Liberia|Zambia|Libya|Zimbabwe)
-					input=${inputdata_path}clean_africa/COI_500to700_data.tsv
+					input=${outfilename}_500to700_data.tsv
 					output=${output_files_africa[0]}
 					append_tsvfile
 
-					input=${inputdata_path}clean_africa/COI_650to660_data.tsv
+					input=${outfilename}_650to660_data.tsv
 					output=${output_files_africa[1]}
 					append_tsvfile
 
-					input=${inputdata_path}clean_africa/COI_all_data.tsv 
+					input=${outfilename}_all_data.tsv 
 					output=${output_files_africa[2]}
 					append_tsvfile
 
-					input=${inputdata_path}clean_africa/COI_Over499_data.tsv
+					input=${outfilename}_Over499_data.tsv
 					output=${output_files_africa[3]}
 					append_tsvfile
 					
-					input=${inputdata_path}clean_africa/COI_Over700_data.tsv
+					input=${outfilename}_Over700_data.tsv
 					output=${output_files_africa[4]}
 					append_tsvfile
 					
-					input=${inputdata_path}clean_africa/COI_Under500_data.tsv
+					input=${outfilename}_Under500_data.tsv
 					output=${output_files_africa[5]}
 					append_tsvfile
 					;;
 				Kenya|Tanzania|Uganda|Rwanda|Burundi|South_Sudan|Ethiopia)
-					input=${inputdata_path}clean_africa/COI_500to700_data.tsv
+					input=${outfilename}_500to700_data.tsv
 					output=${output_files_eafrica[0]}
 					append_tsvfile
 					
-					input=${inputdata_path}clean_africa/COI_650to660_data.tsv
+					input=${outfilename}_650to660_data.tsv
 					output=${output_files_eafrica[1]}
 					append_tsvfile
 					
-					input=${inputdata_path}clean_africa/COI_all_data.tsv
+					input=${outfilename}_all_data.tsv
 					output=${output_files_eafrica[2]}
 					append_tsvfile
 					
-					input=${inputdata_path}clean_africa/COI_Over499_data.tsv
+					input=${outfilename}_Over499_data.tsv
 					output=${output_files_eafrica[3]}
 					append_tsvfile
 					
-					input=${inputdata_path}clean_africa/COI_Over700_data.tsv
+					input=${outfilename}_Over700_data.tsv
 					output=${output_files_eafrica[4]}
 					append_tsvfile
 					
-					input=${inputdata_path}clean_africa/COI_Under500_data.tsv
+					input=${outfilename}_Under500_data.tsv
 					output=${output_files_eafrica[5]}
 					append_tsvfile
 					

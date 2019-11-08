@@ -8,11 +8,18 @@ if("tidyverse" %in% rownames(installed.packages()) == FALSE) {
         install.packages("tidyverse")
 } else {
         cat("\nExcellent tidyverse already installed.\nproceeding with clean_up and sorting\n")
-	suppressMessages(library(dplyr));suppressMessages(library(magrittr)) ## loads dplyr and magrittr packages
+	## loads dplyr and magrittr packages
+	suppressMessages(library(dplyr))
+	suppressMessages(library(magrittr))
+	suppressMessages(library(tools))
 }
 
 
+## loading RDPclassifier results in tab delimited format to a dataframe object. 
 args = commandArgs(trailingOnly=TRUE)
+filename_ext = file_ext(args[1])
+filename = file_path_sans_ext(args[1])
+input_src=dirname(file_path_as_absolute(args[1]))
 
 bold_dataframe = read.delim(args[1], stringsAsFactors = F, header = T, na.strings = "") ## loads bold2.tsv as a dataframe object. works ok, bold2.tsv does not contain any '\r' characters
 
@@ -33,28 +40,28 @@ resulting_dataframe1 %>% mutate(unaligned_nucleotides = gsub('-', '', resulting_
 resulting_dataframe2 %>% mutate(seqlen2 = nchar(unaligned_nucleotides)) -> resulting_dataframe3 
 
 ###Generating a file with all 'COI-5P' sequences
-resulting_dataframe3 -> COI_all_data; cat("\t",length(COI_all_data$unaligned_nucleotides),"sequences have 'COI-5P' marker\n")
+resulting_dataframe3 -> COI_all_data; cat("\nOf all",nrow(COI_data),"retrieved records, ",length(COI_all_data$unaligned_nucleotides)," sequences have 'COI-5P' marker. These are the only ones retained for downstream analysis::\n")
 
 ###Introducing a filter to remove sequences with less than 500 nucleotides
-COI_all_data %>% filter(seqlen2 >= 500 ) -> COI_Over499_data; cat("\n\t",length(COI_Over499_data$unaligned_nucleotides),"sequences have more or equivalent to 500 bases\n")
+COI_all_data %>% filter(seqlen2 >= 500 ) -> COI_Over499_data; cat("\t",length(COI_Over499_data$unaligned_nucleotides),"sequences have 500 or more nucleotide bases\n")
 
 ### Introducing a filter to remove any sequence with less than 500 and more than 700 nucleotides
-COI_all_data %>% filter(seqlen2 >= 500 & seqlen2 <= 700) -> COI_500to700_data; cat("\n\t",length(COI_500to700_data$unaligned_nucleotides),"sequences have from 500 to 700 bases\n") ## 
+COI_all_data %>% filter(seqlen2 >= 500 & seqlen2 <= 700) -> COI_500to700_data; cat("\t",length(COI_500to700_data$unaligned_nucleotides),"sequences have 500 to 700 bases\n") ## 
 
 ### Introducing a filter to remove any sequence with less than 650 and over 660 nucleotides
-COI_all_data %>% filter(seqlen2 >= 650 & seqlen2 <= 660) -> COI_650to660_data; cat("\n\t",length(COI_650to660_data$unaligned_nucleotides),"sequences have from 650 to 660 bases\n") 
+COI_all_data %>% filter(seqlen2 >= 650 & seqlen2 <= 660) -> COI_650to660_data; cat("\t",length(COI_650to660_data$unaligned_nucleotides),"sequences have 650 to 660 bases\n") 
 
 ### Introducing a filter to remove any sequence with over 500 nucleotides
-COI_all_data %>% filter(seqlen2 < 500) -> COI_Under500_data; cat("\n\t",length(COI_Under500_data$unaligned_nucleotides),"sequences have less than 500 bases\n")
+COI_all_data %>% filter(seqlen2 < 500) -> COI_Under500_data; cat("\t",length(COI_Under500_data$unaligned_nucleotides),"sequences have less than 500 bases\n")
 
 ### Introducing a filter to remove any sequence with less than 700 nucleotides
-COI_all_data %>% filter(seqlen2 > 700) -> COI_Over700_data; cat("\n\t",length(COI_Over700_data$unaligned_nucleotides),"sequences have more than 700 bases\n")
+COI_all_data %>% filter(seqlen2 > 700) -> COI_Over700_data; cat("\t",length(COI_Over700_data$unaligned_nucleotides),"sequences have more than 700 bases\n")
 
 
 ### Printing copies of the final tidy files as dataframes in .tsv format
-data_path = '~/bioinformatics/github/co1_metaanalysis/data/input/clean_africa/'
 output_list = c("COI_all_data", "COI_Over499_data", "COI_500to700_data", "COI_650to660_data", "COI_Over700_data", "COI_Under500_data")
+output_list_names = c("_all_data", "_Over499_data", "_500to700_data", "_650to660_data", "_Over700_data", "_Under500_data")
 
 datalist = lapply(output_list, get)
-names(datalist) <- paste(data_path, output_list, sep= "" )
+names(datalist) <- paste(input_src,"/", filename, output_list_names, sep= "" )
 for (i in 1:length(datalist)) {write.table(datalist[i], file = paste(names(datalist[i]), ".tsv", sep = ""), row.names = FALSE, col.names= TRUE, sep = "\t", quote=FALSE)}
