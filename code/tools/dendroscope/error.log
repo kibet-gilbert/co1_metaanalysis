@@ -2,52 +2,10 @@ Version   Dendroscope (version 3.6.3, built 1 Aug 2019)
 Copyright (C) 2019 Daniel H. Huson. This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, licensed under the terms of the GNU General Public License, Version 3.
 Java version: 11.0.4
-Executing: open file='/home/kibet/bioinformatics/github/co1_metaanalysis/data/output/phylogen/raxml_output/RAxML_labelledTree.enafroCOI_all_clean_Diptera_95g_rooted';
+Executing: open file='/home/kibet/bioinformatics/github/co1_metaanalysis/data/output/phylogen/raxml_output/diptera/sp-Dacus_ciliatus.tree';
 Trees loaded: 1
-Executing: reroot;
-total outgroup 1 total nodes 19956
-Executing: set drawer=CircularCladogram;
-Executing: set fontSize=increase;
-Executing: set fontSize=increase;
-Executing: set fontSize=increase;
-Executing: set fontSize=increase;
-Executing: set fontSize=increase;
-Executing: set fontSize=decrease;
-Executing: set fontSize=decrease;
-Executing: set fontSize=decrease;
-Executing: set fontSize=decrease;
-Executing: set fontSize=increase;
-Executing: set fontSize=increase;
-Executing: set drawer=RectangularCladogram;
-Executing: set magnifier=true;
-Executing: set magnifier=false;
-Executing: set magnifier=true;
-Executing: set magnifier=false;
-Executing: set magnifier=true;
-Executing: set magnifier=false;
-Executing: set magnifier=true;
-Executing: set magnifier=false;
-Executing: set magnifier=true;
-Executing: set magnifier=false;
-Executing: set magnifier=true;
-Executing: set magnifier=false;
-Executing: set magnifier=true;
-Executing: set magnifier=false;
-Executing: set drawer=RectangularPhylogram;
 Executing: set drawer=RectangularPhylogram;
 Executing: midpointroot;
+Executing: set layouter=Algorithm2010;
 Executing: midpointroot;
-Executing: zoom what=fit;
-Executing: zoom what=contract;
-Executing: zoom what=expand;
-Executing: reroot;
-Executing: reroot;
-total outgroup 1 total nodes 147
-Executing: reroot;
-total outgroup 1 total nodes 147
-Executing: reroot;
-total outgroup 1 total nodes 147
-Save canceled
-Executing: save format=Newick file='/home/kibet/bioinformatics/github/co1_metaanalysis/data/output/phylogen/raxml_output/simulium.tree';
-written 1 trees
 Executing: toFront;

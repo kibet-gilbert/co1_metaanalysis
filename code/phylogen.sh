@@ -5,8 +5,10 @@
 
 co1_path=~/bioinformatics/github/co1_metaanalysis/
 bmge_path=${co1_path}code/tools/BMGE-1.12/
+raxmlng_mpi=${co1_path}code/tools/raxml-ng/bin/raxml-ng-mpi
 fasttree_dest=${co1_path}data/output/phylogen/fasttree_output/
 raxml_dest=${co1_path}data/output/phylogen/raxml_output/
+raxmlng_dest=${co1_path}data/output/phylogen/raxmlng_output/
 PYTHON_EXEC=$( which python )
 
 source ${co1_path}code/process_all_input_files.sh
@@ -323,3 +325,63 @@ raxml_rooting(){ # This funtion generates a model filewith model parameters for 
 		fi
 	done
 }
+
+
+#==================================================================================================================================================================================================================
+
+
+raxmlng_mpi_phylo(){ # This function conduct a full ML analysis, i.e., a certain number of BS replicates and a search for a best-scoring tree on the original alignment and output the bootstrapped trees (RAxML_bootstrap.TEST), the best scoring ML tree (RAxML_bestTree.TEST) and the BS support values drawn on the best-scoring tree as node labels (RAxML_bipartitions.TEST) as well as, more correctly since support values refer to branches as branch labels (RAxML_bipartitionsBranchLabels.
+        usage $@
+        echo "RAxML-ng MPI mode starting Phylogenetic tree inference..."
+
+        for i in $@
+        do
+                if [ ! -f $i ]
+                then
+                        echo "input error: file $i is non-existent!"
+                elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa)$ ) ]]
+                then
+                        rename
+
+                        #Deleting unwanted records
+                        echo -e "\nDeleting unwanted records from `basename $i`..."
+                        unset Choice
+                        read -p "Please enter [Yes] or [NO] to proceed:: " Choice
+                        regexp1='^[n|N|No|NO|no]$'
+                        until [[ "$Choice" =~ $regexp1 ]]
+                        do
+                                if [[ "${Choice}"=="y" || "${Choice}"=="Y" || "${Choice}"=="Yes" || "${Choice}"=="YES" || "${Choice}"=="yes" ]]
+                                then
+                                        delete_unwanted $i
+                                fi
+                                read -p "Please enter [Yes] or [NO] to delete more unwanted records:: " Choice
+                        done
+
+                        #Substituting Illegal characters in taxon-names are: tabulators, carriage returns, spaces, ":", ",", ")", "(", ";", "]", "[", "'" that affect the interpretation in RAxML
+                        sed -i "s/\[//g; s/\]//g; s/ /_/g; s/://g; s/;//g; s/,/__/g; s/(/__/g; s/)//g; s/'//g" $i
+
+                        #Full analysis rapid Bootstrapping and Maximum Likelihood search
+                        echo -e "Please select the number of bootstrap_runs or selection method from the following options:"
+                        select bootstrap_option in autoMRE autoMRE_ING 20 100 1000
+                        do
+                                unset rate_heterogeneity
+                                echo -e "Please select the rate heterogeneity model or approximation to use from the following options, enter [1] or [2]:"
+                                select rate_heterogeneity in GTRGAMMA GTRCAT
+                                do
+                                        echo -e "\nBegining complete analysis (ML search + Bootstrapping) for `basename $i` in one step..."
+                                        raxmlHPC-HYBRID-AVX2 -f a -T 2 -m ${rate_heterogeneity} -p 12345 -x 12345 -# ${bootstrap_option} -s $i -w ${raxml_dest} -n ${output_filename}
+                                        ##raxmlHPC-HYBRID-AVX2 -f a -T 2 -m GTRGAMMA -p 12345 -x 12345 -# ${bootstrap_option}­-s $i -w ${raxml_dest} -n ${output_filename}
+                                        break
+                                done
+                                break
+                        done
+
+                        echo -e "\nComplete analysis done"
+                else
+                        echo "input file error in `basename $i`: input file should be a FASTA or relaxed or interleaved PHYLIP file format"
+                        continue
+                fi
+        done
+}
+
+

@@ -46,3 +46,6 @@
 [submodule "code/tools/popart-current"]
 	path = code/tools/popart-current
 	url = https://github.com/jessicawleigh/popart-current.git
+[submodule "code/tools/raxml-ng"]
+	path = code/tools/raxml-ng
+	url = https://github.com/amkozlov/raxml-ng.git

@@ -28,11 +28,11 @@ realpath() { #
 	${PYTHON_EXEC} -c "import os,sys; print(os.path.realpath(sys.argv[1]))" $1
 }
 
-rename() { #generates output file names with same input filename prefix. The suffix (".suffix") is set in individual functions.
-	input_filename=`basename $i`
+rename() { #generates output file names with same input filename prefix. The suffix (".suffix") is set in individual functions that perform different tasks.
+	input_filename=`basename -- $i`
 	output_filename=${input_filename%.*}
+	filename_ext=${input_filename##*.}
 }
-
 
 #========================================================================================
 #MUSCLE
@@ -77,7 +77,7 @@ muscle_refine() {
 		then
 			rename
 			echo -e "\nproceeding with file `basename $i`..."
-			muscle -in $i -fastaout ${muscle_dest}./refined/\r${output_filename}.afa -clwout ${muscle_dest}./refined/\r${output_filename}.aln -refine
+			muscle -in $i -fastaout ${muscle_dest}./refined/\r${output_filename}.afa -clwout ${muscle_dest}./refined/${output_filename}_rfnd.aln -refine
 		else
 			echo "input file error in `basename $i`: input file should be a .afa file format"
 			continue
@@ -662,33 +662,44 @@ pasta_aln() { #MSA alignment using pasta
 			do
 				echo -e "\n\tSet the number of threads used, otherwise PASTA will use all available cpus. ( icipe only: use 4 for pc and 32 for hpc)"
 				unset num_cpus
-				regexp='^[0-9]\d*$'
+				regexp='^[0-9][1-9]*$'
 				until [[ "$num_cpus" =~ $regexp ]]
 				do
 					read -p "Please enter the number of cpus to be used: " num_cpus
 				done
 
+				rename ${i}
+				jobs_dest=${pasta_dest}\jobs/${output_filename}
+				aligned_dest=${pasta_dest}aligned/${output_filename}
+				temporaries_dest=${pasta_dest}temporaries
+				dest=("${jobs_dest}" "${aligned_dest}" "${temporaries_dest}")
+				for dest1 in ${dest[@]}
+				do
+					until [[ -d ${dest1} ]]
+					do
+						echo "creating output directory '${dest1}'..."
+						mkdir ${dest1}
+					done
+				done
+
 				case $type_of_alignment in
 					mafft_linsi)
-						rename
 						echo -e "\nDoing local alignment of `basename $i`..."
 						#${PYTHON3_EXEC} ${runpasta} --aligner=mafft -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
-						${PYTHON3_EXEC} ${runpasta} --num-cpus=${num_cpus} --aligner=mafft -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
-						cp ${pasta_dest}\jobs/*.${output_filename}.aln ${pasta_dest}aligned/ && mv ${pasta_dest}aligned/{*.${output_filename}.aln,${output_filename}.aln}
-						cp ${pasta_dest}\jobs/${output_filename}.tre ${pasta_dest}aligned/${output_filename}.tre
+						${PYTHON3_EXEC} ${runpasta} --num-cpus=${num_cpus} --aligner=mafft -i $i -j ${output_filename} --temporaries=${temporaries_dest} -o ${jobs_dest}
+						cp ${jobs_dest}/*.${output_filename}.aln ${aligned_dest}/ && mv ${aligned_dest}/{*.${output_filename}.aln,${output_filename}.aln}
+						cp ${jobs_dest}/${output_filename}.tre ${aligned_dest}/${output_filename}.tre
 						break
 						;;
 					mafft_ginsi)
-						rename
 		       				echo -e "\nDoing global alignment of `basename $i`..."
 						#${PYTHON3_EXEC} ${runpasta} --aligner=ginsi -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
-						${PYTHON3_EXEC} ${runpasta} --num-cpus=${num_cpus} --aligner=ginsi -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
-						cp ${pasta_dest}\jobs/*.${output_filename}.aln ${pasta_dest}aligned/ && mv ${pasta_dest}aligned/{*.${output_filename}.aln,${output_filename}.aln}
-						cp ${pasta_dest}\jobs/${output_filename}*.tre ${pasta_dest}aligned/${output_filename}.tre
+						${PYTHON3_EXEC} ${runpasta} --num-cpus=${num_cpus} --aligner=ginsi -i $i -j ${output_filename} --temporaries=${temporaries_dest} -o ${jobs_dest}
+						cp ${jobs_dest}/*.${output_filename}.aln ${aligned_dest}/ && mv ${aligned_dest}/{*.${output_filename}.aln,${output_filename}.aln}
+						cp ${jobs_dest}/${output_filename}*.tre ${aligned_dest}/${output_filename}.tre
 						break
 						;;
 					mafft_linsi_with_starting_tree)
-						rename
 						unset start_tree
                                                 echo -e "\nDoing local alignment of `basename $i` using a starting tree..."
 						until [[ ( -f "$start_tree" ) && ( `basename -- "$start_tree"` =~ .*\.(tre) ) ]]
@@ -697,13 +708,12 @@ pasta_aln() { #MSA alignment using pasta
 							read -p "Please enter the file to be used as the starting tree: " start_tree
 						done
                                                 #${PYTHON3_EXEC} ${runpasta} --aligner=mafft -i $i -t $start_tree -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
-						${PYTHON3_EXEC} ${runpasta} --num-cpus=${num_cpus} --aligner=mafft -i $i -t $start_tree -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
-                                                cp ${pasta_dest}\jobs/*.${output_filename}.aln ${pasta_dest}aligned/ && mv ${pasta_dest}aligned/{*.${output_filename}.aln,${output_filename}.aln}
-                                                cp ${pasta_dest}\jobs/${output_filename}.tre ${pasta_dest}aligned/${output_filename}.tre
+						${PYTHON3_EXEC} ${runpasta} --num-cpus=${num_cpus} --aligner=mafft -i $i -t $start_tree -j ${output_filename} --temporaries=${temporaries_dest} -o ${jobs_dest}
+                                                cp ${jobs_dest}/*.${output_filename}.aln ${aligned_dest}/ && mv ${aligned_dest}/{*.${output_filename}.aln,${output_filename}.aln}
+                                                cp ${jobs_dest}/${output_filename}.tre ${aligned_dest}/${output_filename}.tre
 						break
 						;;
 					mafft_ginsi_with_starting_tree)
-						rename
 						unset start_tree
                                                 echo -e "\nDoing global alignment of `basename $i` using a starting tree..."
 						until [[ ( -f "$start_tree" ) && ( `basename -- "$start_tree"` =~ .*\.(tre) ) ]]
@@ -712,9 +722,9 @@ pasta_aln() { #MSA alignment using pasta
                                                         read -p "Please enter the file to be used as the starting tree: " start_tree
                                                 done
                                                 #${PYTHON3_EXEC} ${runpasta} --aligner=ginsi -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
-						${PYTHON3_EXEC} ${runpasta} --num-cpus=${num_cpus} --aligner=ginsi -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
-                                                cp ${pasta_dest}\jobs/*.${output_filename}.aln ${pasta_dest}aligned/ && mv ${pasta_dest}aligned/{*.${output_filename}.aln,${output_filename}.aln}
-                                                cp ${pasta_dest}\jobs/${output_filename}*.tre ${pasta_dest}aligned/${output_filename}.tre
+						${PYTHON3_EXEC} ${runpasta} --num-cpus=${num_cpus} --aligner=ginsi -i $i -j ${output_filename} --temporaries=${temporaries_dest} -o ${jobs_dest}/
+                                                cp ${jobs_dest}/*.${output_filename}.aln ${aligned_dest}/ && mv ${aligned_dest}/{*.${output_filename}.aln,${output_filename}.aln}
+                                                cp ${jobs_dest}/${output_filename}*.tre ${aligned_dest}/${output_filename}.tre
 						break
 						;;
 					none_exit)
@@ -763,18 +773,31 @@ upp_align() { #UPP stands for Ultra-large alignments using Phylogeny-aware Profi
 			do
 				echo -e "\n\tSet the number of threads used, otherwise UPP will use all available cpus. ( icipe only: use 4 for pc and 32 for hpc)"
 				unset num_cpus
-				regexp='^[0-9]\d*$'
+				regexp='^[0-9][1-9]*$'
                                 until [[ "$num_cpus" =~ $regexp ]]
                                 do
                                         read -p "Please enter the number of cpus to be used: " num_cpus
                                 done
 
+				rename ${i}
+				jobs_upp_dest=${pasta_dest}jobs_upp/${output_filename}
+				aligned_dest=${pasta_dest}aligned/${output_filename}
+				temporaries_dest=${pasta_dest}temporaries/sepp
+				dest=("${jobs_upp_dest}" "${aligned_dest}" "${temporaries_dest}")
+				for dest1 in ${dest[@]}
+				do
+					until [[ -d ${dest1} ]]
+					do
+						echo "creating output directory '${dest1}'..."
+						mkdir ${dest1}
+					done
+				done
+
 				case $type_of_alignment in
 					using_sequences_only)
-		 				rename
 						echo -e "\nDoing Multiple Sequence Alignment of `basename $i` based on the fragmentary sequences alone"
-						${PYTHON3_EXEC} ${run_upp} -s $i -o ${output_filename} --tempdir ${pasta_dest}temporaries/sepp/ -d ${pasta_dest}jobs_upp/ #-x ${num_cpus}
-						cp ${pasta_dest}\jobs/*.${output_filename}_alignment.fasta ${pasta_dest}aligned/
+						${PYTHON3_EXEC} ${run_upp} -s $i -o ${output_filename} --tempdir ${temporaries_dest} -d ${jobs_upp_dest} #-x ${num_cpus}
+						cp ${jobs_upp_dest}/*.${output_filename}_alignment.fasta ${aligned_dest}
 						break
 						;;
 					using_precomputed_backbone)
@@ -795,8 +818,8 @@ upp_align() { #UPP stands for Ultra-large alignments using Phylogeny-aware Profi
 							read -p "Please enter the file to be used as the backbone alignment: " backbone
 						done
 
-						${PYTHON3_EXEC} ${run_upp} -s $i -a ${backbone} -t ${start_tree} -o ${output_filename} --tempdir ${pasta_dest}temporaries/sepp/ -d ${pasta_dest}jobs_upp/ #-x ${num_cpus}
-						cp ${pasta_dest}\jobs/*.${output_filename}_alignment.fasta ${pasta_dest}aligned/
+						${PYTHON3_EXEC} ${run_upp} -s $i -a ${backbone} -t ${start_tree} -o ${output_filename} --tempdir ${temporaries_dest} -d ${jobs_upp_dest} #-x ${num_cpus}
+						cp ${jobs_upp_dest}/*.${output_filename}_alignment.fasta ${aligned_dest}/
                                                 break
                                                 ;;
                                         none_exit)

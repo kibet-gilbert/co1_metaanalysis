@@ -1,0 +1,80 @@
+[Profile] 
+
+Title="Three Amerindian populations From Schurr et al. Am J. Hum. Genet. 1990. 46:613-623" 
+     NbSamples=3               
+     DataType=RFLP            
+     GenotypicData=0         
+     LocusSeparator= WHITESPACE 
+     Frequency= REL            
+
+
+[Data] 
+
+[[HaplotypeDefinition]]
+         HaplList={
+               	AM_1  	1 1 0 0 1 1 1 1 1 1 1
+               	AM_2  	1 1 0 0 1 1 1 1 1 1 1
+               	AM_3 	1 1 0 0 1 1 1 0 1 1 1
+               	AM_4  	1 1 0 1 1 1 1 1 1 1 1
+		AM_5	1 1 0 0 1 1 1 1 1 0 1
+		AM_6	1 1 0 1 1 1 1 1 1 1 1
+		AM_7	0 1 0 1 1 1 1 1 1 1 1
+		AM_8	1 1 0 1 1 1 1 1 1 1 0
+		AM_9	1 1 0 1 1 1 1 1 0 1 1
+		AM_X	0 1 0 0 1 1 1 1 1 1 1
+		AM_10	0 1 1 0 1 1 1 1 1 1 0
+		AM_11	0 1 1 0 1 0 1 1 1 1 1
+		AM_12	0 0 1 0 1 1 1 1 1 1 1
+		AM_13	0 1 1 0 0 1 1 1 1 1 1
+		AM_14	0 1 1 0 0 1 0 1 1 1 1
+    }
+
+[[Samples]] 
+
+	SampleName="Pima" 
+#	Published results : 	Observed gene diversity : 0.746 +- 0.050
+#				Theta(Hom)		: 2.28  +- 0.65
+#				Expected value of k     : 6.62  +- 1.98
+#				Chakraborty's test
+#					P(K>=k)		: 0.505
+	SampleSize=31
+	SampleData= { 
+		AM_2	0.323
+		AM_3	0.129
+		AM_6	0.032
+		AM_7	0.032
+		AM_10	0.387
+		AM_11	0.032
+		AM_12	0.065
+} 
+	SampleName="Maya" 
+#	Published results : 	Observed gene diversity : 0.766 +- 0.055
+#				Theta(Hom)		: 2.55  +- 0.83
+#				Expected value of k     : 7.49  +- 2.13
+#				Chakraborty's test
+#					P(K>=k)		: 0.482
+	SampleSize=37
+	SampleData= { 
+		AM_1	0.027 
+		AM_2	0.189
+		AM_4	0.027
+		AM_5	0.081
+		AM_6	0.432
+		AM_8	0.108
+		AM_9	0.027
+		AM_10	0.108
+} 
+	SampleName="Ticuna" 
+#	Published results : 	Observed gene diversity : 0.735 +- 0.040
+#				Theta(Hom)		: 2.15  +- 0.47
+#				Expected value of k     : 6.38  +- 1.95
+#				Chakraborty's test
+#					P(K>=k)		: 0.834
+	SampleSize=31
+	SampleData= { 
+		AM_1	0.387
+		AM_6	0.258
+		AM_10	0.032
+		AM_13	0.258
+		AM_14	0.065
+} 

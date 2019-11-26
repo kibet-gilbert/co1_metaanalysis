@@ -1,0 +1,6 @@
+/home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/arlequin/arlecore_linux
+use_interf_settings
+*.arp
+0
+0
+end

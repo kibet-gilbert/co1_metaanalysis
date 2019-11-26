@@ -1,0 +1,8 @@
+1	//Estimate inbreeding
+0	//Fixed inbreeding value
+10	//Number of initial conditions for EM
+1	//Compact haplotypes
+1000	Maximum number of iterations
+0	//Assume linkage equilibrium
+1e-06	//epsilon value
+0	//Number of bootstrap estimates

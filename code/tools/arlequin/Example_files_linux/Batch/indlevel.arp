@@ -1,0 +1,38 @@
+ [Profile]
+
+	Title="1 Pop with individual level"
+		NbSamples=1
+		GenotypicData=1
+		GameticPhase=1
+		DataType=DNA
+		LocusSeparator=WHITESPACE		
+
+[Data]
+
+
+	[[Samples]]
+
+		SampleName="pop1"
+		SampleSize=20
+		SampleData= {
+			1 4	A T
+				G C
+			3 5	A G
+				A A
+			5 3	G G
+				G A
+			7 8	T C
+				T C
+			}
+
+
+
+
+	[[Structure]]
+
+		StructureName = "A single population in a single group : We just test for HW equilibrium"
+		NbGroups = 1
+		Group = {
+			"pop1"
+		}
+

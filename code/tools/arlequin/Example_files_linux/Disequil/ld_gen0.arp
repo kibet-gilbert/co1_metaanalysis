@@ -1,0 +1,229 @@
+
+	#Same data as in file "ld_gen1.arp", but here the gametic phase 
+	#of genotypes is not known.
+
+[Profile]
+	Title="A file with 2 simulated populations : 2 loci, 5 alleles per locus"
+
+	NbSamples=2
+	GenotypicData=1
+	#The gametic phase of the haplotypes is not known here
+	GameticPhase=0
+	RecessiveData=0
+	DataType=STANDARD
+	LocusSeparator=WHITESPACE
+	MissingData='?'
+
+[Data]
+	[[Samples]]
+		SampleName="Pop 1: Linkage disequilibrium test : P=0.264"
+		SampleSize=50
+		SampleData= {
+			  0  1 C D
+			       E A
+			  1  1 A C
+			       A B
+			  2  1 B A
+			       D A
+			  3  1 A A
+			       B A
+			  4  1 A D
+			       A C
+			  5  1 E A
+			       A C
+			  6  1 E A
+			       E B
+			  7  1 A A
+			       A A
+			  8  1 E A
+			       D A
+			  9  1 E E
+			       E C
+			 10  1 C A
+			       E A
+			 11  1 A B
+			       E A
+			 12  1 B A
+			       E A
+			 13  1 D A
+			       D C
+			 14  1 E B
+			       E A
+			 15  1 E D
+			       E A
+			 16  1 A A
+			       E E
+			 17  1 A A
+			       E A
+			 18  1 C A
+			       A A
+			 19  1 A B
+			       C A
+			 20  1 B A
+			       A C
+			 21  1 A A
+			       A A
+			 22  1 C D
+			       C A
+			 23  1 A C
+			       E A
+			 24  1 E A
+			       E B
+			 25  1 B A
+			       D A
+			 26  1 E A
+			       B A
+			 27  1 E C
+			       A A
+			 28  1 E A
+			       C B
+			 29  1 A A
+			       E C
+			 30  1 A C
+			       A A
+			 31  1 B A
+			       E A
+			 32  1 C A
+			       A A
+			 33  1 E A
+			       A A
+			 34  1 A A
+			       D A
+			 35  1 B A
+			       E A
+			 36  1 A C
+			       E A
+			 37  1 A A
+			       E A
+			 38  1 C A
+			       E E
+			 39  1 E A
+			       E A
+			 40  1 A A
+			       D E
+			 41  1 B C
+			       C A
+			 42  1 E A
+			       E B
+			 43  1 B A
+			       D A
+			 44  1 A A
+			       E A
+			 45  1 E B
+			       E E
+			 46  1 C A
+			       E B
+			 47  1 E A
+			       A B
+			 48  1 E A
+			       E E
+			 49  1 C A
+			       D C
+		}
+
+
+		SampleName="Pop 2: Linkage disequilibrium test : P=0.415"
+		SampleSize=50
+		SampleData= {
+			  0  1 E D
+			       E C
+			  1  1 D A
+			       A A
+			  2  1 A E
+			       A A
+			  3  1 A C
+			       B C
+			  4  1 A A
+			       C A
+			  5  1 E D
+			       D D
+			  6  1 E D
+			       B D
+			  7  1 A E
+			       C A
+			  8  1 A D
+			       A D
+			  9  1 A A
+			       A A
+			 10  1 D B
+			       E E
+			 11  1 A D
+			       B A
+			 12  1 B D
+			       A E
+			 13  1 B A
+			       A E
+			 14  1 B A
+			       B A
+			 15  1 A A
+			       A C
+			 16  1 B A
+			       E C
+			 17  1 B D
+			       A A
+			 18  1 A A
+			       E A
+			 19  1 A A
+			       A C
+			 20  1 A B
+			       A A
+			 21  1 A E
+			       B A
+			 22  1 E A
+			       A E
+			 23  1 A A
+			       B A
+			 24  1 A E
+			       A E
+			 25  1 A A
+			       A A
+			 26  1 A E
+			       B A
+			 27  1 B D
+			       A C
+			 28  1 A D
+			       D C
+			 29  1 A A
+			       D A
+			 30  1 A A
+			       D C
+			 31  1 A A
+			       B A
+			 32  1 A E
+			       A A
+			 33  1 A C
+			       A D
+			 34  1 B A
+			       A E
+			 35  1 E A
+			       A A
+			 36  1 D A
+			       B A
+			 37  1 E C
+			       B A
+			 38  1 E C
+			       A E
+			 39  1 A A
+			       A D
+			 40  1 B D
+			       A E
+			 41  1 A A
+			       A A
+			 42  1 A D
+			       B D
+			 43  1 A A
+			       A A
+			 44  1 B D
+			       A D
+			 45  1 A A
+			       B D
+			 46  1 B D
+			       A A
+			 47  1 A A
+			       E C
+			 48  1 B D
+			       B D
+			 49  1 A A
+			       A E
+		}
+

@@ -35,6 +35,7 @@ data/input/odonata/*
 data/input/orthoptera/*
 data/input/others/*
 *.Rhistory
+*.sh.s??
 *.swj
 *.swk
 *.swl

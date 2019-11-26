@@ -1,0 +1,66 @@
+# For this example no matrix structure is defined, so if
+# one wants to make an AMOVA analysis, the option:
+#      "Compute distance matrix" should be actived in the interface
+
+[Profile]
+
+		Title="AMOVA on genotypic data, known gametic phase"
+
+		NbSamples=3
+		GenotypicData=1
+		#As the gametic phase is known, the treatment will be equivalent 
+		# to that of haplotypic data
+		GameticPhase=1
+		DataType=DNA
+		# A whitespace separates each locus
+		LocusSeparator=WHITESPACE
+		
+
+[Data]
+	
+	[[Samples]]
+
+		SampleName="pop1"
+		SampleSize=20
+		SampleData= {
+			1 4		A C
+					G T
+			3 5		A A
+					A G
+			5 3		G A
+					G G
+			7 8		T C
+					T C
+		}
+
+		SampleName="pop2"
+		SampleSize=10
+		SampleData= {
+			8 5  	A G
+					C C
+			9 5		G G
+					T C
+
+	}
+
+		SampleName="pop3"
+		SampleSize= 15
+		SampleData= {
+			10 3	A A
+					C T
+			4 12	A G
+					G C
+
+		} 
+
+	[[Structure]]
+
+		StructureName = "Small structure example"
+		NbGroups = 2
+		Group = {
+			"pop1"
+			"pop2"
+		}
+		Group={
+			"pop3"
+		}

@@ -1,0 +1,74 @@
+[Profile] 
+
+Title="Data of Guo and Thomson, 1992, for Hardy-Weinberg equilibrium exact test" 
+
+     NbSamples=2                #Number of samples }
+     DataType=STANDARD          # + {DNA, RFLP, MICROSAT, STANDARD, FREQUENCY}
+     GenotypicData=1            # + {0, 1}
+     LocusSeparator=WHITESPACE	# - {WHITESPACE, TAB, NONE}
+     GameticPhase=0             # + {0, 1}
+     RecessiveData=0           	# - {0, 1}
+
+[Data] 
+
+[[Samples]] 
+
+
+	SampleName="Data from Figure 1 in Guo and Thomson, 1992 : HW P value: 0.2167" 
+	SampleSize=30           #Number of diploid individuals in sample } 
+	SampleData= {  
+ 1  3 	A1
+	A1 
+ 2  4	A2
+	A1
+ 3  2	A2
+	A2
+ 4  2	A3
+	A1
+ 5  2	A3
+	A2
+ 6  2	A3
+	A3
+ 7  3	A4
+	A1
+ 8  3	A4
+	A2
+ 9  2	A4
+	A3
+ 10 1	A4
+	A4
+ 11 1	A5
+	A2
+ 12  1	A6
+	A6
+ 13  1	A7
+	A3
+ 14  2	A8
+	A4
+ 15  1	A8
+	A5
+ } 
+
+
+	SampleName="Data from Figure 2 in Guo and Thomson, 1992 Exact HW P value: 0.01744" 
+	SampleSize=45           #Number of diploid individuals in sample } 
+	SampleData= {  
+ 1  3 	A2
+	A1
+ 2  1	A2
+	A2
+ 3  5	A3
+	A1
+ 4 18	A3
+	A2
+ 5  1	A3
+	A3
+ 6  3	A4
+	A1
+ 7  7	A4
+	A2
+ 8  5	A4
+	A3
+ 9  2	A4
+	A4
+ } 

@@ -1,0 +1,93 @@
+
+[Profile] 
+
+	Title="Y chromosome microsatellite data scored as allele frequencies"
+
+	#Reference: 
+	#	Skorecki et al. (1997) Y chromosome of Jewish priests. Nature 385:32.
+	
+	NbSamples=6                 
+	DataType=FREQUENCY         	
+	GenotypicData=0
+	LocusSeparator=' '             
+ 	MissingData="?"	
+	Frequency= REL
+
+[Data] 
+
+#Commented microsatellite haplotype definition. Not necessary here
+
+#	[[HaplotypeDefinition]]
+#
+#        	HaplListName="Yap-DYS19 haplotypes on Y chromosome"
+#          	HaplList={
+#			1 Yap- A
+#			2 Yap- B
+#			3 Yap- C
+#			4 Yap- D
+#			5 Yap- E
+#			6 Yap+ All		
+#		}
+ 
+
+[[Samples]] 
+
+	SampleName="All Cohen" 
+	SampleSize=68
+	SampleData= {
+		1	0.162
+		2	0.544
+		3	0.162
+		4	0.088
+		5	0.029
+		6	0.015 	
+	} 
+
+	SampleName="All Israelite" 
+	SampleSize=120
+	SampleData= {
+		1	0.091
+		2	0.325
+		3	0.300
+		4	0.083
+		5	0.017
+		6	0.184
+	} 
+
+	SampleName="Ashkenazic Cohen" 
+	SampleSize=44
+	SampleData= {
+		1	0.205
+		2	0.454
+		3	0.227
+		4	0.091
+		6	0.023 	
+	} 
+	SampleName="Ashkenazic Israelite" 
+	SampleSize=81
+	SampleData= {
+		1	0.074
+		2	0.321
+		3	0.272
+		4	0.111
+		5	0.025
+		6	0.197 	
+	} 
+	SampleName="Sephardic Cohen" 
+	SampleSize=24
+	SampleData= {
+		1	0.083
+		2	0.709
+		3	0.042
+		4	0.083
+		5	0.083 	
+	} 
+	SampleName="Sephardic Israelite" 
+	SampleSize=39
+	SampleData= {
+		1	0.129
+		2	0.333
+		3	0.359
+		4	0.026
+		6	0.153 	
+	} 

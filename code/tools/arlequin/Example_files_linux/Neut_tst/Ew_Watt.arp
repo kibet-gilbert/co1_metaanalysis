@@ -1,0 +1,45 @@
+
+[Profile] 
+
+Title="The example given by Slatkin in his new version of Ewens-Watterson exact test " 
+     NbSamples= 2         
+     GenotypicData=0      
+     DataType=FREQUENCY 
+ 
+[Data] 
+
+[[Samples]] 
+
+   	SampleName="First example provided in Slatkin, 1997 : Results should be : P(exact test) =0.990330  P(Homoz. test)=0.990998" 
+	SampleSize=89
+	SampleData= {  
+		1 52
+		2 9
+		3 8
+		4 4
+		5 4
+		6 2
+		7 2    
+		8 1
+		9 1
+		10 1
+		11 1
+		12 1
+		13 1
+		14 1
+		15 1
+} 
+
+   	SampleName="Second example provided in Slatkin, 1997 : Results should be : P(exact test) =0.98935  P(Homoz. test)=0.98935" 
+	SampleSize=16
+	SampleData= {  
+		1 9
+		2 2
+		3 1
+		4 1
+		5 1
+		6 1
+		7 1
+} 
+
+
