@@ -14,4 +14,4 @@ for(p in requiredPackages)
         ## loads dplyr and magrittr packages
         suppressMessages(library(p, character.only = T))
 }
-
+cat("\nDone...\n")

@@ -29,9 +29,11 @@ realpath() { #
 }
 
 rename() { #generates output file names with same input filename prefix. The suffix (".suffix") is set in individual functions that perform different tasks.
-	input_filename=`basename -- $i`
+	input_filename=$(basename -- "${i}")
 	output_filename=${input_filename%.*}
 	filename_ext=${input_filename##*.}
+	src_dir_path=`dirname $(realpath ${i})`
+	src_dir=${src_dir_path##*/}
 }
 
 #========================================================================================
@@ -77,7 +79,7 @@ muscle_refine() {
 		then
 			rename
 			echo -e "\nproceeding with file `basename $i`..."
-			muscle -in $i -fastaout ${muscle_dest}./refined/\r${output_filename}.afa -clwout ${muscle_dest}./refined/${output_filename}_rfnd.aln -refine
+			muscle -in $i -fastaout ${muscle_dest}./refined/${output_filename}_rfnd.afa -clwout ${muscle_dest}./refined/${output_filename}_rfnd.aln -refine
 		else
 			echo "input file error in `basename $i`: input file should be a .afa file format"
 			continue
@@ -669,8 +671,8 @@ pasta_aln() { #MSA alignment using pasta
 				done
 
 				rename ${i}
-				jobs_dest=${pasta_dest}\jobs/${output_filename}
-				aligned_dest=${pasta_dest}aligned/${output_filename}
+				jobs_dest=${pasta_dest}\jobs/${src_dir}
+				aligned_dest=${pasta_dest}aligned/${src_dir}
 				temporaries_dest=${pasta_dest}temporaries
 				dest=("${jobs_dest}" "${aligned_dest}" "${temporaries_dest}")
 				for dest1 in ${dest[@]}
@@ -688,7 +690,7 @@ pasta_aln() { #MSA alignment using pasta
 						#${PYTHON3_EXEC} ${runpasta} --aligner=mafft -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
 						${PYTHON3_EXEC} ${runpasta} --num-cpus=${num_cpus} --aligner=mafft -i $i -j ${output_filename} --temporaries=${temporaries_dest} -o ${jobs_dest}
 						cp ${jobs_dest}/*.${output_filename}.aln ${aligned_dest}/ && mv ${aligned_dest}/{*.${output_filename}.aln,${output_filename}.aln}
-						cp ${jobs_dest}/${output_filename}.tre ${aligned_dest}/${output_filename}.tre
+						cp ${jobs_dest}/${output_filename}*.tre ${aligned_dest}/${output_filename}.tre
 						break
 						;;
 					mafft_ginsi)
@@ -710,7 +712,7 @@ pasta_aln() { #MSA alignment using pasta
                                                 #${PYTHON3_EXEC} ${runpasta} --aligner=mafft -i $i -t $start_tree -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
 						${PYTHON3_EXEC} ${runpasta} --num-cpus=${num_cpus} --aligner=mafft -i $i -t $start_tree -j ${output_filename} --temporaries=${temporaries_dest} -o ${jobs_dest}
                                                 cp ${jobs_dest}/*.${output_filename}.aln ${aligned_dest}/ && mv ${aligned_dest}/{*.${output_filename}.aln,${output_filename}.aln}
-                                                cp ${jobs_dest}/${output_filename}.tre ${aligned_dest}/${output_filename}.tre
+                                                cp ${jobs_dest}/${output_filename}*.tre ${aligned_dest}/${output_filename}.tre
 						break
 						;;
 					mafft_ginsi_with_starting_tree)
@@ -780,8 +782,8 @@ upp_align() { #UPP stands for Ultra-large alignments using Phylogeny-aware Profi
                                 done
 
 				rename ${i}
-				jobs_upp_dest=${pasta_dest}jobs_upp/${output_filename}
-				aligned_dest=${pasta_dest}aligned/${output_filename}
+				jobs_upp_dest=${pasta_dest}jobs_upp/${src_dir}
+				aligned_dest=${pasta_dest}aligned/${src_dir}
 				temporaries_dest=${pasta_dest}temporaries/sepp
 				dest=("${jobs_upp_dest}" "${aligned_dest}" "${temporaries_dest}")
 				for dest1 in ${dest[@]}

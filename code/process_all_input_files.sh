@@ -20,14 +20,18 @@ usage() { #checks if the positional arguments (input files) for execution of the
         fi
 }
 
+realpath() { #
+	${PYTHON_EXEC} -c "import os,sys; print(os.path.realpath(sys.argv[1]))" $1
+}
+
+
 rename() { #generates output file names with same input filename prefix. The suffix (".suffix") is set in individual functions that perform different tasks.
         input_filename=`basename -- $i`
         output_filename=${input_filename%.*}
 	filename_ext=${input_filename##*.}
-}
-
-realpath() { #
-	${PYTHON_EXEC} -c "import os,sys; print(os.path.realpath(sys.argv[1]))" $1
+	src_dir_path=`dirname $(realpath ${i})`
+	src_dir=${src_dir_path##*/}
+	echo -e "input is $i \ninput_filename is $input_filename \noutput_filename is $output_filename \nfilename_ext is $filename_ext \nsrc_dir_path is $src_dir_path \nsrc_dir is $src_dir"
 }
 
 
@@ -78,7 +82,7 @@ bolddata_retrival() { # This fuction retrives data belonging to a list of countr
 				then
 					countries+=("$(while IFS="\n" read -r line || [[ "$line" ]]; do geography+=("`echo $line | sed 's/ /%20/g'`"); done < $OPTARG)")
 				else
-					echo "input file error in `basename $OPTARG`: input file should be name countries"
+					echo "input file error in `basename $OPTARG`: input file should be named 'countries'"
 				fi
 				;;
 			c)
