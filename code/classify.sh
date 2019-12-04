@@ -32,6 +32,7 @@ RDPclassifyCOI() { # This function will use RDPclassiffier to assign species tax
 			#Removing gaps & concatinating sequence lines
 			remove_gaps $i
 			input=${input_src}/${output_filename}_dgpd.fasta
+			sed -i "s/ /_/g" $input
 			
 			# Setting the maximum memory to be used by java
 			regexp='^[0-9]+[kKmMgG]$'
