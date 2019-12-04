@@ -87,7 +87,15 @@ Programs to be used to visualize and edit phylogenetic trees:
 2. [Bio.Phylo](https://doi.org/10.1186/1471-2105-13-209): Biopython's Phylo package as descriped in the [Phylo Cookbook](https://biopython.org/wiki/Phylo_cookbook) and [tutorial](http://biopython.org/DIST/docs/tutorial/Tutorial.html#htoc204), uses other Python packages; MatPlotlib and NetworkX. Can be used to study the tree and manipulate it's nodes
 
 ### Population STructured.
+#### Haplotype Network.  
 To elucidate the population structure, first a haplotype network needs to be infered. There are severally GUI tools: DNASP5/6 (Windows and MAC), PopART (Windows, MAC and Linux). But command line tools are limited. One is the haploNet fuction in the pegas R package.
+##### pegas R package
+This package relies on ape, adegenet and other dependencies.  
+The first step is to load and parse a FASTA file: the ape package is used here. 
+1. **pairwise distances of sequences**  
+It may be valueble to compute pairwise distances between the DNA sequnces using `ape::dist.dna()` function. This will generate a matrix of pairwise distances. The substitution model used can be selected using [ModelTest-NG](https://github.com/ddarriba/modeltest) described by [Darriba et.al](https://doi.org/10.1093/molbev/msz189).  
+2. **Haplotype Extraction and Frequencies**  
+The identification of haplotypes and friquencies is done using `pegas::haplotype()` function of the pegas R package.
 
 Second is to test if there is any empirical semblance of phylogeographic differentiation using statisical tests. There are two options here too GUI based like PERMUT in CPSSR or command line based like diveRsity package in R.
 

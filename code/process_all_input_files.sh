@@ -31,7 +31,7 @@ rename() { #generates output file names with same input filename prefix. The suf
 	filename_ext=${input_filename##*.}
 	src_dir_path=`dirname $(realpath ${i})`
 	src_dir=${src_dir_path##*/}
-	echo -e "input is $i \ninput_filename is $input_filename \noutput_filename is $output_filename \nfilename_ext is $filename_ext \nsrc_dir_path is $src_dir_path \nsrc_dir is $src_dir"
+	#echo -e "input is $i \ninput_filename is $input_filename \noutput_filename is $output_filename \nfilename_ext is $filename_ext \nsrc_dir_path is $src_dir_path \nsrc_dir is $src_dir"
 }
 
 

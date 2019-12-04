@@ -27,9 +27,9 @@ df_taxa = read.delim(args[1], sep = "\t", stringsAsFactors = F, dec = ".", heade
 Prefamily_df <- as.data.frame(table(c(subset(df_taxa, seq_len >= 500)$Family)), row.names = NULL)
 colnames(Prefamily_df) <- c("Family","prefamfreq")
 cat(nrow(subset(Prefamily_df, prefamfreq >= 20)),
-    "predefined families (seq_len >= 500), with frequency of over 20, are found in this clade, out of",
+    "predefined famil(y/ies) (seq_len >= 500), with frequency of over 20, is/are found in this clade, out of",
    nrow(Prefamily_df),
-   "represented families (seq_len >= 500)\n\n")
+   "represented famil(y/ies) (seq_len >= 500)\n\n")
 #subset(Prefamily_df, prefamfreq >= 20)
 
 Asfamily_df <- as.data.frame(table(c(subset(df_taxa, Family_sc == 1.0 & seq_len >= 500)$As_family)), row.names = NULL)
@@ -42,25 +42,27 @@ cat(nrow(subset(Asfamily_df, asfamfreq >= 20)),
 family_df <- merge(Prefamily_df, Asfamily_df, by.x="Family", by.y="As_family")
 subset(family_df, prefamfreq >= 20 | asfamfreq >= 20)
 
-## listing all genera with over 20 values represented in the dataset.
+## listing all genera with over 5 values represented in the dataset.
 Pregenus_df <- as.data.frame(table(c(subset(df_taxa, seq_len >= 500)$Genus)), row.names = NULL)
 colnames(Pregenus_df) <- c("Genus","pregenusfreq")
-cat(nrow(subset(Pregenus_df, pregenusfreq >= 10)),
-    "predefined genera (seq_len >= 500 $ frequency >= 10) are found in this clade, out of",
+cat(nrow(subset(Pregenus_df, pregenusfreq >= 5)),
+    "predefined genera (seq_len >= 500 $ frequency >= 5) are found in this clade, out of",
    nrow(Pregenus_df),
    "represented genera (seq_len >= 500)\n\n")
 #subset(Pregenus_df, pregenusfreq >= 10)
 
 Asgenus_df <- as.data.frame(table(c(subset(df_taxa, Genus_sc == 1.0 & seq_len >= 500)$As_genus)), row.names = NULL)
 colnames(Asgenus_df) <- c("As_genus","asgenusfreq")
-cat(nrow(subset(Asgenus_df, asgenusfreq >= 10)),
-    "assigned genera (BS score = 1.0 & seq_len >= 500), with frequency of over 20, are found in this clade out of",
+cat(nrow(subset(Asgenus_df, asgenusfreq >= 5)),
+    "assigned genera (BS score = 1.0 & seq_len >= 500), with frequency of over 5, are found in this clade out of",
    nrow(Asgenus_df),
    "represented genera (seq_len >= 500)\n\n")
 #subset(Asgenus_df, asgenusfreq >= 10)
 genus_df <- merge(Pregenus_df, Asgenus_df, by.x="Genus", by.y="As_genus")
-subset(genus_df, pregenusfreq >= 20 | asgenusfreq >= 20)
+subset(genus_df, pregenusfreq >= 5 | asgenusfreq >= 5)
 
+
+#Detailed analysis of the distribution of variables as a assinged by RDPclassifier
 ## Total number of records within the file vs those with over 500 base-pairs
 cat(nrow(df_taxa), "total number of records with",
     nrow(subset(df_taxa, seq_len >= 500)),

@@ -1,11 +1,4 @@
 Version   Dendroscope (version 3.6.3, built 1 Aug 2019)
 Copyright (C) 2019 Daniel H. Huson. This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, licensed under the terms of the GNU General Public License, Version 3.
-Java version: 11.0.4
-Executing: open file='/home/kibet/bioinformatics/github/co1_metaanalysis/data/output/phylogen/raxml_output/diptera/sp-Dacus_ciliatus.tree';
-Trees loaded: 1
-Executing: set drawer=RectangularPhylogram;
-Executing: midpointroot;
-Executing: set layouter=Algorithm2010;
-Executing: midpointroot;
-Executing: toFront;
+Java version: 11.0.1-internal

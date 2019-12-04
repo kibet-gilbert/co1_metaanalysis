@@ -49,3 +49,6 @@
 [submodule "code/tools/raxml-ng"]
 	path = code/tools/raxml-ng
 	url = https://github.com/amkozlov/raxml-ng.git
+[submodule "/home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/modeltest"]
+	path = /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/modeltest
+	url = https://github.com/ddarriba/modeltest.git
