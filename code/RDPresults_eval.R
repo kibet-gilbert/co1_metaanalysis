@@ -132,11 +132,12 @@ cat(nrow(subset(df_taxa, Species_sc == 1.0 & Species != df_taxa$As_species)),
 df_taxa_clash <- subset(
     df_taxa, seq_len >= 500 & Species_sc == 1.0 & Species != df_taxa$As_species)
 #names(lapply("df_taxa_clash",get)) <- paste(input_src,filename,sep="")
-write.table(df_taxa_clash, file = paste(input_src,"/",filename, "_clash.tsv", sep =""),
+setwd(input_src)
+write.table(df_taxa_clash, file = paste(filename, "_clash.tsv", sep =""),
             row.names = FALSE, col.names= TRUE, sep = "\t", quote=FALSE )
-write.table(family_df, file = paste(input_src,"/",filename, "_families.tsv", sep =""),
+write.table(family_df, file = paste(filename, "_families.tsv", sep =""),
             row.names = FALSE, col.names= TRUE, sep = "\t", quote=FALSE )
-write.table(genus_df, file = paste(input_src,"/",filename, "_genera.tsv", sep =""),
+write.table(genus_df, file = paste(filename, "_genera.tsv", sep =""),
             row.names = FALSE, col.names= TRUE, sep = "\t", quote=FALSE )
 #head(df_classified)
 #head(subset(df_taxa, Species != "NA" & Species_sc == 0))

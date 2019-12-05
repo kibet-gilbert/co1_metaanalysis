@@ -690,7 +690,7 @@ pasta_aln() { #MSA alignment using pasta
 						#${PYTHON3_EXEC} ${runpasta} --aligner=mafft -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
 						${PYTHON3_EXEC} ${runpasta} --num-cpus=${num_cpus} --aligner=mafft -i $i -j ${output_filename} --temporaries=${temporaries_dest} -o ${jobs_dest}
 						cp ${jobs_dest}/*.${output_filename}.aln ${aligned_dest}/ && mv ${aligned_dest}/{*.${output_filename}.aln,${output_filename}.aln}
-						cp ${jobs_dest}/${output_filename}*.tre ${aligned_dest}/${output_filename}.tre
+						cp ${jobs_dest}/${output_filename}.tre ${aligned_dest}/${output_filename}.tre
 						break
 						;;
 					mafft_ginsi)
@@ -698,7 +698,7 @@ pasta_aln() { #MSA alignment using pasta
 						#${PYTHON3_EXEC} ${runpasta} --aligner=ginsi -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
 						${PYTHON3_EXEC} ${runpasta} --num-cpus=${num_cpus} --aligner=ginsi -i $i -j ${output_filename} --temporaries=${temporaries_dest} -o ${jobs_dest}
 						cp ${jobs_dest}/*.${output_filename}.aln ${aligned_dest}/ && mv ${aligned_dest}/{*.${output_filename}.aln,${output_filename}.aln}
-						cp ${jobs_dest}/${output_filename}*.tre ${aligned_dest}/${output_filename}.tre
+						cp ${jobs_dest}/${output_filename}.tre ${aligned_dest}/${output_filename}.tre
 						break
 						;;
 					mafft_linsi_with_starting_tree)
@@ -712,7 +712,7 @@ pasta_aln() { #MSA alignment using pasta
                                                 #${PYTHON3_EXEC} ${runpasta} --aligner=mafft -i $i -t $start_tree -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
 						${PYTHON3_EXEC} ${runpasta} --num-cpus=${num_cpus} --aligner=mafft -i $i -t $start_tree -j ${output_filename} --temporaries=${temporaries_dest} -o ${jobs_dest}
                                                 cp ${jobs_dest}/*.${output_filename}.aln ${aligned_dest}/ && mv ${aligned_dest}/{*.${output_filename}.aln,${output_filename}.aln}
-                                                cp ${jobs_dest}/${output_filename}*.tre ${aligned_dest}/${output_filename}.tre
+                                                cp ${jobs_dest}/${output_filename}.tre ${aligned_dest}/${output_filename}.tre
 						break
 						;;
 					mafft_ginsi_with_starting_tree)
@@ -726,7 +726,7 @@ pasta_aln() { #MSA alignment using pasta
                                                 #${PYTHON3_EXEC} ${runpasta} --aligner=ginsi -i $i -j ${output_filename} --temporaries=${pasta_dest}temporaries/ -o ${pasta_dest}\jobs/
 						${PYTHON3_EXEC} ${runpasta} --num-cpus=${num_cpus} --aligner=ginsi -i $i -j ${output_filename} --temporaries=${temporaries_dest} -o ${jobs_dest}/
                                                 cp ${jobs_dest}/*.${output_filename}.aln ${aligned_dest}/ && mv ${aligned_dest}/{*.${output_filename}.aln,${output_filename}.aln}
-                                                cp ${jobs_dest}/${output_filename}*.tre ${aligned_dest}/${output_filename}.tre
+                                                cp ${jobs_dest}/${output_filename}.tre ${aligned_dest}/${output_filename}.tre
 						break
 						;;
 					none_exit)

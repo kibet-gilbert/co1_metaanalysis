@@ -4,6 +4,7 @@ source ~/bioinformatics/github/co1_metaanalysis/code/process_all_input_files.sh
 
 classifier=${co1_path}code/tools/RDPTools/classifier.jar
 classifierproperties=${co1_path}code/tools/CO1Classifierv3.2/mydata_trained/rRNAClassifier.properties
+RDPresults_eval_R=${co1_path}code/RDPresults_eval.R
 JAVA_EXEC=$( which java )
 
 
@@ -70,6 +71,7 @@ RDPcoiresults2tsv() { # This function will take the raw RDPClassiffier results o
 			echo "input error: file '$i' is non-existent!"
 		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*_taxa$ ) ]]
 		then
+			echo -e "\nConverting $i to TSV format..."
 			input_src=`dirname "$( realpath "${i}" )"`
 			cp ${i} ${input_src}/${i}.edit
 			rename ${input_src}/${i}.edit
@@ -91,11 +93,52 @@ RDPcoiresults2tsv() { # This function will take the raw RDPClassiffier results o
 				$29,$31,$32,$34,$35,$37,$38,$40,$41,$43}' ${input_src}/${i}.edit > ${input_src}/${output_filename}.tsv
 
 			rm ${input_src}/${i}.edit
+			echo -e"\nDONE the output file has been stored in ${input_src}/${output_filename}.tsv"
 		else
 			echo "input file error in `basename $i`: input file should be a raw RDPClassifier.tsv file format"
 			continue
 		fi
 	done
+}
+
+#===============================================================================================================================================================
+
+RDPresults_eval(){ # this function evaluates the results from the RDP classiffier and informs on the distribution of various clades prior to classification and the resultant distribution.
+	if [ $# -eq 0 ]
+	then
+		echo "Input error..."
+		echo "Usage: ${FUNCNAME[0]} file1.tsv|_taxa[file2.* file3.* ...]"
+		return 1
+	fi
+	
+	for i in "$@"
+	do
+		if [ ! -f $i ]
+		then
+			echo "input error: file '$i' is non-existent!"
+		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*(.tsv|_taxa)$ ) ]]
+		then
+			input_src=`dirname "$( realpath "${i}" )"`
+			if [[ `basename -- "$i"` =~ .*_taxa$ ]]
+			then
+				RDPcoiresults2tsv ${i}
+				i=${input_src}/${output_filename}.tsv
+			else
+				i=${i}
+			fi
+
+			rename ${i}
+
+			echo -e "\nProceeding with `basename -- ${i}`"
+			Rscript --vanilla ${RDPresults_eval_R} ${i} |& tee -a ${input_src}/${output_filename}_evaluation
+			echo -e "\nThe ouput file from evaluation of `basename $i` has been stored in ${input_src}/${output_filename}_evaluation"
+		else
+			echo "input file error in `basename $i`: input file should be a raw RDPClassifier.tsv file format"
+			continue
+		fi
+	done
+		
+
 }
 
 #===============================================================================================================================================================

@@ -1,0 +1,51 @@
+
+Checking if needed packages are installed... tidyverse packages: 'ggplot2','dplyr' and 'magrittr'
+Excellent tidyverse already installed.
+proceeding with summary analysis of RDPclassifier results...
+Warning messages:
+1: package ‘ggplot2’ was built under R version 3.4.4 
+2: package ‘magrittr’ was built under R version 3.4.4 
+1 predefined famil(y/ies) (seq_len >= 500), with frequency of over 20, is/are found in this clade, out of 1 represented famil(y/ies) (seq_len >= 500)
+
+1 assigned families (BS score = 1.0 & seq_len >= 500), with frequency of over 20, are found in this clade out of 2 represented assigned families (seq_len >= 500)
+
+       Family prefamfreq asfamfreq
+1 Psychodidae       1969      1740
+17 predefined genera (seq_len >= 500 $ frequency >= 5) are found in this clade, out of 21 represented genera (seq_len >= 500)
+
+15 assigned genera (BS score = 1.0 & seq_len >= 500), with frequency of over 5, are found in this clade out of 19 represented genera (seq_len >= 500)
+
+            Genus pregenusfreq asgenusfreq
+1    Bichromomyia           11          11
+2     Brumptomyia           34          34
+3     Evandromyia           40          40
+4       Lutzomyia          709         377
+5   Micropygomyia           23          40
+6      Migonemyia           33          35
+7       Nyssomyia          157         297
+8     Phlebotomus          424         381
+9       Pintomyia           12          12
+10      Pressatia           11          16
+11   Psathyromyia           17          79
+12  Psychodopygus           72          84
+13     Sciopemyia            8          10
+14   Sergentomyia          391         285
+16 Trichopygomyia            2          12
+2428 total number of records with 1969 records having over 500 base-pairs
+2393 records with a predefined species from which 1944 have over 500 base pairs
+
+2428 records were assigned species classification with bootstrap support ranging from 0 to 1
+
+1899 records were classiffied with a bootsrap of = 1, 1990 with >= 0.95 bootstrap support and 2060 with >= 0.7 bootstrap support
+
+1893 records, with predefined species, were classiffied with a bootsrap of = 1, 1982 with >= 0.95 bootstrap support and 2051 with >= 0.7 bootstrap support
+
+1613 records, with >= 500 seq. length, were classiffied with a bootsrap of = 1, 1683 with >= 0.95 bootstrap support and 1745 with >= 0.7 bootstrap support
+
+1608 records, with predefined species and >= 500 seq. length, were classiffied with a bootsrap of = 1, 1676 with >= 0.95 bootstrap support and 1737 with >= 0.7 bootstrap support
+
+2399 records either had predefined species, or were classified with a bootstrap value of 1.0, 2401 with bootstrap value of >=0.95 and 2402 with boostrap value of >=0.7
+
+1613 records classified into species have sequences with over 500 bases, with 5 having no prior species classification
+432 records with a species classication confidence of 1.0 have differing assinged species from predefined species, 311 of which have over 500 base-pairs
+
