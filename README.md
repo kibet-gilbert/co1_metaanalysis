@@ -68,11 +68,12 @@ We used the following [sequence based methods](https://tcoffee.readthedocs.io/en
 2. Evaluating the [Transitive Consistency Score (TCS)](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#transitive-consistency-score-tcs) of an MSA. The scores generated here are usefull in filtering our sequences and in phylogenetic inference based on herogenous site evolutionary rates.
 
 ### Phylogenetic Inference tools.
-1. [BMGE (Block Mapping and Gathering with Entropy)](ftp://ftp.pasteur.fr/pub/gensoft/projects/BMGE/): A tool for selection of phylogenetic informative regions from MSAs as documented [**HERE**]( http://gensoft.pasteur.fr/docs/BMGE/1.12/BMGE_doc.pdf). Removes ambiguously aligned regions, highly variable (saturated) characters altimately improving overall performance of the phylogenetic reconstruction  method as described by [Criscuolo et. al. (2010)](https://doi.org/10.1186/1471-2148-10-210)
-2. [RAxML (Randomized Axelerated Maximum Likelihood)](https://cme.h-its.org/exelixis/web/software/raxml/index.html): Highly accurate, computer intensive but, a little slow. Removes duplicate sequences (Headers/nucleotide-sequences) then infers the tree. described in [Stamakis et. al. (2014)]( https://doi.org/10.1093/bioinformatics/btu033)
-3.  [RAxML-ng (RAxML Next Generation)](https://github.com/amkozlov/raxml-ng): a fast, scalable and user-friendly tool for maximum likelihood phylogenetic inference. "A from-scratch re-implementation of the established greedy tree search algorithm of RAxML/ExaML" with "improved accuracy, flexibility, speed, scalability, and usability compared with RAxML/ExaML". Desribed by [Kozlov et. al. (2019)](https://doi.org/10.1093/bioinformatics/btz305) as having higher scoring trees than IQtree on "taxon-rich datasets"
-4. [IQtree]
-5. [FastTree](http://www.microbesonline.org/fasttree/): Fast and less computer intensive, but not so accurate.
+1. The substitution model used can be selected using [ModelTest-NG](https://github.com/ddarriba/modeltest) described by [Darriba et.al](https://doi.org/10.1093/molbev/msz189).
+2. [BMGE (Block Mapping and Gathering with Entropy)](ftp://ftp.pasteur.fr/pub/gensoft/projects/BMGE/): A tool for selection of phylogenetic informative regions from MSAs as documented [**HERE**]( http://gensoft.pasteur.fr/docs/BMGE/1.12/BMGE_doc.pdf). Removes ambiguously aligned regions, highly variable (saturated) characters altimately improving overall performance of the phylogenetic reconstruction  method as described by [Criscuolo et. al. (2010)](https://doi.org/10.1186/1471-2148-10-210)
+3. [RAxML (Randomized Axelerated Maximum Likelihood)](https://cme.h-its.org/exelixis/web/software/raxml/index.html): Highly accurate, computer intensive but, a little slow. Removes duplicate sequences (Headers/nucleotide-sequences) then infers the tree. described in [Stamakis et. al. (2014)]( https://doi.org/10.1093/bioinformatics/btu033)
+4.  [RAxML-ng (RAxML Next Generation)](https://github.com/amkozlov/raxml-ng): a fast, scalable and user-friendly tool for maximum likelihood phylogenetic inference. "A from-scratch re-implementation of the established greedy tree search algorithm of RAxML/ExaML" with "improved accuracy, flexibility, speed, scalability, and usability compared with RAxML/ExaML". Desribed by [Kozlov et. al. (2019)](https://doi.org/10.1093/bioinformatics/btz305) as having higher scoring trees than IQtree on "taxon-rich datasets"
+5. [IQtree](http://www.iqtree.org/doc/): An "Efficient search algorithm: Fast and effective stochastic algorithm to reconstruct phylogenetic trees by maximum likelihood". Has a "Ultrafast" bootstrap algorithm 10-40 times faster than RAxML, "Ultafast model selection" algorithm (ModelFinder) that is automatic, 10-100 times faster than jModelTest and ProTest, support Bid Data Analysis and other attributes as descriped by [Nguyen ect. al.](https://doi.org/10.1093/molbev/msu300).
+6. [FastTree](http://www.microbesonline.org/fasttree/): Fast and less computer intensive, but not so accurate.
 
 The resultant computer readable formats of the phylogenetic trees are either of the following [Newick](http://evolution.genetics.washington.edu/phylip/newicktree.html), [NEXUS](http://en.wikipedia.org/wiki/Nexus_file) and [PhyloXML](http://en.wikipedia.org/wiki/PhyloXML).
 
@@ -87,14 +88,14 @@ Programs to be used to visualize and edit phylogenetic trees:
 2. [Bio.Phylo](https://doi.org/10.1186/1471-2105-13-209): Biopython's Phylo package as descriped in the [Phylo Cookbook](https://biopython.org/wiki/Phylo_cookbook) and [tutorial](http://biopython.org/DIST/docs/tutorial/Tutorial.html#htoc204), uses other Python packages; MatPlotlib and NetworkX. Can be used to study the tree and manipulate it's nodes
 
 ### Population STructured.
-#### Haplotype Network.  
+#### Haplotype Network.
 To elucidate the population structure, first a haplotype network needs to be infered. There are severally GUI tools: DNASP5/6 (Windows and MAC), PopART (Windows, MAC and Linux). But command line tools are limited. One is the haploNet fuction in the pegas R package.
 ##### pegas R package
-This package relies on ape, adegenet and other dependencies.  
-The first step is to load and parse a FASTA file: the ape package is used here. 
-1. **pairwise distances of sequences**  
-It may be valueble to compute pairwise distances between the DNA sequnces using `ape::dist.dna()` function. This will generate a matrix of pairwise distances. The substitution model used can be selected using [ModelTest-NG](https://github.com/ddarriba/modeltest) described by [Darriba et.al](https://doi.org/10.1093/molbev/msz189).  
-2. **Haplotype Extraction and Frequencies**  
+This package relies on ape, adegenet and other dependencies.
+The first step is to load and parse a FASTA file: the ape package is used here.
+1. **pairwise distances of sequences**
+It may be valueble to compute pairwise distances between the DNA sequnces using `ape::dist.dna()` function. This will generate a matrix of pairwise distances. The substitution model used can be selected using [ModelTest-NG](https://github.com/ddarriba/modeltest) described by [Darriba et.al](https://doi.org/10.1093/molbev/msz189).
+2. **Haplotype Extraction and Frequencies**
 The identification of haplotypes and friquencies is done using `pegas::haplotype()` function of the pegas R package.
 
 Second is to test if there is any empirical semblance of phylogeographic differentiation using statisical tests. There are two options here too GUI based like PERMUT in CPSSR or command line based like diveRsity package in R.

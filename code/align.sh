@@ -211,8 +211,15 @@ mafft_local() {
                         echo "input error: file $i is non-existent!"
                 elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa)$ ) ]]
                 then
-                        rename
-                        echo -e "\nmafft G-large-INS-1 MSA: proceeding with file `basename $i`..."
+			unset num_cpus
+			regexp='^[0-9][1-9]*$'
+			until [[ "$num_cpus" =~ $regexp ]]
+			do
+				read -p "Please enter the number of physical cores to be used: " num_cpus
+			done
+
+			rename
+                        echo -e "\nmafft L-large-INS-1 MSA: proceeding with file `basename $i`..."
                         printf "Choose from the following output formats: \n"
                         select output_formats in fasta_output_format clustal_output_format none_exit
                         do
@@ -220,13 +227,13 @@ mafft_local() {
                                         fasta_output_format)
                                                 echo -e "\nGenerating .fasta output\n"
 						bash $mpionly
-                                                mafft --mpi --large --globalpair --thread -1 --reorder $i > ${mafft_dest}aligned/${output_filename}_l.fasta
+                                                mafft --mpi --large --localpair --thread -${num_cpus} --reorder $i > ${mafft_dest}aligned/${output_filename}_l.fasta
 						break
                                                 ;;
                                         clustal_output_format)
                                                 echo -e "\nGenerating a clustal format output\n"
 						bash $mpionly
-                                                mafft --mpi --large --globalpair --thread -1 --reorder --clustalout $1 > ${mafft_dest}aligned/${output_filename}_l.aln
+                                                mafft --mpi --large --localpair --thread -${num_cpus} --reorder --clustalout $1 > ${mafft_dest}aligned/${output_filename}_l.aln
 						break
                                                 ;;
                                         none_exit)

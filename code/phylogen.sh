@@ -9,6 +9,7 @@ raxmlng_mpi=${co1_path}code/tools/raxml-ng/bin/raxml-ng-mpi
 fasttree_dest=${co1_path}data/output/phylogen/fasttree_output/
 raxml_dest=${co1_path}data/output/phylogen/raxml_output/
 raxmlng_dest=${co1_path}data/output/phylogen/raxmlng_output/
+iqtree_dest=${co1_path}data/output/phylogen/iqtree_output/
 PYTHON_EXEC=$( which python )
 
 source ${co1_path}code/process_all_input_files.sh
@@ -128,6 +129,8 @@ raxml_phylo_hard(){ # This function performs a maximum likelihood search of the 
 		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa)$ ) ]]
 		then
 			rename
+
+			#Substituting illegal characters
 			sed -i "s/\[//g; s/\]//g; s/ /_/g; s/://g; s/;//g; s/,/__/g; s/(/__/g; s/)//g; s/'//g" $i
 
 			#Deleting unwanted records
@@ -145,6 +148,16 @@ raxml_phylo_hard(){ # This function performs a maximum likelihood search of the 
 				read -p "Please enter [Yes] or [NO] to delete more unwanted records:: " Choice
 			done
 
+			#Setting up the output directory
+			unset dest
+			dest=${raxml_dest}${output_filename}
+			until [[ -d ${dest} ]]
+			do
+				echo "creating output directory '${dest}'..."
+				mkdir ${dest}
+			done
+
+			#Setting the rate heterogeneity model
 			unset rate_heterogeneity
 			echo -e "Please select the rate heterogeneity model or approximation to use from the following options, enter [1] or [2]:"
 			select rate_heterogeneity in GTRGAMMA GTRCAT
@@ -155,17 +168,17 @@ raxml_phylo_hard(){ # This function performs a maximum likelihood search of the 
 				select MLtree_searches in 10 20 100 200
 				do
 					echo -e "\nProceeding with file `basename $i`...\nFinding the best-scoring ML tree for the DNA alignment.."
-					raxmlHPC-HYBRID-AVX2 -f d -T 2 -m ${rate_heterogeneity} -p 12345 -# ${MLtree_searches} -s $i -w ${raxml_dest} -n ${output_filename}
+					raxmlHPC-HYBRID-AVX2 -f d -T 2 -m ${rate_heterogeneity} -p 12345 -# ${MLtree_searches} -s $i -w ${dest} -n ${output_filename}
 					break
 				done
-				echo -e "\nBest-scoring ML tree search DONE...\nThe best scoring ML tree written to ${raxml_dest}RAxML_bestTree.${output_filename}\n\nProceeding with bootsrap search..."
+				echo -e "\nBest-scoring ML tree search DONE...\nThe best scoring ML tree written to ${dest}RAxML_bestTree.${output_filename}\n\nProceeding with bootsrap search..."
 				
 				#Bootsrap search
 				echo -e "Please select the number of bootstrap_runs or selection method from the following options:"
 				select bootstrap_option in autoMRE autoMRE_ING 20 100 1000
 				do
 					echo -e "\nBegining bootstrap search, This may take a while...\n"
-					raxmlHPC-HYBRID-AVX2 -f d -T 2 -m ${rate_heterogeneity} -p 12345 -b 12345 -# ${bootstrap_option} -s $i -w ${raxml_dest} -n ${output_filename}1
+					raxmlHPC-HYBRID-AVX2 -f d -T 2 -m ${rate_heterogeneity} -p 12345 -b 12345 -# ${bootstrap_option} -s $i -w ${dest} -n ${output_filename}1
 					break
 				done
 				echo -e "\nBootstrap search DONE..."
@@ -173,12 +186,12 @@ raxml_phylo_hard(){ # This function performs a maximum likelihood search of the 
 				#Obtaining Confidence Values
 				echo -e "\nProceeding with drawing bipartitions on the best ML tree to obtain a topology with support values...\n"
 				
-				raxmlHPC-AVX2 -m ${rate_heterogeneity} -p 12345 -f b -t ${raxml_dest}RAxML_bestTree.${output_filename} -z ${raxml_dest}RAxML_bootstrap.${output_filename}1 -w ${raxml_dest} -n ${output_filename}_BS_tree
+				raxmlHPC-AVX2 -m ${rate_heterogeneity} -p 12345 -f b -t ${dest}RAxML_bestTree.${output_filename} -z ${dest}RAxML_bootstrap.${output_filename}1 -w ${dest} -n ${output_filename}_BS_tree
 				
 				#Computing Extended Majority Rule (MRE) Consensus tree
 				echo -e "\nProceeding to build a consensus tree...\n"
-				
-				raxmlHPC-AVX2 -m ${rate_heterogeneity} -J MRE -z ${raxml_dest}RAxML_bootstrap.${output_filename}1 -w ${raxml_dest} -n ${output_filename}_MRE-CONS
+				#Generating consensus tree
+				raxmlHPC-AVX2 -m ${rate_heterogeneity} -J MRE -z ${dest}RAxML_bootstrap.${output_filename}1 -w ${dest} -n ${output_filename}_MRE-CONS
 				echo -e "DONE generating the consensus tree"
 				break
 			done
@@ -226,6 +239,15 @@ raxml_phylo_easy(){ # This function conduct a full ML analysis, i.e., a certain 
 
 			#Substituting Illegal characters in taxon-names are: tabulators, carriage returns, spaces, ":", ",", ")", "(", ";", "]", "[", "'" that affect the interpretation in RAxML
 			sed -i "s/\[//g; s/\]//g; s/ /_/g; s/://g; s/;//g; s/,/__/g; s/(/__/g; s/)//g; s/'//g" $i
+		
+			#Setting up the output directory
+			unset dest
+			dest=${raxml_dest}${output_filename}
+			until [[ -d ${dest} ]]
+			do
+				echo "creating output directory '${dest}'..."
+				mkdir ${dest}
+			done		
 			
 			#Full analysis rapid Bootstrapping and Maximum Likelihood search
 			echo -e "Please select the number of bootstrap_runs or selection method from the following options:"
@@ -236,8 +258,8 @@ raxml_phylo_easy(){ # This function conduct a full ML analysis, i.e., a certain 
 				select rate_heterogeneity in GTRGAMMA GTRCAT
 				do
 					echo -e "\nBegining complete analysis (ML search + Bootstrapping) for `basename $i` in one step..."
-					raxmlHPC-HYBRID-AVX2 -f a -T 2 -m ${rate_heterogeneity} -p 12345 -x 12345 -# ${bootstrap_option} -s $i -w ${raxml_dest} -n ${output_filename}
-					##raxmlHPC-HYBRID-AVX2 -f a -T 2 -m GTRGAMMA -p 12345 -x 12345 -# ${bootstrap_option}­-s $i -w ${raxml_dest} -n ${output_filename}
+					raxmlHPC-HYBRID-AVX2 -f a -T 2 -m ${rate_heterogeneity} -p 12345 -x 12345 -# ${bootstrap_option} -s $i -w ${dest} -n ${output_filename}
+					##raxmlHPC-HYBRID-AVX2 -f a -T 2 -m GTRGAMMA -p 12345 -x 12345 -# ${bootstrap_option}­-s $i -w ${dest} -n ${output_filename}
 					break
 				done
 				break
@@ -281,10 +303,22 @@ raxml_rooting(){ # This funtion generates a model filewith model parameters for 
 		then
  			rename
 			input_src=`dirname "$( realpath "${i}" )"`
+
+			#Substituting illigal characters
 			sed -i "s/\[//g; s/\]//g; s/ /_/g; s/://g; s/;//g; s/,/__/g; s/(/__/g; s/)//g; s/'//g" $i
 
+			#Setting up the output directory
+			unset dest
+			dest=${raxml_dest}${output_filename}
+			until [[ -d ${dest} ]]
+			do
+				echo "creating output directory '${dest}'..."
+				mkdir ${dest}
+			done
+
+			#Setting the rate of heterogeneitu model
 			unset rate_heterogeneity
-			echo -e "Please select the rate heterogeneity model or approximation to use from the following options, enter [1] or [2]:"
+			echo -e "Please select the rate heterogeneity model or approximation to use from the following options, enter [1] or [2], It should be exactly the same as the one used in tree inference:"
 			select rate_heterogeneity in GTRGAMMA GTRCAT
 			do
 				unset tree
@@ -293,26 +327,32 @@ raxml_rooting(){ # This funtion generates a model filewith model parameters for 
 				read -p "Please enter the phylogenetic tree::  " tree
 				case $rate_heterogeneity in
 					GTRGAMMA)
+						#Generating reference tree model parameters binary file
 						echo -e "\nBeginning rooting based on ${rate_heterogeneity} rate heterogeneity model...\nGenerating reference tree model parameters binary file..."
-						raxmlHPC-AVX2 -f e -m ${rate_heterogeneity} -s ${i} -t ${tree} -w ${raxml_dest} -n ${output_filename}_PARAMS
+						raxmlHPC-AVX2 -f e -m ${rate_heterogeneity} -s ${i} -t ${tree} -w ${dest} -n ${output_filename}_PARAMS
 						echo -e "\nBinary files generation DONE.\nProceeding with outgroup insertion...\nPlease enter the path to the file containing the outgroup, it should be a single sequence/record..."
 						read -p "Please enter the outgroup file:: " outgroup
+						#appending the outgroup to the alignment file
 						cp ${i} ${input_src}/rooting_inputfile.fas
 						cat ${outgroup} >> ${input_src}/rooting_inputfile.fas
 						sed -i '/^[[:space:]]*$/d' ${input_src}/rooting_inputfile.fas
-						raxmlHPC-AVX2 -f v -m ${rate_heterogeneity} -R ${raxml_dest}RAxML_binaryModelParameters.${output_filename}_PARAMS -t ${raxml_dest}RAxML_results.${output_filename}_PARAMS -s ${input_src}/rooting_inputfile.fas -w ${raxml_dest} -n ${output_filename}_rooted
+						#Rooting - ougroup insertiion in the tree
+						raxmlHPC-AVX2 -f v -m ${rate_heterogeneity} -R ${dest}RAxML_binaryModelParameters.${output_filename}_PARAMS -t ${dest}RAxML_results.${output_filename}_PARAMS -s ${input_src}/rooting_inputfile.fas -w ${dest} -n ${output_filename}_rooted
 						echo -e "Thorough outgroup insertion DONE."
 						break
 						;;
 					GTRCAT)
+						#Generating reference tree model parameters binary file
 						echo -e "\nBeginning rooting based on ${rate_heterogeneity} rate heterogeneity model...\nGenerating reference tree model parameters binary file..."
-						raxmlHPC-AVX2 -f e -H -m ${rate_heterogeneity} -s ${i} -t ${tree} -w ${raxml_dest} -n ${output_filename}_PARAMS
+						raxmlHPC-AVX2 -f e -H -m ${rate_heterogeneity} -s ${i} -t ${tree} -w ${dest} -n ${output_filename}_PARAMS
 						echo -e "\nBinary files generation DONE.\nProceeding with outgroup insertion...\nPlease enter the path to the file containing the outgroup, it should be a single sequence/record..."
 						read -p "Please enter the outgroup file:: " outgroup
+						#Appending the ougroup to the alignment file
 						cp ${i} ${input_src}/rooting_inputfile.fas
 						cat ${outgroup} >> ${input_src}/rooting_inputfile.fas
 						sed -i '/^[[:space:]]*$/d' ${input_src}/rooting_inputfile.fas
-						raxmlHPC-AVX2 -f v -H -m ${rate_heterogeneity} -R ${raxml_dest}RAxML_binaryModelParameters.${output_filename}_PARAMS -t ${raxml_dest}RAxML_result.${output_filename}_PARAMS -s ${input_src}/rooting_inputfile.fas -w ${raxml_dest} -n ${output_filename}_rooted
+						#Rooting - insertion of the outgroup into the tree
+						raxmlHPC-AVX2 -f v -H -m ${rate_heterogeneity} -R ${dest}RAxML_binaryModelParameters.${output_filename}_PARAMS -t ${dest}RAxML_result.${output_filename}_PARAMS -s ${input_src}/rooting_inputfile.fas -w ${dest} -n ${output_filename}_rooted
 						echo -e "Thorough outgroup insertion DONE."
 						break
 						;;
@@ -329,8 +369,10 @@ raxml_rooting(){ # This funtion generates a model filewith model parameters for 
 
 #==================================================================================================================================================================================================================
 
+#Full ML-bootstrapping analysis:
+#syntax: raxml-ng -msa FILE --all --bs-trees [value] 
 
-raxmlng_mpi_phylo(){ # This function conduct a full ML analysis, i.e., a certain number of BS replicates and a search for a best-scoring tree on the original alignment and output the bootstrapped trees (RAxML_bootstrap.TEST), the best scoring ML tree (RAxML_bestTree.TEST) and the BS support values drawn on the best-scoring tree as node labels (RAxML_bipartitions.TEST) as well as, more correctly since support values refer to branches as branch labels (RAxML_bipartitionsBranchLabels.
+raxmlng_phylo(){ # This function is based on RAxML-NG v. 0.9.0 released on 20.05.2019 by The Exelixis Lab. Supports faster bootstraping and perform all-in-one analysis: ML-tree search, non-parametric bootstrap:
         usage $@
         echo "RAxML-ng MPI mode starting Phylogenetic tree inference..."
 
@@ -356,32 +398,138 @@ raxmlng_mpi_phylo(){ # This function conduct a full ML analysis, i.e., a certain
                                 fi
                                 read -p "Please enter [Yes] or [NO] to delete more unwanted records:: " Choice
                         done
+			
+			#Setting number of threads to use
+			unset num_cpus
+			regexp='^[0-9][1-9]*$'
+			until [[ "$num_cpus" =~ $regexp ]]
+			do
+				read -p "Please enter the number of cpus to be used, RAxML-NG works best with one thread per physical core: " num_cpus
+			done
+
+			#Setting up the output directory
+			unset dest
+			dest=${raxmlng_dest}${output_filename}
+			until [[ -d ${dest} ]]
+			do
+				echo "creating output directory '${dest}'..."
+				mkdir ${dest}
+			done
 
                         #Substituting Illegal characters in taxon-names are: tabulators, carriage returns, spaces, ":", ",", ")", "(", ";", "]", "[", "'" that affect the interpretation in RAxML
                         sed -i "s/\[//g; s/\]//g; s/ /_/g; s/://g; s/;//g; s/,/__/g; s/(/__/g; s/)//g; s/'//g" $i
 
+			#Setting the evolutionary model: [Substitution matrix]+[Propotions of invariant sites]+[rate heterogenaity model]
+			unset evolutionary_model
+			regexp='^^[a-zA-Z0-9/+]+$'
+			until [[ "$evolutionary_model" =~ $regexp ]]
+			do
+				read -p "Please enter the evolutionary model [Substitution matrix]+[Propotions of invariant sites]+[rate heterogenaity model] to be used. Use modeltest to select 'modeltest -i [inputfile] -T raxml-ng': " evolutionary_model
+			done
+
+			#Working with large files
+			if [ $( grep ">" ${i} | wc -l) -gt 200 ]
+			then
+				raxml-ng --parse --msa ${i} --model ${evolutionary_model} --prefix ${dest}/${output_filename}
+				i='${dest}${output_filename}.raxml.rba'
+			fi
+
                         #Full analysis rapid Bootstrapping and Maximum Likelihood search
                         echo -e "Please select the number of bootstrap_runs or selection method from the following options:"
-                        select bootstrap_option in autoMRE autoMRE_ING 20 100 1000
+                        select bootstrap_option in autoMRE 20 100 1000
                         do
-                                unset rate_heterogeneity
-                                echo -e "Please select the rate heterogeneity model or approximation to use from the following options, enter [1] or [2]:"
-                                select rate_heterogeneity in GTRGAMMA GTRCAT
-                                do
-                                        echo -e "\nBegining complete analysis (ML search + Bootstrapping) for `basename $i` in one step..."
-                                        raxmlHPC-HYBRID-AVX2 -f a -T 2 -m ${rate_heterogeneity} -p 12345 -x 12345 -# ${bootstrap_option} -s $i -w ${raxml_dest} -n ${output_filename}
-                                        ##raxmlHPC-HYBRID-AVX2 -f a -T 2 -m GTRGAMMA -p 12345 -x 12345 -# ${bootstrap_option}­-s $i -w ${raxml_dest} -n ${output_filename}
-                                        break
-                                done
-                                break
-                        done
+				#Setting the number of starting trees
+				unset st_trees
+				regexp='^[0-9]+$'
+				until [[ "$st_trees" =~ $regexp ]]
+				do
+					read -p "Please enter the number of strarting trees to generate before the best-scoring topology as the final ML-tree is picked, the : " st_trees
+				done
+
+				#Setting the branch support metric algorithm
+				unset branch_support_metric
+				echo -e "Please select a suitable branch support metric: Transfer Bootstrap Expectation (Lemoine et al., Nature 2018) is a recent alternative to the classical Felsenstein's bootstrap and can better reveal support for deep branches "
+				select branch_support_metric in FBE TBE
+				do
+					echo -e "\nBegining complete analysis (ML search + Bootstrapping) for `basename $i` in one step..."
+					raxml-ng-mpi --all --threads ${num_cpus} --model ${evolutionary_model} --tree pars{${st_trees}},rand{${st_trees}} --seed 12345 --bs-trees ${bootstrap_option} -bs-metric ${branch_support_metric} --msa $i --prefix ${dest}/${output_filename}
+					echo -e "\nAnalysis Done!!!Congratulations"
+					break
+				done
+				break
+			done
 
                         echo -e "\nComplete analysis done"
                 else
                         echo "input file error in `basename $i`: input file should be a FASTA or relaxed or interleaved PHYLIP file format"
                         continue
-                fi
+		fi
         done
 }
 
+#==================================================================================================================================================================================================================
 
+#Input: FASTA, NEXUS, CLUSTALW,PHYLIP
+#output: NEWICK(.treefile), main report (.iqtree), log file (.log), model file (.model), consensus tree (.contree), % bs-support values (.splits.nex) and star-dot format (.splits), 
+
+#automatically selects best-fit model using modelfinder (iqtree >= 1.5.4)
+#Fast and effective stochastic algorithm to reconstruct phylogenetic trees by ML
+#ultrafast bootstrap approximation (UFBoot) to assess branch supports: -bb(version 1.X)|-B and -bnni option to reduce risk of overestimating branch supports due to severe model violation bu UFBoot
+#Assessing branch support with single branch tests. Several fast branch tests like SH-aLRT. both SH-aLRT and UFBoot can be assinged jointly in a single run
+
+#Combine ModelFinder, tree search, SH-aLRT test and ultrafast bootstrap with 1000 replicates:
+#Syntax: iqtree -s example.phy -bb 1000 -bnni -alrt 1000 --prefix ouputfilename
+
+#Find best partition scheme followed by tree inference and ultrafast bootstrap:
+#Syntax: iqtree -s example.phy -p example.nex -m MFP+MERGE -B 1000
+
+#use 4CPUs or automatically determine the best number: -T|-nt(version 1.x)
+#iqtree -s example.phy -m GTR+R4 -nt [4|AUTO]
+
+#General
+#iqtree -s example.phy -bb 1000 -bnni -alrt 1000 -nt AUTO [--prefix|-pre(-version 1.X)] ouputfilename
+
+iqtree_phylo() { # This function based on iqtree version 1.X, performs an automatic model search using ModelTest, UFBoot, optimize each bootstrap tree using a hill-climbing nearest neighbor interchange (NNI) search, SH-aLRT and automatic detection of best fit number of cores.
+
+	usage $@
+	echo "Iqtree mode starting Phylogenetic tree inference..."
+	
+	for i in $@
+	do
+		if [ ! -f $i ]
+		then
+			echo "input error: file $i is non-existent!"
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(aln|afa|fasta|fa)$ ) ]]
+		then
+			 #Substituting Illegal characters in taxon-names are: tabulators, carriage returns, spaces, ":", ",", ")", "(", ";", "]", "[", "'" that affect the interpretation in IQ-TREE
+ 			 sed -i "s/\[//g; s/\]//g; s/ /_/g; s/://g; s/;//g; s/,/__/g; s/(/__/g; s/)//g; s/'//g; s/|/-.-/g" $i
+
+			#Bootstrap support
+			unset bs_reps
+			regexp='^[0-9]+$'
+			until [[ "$bs_reps" =~ $regexp ]]
+			do
+				read -p "Please enter the number of bootstrap replicates to generate before the best-scoring topology of the final ML-tree is assigned branch support values, the 1000 is advisable : " bs_reps
+			done
+			rename
+
+			#Setting up the output directory
+			unset dest
+			dest=${iqtree_dest}${output_filename}
+			until [[ -d ${dest} ]]
+			do
+				echo "creating output directory '${dest}'..."
+				mkdir ${dest}
+			done
+
+			#Actual analysis
+			echo -e "\nBegining complete analysis (ML search + Bootstrapping) for `basename $i` in one step..."
+			iqtree -s ${i} -bb ${bs_reps} -bnni -alrt ${bs_reps} -nt AUTO -pre ${dest}/${output_filename}
+			sed -i "s/-.-/|/g" ${dest}/${output_filename}.treefile
+			echo -e "\nOutput files stored in ${dest}/${output_filename}\nCongratulations...Analysis DONE!!!"
+		else
+			echo "input file error in `basename $i`: input file should be a FASTA or relaxed or interleaved PHYLIP file format"
+			continue
+		fi
+	done
+}
