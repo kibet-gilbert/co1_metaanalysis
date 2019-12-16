@@ -49,3 +49,699 @@ Warning messages:
 1613 records classified into species have sequences with over 500 bases, with 5 having no prior species classification
 432 records with a species classication confidence of 1.0 have differing assinged species from predefined species, 311 of which have over 500 base-pairs
 
+
+Checking if needed packages are installed... tidyverse packages: 'ggplot2','dplyr' and 'magrittr'
+Excellent tidyverse already installed.
+proceeding with summary analysis of RDPclassifier results...
+Warning messages:
+1: package ‘ggplot2’ was built under R version 3.4.4 
+2: package ‘magrittr’ was built under R version 3.4.4 
+1 predefined famil(y/ies) (seq_len >= 500), with frequency of over 20, is/are found in this clade, out of 1 represented famil(y/ies) (seq_len >= 500)
+
+1 assigned families (BS score = 1.0 & seq_len >= 500), with frequency of over 20, are found in this clade out of 2 represented assigned families (seq_len >= 500)
+
+       Family prefamfreq asfamfreq
+1 Psychodidae       1969      1740
+17 predefined genera (seq_len >= 500 $ frequency >= 5) are found in this clade, out of 21 represented genera (seq_len >= 500)
+
+15 assigned genera (BS score = 1.0 & seq_len >= 500), with frequency of over 5, are found in this clade out of 19 represented genera (seq_len >= 500)
+
+            Genus pregenusfreq asgenusfreq
+1    Bichromomyia           11          11
+2     Brumptomyia           34          34
+3     Evandromyia           40          40
+4       Lutzomyia          709         377
+5   Micropygomyia           23          40
+6      Migonemyia           33          35
+7       Nyssomyia          157         297
+8     Phlebotomus          424         381
+9       Pintomyia           12          12
+10      Pressatia           11          16
+11   Psathyromyia           17          79
+12  Psychodopygus           72          84
+13     Sciopemyia            8          10
+14   Sergentomyia          391         285
+16 Trichopygomyia            2          12
+145 predefined species (seq_len >= 500 $ frequency >= 3) are found in this clade, out of 239 represented species (seq_len >= 500)
+
+118 assigned species (BS score = 1.0 & seq_len >= 500), with frequency of over 3, are found in this clade out of 157 represented species (seq_len >= 500)
+
+                         Species prespeciesfreq asspeciesfreq
+1   Bichromomyia_flaviscutellata             10             7
+2            Bichromomyia_olmeca              1             4
+3           Brumptomyia_avellari             17            17
+6         Brumptomyia_guimaraesi              3             4
+7             Brumptomyia_hamata              3             4
+8              Brumptomyia_mesai              6             2
+10          Evandromyia_evandroi             13             2
+11      Evandromyia_infraspinosa              5             5
+12             Evandromyia_lenti             18            13
+13      Evandromyia_termitophila              4             4
+14        Lutzomyia_ayacuchensis              8             8
+15           Lutzomyia_bicornuta              8             8
+16           Lutzomyia_bifoliata              5             5
+17          Lutzomyia_caballeroi             10            10
+18            Lutzomyia_castanea              9             9
+19          Lutzomyia_columbiana              5             5
+20            Lutzomyia_cruciata              7             2
+21            Lutzomyia_dubitans              7             7
+22              Lutzomyia_evansi              8             7
+23              Lutzomyia_gomezi             20            20
+24            Lutzomyia_gorbitzi              4             4
+26           Lutzomyia_hartmanni              4             4
+28        Lutzomyia_longiflocosa              6             4
+29        Lutzomyia_maranonensis             14            14
+30           Lutzomyia_munaypata             10            10
+31              Lutzomyia_nevesi              3             3
+32            Lutzomyia_noguchii              9             9
+33            Lutzomyia_ovallesi             24            24
+34           Lutzomyia_peruensis             10            10
+35              Lutzomyia_pescei             10            10
+36                 Lutzomyia_pia             15            15
+39          Lutzomyia_rangeliana              7             7
+40             Lutzomyia_robusta             18            18
+41         Lutzomyia_sanguinaria              3             3
+42             Lutzomyia_scorzai              9             9
+43             Lutzomyia_serrana              4             4
+44          Lutzomyia_spinicrasa              6             2
+46             Lutzomyia_tejadai             11            11
+48       Lutzomyia_trinidadensis             15            15
+49          Lutzomyia_verrucarum             41            41
+50      Lutzomyia_vespertilionis              4             5
+52             Lutzomyia_walkeri              4             4
+53              Lutzomyia_youngi              3             3
+54     Micropygomyia_atroclavata              5            11
+55     Micropygomyia_cayennensis              2             8
+57       Micropygomyia_micropyga              2             5
+58   Micropygomyia_trinidadensis             13            13
+59            Migonemyia_migonei             33            35
+60            Nyssomyia_antunesi              4             7
+62          Nyssomyia_umbratilis            130           145
+63            Nyssomyia_whitmani             22            22
+64         Phlebotomus_alexandri             17            18
+65        Phlebotomus_argentipes             15            14
+66            Phlebotomus_ariasi              9             9
+67         Phlebotomus_bergeroti              4             2
+69          Phlebotomus_chabaudi             29            29
+70           Phlebotomus_chadlii              3             3
+71         Phlebotomus_chinensis             22            20
+72        Phlebotomus_kandelakii              3             3
+74       Phlebotomus_longicuspis             14            14
+75       Phlebotomus_longiductus              4             3
+77         Phlebotomus_mascittii              8             8
+78          Phlebotomus_mascomai             22            23
+79         Phlebotomus_neglectus             16            15
+80        Phlebotomus_orientalis              5             5
+81          Phlebotomus_papatasi             35            35
+82        Phlebotomus_perfiliewi             25            21
+83       Phlebotomus_perniciosus             38            38
+84            Phlebotomus_riouxi             13            13
+86          Phlebotomus_sergenti             24            22
+87            Phlebotomus_simici              7             7
+88           Phlebotomus_similis              6             6
+89          Phlebotomus_stantoni             22            21
+90             Phlebotomus_tobbi             19            19
+91               Phlebotomus_wui              4             4
+92            Pintomyia_fischeri             12            12
+93             Pressatia_camposi              1             4
+94               Pressatia_choti              9             9
+95           Pressatia_dysponeta              1             3
+96          Psathyromyia_aragaoi              2             4
+97       Psathyromyia_carpenteri              3             9
+98         Psathyromyia_shannoni             12            56
+100      Psychodopygus_complexus              8             3
+102     Psychodopygus_panamensis             17            21
+103  Psychodopygus_squamiventris             23            23
+105         Sciopemyia_sordellii              7             9
+106        Sergentomyia_africana              4             1
+107       Sergentomyia_antennata             17            20
+108            Sergentomyia_babu             16            16
+109          Sergentomyia_bailyi             44            31
+110        Sergentomyia_barraudi              8             5
+111        Sergentomyia_bedfordi              7             7
+112   Sergentomyia_christophersi              8             7
+113          Sergentomyia_clydei              6            12
+114     Sergentomyia_congolensis              3             3
+115         Sergentomyia_dentata              7             6
+116       Sergentomyia_distincta              4             4
+117       Sergentomyia_dreyfussi              4             4
+118          Sergentomyia_fallax             10            10
+119          Sergentomyia_gemmea              9             9
+120     Sergentomyia_ghesquierei              3             3
+121          Sergentomyia_indica              3             5
+122         Sergentomyia_ingrami              4             4
+124        Sergentomyia_iyengari              4             2
+125   Sergentomyia_koloshanensis              4             4
+126          Sergentomyia_minuta             92            92
+127         Sergentomyia_montana              1             5
+129     Sergentomyia_punjabensis              7             8
+131        Sergentomyia_schwetzi              9             9
+132   Sergentomyia_vadhanurensis             10            10
+135     Trichopygomyia_triramula              1            11
+138       Warileya_rotundipennis              3             3
+2428 total number of records with 1969 records having over 500 base-pairs
+2393 records with a predefined species from which 1944 have over 500 base pairs
+
+2428 records were assigned species classification with bootstrap support ranging from 0 to 1
+
+1899 records were classiffied with a bootsrap of = 1, 1990 with >= 0.95 bootstrap support and 2060 with >= 0.7 bootstrap support
+
+1893 records, with predefined species, were classiffied with a bootsrap of = 1, 1982 with >= 0.95 bootstrap support and 2051 with >= 0.7 bootstrap support
+
+1613 records, with >= 500 seq. length, were classiffied with a bootsrap of = 1, 1683 with >= 0.95 bootstrap support and 1745 with >= 0.7 bootstrap support
+
+1608 records, with predefined species and >= 500 seq. length, were classiffied with a bootsrap of = 1, 1676 with >= 0.95 bootstrap support and 1737 with >= 0.7 bootstrap support
+
+2399 records either had predefined species, or were classified with a bootstrap value of 1.0, 2401 with bootstrap value of >=0.95 and 2402 with boostrap value of >=0.7
+
+1613 records classified into species have sequences with over 500 bases, with 5 having no prior species classification
+432 records with a species classication confidence of 1.0 have differing assinged species from predefined species, 311 of which have over 500 base-pairs
+
+
+Checking if needed packages are installed... tidyverse packages: 'ggplot2','dplyr' and 'magrittr'
+Excellent tidyverse already installed.
+proceeding with summary analysis of RDPclassifier results...
+Warning messages:
+1: package ‘ggplot2’ was built under R version 3.4.4 
+2: package ‘magrittr’ was built under R version 3.4.4 
+
+
+ 1 predefined famil(y/ies) (seq_len >= 500), with frequency of over 20, is/are found in this clade, out of 1 represented famil(y/ies) (seq_len >= 500)
+
+1 assigned families (BS score = 1.0 & seq_len >= 500), with frequency of over 20, are found in this clade out of 2 represented assigned families (seq_len >= 500)
+
+       Family prefamfreq asfamfreq
+1 Psychodidae       1969      1740
+
+
+ 17 predefined genera (seq_len >= 500 $ frequency >= 5) are found in this clade, out of 21 represented genera (seq_len >= 500)
+
+15 assigned genera (BS score = 1.0 & seq_len >= 500), with frequency of over 5, are found in this clade out of 19 represented genera (seq_len >= 500)
+
+            Genus pregenusfreq asgenusfreq
+1    Bichromomyia           11          11
+2     Brumptomyia           34          34
+3     Evandromyia           40          40
+4       Lutzomyia          709         377
+5   Micropygomyia           23          40
+6      Migonemyia           33          35
+7       Nyssomyia          157         297
+8     Phlebotomus          424         381
+9       Pintomyia           12          12
+10      Pressatia           11          16
+11   Psathyromyia           17          79
+12  Psychodopygus           72          84
+13     Sciopemyia            8          10
+14   Sergentomyia          391         285
+16 Trichopygomyia            2          12
+
+
+ 145 predefined species (seq_len >= 500 $ frequency >= 3) are found in this clade, out of 239 represented species (seq_len >= 500)
+
+118 assigned species (BS score = 1.0 & seq_len >= 500), with frequency of over 3, are found in this clade out of 157 represented species (seq_len >= 500)
+
+                         Species prespeciesfreq asspeciesfreq
+1   Bichromomyia_flaviscutellata             10             7
+2            Bichromomyia_olmeca              1             4
+3           Brumptomyia_avellari             17            17
+6         Brumptomyia_guimaraesi              3             4
+7             Brumptomyia_hamata              3             4
+8              Brumptomyia_mesai              6             2
+10          Evandromyia_evandroi             13             2
+11      Evandromyia_infraspinosa              5             5
+12             Evandromyia_lenti             18            13
+13      Evandromyia_termitophila              4             4
+14        Lutzomyia_ayacuchensis              8             8
+15           Lutzomyia_bicornuta              8             8
+16           Lutzomyia_bifoliata              5             5
+17          Lutzomyia_caballeroi             10            10
+18            Lutzomyia_castanea              9             9
+19          Lutzomyia_columbiana              5             5
+20            Lutzomyia_cruciata              7             2
+21            Lutzomyia_dubitans              7             7
+22              Lutzomyia_evansi              8             7
+23              Lutzomyia_gomezi             20            20
+24            Lutzomyia_gorbitzi              4             4
+26           Lutzomyia_hartmanni              4             4
+28        Lutzomyia_longiflocosa              6             4
+29        Lutzomyia_maranonensis             14            14
+30           Lutzomyia_munaypata             10            10
+31              Lutzomyia_nevesi              3             3
+32            Lutzomyia_noguchii              9             9
+33            Lutzomyia_ovallesi             24            24
+34           Lutzomyia_peruensis             10            10
+35              Lutzomyia_pescei             10            10
+36                 Lutzomyia_pia             15            15
+39          Lutzomyia_rangeliana              7             7
+40             Lutzomyia_robusta             18            18
+41         Lutzomyia_sanguinaria              3             3
+42             Lutzomyia_scorzai              9             9
+43             Lutzomyia_serrana              4             4
+44          Lutzomyia_spinicrasa              6             2
+46             Lutzomyia_tejadai             11            11
+48       Lutzomyia_trinidadensis             15            15
+49          Lutzomyia_verrucarum             41            41
+50      Lutzomyia_vespertilionis              4             5
+52             Lutzomyia_walkeri              4             4
+53              Lutzomyia_youngi              3             3
+54     Micropygomyia_atroclavata              5            11
+55     Micropygomyia_cayennensis              2             8
+57       Micropygomyia_micropyga              2             5
+58   Micropygomyia_trinidadensis             13            13
+59            Migonemyia_migonei             33            35
+60            Nyssomyia_antunesi              4             7
+62          Nyssomyia_umbratilis            130           145
+63            Nyssomyia_whitmani             22            22
+64         Phlebotomus_alexandri             17            18
+65        Phlebotomus_argentipes             15            14
+66            Phlebotomus_ariasi              9             9
+67         Phlebotomus_bergeroti              4             2
+69          Phlebotomus_chabaudi             29            29
+70           Phlebotomus_chadlii              3             3
+71         Phlebotomus_chinensis             22            20
+72        Phlebotomus_kandelakii              3             3
+74       Phlebotomus_longicuspis             14            14
+75       Phlebotomus_longiductus              4             3
+77         Phlebotomus_mascittii              8             8
+78          Phlebotomus_mascomai             22            23
+79         Phlebotomus_neglectus             16            15
+80        Phlebotomus_orientalis              5             5
+81          Phlebotomus_papatasi             35            35
+82        Phlebotomus_perfiliewi             25            21
+83       Phlebotomus_perniciosus             38            38
+84            Phlebotomus_riouxi             13            13
+86          Phlebotomus_sergenti             24            22
+87            Phlebotomus_simici              7             7
+88           Phlebotomus_similis              6             6
+89          Phlebotomus_stantoni             22            21
+90             Phlebotomus_tobbi             19            19
+91               Phlebotomus_wui              4             4
+92            Pintomyia_fischeri             12            12
+93             Pressatia_camposi              1             4
+94               Pressatia_choti              9             9
+95           Pressatia_dysponeta              1             3
+96          Psathyromyia_aragaoi              2             4
+97       Psathyromyia_carpenteri              3             9
+98         Psathyromyia_shannoni             12            56
+100      Psychodopygus_complexus              8             3
+102     Psychodopygus_panamensis             17            21
+103  Psychodopygus_squamiventris             23            23
+105         Sciopemyia_sordellii              7             9
+106        Sergentomyia_africana              4             1
+107       Sergentomyia_antennata             17            20
+108            Sergentomyia_babu             16            16
+109          Sergentomyia_bailyi             44            31
+110        Sergentomyia_barraudi              8             5
+111        Sergentomyia_bedfordi              7             7
+112   Sergentomyia_christophersi              8             7
+113          Sergentomyia_clydei              6            12
+114     Sergentomyia_congolensis              3             3
+115         Sergentomyia_dentata              7             6
+116       Sergentomyia_distincta              4             4
+117       Sergentomyia_dreyfussi              4             4
+118          Sergentomyia_fallax             10            10
+119          Sergentomyia_gemmea              9             9
+120     Sergentomyia_ghesquierei              3             3
+121          Sergentomyia_indica              3             5
+122         Sergentomyia_ingrami              4             4
+124        Sergentomyia_iyengari              4             2
+125   Sergentomyia_koloshanensis              4             4
+126          Sergentomyia_minuta             92            92
+127         Sergentomyia_montana              1             5
+129     Sergentomyia_punjabensis              7             8
+131        Sergentomyia_schwetzi              9             9
+132   Sergentomyia_vadhanurensis             10            10
+135     Trichopygomyia_triramula              1            11
+138       Warileya_rotundipennis              3             3
+
+
+ 2428 total number of records with 1969 records having over 500 base-pairs
+2393 records with a predefined species from which 1944 have over 500 base pairs
+
+2428 records were assigned species classification with bootstrap support ranging from 0 to 1
+
+1899 records were classiffied with a bootsrap of = 1, 1990 with >= 0.95 bootstrap support and 2060 with >= 0.7 bootstrap support
+
+1893 records, with predefined species, were classiffied with a bootsrap of = 1, 1982 with >= 0.95 bootstrap support and 2051 with >= 0.7 bootstrap support
+
+1613 records, with >= 500 seq. length, were classiffied with a bootsrap of = 1, 1683 with >= 0.95 bootstrap support and 1745 with >= 0.7 bootstrap support
+
+1608 records, with predefined species and >= 500 seq. length, were classiffied with a bootsrap of = 1, 1676 with >= 0.95 bootstrap support and 1737 with >= 0.7 bootstrap support
+
+2399 records either had predefined species, or were classified with a bootstrap value of 1.0, 2401 with bootstrap value of >=0.95 and 2402 with boostrap value of >=0.7
+
+1613 records classified into species have sequences with over 500 bases, with 5 having no prior species classification
+432 records with a species classication confidence of 1.0 have differing assinged species from predefined species, 311 of which have over 500 base-pairs
+
+
+Checking if needed packages are installed... tidyverse packages: 'ggplot2','dplyr' and 'magrittr'
+Excellent tidyverse already installed.
+proceeding with summary analysis of RDPclassifier results...
+Warning messages:
+1: package ‘ggplot2’ was built under R version 3.4.4 
+2: package ‘magrittr’ was built under R version 3.4.4 
+
+
+ 1 predefined famil(y/ies) (seq_len >= 500), with frequency of over 10, is/are found in this clade, out of 1 represented famil(y/ies) (seq_len >= 500)
+
+1 assigned families (BS score = 1.0 & seq_len >= 500), with frequency of over 10, are found in this clade out of 2 represented assigned families (seq_len >= 500)
+
+       Family prefamfreq asfamfreq
+1 Psychodidae       1969      1740
+
+
+ 17 predefined genera (seq_len >= 500 $ frequency >= 5) are found in this clade, out of 21 represented genera (seq_len >= 500)
+
+15 assigned genera (BS score = 1.0 & seq_len >= 500), with frequency of over 5, are found in this clade out of 19 represented genera (seq_len >= 500)
+
+            Genus pregenusfreq asgenusfreq
+1    Bichromomyia           11          11
+2     Brumptomyia           34          34
+3     Evandromyia           40          40
+4       Lutzomyia          709         377
+5   Micropygomyia           23          40
+6      Migonemyia           33          35
+7       Nyssomyia          157         297
+8     Phlebotomus          424         381
+9       Pintomyia           12          12
+10      Pressatia           11          16
+11   Psathyromyia           17          79
+12  Psychodopygus           72          84
+13     Sciopemyia            8          10
+14   Sergentomyia          391         285
+16 Trichopygomyia            2          12
+
+
+ 145 predefined species (seq_len >= 500 $ frequency >= 3) are found in this clade, out of 239 represented species (seq_len >= 500)
+
+118 assigned species (BS score = 1.0 & seq_len >= 500), with frequency of over 3, are found in this clade out of 157 represented species (seq_len >= 500)
+
+                         Species prespeciesfreq asspeciesfreq
+1   Bichromomyia_flaviscutellata             10             7
+2            Bichromomyia_olmeca              1             4
+3           Brumptomyia_avellari             17            17
+6         Brumptomyia_guimaraesi              3             4
+7             Brumptomyia_hamata              3             4
+8              Brumptomyia_mesai              6             2
+10          Evandromyia_evandroi             13             2
+11      Evandromyia_infraspinosa              5             5
+12             Evandromyia_lenti             18            13
+13      Evandromyia_termitophila              4             4
+14        Lutzomyia_ayacuchensis              8             8
+15           Lutzomyia_bicornuta              8             8
+16           Lutzomyia_bifoliata              5             5
+17          Lutzomyia_caballeroi             10            10
+18            Lutzomyia_castanea              9             9
+19          Lutzomyia_columbiana              5             5
+20            Lutzomyia_cruciata              7             2
+21            Lutzomyia_dubitans              7             7
+22              Lutzomyia_evansi              8             7
+23              Lutzomyia_gomezi             20            20
+24            Lutzomyia_gorbitzi              4             4
+26           Lutzomyia_hartmanni              4             4
+28        Lutzomyia_longiflocosa              6             4
+29        Lutzomyia_maranonensis             14            14
+30           Lutzomyia_munaypata             10            10
+31              Lutzomyia_nevesi              3             3
+32            Lutzomyia_noguchii              9             9
+33            Lutzomyia_ovallesi             24            24
+34           Lutzomyia_peruensis             10            10
+35              Lutzomyia_pescei             10            10
+36                 Lutzomyia_pia             15            15
+39          Lutzomyia_rangeliana              7             7
+40             Lutzomyia_robusta             18            18
+41         Lutzomyia_sanguinaria              3             3
+42             Lutzomyia_scorzai              9             9
+43             Lutzomyia_serrana              4             4
+44          Lutzomyia_spinicrasa              6             2
+46             Lutzomyia_tejadai             11            11
+48       Lutzomyia_trinidadensis             15            15
+49          Lutzomyia_verrucarum             41            41
+50      Lutzomyia_vespertilionis              4             5
+52             Lutzomyia_walkeri              4             4
+53              Lutzomyia_youngi              3             3
+54     Micropygomyia_atroclavata              5            11
+55     Micropygomyia_cayennensis              2             8
+57       Micropygomyia_micropyga              2             5
+58   Micropygomyia_trinidadensis             13            13
+59            Migonemyia_migonei             33            35
+60            Nyssomyia_antunesi              4             7
+62          Nyssomyia_umbratilis            130           145
+63            Nyssomyia_whitmani             22            22
+64         Phlebotomus_alexandri             17            18
+65        Phlebotomus_argentipes             15            14
+66            Phlebotomus_ariasi              9             9
+67         Phlebotomus_bergeroti              4             2
+69          Phlebotomus_chabaudi             29            29
+70           Phlebotomus_chadlii              3             3
+71         Phlebotomus_chinensis             22            20
+72        Phlebotomus_kandelakii              3             3
+74       Phlebotomus_longicuspis             14            14
+75       Phlebotomus_longiductus              4             3
+77         Phlebotomus_mascittii              8             8
+78          Phlebotomus_mascomai             22            23
+79         Phlebotomus_neglectus             16            15
+80        Phlebotomus_orientalis              5             5
+81          Phlebotomus_papatasi             35            35
+82        Phlebotomus_perfiliewi             25            21
+83       Phlebotomus_perniciosus             38            38
+84            Phlebotomus_riouxi             13            13
+86          Phlebotomus_sergenti             24            22
+87            Phlebotomus_simici              7             7
+88           Phlebotomus_similis              6             6
+89          Phlebotomus_stantoni             22            21
+90             Phlebotomus_tobbi             19            19
+91               Phlebotomus_wui              4             4
+92            Pintomyia_fischeri             12            12
+93             Pressatia_camposi              1             4
+94               Pressatia_choti              9             9
+95           Pressatia_dysponeta              1             3
+96          Psathyromyia_aragaoi              2             4
+97       Psathyromyia_carpenteri              3             9
+98         Psathyromyia_shannoni             12            56
+100      Psychodopygus_complexus              8             3
+102     Psychodopygus_panamensis             17            21
+103  Psychodopygus_squamiventris             23            23
+105         Sciopemyia_sordellii              7             9
+106        Sergentomyia_africana              4             1
+107       Sergentomyia_antennata             17            20
+108            Sergentomyia_babu             16            16
+109          Sergentomyia_bailyi             44            31
+110        Sergentomyia_barraudi              8             5
+111        Sergentomyia_bedfordi              7             7
+112   Sergentomyia_christophersi              8             7
+113          Sergentomyia_clydei              6            12
+114     Sergentomyia_congolensis              3             3
+115         Sergentomyia_dentata              7             6
+116       Sergentomyia_distincta              4             4
+117       Sergentomyia_dreyfussi              4             4
+118          Sergentomyia_fallax             10            10
+119          Sergentomyia_gemmea              9             9
+120     Sergentomyia_ghesquierei              3             3
+121          Sergentomyia_indica              3             5
+122         Sergentomyia_ingrami              4             4
+124        Sergentomyia_iyengari              4             2
+125   Sergentomyia_koloshanensis              4             4
+126          Sergentomyia_minuta             92            92
+127         Sergentomyia_montana              1             5
+129     Sergentomyia_punjabensis              7             8
+131        Sergentomyia_schwetzi              9             9
+132   Sergentomyia_vadhanurensis             10            10
+135     Trichopygomyia_triramula              1            11
+138       Warileya_rotundipennis              3             3
+
+
+ 2428 total number of records with 1969 records having over 500 base-pairs
+2393 records with a predefined species from which 1944 have over 500 base pairs
+
+2428 records were assigned species classification with bootstrap support ranging from 0 to 1
+
+1899 records were classiffied with a bootsrap of = 1, 1990 with >= 0.95 bootstrap support and 2060 with >= 0.7 bootstrap support
+
+1893 records, with predefined species, were classiffied with a bootsrap of = 1, 1982 with >= 0.95 bootstrap support and 2051 with >= 0.7 bootstrap support
+
+1613 records, with >= 500 seq. length, were classiffied with a bootsrap of = 1, 1683 with >= 0.95 bootstrap support and 1745 with >= 0.7 bootstrap support
+
+1608 records, with predefined species and >= 500 seq. length, were classiffied with a bootsrap of = 1, 1676 with >= 0.95 bootstrap support and 1737 with >= 0.7 bootstrap support
+
+2399 records either had predefined species, or were classified with a bootstrap value of 1.0, 2401 with bootstrap value of >=0.95 and 2402 with boostrap value of >=0.7
+
+1613 records classified into species have sequences with over 500 bases, with 5 having no prior species classification
+432 records with a species classication confidence of 1.0 have differing assinged species from predefined species, 311 of which have over 500 base-pairs
+
+
+Checking if needed packages are installed... tidyverse packages: 'ggplot2','dplyr' and 'magrittr'
+Excellent tidyverse already installed.
+proceeding with summary analysis of RDPclassifier results...
+Warning messages:
+1: package ‘ggplot2’ was built under R version 3.4.4 
+2: package ‘magrittr’ was built under R version 3.4.4 
+
+
+ 1 predefined famil(y/ies) (seq_len >= 500), with frequency of over 1, is/are found in this clade, out of 1 represented famil(y/ies) (seq_len >= 500)
+
+2 assigned families (BS score = 1.0 & seq_len >= 500), with frequency of over 1, are found in this clade out of 2 represented assigned families (seq_len >= 500)
+
+       Family prefamfreq asfamfreq
+1 Psychodidae       1969      1740
+
+
+ 17 predefined genera (seq_len >= 500 $ frequency >= 5) are found in this clade, out of 21 represented genera (seq_len >= 500)
+
+15 assigned genera (BS score = 1.0 & seq_len >= 500), with frequency of over 5, are found in this clade out of 19 represented genera (seq_len >= 500)
+
+            Genus pregenusfreq asgenusfreq
+1    Bichromomyia           11          11
+2     Brumptomyia           34          34
+3     Evandromyia           40          40
+4       Lutzomyia          709         377
+5   Micropygomyia           23          40
+6      Migonemyia           33          35
+7       Nyssomyia          157         297
+8     Phlebotomus          424         381
+9       Pintomyia           12          12
+10      Pressatia           11          16
+11   Psathyromyia           17          79
+12  Psychodopygus           72          84
+13     Sciopemyia            8          10
+14   Sergentomyia          391         285
+16 Trichopygomyia            2          12
+
+
+ 145 predefined species (seq_len >= 500 $ frequency >= 3) are found in this clade, out of 239 represented species (seq_len >= 500)
+
+118 assigned species (BS score = 1.0 & seq_len >= 500), with frequency of over 3, are found in this clade out of 157 represented species (seq_len >= 500)
+
+                         Species prespeciesfreq asspeciesfreq
+1   Bichromomyia_flaviscutellata             10             7
+2            Bichromomyia_olmeca              1             4
+3           Brumptomyia_avellari             17            17
+6         Brumptomyia_guimaraesi              3             4
+7             Brumptomyia_hamata              3             4
+8              Brumptomyia_mesai              6             2
+10          Evandromyia_evandroi             13             2
+11      Evandromyia_infraspinosa              5             5
+12             Evandromyia_lenti             18            13
+13      Evandromyia_termitophila              4             4
+14        Lutzomyia_ayacuchensis              8             8
+15           Lutzomyia_bicornuta              8             8
+16           Lutzomyia_bifoliata              5             5
+17          Lutzomyia_caballeroi             10            10
+18            Lutzomyia_castanea              9             9
+19          Lutzomyia_columbiana              5             5
+20            Lutzomyia_cruciata              7             2
+21            Lutzomyia_dubitans              7             7
+22              Lutzomyia_evansi              8             7
+23              Lutzomyia_gomezi             20            20
+24            Lutzomyia_gorbitzi              4             4
+26           Lutzomyia_hartmanni              4             4
+28        Lutzomyia_longiflocosa              6             4
+29        Lutzomyia_maranonensis             14            14
+30           Lutzomyia_munaypata             10            10
+31              Lutzomyia_nevesi              3             3
+32            Lutzomyia_noguchii              9             9
+33            Lutzomyia_ovallesi             24            24
+34           Lutzomyia_peruensis             10            10
+35              Lutzomyia_pescei             10            10
+36                 Lutzomyia_pia             15            15
+39          Lutzomyia_rangeliana              7             7
+40             Lutzomyia_robusta             18            18
+41         Lutzomyia_sanguinaria              3             3
+42             Lutzomyia_scorzai              9             9
+43             Lutzomyia_serrana              4             4
+44          Lutzomyia_spinicrasa              6             2
+46             Lutzomyia_tejadai             11            11
+48       Lutzomyia_trinidadensis             15            15
+49          Lutzomyia_verrucarum             41            41
+50      Lutzomyia_vespertilionis              4             5
+52             Lutzomyia_walkeri              4             4
+53              Lutzomyia_youngi              3             3
+54     Micropygomyia_atroclavata              5            11
+55     Micropygomyia_cayennensis              2             8
+57       Micropygomyia_micropyga              2             5
+58   Micropygomyia_trinidadensis             13            13
+59            Migonemyia_migonei             33            35
+60            Nyssomyia_antunesi              4             7
+62          Nyssomyia_umbratilis            130           145
+63            Nyssomyia_whitmani             22            22
+64         Phlebotomus_alexandri             17            18
+65        Phlebotomus_argentipes             15            14
+66            Phlebotomus_ariasi              9             9
+67         Phlebotomus_bergeroti              4             2
+69          Phlebotomus_chabaudi             29            29
+70           Phlebotomus_chadlii              3             3
+71         Phlebotomus_chinensis             22            20
+72        Phlebotomus_kandelakii              3             3
+74       Phlebotomus_longicuspis             14            14
+75       Phlebotomus_longiductus              4             3
+77         Phlebotomus_mascittii              8             8
+78          Phlebotomus_mascomai             22            23
+79         Phlebotomus_neglectus             16            15
+80        Phlebotomus_orientalis              5             5
+81          Phlebotomus_papatasi             35            35
+82        Phlebotomus_perfiliewi             25            21
+83       Phlebotomus_perniciosus             38            38
+84            Phlebotomus_riouxi             13            13
+86          Phlebotomus_sergenti             24            22
+87            Phlebotomus_simici              7             7
+88           Phlebotomus_similis              6             6
+89          Phlebotomus_stantoni             22            21
+90             Phlebotomus_tobbi             19            19
+91               Phlebotomus_wui              4             4
+92            Pintomyia_fischeri             12            12
+93             Pressatia_camposi              1             4
+94               Pressatia_choti              9             9
+95           Pressatia_dysponeta              1             3
+96          Psathyromyia_aragaoi              2             4
+97       Psathyromyia_carpenteri              3             9
+98         Psathyromyia_shannoni             12            56
+100      Psychodopygus_complexus              8             3
+102     Psychodopygus_panamensis             17            21
+103  Psychodopygus_squamiventris             23            23
+105         Sciopemyia_sordellii              7             9
+106        Sergentomyia_africana              4             1
+107       Sergentomyia_antennata             17            20
+108            Sergentomyia_babu             16            16
+109          Sergentomyia_bailyi             44            31
+110        Sergentomyia_barraudi              8             5
+111        Sergentomyia_bedfordi              7             7
+112   Sergentomyia_christophersi              8             7
+113          Sergentomyia_clydei              6            12
+114     Sergentomyia_congolensis              3             3
+115         Sergentomyia_dentata              7             6
+116       Sergentomyia_distincta              4             4
+117       Sergentomyia_dreyfussi              4             4
+118          Sergentomyia_fallax             10            10
+119          Sergentomyia_gemmea              9             9
+120     Sergentomyia_ghesquierei              3             3
+121          Sergentomyia_indica              3             5
+122         Sergentomyia_ingrami              4             4
+124        Sergentomyia_iyengari              4             2
+125   Sergentomyia_koloshanensis              4             4
+126          Sergentomyia_minuta             92            92
+127         Sergentomyia_montana              1             5
+129     Sergentomyia_punjabensis              7             8
+131        Sergentomyia_schwetzi              9             9
+132   Sergentomyia_vadhanurensis             10            10
+135     Trichopygomyia_triramula              1            11
+138       Warileya_rotundipennis              3             3
+
+
+ 2428 total number of records with 1969 records having over 500 base-pairs
+2393 records with a predefined species from which 1944 have over 500 base pairs
+
+2428 records were assigned species classification with bootstrap support ranging from 0 to 1
+
+1899 records were classiffied with a bootsrap of = 1, 1990 with >= 0.95 bootstrap support and 2060 with >= 0.7 bootstrap support
+
+1893 records, with predefined species, were classiffied with a bootsrap of = 1, 1982 with >= 0.95 bootstrap support and 2051 with >= 0.7 bootstrap support
+
+1613 records, with >= 500 seq. length, were classiffied with a bootsrap of = 1, 1683 with >= 0.95 bootstrap support and 1745 with >= 0.7 bootstrap support
+
+1608 records, with predefined species and >= 500 seq. length, were classiffied with a bootsrap of = 1, 1676 with >= 0.95 bootstrap support and 1737 with >= 0.7 bootstrap support
+
+2399 records either had predefined species, or were classified with a bootstrap value of 1.0, 2401 with bootstrap value of >=0.95 and 2402 with boostrap value of >=0.7
+
+1613 records classified into species have sequences with over 500 bases, with 5 having no prior species classification
+432 records with a species classication confidence of 1.0 have differing assinged species from predefined species, 311 of which have over 500 base-pairs
+

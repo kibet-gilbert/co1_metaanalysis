@@ -23,29 +23,29 @@ input_src=dirname(file_path_as_absolute(args[1]))
 
 df_taxa = read.delim(args[1], sep = "\t", stringsAsFactors = F, dec = ".", header = T)
 
-## listing all families with over 20 values represented in the dataset.
+## listing all families with over 10 values represented in the dataset.
 Prefamily_df <- as.data.frame(table(c(subset(df_taxa, seq_len >= 500)$Family)), row.names = NULL)
 colnames(Prefamily_df) <- c("Family","prefamfreq")
-cat(nrow(subset(Prefamily_df, prefamfreq >= 20)),
-    "predefined famil(y/ies) (seq_len >= 500), with frequency of over 20, is/are found in this clade, out of",
+cat("\n\n", nrow(subset(Prefamily_df, prefamfreq >= 1)),
+    "predefined famil(y/ies) (seq_len >= 500), with frequency of over 1, is/are found in this clade, out of",
    nrow(Prefamily_df),
    "represented famil(y/ies) (seq_len >= 500)\n\n")
-#subset(Prefamily_df, prefamfreq >= 20)
+#subset(Prefamily_df, prefamfreq >= 1)
 
 Asfamily_df <- as.data.frame(table(c(subset(df_taxa, Family_sc == 1.0 & seq_len >= 500)$As_family)), row.names = NULL)
 colnames(Asfamily_df) <- c("As_family","asfamfreq")
-cat(nrow(subset(Asfamily_df, asfamfreq >= 20)),
-    "assigned families (BS score = 1.0 & seq_len >= 500), with frequency of over 20, are found in this clade out of",
+cat(nrow(subset(Asfamily_df, asfamfreq >= 1)),
+    "assigned families (BS score = 1.0 & seq_len >= 500), with frequency of over 1, are found in this clade out of",
    nrow(Asfamily_df),
    "represented assigned families (seq_len >= 500)\n\n")
-#subset(Asfamily_df, asfamfreq >= 20)
+#subset(Asfamily_df, asfamfreq >= 1)
 family_df <- merge(Prefamily_df, Asfamily_df, by.x="Family", by.y="As_family")
-subset(family_df, prefamfreq >= 20 | asfamfreq >= 20)
+subset(family_df, prefamfreq >= 1 | asfamfreq >= 1)
 
 ## listing all genera with over 5 values represented in the dataset.
 Pregenus_df <- as.data.frame(table(c(subset(df_taxa, seq_len >= 500)$Genus)), row.names = NULL)
 colnames(Pregenus_df) <- c("Genus","pregenusfreq")
-cat(nrow(subset(Pregenus_df, pregenusfreq >= 5)),
+cat("\n\n", nrow(subset(Pregenus_df, pregenusfreq >= 5)),
     "predefined genera (seq_len >= 500 $ frequency >= 5) are found in this clade, out of",
    nrow(Pregenus_df),
    "represented genera (seq_len >= 500)\n\n")
@@ -61,10 +61,28 @@ cat(nrow(subset(Asgenus_df, asgenusfreq >= 5)),
 genus_df <- merge(Pregenus_df, Asgenus_df, by.x="Genus", by.y="As_genus")
 subset(genus_df, pregenusfreq >= 5 | asgenusfreq >= 5)
 
+# listing all species with over 5 values represented in the dataset.
+Prespecies_df <- as.data.frame(table(c(subset(df_taxa, seq_len >= 500)$Species)), row.names = NULL)
+colnames(Prespecies_df) <- c("Species","prespeciesfreq")
+cat("\n\n", nrow(subset(Prespecies_df, prespeciesfreq >= 3)),
+    "predefined species (seq_len >= 500 $ frequency >= 3) are found in this clade, out of",
+    nrow(Prespecies_df),
+    "represented species (seq_len >= 500)\n\n")
+#subset(Prespecies_df, prespeciesfreq >= 3)
+
+Asspecies_df <- as.data.frame(table(c(subset(df_taxa, Species_sc == 1.0 & seq_len >= 500)$As_species)), row.names = NULL)
+colnames(Asspecies_df) <- c("As_species","asspeciesfreq")
+cat(nrow(subset(Asspecies_df, asspeciesfreq >= 3)),
+    "assigned species (BS score = 1.0 & seq_len >= 500), with frequency of over 3, are found in this clade out of",
+    nrow(Asspecies_df),
+    "represented species (seq_len >= 500)\n\n")
+#subset(Asspecies_df, asspeciesfreq >= 5)
+species_df <- merge(Prespecies_df, Asspecies_df, by.x="Species", by.y="As_species")
+subset(species_df, prespeciesfreq >= 3 | asspeciesfreq >= 3)
 
 #Detailed analysis of the distribution of variables as a assinged by RDPclassifier
 ## Total number of records within the file vs those with over 500 base-pairs
-cat(nrow(df_taxa), "total number of records with",
+cat("\n\n", nrow(df_taxa), "total number of records with",
     nrow(subset(df_taxa, seq_len >= 500)),
     "records having over 500 base-pairs\n")
 # Total number of sequences with predefined species taxa vs
@@ -139,5 +157,7 @@ write.table(family_df, file = paste(filename, "_families.tsv", sep =""),
             row.names = FALSE, col.names= TRUE, sep = "\t", quote=FALSE )
 write.table(genus_df, file = paste(filename, "_genera.tsv", sep =""),
             row.names = FALSE, col.names= TRUE, sep = "\t", quote=FALSE )
+write.table(species_df, file = paste(filename, "_species.tsv", sep =""),
+	    row.names = FALSE, col.names= TRUE, sep = "\t", quote=FALSE )
 #head(df_classified)
 #head(subset(df_taxa, Species != "NA" & Species_sc == 0))

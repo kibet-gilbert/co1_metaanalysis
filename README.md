@@ -91,14 +91,16 @@ Programs to be used to visualize and edit phylogenetic trees:
 #### Haplotype Network.
 To elucidate the population structure, first a haplotype network needs to be infered. There are severally GUI tools: DNASP5/6 (Windows and MAC), PopART (Windows, MAC and Linux). But command line tools are limited. One is the haploNet fuction in the pegas R package.
 ##### pegas R package
-This package relies on ape, adegenet and other dependencies.
-The first step is to load and parse a FASTA file: the ape package is used here.
+[Population and Evolutionary Genetics Analysis System (pegas)](https://doi.org/10.1093/bioinformatics/btp696) is an [R package](https://cran.r-project.org/web/packages/pegas/index.html) that relies on [ape](https://cran.r-project.org/web/packages/ape/), [adegenet](https://cran.r-project.org/web/packages/adegenet/) and other dependencies.
+The first step is to load and parse a FASTA file: the `ape::read.dna()` function of ape package is used here.
 1. **pairwise distances of sequences**
 It may be valueble to compute pairwise distances between the DNA sequnces using `ape::dist.dna()` function. This will generate a matrix of pairwise distances. The substitution model used can be selected using [ModelTest-NG](https://github.com/ddarriba/modeltest) described by [Darriba et.al](https://doi.org/10.1093/molbev/msz189).
 2. **Haplotype Extraction and Frequencies**
 The identification of haplotypes and friquencies is done using `pegas::haplotype()` function of the pegas R package.
-
-Second is to test if there is any empirical semblance of phylogeographic differentiation using statisical tests. There are two options here too GUI based like PERMUT in CPSSR or command line based like diveRsity package in R.
+3. **Haplotype Network**
+This can be computed using `pegas::haploNet()` function and the plot is visualized using `plot()` function, with the legend displayed using `legend()` function.
+#### Phylogeographic Differentiation
+Second is to test if there is any empirical semblance of phylogeographic differentiation using statisical tests. There are two options here too GUI based like PERMUTcpSSR or command line based like diveRsity package in R.
 
 Third is to estimate number of population clusters (K) based on geographical and genetic distance. This generates haplogroups that are generally phylogenetically closely related within clusters and geographically clustered. Again two options are available: GUI based tools like SAMOVA in SPADS1 (Windows) and command line based like GENELAND, an R package.
 

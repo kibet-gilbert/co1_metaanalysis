@@ -99,13 +99,13 @@ bolddata_retrival() { # This fuction retrives data belonging to a list of countr
 		esac
 	done
 
-	echo -e "\n\tDownloading data of countries named in ${countries[@]} from www.boldsystems.org"
+	echo -e "\n\tDownloading data of countries named in ${countries[@]} from www.boldsystems.org V4"
 	unset taxon_nam
 	regexp='^[a-zA-Z0-9/_-\ ]+$'
 	
 	until [[ "$taxon_nam" =~ $regexp ]]
 	do
-		read -p "Please enter taxon name to be searched, ensure the spelling is right otherise you get everything downloaded:: " taxon_nam
+		read -p "Please enter taxon name to be searched, ensure the spelling is right otherwise you get everything downloaded. To ensure that you are downloading the right dataset first go to 'http://v4.boldsystems.org/index.php/Public_BINSearch?searchtype=records' and search the tax(on|a) of choice as explained:: " taxon_nam
 	done
 
 	taxon_name=`echo $taxon_nam | sed 's/ /%20/g'`
@@ -122,10 +122,14 @@ bolddata_retrival() { # This fuction retrives data belonging to a list of countr
 	then
 		for i in ${countries[@]}
 		do
+			wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${i}"_summary.xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/stats?geo=${i}&taxon=${taxon_name}&format=xml"
+			#wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${i}"_specimen.xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/specimen?geo=${i}&taxon=${taxon_name}&format=xml"
 			wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${i}".xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/combined?geo=${i}&taxon=${taxon_name}&format=xml"
 		done
 	elif [[ ( `echo ${countries[0]}` =~ "all" ) ]]
 	then
+		wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${taxon_nam}"_summary.xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/stats?taxon=${taxon_name}&format=xml"
+		#wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${taxon_nam}"_specimen.xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/specimen?taxon=${taxon_name}&format=xml"
 		wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${taxon_nam}".xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/combined?taxon=${taxon_name}&format=xml"
 	fi
 }
