@@ -11,12 +11,13 @@ data_cleanup=${co1_path}code/data_cleanup.R
 inputdata_path=${co1_path}data/input/
 
 usage() { #checks if the positional arguments (input files) for execution of the script are defined
+	set -E
+	trap '[ "$?" -ne 10 ] || return 10' ERR
         if [ $# -eq 0 ]
         then
                 echo "Input error..."
                 echo "Usage: ${FUNCNAME[1]} file1.*[file2.* file3.* ...]"
-                exit 1
-
+                return 10
         fi
 }
 
@@ -34,6 +35,8 @@ rename() { #generates output file names with same input filename prefix. The suf
 	#echo -e "input is $i \ninput_filename is $input_filename \noutput_filename is $output_filename \nfilename_ext is $filename_ext \nsrc_dir_path is $src_dir_path \nsrc_dir is $src_dir"
 }
 
+#===============================================================================================================================================================
+#bolddata_tsv2fasta
 
 build_fasta() { #This function generates .fasta files from .tsv files using an awk script
 
@@ -59,12 +62,13 @@ build_fasta() { #This function generates .fasta files from .tsv files using an a
 	done
 }
 
+#===============================================================================================================================================================
 
 bolddata_retrival() { # This fuction retrives data belonging to a list of country names given. Input can be a file containing names of select countries or idividual country names
 	if [[ ( $# -eq 0 ) || ! ( `echo $1` =~ -.*$ ) ]]
 	then
 		echo "Input error..."
-		echo "function usage: ${FUNCNAME[0]} [-a] [-c <name of country>] [-f <a file with list of countries>]"
+		echo "function usage: ${FUNCNAME[0]} [-a] [-c <name of country>] [-f <a file with list of countries and named *countries*>]"
 		return 1
 	fi
 
@@ -78,11 +82,11 @@ bolddata_retrival() { # This fuction retrives data belonging to a list of countr
 				if [ ! -f $OPTARG ]
 				then
 					echo "input error: file $OPTARG is non-existent!"
-				elif [[ ( -f $OPTARG ) && ( `basename $OPTARG` =~ ^countries$ ) ]]
+				elif [[ ( -f $OPTARG ) && ( `basename $OPTARG` =~ ^.*countries.*$ ) ]]
 				then
 					countries+=("$(while IFS="\n" read -r line || [[ "$line" ]]; do geography+=("`echo $line | sed 's/ /%20/g'`"); done < $OPTARG)")
 				else
-					echo "input file error in `basename $OPTARG`: input file should be named 'countries'"
+					echo "input file error in `basename $OPTARG`: input file should be named '.*countries.*'"
 				fi
 				;;
 			c)
@@ -110,7 +114,7 @@ bolddata_retrival() { # This fuction retrives data belonging to a list of countr
 
 	taxon_name=`echo $taxon_nam | sed 's/ /%20/g'`
 	
-	wgetoutput_dir=${inputdata_path}bold_africa/${taxon_name}
+	wgetoutput_dir=${inputdata_path}bold_data/${taxon_name}
 	until [[ -d ${wgetoutput_dir} ]]
 	do
 		echo "Creating output directory '${wgetoutput_dir}'"
@@ -134,7 +138,210 @@ bolddata_retrival() { # This fuction retrives data belonging to a list of countr
 	fi
 }
 
+#===============================================================================================================================================================
+#still under development
+gbifdata_retrival(){ # This function retrieves occurence data from gbif.org (Global Biodiversity Information Facility). It is based on first building a json file which it uses to interact with the gbif API and downloads the records.
+	curl -i --user _YOUR_GBIF_USER_NAME_:_YOUR_GBIF_PASSWORD_ -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d "{\"creator\":\"_YOUR_GBIF_USER_NAME_\", \"notification_address\": [\"_YOUR_EMAIL_\"], \"predicate\": {\"type\":\"and\", \"predicates\": [{\"type\":\"equals\",\"key\":\"HAS_COORDINATE\",\"value\":\"true\"}, {\"type\":\"equals\", \"key\":\"TAXON_KEY\", \"value\":\"$1\"}] }}" http://api.gbif.org/v1/occurrence/download/request >> log_gbifapi.txt
+	echo -e "\r\n$1 $2\r\n\r\n----------------\r\n\r\n" >> log_gbifapi.txt
+}
 
+#===============================================================================================================================================================
+genbankdata_retrival(){ # This function will retrieve nucleotide sequence data from GenBank based on a provided file of accession numbers.
+	# epost -db nuccore -input ../gbif/psychodidae-9164/psychodidae_genbankAccessionNumbers.txt | efetch -format gb -mode xml > output.genbank
+	if [ $# -eq 0 ]
+	then
+		echo "Input error..."
+		echo "Usage: ${FUNCNAME[0]} file1.genbankAccessionNumbers.txt[file2.genbankAccessionNumbers.txt file3.genbankAccessionNumbers.txt ...]"
+		return 1
+	fi
+	
+	for i in "$@"
+	do
+		if [ ! -f $i ]
+		then
+			echo "input error: file '$i' is non-existent!"
+		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*genbankAccessionNumbers\.txt$ ) ]]
+		then
+			rename ${i}
+			input_src=`dirname "$( realpath "${i}" )"`
+			genbankouput_dir=${inputdata_path}genbank/${src_dir}
+			until [[ -d ${genbankouput_dir} ]]
+			do
+				echo "Creating output directory '${genbankouput_dir}'"
+				mkdir ${genbankouput_dir}
+			done
+
+			echo -e "\tWhich type of the following data formats and modes do you wish to download?"
+			PS3='Select a choice from the following options, Enter [1] or [2] or [3] or [4] or [5]: '
+			options=("FASTA format in plain text mode" "FASTA format in XML mode" "GenBank (.gb) format in plaitext mode" "GenBank (.gb) format in XML mode" "Quit")
+			select opt in "${options[@]}"
+                        do
+				unset format
+				unset mode
+				case $opt in
+					"FASTA format in plain text mode")
+						format="fasta"
+						mode="text"
+						break
+						;;
+					"FASTA format in XML mode")
+						format="fasta"
+						mode="xml"
+						break
+						;;
+					"GenBank (.gb) format in plaitext mode")
+						format="gb"
+						mode="text"
+						break
+						;;
+					"GenBank (.gb) format in XML mode")
+						format="gb"
+						mode="xml"
+						break
+						;;
+					"Quit")
+                                                break
+                                                ;;
+                                        *) echo "INVALID choice $REPLY"
+                                                ;;
+				esac
+			done
+
+			epost -db nuccore -input ${i} | efetch -format ${format} -mode ${mode} > ${genbankouput_dir}/${output_filename}.${format}.${mode}
+
+			echo -e "\n\tDONE. The output file has been stored in ${genbankouput_dir}/${output_filename}.${format}.${mode}"
+		else
+			echo -e "\n\tinput file error in `basename -- $i`: input file should be a .txt format with name '[myfilename]genbankAccessionNumbers.txt'"
+			continue
+		fi
+	done
+}
+
+#===============================================================================================================================================================
+gbtsv2fasta(){ # This is part of the function gbxml2tsv; takes its output and convert it to a FASTA file
+	if [ $# -eq 0 ]
+	then
+		echo "Input error..."
+		echo "Usage: ${FUNCNAME[0]} file1.gb.xml[file2.gb.xml file3.gb.xml ...]"
+		return 1
+	fi
+
+	for i in "$@"
+	do
+		echo -e "\nProceeding with converting `basename -- $i` to fasta..."
+		rename ${i}
+		input_src=`dirname "$( realpath "${i}" )"`
+
+		$AWK_EXEC 'BEGIN{FS="\t"; OFS="|"} NR == 1 {next} {
+		gsub(/\|/, ";")} {
+		gsub(/[[:space:]]*/,"",$7); split($7,a,";"); b = a[4]; c = a[6]; d = a[10]; e = a[13]; {
+			if (a[14] ~ /^[[:alnum:][:space:]]+$/) {f = a[14]}
+			else {f = "NA"}
+			if (a[15] ~ /^unclassified.*$/) {k = "NA"} 
+			else if (a[15] ~ /^[[:alnum:][:space:]]+$/) {k = a[15]}
+			else {k = "NA"}
+			}
+		} {
+		if ($9 ~ /^[[:alpha:]]*:.*/) {split($9,l,":"); m = l[1]; n = l[2] }
+		else if ($9 ~ /^[[:alpha:]]*$/) {m = $9; n = "NA"}
+		else {m = "NA"; n = "NA"}
+		} {
+		if ($10 ~ /^-?[[:digit:]]{,3}\.[[:digit:]]{,10}/) {p = $10}
+	       	else {p = "NA"}
+		} {
+		if ($11 ~ /^-?[[:digit:]]{0,3}\.[[:digit:]]{0,10}/) {q = $11}
+	       	else {q = "NA"}
+		}; {
+		print ">"$3"("$1";NA)",b,c,d,"fam-"e,"subfam-NA","tri-NA","gs-"f"_subgs-"k,"sp-"$6,"country-"m,"exactsite-"n, "lat_"p, "lon_"q, "elev-NA", "l-"$4 "\n" $8}' ${i} > ${input_src}/${output_filename}.fasta
+		echo -e "\n\tDONE. The output file has been stored in ${input_src}/${output_filename}.fasta"
+	done
+
+}
+
+
+gbxml2tsv(){ # This function will convert a genbank XML file downloaded in gb formatr and convert it to a tab separated fortmat tsv.
+	#element=$(xtract -input psychodidae_genbankAccessionNumbers.gb.xml -outline | awk '!seen[$0]++' | sed 's/GBSet//g' | xargs)
+	#echo ${element} | tr -s '[:blank:]' '\t' > test.gbifAssociatedSequences.gb.tsv && xtract -input test.gbifAssociatedSequences.gb.xml -pattern GBSeq -element ${element} >> test.gbifAssociatedSequences.gb.tsv
+
+ 	if [ $# -eq 0 ]
+	then
+		echo "Input error..."
+		echo "Usage: ${FUNCNAME[0]} file1.gb.xml[file2.gb.xml file3.gb.xml ...]"
+		return 1
+	fi
+
+	for i in "$@"
+	do
+		if [ ! -f $i ]
+		then
+			echo "input error: file '$i' is non-existent!"
+		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.gb\.xml$ ) ]]
+                then
+                        rename ${i}
+                        input_src=`dirname "$( realpath "${i}" )"`
+			unset element
+
+			echo -e "\nProceeding with converting `basename -- $i` to .tsv and FASTA..."
+			#element=$(xtract -input ${i} -outline | awk '!seen[$0]++' | sed 's/GBSet//g; s/\bGBSeq\b//g; s/\bGBSeq_other-seqids\b//g; s/\b/GBSeq_feature-table\b//g;' | xargs)
+			element="GBSeq_locus GBSeq_accession-version BOLDProcessid GBSeq_length GBSeq_definition GBSeq_organism GBSeq_taxonomy GBSeq_sequence country lat lon collection_date collected_by"
+			element1=`echo ${element} | tr -s '[:blank:]' '\t'`
+			echo ${element1} > ${input_src}/${output_filename}.tsv
+			xtract -input ${i} -pattern GBSeq -def "NA" -element GBSeq_locus GBSeq_accession-version GBSeq_length GBSeq_definition GBSeq_organism GBSeq_taxonomy \
+			       	-upper GBSeq_sequence \
+				-block GBSeq_other-seqids -sep "::" -element GBSeqid \
+				-block GBQualifier -if GBQualifier_name -equals country -def "NA" -element GBQualifier_value \
+				-block GBQualifier -if GBQualifier_name -equals lat_lon -def "NA" -element GBQualifier_value \
+				-block GBQualifier -if GBQualifier_name -equals collection_date -def "NA" -element GBQualifier_value \
+				-block GBQualifier -if GBQualifier_name -equals collected_by -def "NA" -element GBQualifier_value >> ${input_src}/${output_filename}.tsv
+			$AWK_EXEC -v element="$element1" 'BEGINFILE {gsub(/[[:space:]]/, "\t", element); print element};
+			BEGIN{ FS="\t"; OFS="\t" }; 
+			NR == 1 { next }; {
+			if ($8 ~ /^.*gnl.*$/) {split($8,a,"::"); {
+				for (i in a) if (a[i] ~ /^gnl.*$/) {b = a[i]}
+				}; split(b,c,"|"); d = c[3]; split(d,e,"."); { 
+				if (d !~ /^[[:upper:]]{4,5}[[:digit:]]{3,5}\-[[:digit:]]{2}.*$/) {y = "NA"} 
+				else y = e[1]} 
+				} 
+			else if ($8 ~ /^[[:upper:]]{4,5}[[:digit:]]{3,5}\-[[:digit:]]{2}$/) {y = $8} 
+			else {y = "NA"} 
+			}; {
+			split($10,f," ");
+			if (f[2] ~ /S/) {v = "-"f[1]} 
+			else if (f[2] ~ /N/) {v = f[1]} 
+			else if ($10 ~ /^[-+][[:digit:]]{1,3}\.[[:digit:]]{0,4}$/) {v = $10} 
+			else {v = "NA"} 
+			}; {
+			split($10,g," ");
+			if (g[4] ~ /W/) {w = "-"g[3]} 
+			else if (g[4] ~ /E/) {w = g[3]} 
+			else if ($11 ~ /^[-+][[:digit:]]{1,3}\.[[:digit:]]{0,4}$/) {w = $11} 
+			else {w = "NA"} 
+			} {
+			print $1,$2,y,$3,$4,$5,$6,$7,$9,v,w,$11,$12
+			}' ${input_src}/${output_filename}.tsv > ${input_src}/input.tsv && mv ${input_src}/input.tsv ${input_src}/${output_filename}.tsv
+			gbtsv2fasta ${input_src}/${output_filename}.tsv
+
+			echo ${element} | tr -s '[:blank:]' '\t' > ${input_src}/${output_filename}_COI.tsv && grep -E 'COI|cytochrome c oxidase subunit 1|CO1|mitochondrion, complete genome' ${input_src}/${output_filename}.tsv >> ${input_src}/${output_filename}_COI.tsv
+			gbtsv2fasta ${input_src}/${output_filename}_COI.tsv
+
+			grep -E -v 'COI|cytochrome c oxidase subunit 1|CO1|mitochondrion, complete genome' ${input_src}/${output_filename}.tsv > ${input_src}/${output_filename}_non-COI.tsv
+			gbtsv2fasta ${input_src}/${output_filename}_non-COI.tsv
+
+			echo -e "\n\tDONE. The output file has been stored in ${input_src}/ as ${output_filename}[.tsv|_COI.tsv|_non-COI.tsv]"
+		else
+			echo -e "\n\tinput file error in `basename -- $i`: input file should be a .gb.xml format with name '[myfilename].gb.xml'"
+			continue
+		fi
+	done
+}
+
+#===============================================================================================================================================================
+#gbtsv2fasta() { #
+#	#
+#}
+
+
+#===============================================================================================================================================================
 build_tsv() { #This function generates .tsv files from .xml files using python script and Beautifulsoup4 and pandas package
 
 	usage $@
@@ -153,11 +360,11 @@ build_tsv() { #This function generates .tsv files from .xml files using python s
 			input_src=`dirname "$( realpath "${i}" )"`
 			rename 
 			echo -e "\tLet us proceed with file '${input_filename}'..."
-			sed 's/class/Class/g' "$i" | sed "s/$TAB/,/g" > ${inputdata_path}bold_africa/input.xml
-			${PYTHON_EXEC} ${xml_to_tsv} ${inputdata_path}bold_africa/input.xml && mv output.tsv ${input_src}/${output_filename}.tsv
+			sed 's/class/Class/g' "$i" | sed "s/$TAB/,/g" > ${input_src}/input.xml
+			${PYTHON_EXEC} ${xml_to_tsv} ${input_src}/input.xml && mv output.tsv ${input_src}/${output_filename}.tsv
 			echo -e "\n\tDONE. The output file has been stored in ${input_src}/${output_filename}.tsv"
 		else
-			echo -e "\n\tinput file error in `basename -- '$i'`: input file should be a .xml file format"
+			echo -e "\n\tinput file error in `basename -- $i`: input file should be a .xml file format"
 			continue
 		fi
 	done

@@ -52,3 +52,15 @@
 [submodule "/home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/modeltest"]
 	path = /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/modeltest
 	url = https://github.com/ddarriba/modeltest.git
+[submodule "code/tools/conda_r_skeleton_helper"]
+	path = code/tools/conda_r_skeleton_helper
+	url = https://github.com/bgruening/conda_r_skeleton_helper.git
+[submodule "code/tools/staged-recipes"]
+	path = code/tools/staged-recipes
+	url = https://github.com/kibet-gilbert/staged-recipes.git
+[submodule "code/tools/fasta2genotype"]
+	path = code/tools/fasta2genotype
+	url = https://github.com/kibet-gilbert/fasta2genotype.git
+[submodule "code/tools/ElConcatenero"]
+	path = code/tools/ElConcatenero
+	url = https://github.com/kibet-gilbert/ElConcatenero.git

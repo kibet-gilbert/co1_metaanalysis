@@ -321,42 +321,24 @@ raxml_rooting(){ # This funtion generates a model filewith model parameters for 
 			echo -e "Please select the rate heterogeneity model or approximation to use from the following options, enter [1] or [2], It should be exactly the same as the one used in tree inference:"
 			select rate_heterogeneity in GTRGAMMA GTRCAT
 			do
+				if [ ${rate_heterogeneity} = "GTRCAT" ]; then rate_heterogeneity="GTRCAT -H"; fi
 				unset tree
 				unset outgroup
 				echo -e "\nBeginning rerooting of the tree. Please enter the path to the tree file to be  rerooted..."
 				read -p "Please enter the phylogenetic tree::  " tree
-				case $rate_heterogeneity in
-					GTRGAMMA)
-						#Generating reference tree model parameters binary file
-						echo -e "\nBeginning rooting based on ${rate_heterogeneity} rate heterogeneity model...\nGenerating reference tree model parameters binary file..."
-						raxmlHPC-AVX2 -f e -m ${rate_heterogeneity} -s ${i} -t ${tree} -w ${dest} -n ${output_filename}_PARAMS
-						echo -e "\nBinary files generation DONE.\nProceeding with outgroup insertion...\nPlease enter the path to the file containing the outgroup, it should be a single sequence/record..."
-						read -p "Please enter the outgroup file:: " outgroup
-						#appending the outgroup to the alignment file
-						cp ${i} ${input_src}/rooting_inputfile.fas
-						cat ${outgroup} >> ${input_src}/rooting_inputfile.fas
-						sed -i '/^[[:space:]]*$/d' ${input_src}/rooting_inputfile.fas
-						#Rooting - ougroup insertiion in the tree
-						raxmlHPC-AVX2 -f v -m ${rate_heterogeneity} -R ${dest}RAxML_binaryModelParameters.${output_filename}_PARAMS -t ${dest}RAxML_results.${output_filename}_PARAMS -s ${input_src}/rooting_inputfile.fas -w ${dest} -n ${output_filename}_rooted
-						echo -e "Thorough outgroup insertion DONE."
-						break
-						;;
-					GTRCAT)
-						#Generating reference tree model parameters binary file
-						echo -e "\nBeginning rooting based on ${rate_heterogeneity} rate heterogeneity model...\nGenerating reference tree model parameters binary file..."
-						raxmlHPC-AVX2 -f e -H -m ${rate_heterogeneity} -s ${i} -t ${tree} -w ${dest} -n ${output_filename}_PARAMS
-						echo -e "\nBinary files generation DONE.\nProceeding with outgroup insertion...\nPlease enter the path to the file containing the outgroup, it should be a single sequence/record..."
-						read -p "Please enter the outgroup file:: " outgroup
-						#Appending the ougroup to the alignment file
-						cp ${i} ${input_src}/rooting_inputfile.fas
-						cat ${outgroup} >> ${input_src}/rooting_inputfile.fas
-						sed -i '/^[[:space:]]*$/d' ${input_src}/rooting_inputfile.fas
-						#Rooting - insertion of the outgroup into the tree
-						raxmlHPC-AVX2 -f v -H -m ${rate_heterogeneity} -R ${dest}RAxML_binaryModelParameters.${output_filename}_PARAMS -t ${dest}RAxML_result.${output_filename}_PARAMS -s ${input_src}/rooting_inputfile.fas -w ${dest} -n ${output_filename}_rooted
-						echo -e "Thorough outgroup insertion DONE."
-						break
-						;;
-				esac
+				
+				#Generating reference tree model parameters binary file
+				echo -e "\nBeginning rooting based on ${rate_heterogeneity} rate heterogeneity model...\nGenerating reference tree model parameters binary file..."
+				raxmlHPC-AVX2 -f e -m ${rate_heterogeneity} -s ${i} -t ${tree} -w ${dest} -n ${output_filename}_PARAMS
+				echo -e "\nBinary files generation DONE.\nProceeding with outgroup insertion...\nPlease enter the path to the file containing the outgroup, it should be a single sequence/record..."
+				read -p "Please enter the outgroup file:: " outgroup
+				#appending the outgroup to the alignment file
+				cp ${i} ${input_src}/rooting_inputfile.fas
+				cat ${outgroup} >> ${input_src}/rooting_inputfile.fas
+				sed -i '/^[[:space:]]*$/d' ${input_src}/rooting_inputfile.fas
+				#Rooting - ougroup insertiion in the tree
+				raxmlHPC-AVX2 -f v -m ${rate_heterogeneity} -R ${dest}RAxML_binaryModelParameters.${output_filename}_PARAMS -t ${dest}RAxML_results.${output_filename}_PARAMS -s ${input_src}/rooting_inputfile.fas -w ${dest} -n ${output_filename}_rooted
+				echo -e "Thorough outgroup insertion DONE."
 			done
 
 		else

@@ -48,14 +48,14 @@ To download the COI-5P datasets from countries listed in the file `countries`, w
 3. Python (Python2, Python3 and ipython): BeautifulSoup4, lxml, pandas
 
 ### Classification of sequences.
-On avarage, less than 20% of all downloaded sequences have species identities and a small fraction of this are mislabelled. Therefore to give identities to the sequences and assess the accuracy of the identities for those with species taxon classification, a classification analysis is done. The tools available are:
-1. [RDPClassifier](https://github.com/rdpstaff/classifier), a naive Bayasian classifier originally developed to do rapid taxonomic placement of 16S rRNA sequences as descriped by [Cole et al.](https://doi.org/10.1093/nar/gkt1244), is used to  assign taxon names to CO1 metabarcode sequences that have missing taxa values. It's trained to species rank using [CO1 Eukaryote v3.2 training set](https://github.com/terrimporter/CO1Classifier/releases/tag/v3.2) as described by [Porter and Hajibabaei](http://dx.doi.org/10.1146/annurev-ecolsys-102209-144621)
+On avarage, less than 20% of all downloaded sequences have species identities and a small fraction of this are mislabelled. Therefore to give species identities to the sequences and assess the accuracy of the identities for those with species taxon classification, a classification analysis is done. The tool used is:
+1. [Ribosomal Database Project classifier (RDPClassifier)](https://github.com/rdpstaff/classifier), a naive Bayasian classifier originally developed to do rapid taxonomic placement of 16S rRNA sequences as descriped by [Cole et al.](https://doi.org/10.1093/nar/gkt1244), is used to  assign taxon names to CO1 metabarcode sequences that have missing taxa values. It has been trained to species rank using [CO1 Eukaryote v3.2 training set](https://github.com/terrimporter/CO1Classifier/releases/tag/v3.2) as described by [Porter and Hajibabaei](http://dx.doi.org/10.1146/annurev-ecolsys-102209-144621)
 
 ### Multiple Sequence Alignment tools.
 1. [Muscle.](http://www.drive5.com/muscle/)
 It is problematic to align large number of sequences using global alignment algorithims used by muscle as explained in [Very large alignments are usually a bad idea](http://www.drive5.com/muscle/manual/bigalignments.html). Clustering highly identical (95% or 90% identity) help reduce the the sequences and challanges faced.
-2. [T_Coffee](https://github.com/cbcrg/tcoffee). [The regressive mode of T-Coffee](https://github.com/cbcrg/tcoffee/blob/master/docs/tcoffee_quickstart_regressive.rst) is [described as most suitable for large datasets](https://www.biorxiv.org/content/10.1101/490235v1.full) by E. G. Nogales et. al (2018).
-3. [MAFFT Version 7](https://mafft.cbrc.jp/alignment/software/). For large datasets: [Tips for handling a large dataset](https://mafft.cbrc.jp/alignment/software/tips.html). More published by [T. Nakamura et. al (2018)](https://academic.oup.com/bioinformatics/article/34/14/2490/4916099)
+2. [T_Coffee](https://github.com/cbcrg/tcoffee). [The regressive mode of T-Coffee](https://github.com/cbcrg/tcoffee/blob/master/docs/tcoffee_quickstart_regressive.rst) is [described as most suitable for large datasets](https://www.biorxiv.org/content/10.1101/490235v1.full) by E. G. Nogales et. al (2018). Our assesment proved that it is relatively accurate compared to MUSCLE but relatively slow compared to PASTA
+3. [MAFFT Version 7](https://mafft.cbrc.jp/alignment/software/). For large datasets: [Tips for handling a large dataset](https://mafft.cbrc.jp/alignment/software/tips.html). More published by [T. Nakamura et. al (2018)](https://academic.oup.com/bioinformatics/article/34/14/2490/4916099). This tool is reliably accurate but very slow
 4. [SATé](https://github.com/sate-dev/sate-core) for [sate-tools-linux](https://github.com/sate-dev/sate-tools-linux)
 5. [PASTA](https://github.com/smirarab/pasta) [(Tutorial)](https://github.com/smirarab/pasta/blob/master/pasta-doc/pasta-tutorial.md)
 6. Other tools; [SEPP](https://github.com/smirarab/sepp), [UPP](https://github.com/smirarab/sepp/blob/master/README.UPP.md) and [HMMER](http://hmmer.org/)
@@ -72,7 +72,7 @@ We used the following [sequence based methods](https://tcoffee.readthedocs.io/en
 2. [BMGE (Block Mapping and Gathering with Entropy)](ftp://ftp.pasteur.fr/pub/gensoft/projects/BMGE/): A tool for selection of phylogenetic informative regions from MSAs as documented [**HERE**]( http://gensoft.pasteur.fr/docs/BMGE/1.12/BMGE_doc.pdf). Removes ambiguously aligned regions, highly variable (saturated) characters altimately improving overall performance of the phylogenetic reconstruction  method as described by [Criscuolo et. al. (2010)](https://doi.org/10.1186/1471-2148-10-210)
 3. [RAxML (Randomized Axelerated Maximum Likelihood)](https://cme.h-its.org/exelixis/web/software/raxml/index.html): Highly accurate, computer intensive but, a little slow. Removes duplicate sequences (Headers/nucleotide-sequences) then infers the tree. described in [Stamakis et. al. (2014)]( https://doi.org/10.1093/bioinformatics/btu033)
 4.  [RAxML-ng (RAxML Next Generation)](https://github.com/amkozlov/raxml-ng): a fast, scalable and user-friendly tool for maximum likelihood phylogenetic inference. "A from-scratch re-implementation of the established greedy tree search algorithm of RAxML/ExaML" with "improved accuracy, flexibility, speed, scalability, and usability compared with RAxML/ExaML". Desribed by [Kozlov et. al. (2019)](https://doi.org/10.1093/bioinformatics/btz305) as having higher scoring trees than IQtree on "taxon-rich datasets"
-5. [IQtree](http://www.iqtree.org/doc/): An "Efficient search algorithm: Fast and effective stochastic algorithm to reconstruct phylogenetic trees by maximum likelihood". Has a "Ultrafast" bootstrap algorithm 10-40 times faster than RAxML, "Ultafast model selection" algorithm (ModelFinder) that is automatic, 10-100 times faster than jModelTest and ProTest, support Bid Data Analysis and other attributes as descriped by [Nguyen ect. al.](https://doi.org/10.1093/molbev/msu300).
+5. [IQtree](http://www.iqtree.org/doc/): An "Efficient search algorithm: Fast and effective stochastic algorithm to reconstruct phylogenetic trees by maximum likelihood". Has a "Ultrafast" bootstrap algorithm 10-40 times faster than RAxML, "Ultafast model selection" algorithm (ModelFinder) that is automatic, 10-100 times faster than jModelTest and ProTest, support Bid Data Analysis and other attributes as descriped by [Nguyen et. al.](https://doi.org/10.1093/molbev/msu300).
 6. [FastTree](http://www.microbesonline.org/fasttree/): Fast and less computer intensive, but not so accurate.
 
 The resultant computer readable formats of the phylogenetic trees are either of the following [Newick](http://evolution.genetics.washington.edu/phylip/newicktree.html), [NEXUS](http://en.wikipedia.org/wiki/Nexus_file) and [PhyloXML](http://en.wikipedia.org/wiki/PhyloXML).
@@ -83,11 +83,11 @@ Programs to be used to visualize and edit phylogenetic trees:
 3. Also attempted these other options: [(i) Dendroscope](http://ab.inf.uni-tuebingen.de/software/dendroscope/),
 [(ii) Jstree](http://lh3lh3.users.sourceforge.net/jstree.shtml) or [(iii) PhyloWidget](http://www.phylowidget.org/) can be used.
 
-### Phylogenetic Tree Analysis Tools:
+#### Phylogenetic Tree Analysis Tools:
 1. [Evolutionary Placement Algorithm (EPA)](https://academic.oup.com/sysbio/article/60/3/291/1667010): Used to root a tree (adding outgroups). Integrated into RAxML, it can classify a bunch of environmental sequences into a reference tree using thorough read insertions given a non-comprehensive reference tree and an alignment containing all sequences (reference + query)
 2. [Bio.Phylo](https://doi.org/10.1186/1471-2105-13-209): Biopython's Phylo package as descriped in the [Phylo Cookbook](https://biopython.org/wiki/Phylo_cookbook) and [tutorial](http://biopython.org/DIST/docs/tutorial/Tutorial.html#htoc204), uses other Python packages; MatPlotlib and NetworkX. Can be used to study the tree and manipulate it's nodes
 
-### Population STructured.
+### Population Structure.
 #### Haplotype Network.
 To elucidate the population structure, first a haplotype network needs to be infered. There are severally GUI tools: DNASP5/6 (Windows and MAC), PopART (Windows, MAC and Linux). But command line tools are limited. One is the haploNet fuction in the pegas R package.
 ##### pegas R package
@@ -99,14 +99,19 @@ It may be valueble to compute pairwise distances between the DNA sequnces using 
 The identification of haplotypes and friquencies is done using `pegas::haplotype()` function of the pegas R package.
 3. **Haplotype Network**
 This can be computed using `pegas::haploNet()` function and the plot is visualized using `plot()` function, with the legend displayed using `legend()` function.
-#### Phylogeographic Differentiation
-Second is to test if there is any empirical semblance of phylogeographic differentiation using statisical tests. There are two options here too GUI based like PERMUTcpSSR or command line based like diveRsity package in R.
 
-Third is to estimate number of population clusters (K) based on geographical and genetic distance. This generates haplogroups that are generally phylogenetically closely related within clusters and geographically clustered. Again two options are available: GUI based tools like SAMOVA in SPADS1 (Windows) and command line based like GENELAND, an R package.
+#### Phylogeographic Differentiation
+**Testing for phylogeographic differentiation**
+Second is to test if there is any empirical semblance of phylogeographic differentiation using statisical tests. There are two options here too GUI based like PERMUTcpSSR (Windows ONLY) or command line based like diveRsity package in R. An alternative to diveRsity R is finePOP  R package by [Nakamichi et. al.]( https://doi.org/10.1111/1755-0998.12663) that is based on empirical Bayes estimation
+##### diveRsity R package
+[diveRsity](https://cran.r-project.org/web/packages/diveRsity/index.html): "An R package for the estimation and exploration of population genetics parameters and their associated errors" by [Keenan et al., 2013](https://doi.org/10.1111/2041-210X.12067).
+Using `diveRsity::fastDivPart()` function one can calculate Jost's D (Jost, 2008) and Wright's FST (Weir & Cockerham, 1984) statistics to assess population differentiation using a number of permutation replicates (e.g 10,000). This function accepts only [`genpop` file format](https://genepop.curtin.edu.au/help_input.html) in either three or two digit format.
+
+Third is to estimate number of population clusters (K) based on geographical and genetic distance. This generates haplogroups that are generally phylogenetically closely related within clusters and geographically clustered. Again two options are available: GUI based tools like SAMOVA in SPADS1 (Windows ONLY) and command line based like GENELAND, an R package.
 
 Fourth, AMOVA test is conducted to test the percentage of variation attributable to; (1) groups, (2) localities and (3) differences among individual within groups. This can be done in ARLEQUIN R package.
 
-Fifth is to test the significance of correlation between mean genetic distances (Kimura two parameter model, 2KP) and geographic distances (Km) where possible. This can be done with Mantel Tests in R.
+Fifth is to test the significance of correlation between mean genetic distances (Kimura two parameter model, 2KP) and geographic distances (Km) where possible. This can be done with Mantel Tests in Ade4 package in R.
 
 Lastly is to conduct statistical tests to acertain the evolutionary nutrality in terms of Tajima's D and Fu's F. Also of interest is the haplotype diversity (h), nucleotide diversity (π) and number of segregating sites in each cluster.
 
@@ -116,7 +121,7 @@ Lastly is to conduct statistical tests to acertain the evolutionary nutrality in
 
 ### Other tools
 Besides tools mentioned above, the tools below proved useful:
-1. [PGDSpider](http://www.cmpg.unibe.ch/software/PGDSpider/): Very useful in molecular sequence format convertion/transformation i.e FASTA, phylip interleaved or sequential.
+1. [PGDSpider](http://www.cmpg.unibe.ch/software/PGDSpider/): Very useful a Java program that can read 27 different file formats and export data into 29 in molecular sequence format convertion/transformation by [Lischer et al., 2012](https://doi.org/10.1093/bioinformatics/btr642).
 
 ## Resources
 COI sequences preparation protocol;

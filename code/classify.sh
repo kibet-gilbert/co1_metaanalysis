@@ -40,7 +40,7 @@ RDPclassifyCOI() { # This function will use RDPclassiffier to assign species tax
 
 			until [[ "$max_mem" =~ $regexp ]]
                         do
-				echo -e "\tThe maximum memory allocation to this java process. Specify the maximum size of the memory allocation pool in bytes. This value must be a multiple of 1024 and greater than 2 MB. Append the letter k or K to indicate kilobytes, m or M to indicate megabytes, g or G to indicate gigabytes. Recommended maximum memory is 1/4 of your RAM if working on PC or any size not exceeding max mem if on a cluster"
+				echo -e "\tThe maximum memory allocation to this java process::\n\tSpecify the maximum size of the memory allocation pool in bytes. This value must be a multiple of 1024 and greater than 2 MB. Append the letter k or K to indicate kilobytes, m or M to indicate megabytes, g or G to indicate gigabytes. Recommended maximum memory is 1/4 of your RAM if working on PC or any size not exceeding max mem if on a cluster"
 				read -p "Please enter maximum memory allocation to RDP classifier java process: " max_mem
                         done
 			echo -e "\n\tClassifying sequences in `basename -- ${i}` using RDPclassifier trained on CO1 Eukaryote v3.2 training set from insects, mammals and some outliers...\n\tThis may take awhile. Kindly wait until it's done..."
@@ -93,7 +93,7 @@ RDPcoiresults2tsv() { # This function will take the raw RDPClassiffier results o
 				$29,$31,$32,$34,$35,$37,$38,$40,$41,$43}' ${input_src}/${i}.edit > ${input_src}/${output_filename}.tsv
 
 			rm ${input_src}/${i}.edit
-			echo -e"\nDONE the output file has been stored in ${input_src}/${output_filename}.tsv"
+			echo -e "\nDONE the output file has been stored in ${input_src}/${output_filename}.tsv"
 		else
 			echo "input file error in `basename $i`: input file should be a raw RDPClassifier.tsv file format"
 			continue
