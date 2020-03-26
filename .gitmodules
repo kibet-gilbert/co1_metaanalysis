@@ -64,3 +64,9 @@
 [submodule "code/tools/ElConcatenero"]
 	path = code/tools/ElConcatenero
 	url = https://github.com/kibet-gilbert/ElConcatenero.git
+[submodule "code/tools/mptp"]
+	path = code/tools/mptp
+	url = https://github.com/Pas-Kapli/mptp.git
+[submodule "code/tools/epa-ng"]
+	path = code/tools/epa-ng
+	url = https://github.com/Pas-Kapli/mptp.git

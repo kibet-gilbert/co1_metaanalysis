@@ -79,7 +79,7 @@ muscle_refine() {
 		then
 			rename
 			echo -e "\nproceeding with file `basename $i`..."
-			muscle -in $i -fastaout ${muscle_dest}./refined/${output_filename}_rfnd.afa -clwout ${muscle_dest}./refined/${output_filename}_rfnd.aln -refine
+			muscle -in $i -fastaout ${src_dir_path}/${output_filename}_rfnd.afa -clwout ${src_dir_path}/${output_filename}_rfnd.aln -refine
 		else
 			echo "input file error in `basename $i`: input file should be a .afa file format"
 			continue
@@ -92,8 +92,8 @@ muscle_refine() {
 muscle_p2p() {
 	#takes two existing MSAs ("profiles") and aligns them to each other, keeping the columns in each MSA intact.The final alignment is made by inserting columns of gaps into the MSAs as needed. The alignments of sequences in each input MSAs are thus fully preserved in the output alignment.
 	usage $@
-	unset $in1_outname && echo "good: output filename var in1_outname is empty"
-	unset $in2_outname && echo "good: output filename var in2_outname is empty"
+	unset in1_outname #&& echo "good: output filename var in1_outname is empty"
+	unset in2_outname #&& echo "good: output filename var in2_outname is empty"
 
 
 	for i in $@
@@ -102,16 +102,18 @@ muscle_p2p() {
 		then
 			echo "input file error: only two input files are allowed!"
 			break
-		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa) ) ]]
+		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa|aln) ) ]]
 		then
 			if [ -z $in1_outname ]
 			then 
 				rename $i
 				in1_outname=$output_filename
-			else
+			elif [ -n $in1_outname ]
+			then
 				rename $i
 				in2_outname=$output_filename
 			fi
+			#echo -e "in1_outname= ${in1_outname}\nin2_outname=${in2_outname}"
 			continue
                 elif [ ! -f $i ]
                 then
@@ -126,7 +128,11 @@ muscle_p2p() {
 	if [[ ( -n $in1_outname ) && ( -n $in2_outname  )  ]]
 	then
 		echo -e "\nproceeding with file `basename $1` and `basename $2`..."
-		muscle -profile -in1 $1 -in2 $2 -fastaout ${muscle_dest}./merged/${in1_outname}_${in2_outname}.afa -clwout ${muscle_dest}./merged/${in1_outname}_${in2_outname}.aln
+		muscle -profile -in1 $1 -in2 $2 -fastaout ${src_dir_path}/${in1_outname}_${in2_outname}.afa #-clwout ${src_dir_path}/${in1_outname}_${in2_outname}.aln
+		if [ $? -eq 0 ]
+		then
+			echo -e "\n\tDONE. All trimmed records have been stored in ${src_dir_path}/${in1_outname}_${in2_outname}.[afa|aln]\n"
+		fi
 	else
 		echo " A error with output_filenames: in1_outname and in2_outname "
 	fi
@@ -227,7 +233,7 @@ mafft_local() {
                                         fasta_output_format)
                                                 echo -e "\nGenerating .fasta output\n"
 						bash $mpionly
-                                                mafft --mpi --large --localpair --thread -${num_cpus} --reorder $i > ${mafft_dest}aligned/${output_filename}_l.fasta
+                                                mafft --mpi --large --localpair --thread -${num_cpus} --reorder $i > ${mafft_dest}aligned/${output_filename}.fasta
 						break
                                                 ;;
                                         clustal_output_format)
@@ -470,9 +476,16 @@ tcoffee_large() {
 			echo "input error: file $i is non-existent!"
 		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa)$ ) ]]
 		then
+			unset num_cpus
+			regexp='^[0-9][1-9]*$'
+			until [[ "$num_cpus" =~ $regexp ]]
+			do
+				read -p "Please enter the number of physical cores to be used: " num_cpus
+			done
+
 			rename
 			echo -e "\nproceeding with file `basename $i`..."
-			t_coffee -reg -multi_core -n_core=32 -seq $i -reg_nseq 100 -reg_tree mbed -reg_method clustalo_msa -outfile ${tcoffee_dest}aligned/${output_filename}.fasta -newtree ${tcoffee_dest}trees/${output_filename}.mbed
+			t_coffee -reg -multi_core -n_core=${num_cpus} -seq $i -reg_nseq 100 -reg_tree mbed -reg_method clustalo_msa -outfile ${tcoffee_dest}aligned/${output_filename}.fasta -newtree ${tcoffee_dest}trees/${output_filename}.mbed
 		else
 			echo "input file error in `basename $i`: input file should be a .fasta file format"
 			continue

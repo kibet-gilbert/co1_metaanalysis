@@ -15,7 +15,7 @@ if("tidyverse" %in% rownames(installed.packages()) == FALSE) {
 }
 
 
-## loading RDPclassifier results in tab delimited format to a dataframe object. 
+## loading BOLD results in tab delimited format to a dataframe object. 
 args = commandArgs(trailingOnly=TRUE)
 filename_ext = file_ext(args[1])
 filename = file_path_sans_ext(args[1])
@@ -23,15 +23,10 @@ input_src=dirname(file_path_as_absolute(args[1]))
 
 bold_dataframe = read.delim(args[1], stringsAsFactors = F, header = T, na.strings = "") ## loads bold2.tsv as a dataframe object. works ok, bold2.tsv does not contain any '\r' characters
 
-### taking a closer look at bold_dataframe$markercode
-
-## filtering records corresponding to COI-5P markers
-COI_data = subset(bold_dataframe, markercode == "COI-5P" & !is.na(nucleotides) & class_name == "Insecta")
-
 ### Taking a closer look at the bold_dataframe$nucleotides field
-
+bold_data = subset(bold_dataframe, !is.na(nucleotides))
 ## Introducing a field "seqlen1" that has the number of nucleotides in the COI_data
-COI_data %>% mutate(seqlen1 = nchar(nucleotides)) -> resulting_dataframe1 
+bold_data %>% mutate(seqlen1 = nchar(nucleotides)) -> resulting_dataframe1 
 
 ## REMOVING '-'characters from nucleotide sequences and creating a field of unalinged nucleotide sequences (resulting_dataframe2$unaligned_nucleotides)
 resulting_dataframe1 %>% mutate(unaligned_nucleotides = gsub('-', '', resulting_dataframe1$nucleotides, ignore.case = FALSE, perl = FALSE, fixed = FALSE, useBytes = FALSE)) -> resulting_dataframe2 
@@ -39,8 +34,16 @@ resulting_dataframe1 %>% mutate(unaligned_nucleotides = gsub('-', '', resulting_
 ## Introducing a field seqlen2 with number nucleotides in resulting_dataframe2$unaligned_nucleotides field
 resulting_dataframe2 %>% mutate(seqlen2 = nchar(unaligned_nucleotides)) -> resulting_dataframe3 
 
+### taking a closer look at bold_dataframe$markercode
+
+## filtering records corresponding to COI-5P markers
+COI_data = subset(resulting_dataframe3, markercode == "COI-5P" & !is.na(nucleotides))
+non_COI_data = subset(resulting_dataframe3, markercode != "COI-5P" & !is.na(nucleotides))
+
 ###Generating a file with all 'COI-5P' sequences
-resulting_dataframe3 -> COI_all_data; cat("\nOf all",nrow(COI_data),"retrieved records, ",length(COI_all_data$unaligned_nucleotides)," sequences have 'COI-5P' marker. These are the only ones retained for downstream analysis::\n")
+COI_data -> COI_all_data
+cat("\nOf all",nrow(bold_dataframe),"retrieved records, ",length(COI_all_data$unaligned_nucleotides)," have 'COI-5P' marker sequences. These are the only ones retained for downstream analysis::\n")
+
 
 ###Introducing a filter to remove sequences with less than 500 nucleotides
 COI_all_data %>% filter(seqlen2 >= 500 ) -> COI_Over499_data; cat("\t",length(COI_Over499_data$unaligned_nucleotides),"sequences have 500 or more nucleotide bases\n")
@@ -57,10 +60,19 @@ COI_all_data %>% filter(seqlen2 < 500) -> COI_Under500_data; cat("\t",length(COI
 ### Introducing a filter to remove any sequence with less than 700 nucleotides
 COI_all_data %>% filter(seqlen2 > 700) -> COI_Over700_data; cat("\t",length(COI_Over700_data$unaligned_nucleotides),"sequences have more than 700 bases\n")
 
+### Assessing gps co-ordinates
+cat( "\t", nrow(subset (COI_all_data, is.na(lat))), "records lack latitude co-ordinates \n\t",
+    nrow(subset (COI_all_data, is.na(lon))), "records lack longitude co-ordinates")
+
+### Summary
+cat( "\n\t",nrow(subset(bold_dataframe, markercode != "COI-5P")), 
+    " records have non-COI-5P markersequences \n\t",
+    nrow(subset(bold_dataframe,  is.na(nucleotides) )),
+    " lack nucleotide sequence values (is.na(nucleotides))")
 
 ### Printing copies of the final tidy files as dataframes in .tsv format
-output_list = c("COI_all_data", "COI_Over499_data", "COI_500to700_data", "COI_650to660_data", "COI_Over700_data", "COI_Under500_data")
-output_list_names = c("_all_data", "_Over499_data", "_500to700_data", "_650to660_data", "_Over700_data", "_Under500_data")
+output_list = c("COI_all_data", "non_COI_data", "COI_Over499_data", "COI_500to700_data", "COI_650to660_data", "COI_Over700_data", "COI_Under500_data")
+output_list_names = c("_all_data", "_NonCOI_data", "_Over499_data", "_500to700_data", "_650to660_data", "_Over700_data", "_Under500_data")
 
 datalist = lapply(output_list, get)
 names(datalist) <- paste(input_src,"/", filename, output_list_names, sep= "" )

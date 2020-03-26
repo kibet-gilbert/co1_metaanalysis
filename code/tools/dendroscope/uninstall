@@ -64,7 +64,7 @@ create_db_entry() {
   tested_jvm=true
   version_output=`"$bin_dir/java" $1 -version 2>&1`
   is_gcj=`expr "$version_output" : '.*gcj'`
-  is_openjdk=`expr "$version_output" : '.*OpenJDK'`
+  is_openjdk=`expr "$version_output" : '.*openjdk'`
   if [ "$is_gcj" = "0" ]; then
     java_version=`expr "$version_output" : '.*"\(.*\)".*'`
     ver_major=`expr "$java_version" : '\([0-9][0-9]*\).*'`
@@ -148,7 +148,7 @@ test_jvm() {
 
 add_class_path() {
   if [ -n "$1" ] && [ `expr "$1" : '.*\*'` -eq "0" ]; then
-    local_classpath="$local_classpath${local_classpath:+:}$1"
+    local_classpath="$local_classpath${local_classpath:+:}${1}${2}"
   fi
 }
 
@@ -224,7 +224,7 @@ read_vmoptions() {
 
 unpack_file() {
   if [ -f "$1" ]; then
-    jar_file=`echo "$1" | awk '{ print substr($0,1,length-5) }'`
+    jar_file=`echo "$1" | awk '{ print substr($0,1,length($0)-5) }'`
     bin/unpack200 -r "$1" "$jar_file" > /dev/null 2>&1
 
     if [ $? -ne 0 ]; then
@@ -419,8 +419,8 @@ if [ -z "$app_java_home" ]; then
 fi
 
 
-i4j_classpath="$app_home/.install4j/i4jruntime.jar"
 local_classpath=""
+i4j_classpath="$app_home/.install4j/i4jruntime.jar:$app_home/.install4j/launcher2bfa42ba.jar"
 add_class_path "$i4j_classpath"
 
 vmoptions_val=""
@@ -441,7 +441,6 @@ export LIBPATH
 export LD_LIBRARYN32_PATH
 export LD_LIBRARYN64_PATH
 
-INSTALL4J_ADD_VM_PARAMS="$INSTALL4J_ADD_VM_PARAMS -Di4j.vpt=true"
 for param in $@; do
   if [ `echo "W$param" | cut -c -3` = "W-J" ]; then
     INSTALL4J_ADD_VM_PARAMS="$INSTALL4J_ADD_VM_PARAMS `echo "$param" | cut -c 3-`"
@@ -460,25 +459,42 @@ if [ -d jre ]; then
   done
 fi
 cd "$ui_last_wd"
+
+has_space_options=false
 if [ "W$vmov_1" = "W" ]; then
   vmov_1="-Di4jv=0"
+else
+  has_space_options=true
 fi
 if [ "W$vmov_2" = "W" ]; then
   vmov_2="-Di4jv=0"
+else
+  has_space_options=true
 fi
 if [ "W$vmov_3" = "W" ]; then
   vmov_3="-Di4jv=0"
+else
+  has_space_options=true
 fi
 if [ "W$vmov_4" = "W" ]; then
   vmov_4="-Di4jv=0"
+else
+  has_space_options=true
 fi
 if [ "W$vmov_5" = "W" ]; then
   vmov_5="-Di4jv=0"
+else
+  has_space_options=true
 fi
 
 return_code=0
-$INSTALL4J_JAVA_PREFIX exec "$app_java_home/bin/java" -Dinstall4j.jvmDir="$app_java_home" -Dexe4j.moduleName="$prg_dir/$progname" "$vmov_1" "$vmov_2" "$vmov_3" "$vmov_4" "$vmov_5" $INSTALL4J_ADD_VM_PARAMS -classpath "$local_classpath" com.install4j.runtime.launcher.UnixLauncher launch 2bfa42ba 0 0 com.install4j.runtime.installer.Uninstaller  "$@"
+if [ "$has_space_options" = "true" ]; then
+$INSTALL4J_JAVA_PREFIX exec "$app_java_home/bin/java" "$vmov_1" "$vmov_2" "$vmov_3" "$vmov_4" "$vmov_5" $INSTALL4J_ADD_VM_PARAMS -classpath "$local_classpath" install4j.Uninstaller1175798920  "$@"
 return_code=$?
+else
+$INSTALL4J_JAVA_PREFIX exec "$app_java_home/bin/java" $INSTALL4J_ADD_VM_PARAMS -classpath "$local_classpath" install4j.Uninstaller1175798920  "$@"
+return_code=$?
+fi
 
 
 exit $return_code

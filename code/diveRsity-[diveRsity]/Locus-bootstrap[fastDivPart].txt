@@ -1,0 +1,26 @@
+	
+locus	Mean	Lower_95%CI	Upper_95%CI	
+Gst				
+MicroSat	0.0791	0.0172	0.1534	
+Overall	0.0791	0.0172	0.1534	
+G_hed_st				
+MicroSat	0.392	0.0795	0.7763	
+global	0.3919	0.0794	0.7761	
+D_Jost				
+MicroSat	0.3471	0.0634	0.7378	
+global	0.3471	0.0635	0.7376	
+Gst_est				
+MicroSat	0.0243	-0.0378	0.0994	
+global	0.0243	-0.0378	0.0994	
+G_hed_st_est				
+MicroSat	0.1645	-0.2313	0.6831	
+global	0.1644	-0.2312	0.6832	
+D_Jost_est				
+MicroSat	0.1527	-0.1865	0.6508	
+global	0.1527	-0.1865	0.6508	
+Fst_WC				
+MicroSat	-0.0214	-0.1566	0.1291	
+global	-0.0214	-0.1566	0.1291	
+Fit_WC				
+MicroSat	0.525	-0.0392	0.8839	
+global	0.525	-0.0392	0.8839	

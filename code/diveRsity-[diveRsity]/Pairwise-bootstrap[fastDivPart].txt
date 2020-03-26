@@ -1,0 +1,12 @@
+gstEst								
+comparison	actual	mean	BC_mean	Lower_95%CI	Upper_95%CI	BC_Lower_95%CI	BC_Upper_95%CI	
+RueDuQuai vs. Benitier	-0.0016	0.0229	-0.0016	-0.0291	0.1155	-0.0536	0.091	
+gstEstHed								
+comparison	actual	mean	BC_mean	Lower_95%CI	Upper_95%CI	BC_Lower_95%CI	BC_Upper_95%CI	
+RueDuQuai vs. Benitier	-0.0123	0.1515	-0.0123	-0.1668	0.7654	-0.3306	0.6016	
+djostEst								
+comparison	actual	mean	BC_mean	Lower_95%CI	Upper_95%CI	BC_Lower_95%CI	BC_Upper_95%CI	
+RueDuQuai vs. Benitier	-0.0107	0.1407	-0.0107	-0.1378	0.7333	-0.2892	0.5819	
+thetaWC								
+comparison	actual	mean	BC_mean	Lower_95%CI	Upper_95%CI	BC_Lower_95%CI	BC_Upper_95%CI	
+RueDuQuai vs. Benitier	0.0289	0.0803	0.0289	-0.0064	0.2374	-0.0578	0.186	

@@ -1,0 +1,423 @@
+UnsatisfiableError: The following specifications were found
+to be incompatible with the existing python installation in your environment:
+
+Specifications:
+
+  - attrs -> python[version='3.4.*|>=3.8,<3.9.0a0']
+  - bleach -> python[version='>=3.8,<3.9.0a0']
+  - cairo -> python[version='>=2.7,<2.8.0a0|>=3.6,<3.7.0a0|>=3.7,<3.8.0a0|>=3.8,<3.9.0a0']
+  - dbus -> python[version='>=2.7,<2.8.0a0|>=3.6,<3.7.0a0|>=3.7,<3.8.0a0|>=3.8,<3.9.0a0']
+  - glib -> python[version='>=2.7,<2.8.0a0|>=3.6,<3.7.0a0|>=3.7,<3.8.0a0|>=3.8,<3.9.0a0']
+  - gst-plugins-base -> python[version='>=2.7,<2.8.0a0|>=3.6,<3.7.0a0|>=3.7,<3.8.0a0|>=3.8,<3.9.0a0']
+  - gstreamer -> python[version='>=2.7,<2.8.0a0|>=3.6,<3.7.0a0|>=3.7,<3.8.0a0|>=3.8,<3.9.0a0']
+  - harfbuzz -> python[version='>=2.7,<2.8.0a0|>=3.6,<3.7.0a0|>=3.7,<3.8.0a0|>=3.8,<3.9.0a0']
+  - ipykernel -> python[version='>=3.6']
+  - jinja2 -> python[version='>=3.8,<3.9.0a0']
+  - jsonschema -> python[version='<3']
+  - jupyterlab -> python[version='<3']
+  - jupyterlab -> python[version='>=3.6']
+  - jupyterlab -> python[version='>=3.8.0a,<3.9.0a0']
+  - jupyterlab_launcher -> python[version='<3|>=3.6']
+  - jupyterlab_launcher -> python[version='>=3.8.0a,<3.9.0a0']
+  - jupyterlab_server -> python[version='>=3.6|>=3.8.0a,<3.9.0a0']
+  - nbconvert -> python[version='<3']
+  - nbformat -> python[version='<3']
+  - networkx -> python[version='>=3.8,<3.9.0a0']
+  - notebook -> python[version='<3|>=3.6']
+  - pango -> python[version='>=2.7,<2.8.0a0|>=3.6,<3.7.0a0|>=3.7,<3.8.0a0|>=3.8,<3.9.0a0']
+  - prometheus_client -> python[version='>=3.8,<3.9.0a0']
+  - prompt_toolkit -> python[version='>=3.8,<3.9.0a0']
+  - pygments -> python[version='>=3.8,<3.9.0a0']
+  - pyrsistent -> python[version='2.7.*|3.6.*']
+  - pyrsistent -> python[version='>=2.7,<2.8.0a0|>=3.6,<3.7.0a0|>=3.7,<3.8.0a0|>=3.8,<3.9.0a0']
+  - python-dateutil -> python[version='>=3.8,<3.9.0a0']
+  - qt=5.9.5 -> python[version='>=2.7,<2.8.0a0|>=3.6,<3.7.0a0|>=3.7,<3.8.0a0|>=3.8,<3.9.0a0']
+  - soupsieve -> python=2.7
+  - soupsieve -> python=3.6
+  - soupsieve -> python[version='>=2.7,<2.8.0a0|>=3.6,<3.7.0a0|>=3.7,<3.8.0a0|>=3.8,<3.9.0a0']
+  - t-coffee -> python[version='3.4.*|>=3.8,<3.9.0a0']
+  - testpath -> python[version='3.4.*|>=3.8,<3.9.0a0']
+
+Your python: python==3.5.5
+
+If python is on the left-most side of the chain, that's the version you've asked for.
+When python appears to the right, that indicates that the thing on the left is somehow
+not available for the python version you are constrained to. Note that conda will not
+change your python version to a different minor version unless you explicitly specify
+that.
+
+The following specifications were found to be incompatible with each other:
+
+
+
+Package fontconfig conflicts for:
+cairo -> fontconfig[version='2.11.*|2.12.*|>=2.12.4,<3.0a0|>=2.12.6,<3.0a0|>=2.13.0,<3.0a0|>=2.13.1,<3.0a0']
+emboss -> libgd -> fontconfig[version='2.11.*|2.12.*|>=2.13.0,<3.0a0|>=2.13.1,<3.0a0']
+phylip -> openjdk[version='>=6'] -> fontconfig[version='>=2.13.1,<3.0a0']
+matplotlib -> pyqt -> qt=5.6 -> fontconfig[version='2.12.*|>=2.12.4,<3.0a0|>=2.12.6,<3.0a0|>=2.13.0,<3.0a0|>=2.13.1,<3.0a0']
+pyqt -> qt=5.6 -> fontconfig[version='2.12.*|>=2.12.4,<3.0a0|>=2.12.6,<3.0a0|>=2.13.0,<3.0a0|>=2.13.1,<3.0a0']
+libgd -> fontconfig[version='2.11.*|2.12.*|>=2.13.0,<3.0a0|>=2.13.1,<3.0a0']
+beagle-lib -> openjdk -> fontconfig[version='>=2.13.1,<3.0a0']
+pango -> fontconfig[version='2.11.*|2.12.*|>=2.12.4,<3.0a0|>=2.12.6,<3.0a0|>=2.13.0,<3.0a0|>=2.13.1,<3.0a0']
+gdal -> libgdal==2.3.2=h9d4a965_0 -> poppler[version='>=0.60.1,<1.0a0'] -> cairo[version='>=1.14.10,<2.0a0'] -> fontconfig[version='2.12.*|>=2.12.4,<3.0a0|>=2.13.0,<3.0a0|>=2.13.1,<3.0a0']
+beast2 -> fontconfig[version='>=2.13.1,<3.0a0']
+wxpython -> cairo[version='>=1.14.12,<2.0a0'] -> fontconfig[version='2.12.*|>=2.12.4,<3.0a0|>=2.12.6,<3.0a0|>=2.13.0,<3.0a0|>=2.13.1,<3.0a0']
+atk -> gobject-introspection=1 -> cairo[version='>=1.16.0,<1.17.0a0'] -> fontconfig[version='>=2.12.4,<3.0a0|>=2.12.6,<3.0a0|>=2.13.0,<3.0a0|>=2.13.1,<3.0a0']
+gdal -> libgdal==2.3.2=h9d4a965_0 -> poppler[version='>=0.60.1,<1.0a0'] -> fontconfig[version='>=2.12.6,<3.0a0']
+jalview -> openjdk[version='>=8'] -> fontconfig[version='>=2.13.1,<3.0a0']
+qt=5.9.5 -> fontconfig[version='>=2.12.6,<3.0a0']
+harfbuzz -> cairo[version='>=1.14.12,<1.15.0a0'] -> fontconfig[version='2.11.*|2.12.*|>=2.12.4,<3.0a0|>=2.12.6,<3.0a0|>=2.13.0,<3.0a0|>=2.13.1,<3.0a0']
+t-coffee -> pasta -> openjdk -> fontconfig[version='>=2.13.1,<3.0a0']
+pycairo -> cairo[version='>=1.14.12,<2.0a0'] -> fontconfig[version='2.11.*|2.12.*|>=2.12.4,<3.0a0|>=2.12.6,<3.0a0|>=2.13.0,<3.0a0|>=2.13.1,<3.0a0']
+openjdk -> fontconfig[version='>=2.13.1,<3.0a0']
+Package setuptools conflicts for:
+networkx -> setuptools
+cycler -> python -> pip -> setuptools
+attrs -> zope.interface -> setuptools
+ipython -> pygments -> setuptools
+pytz -> python[version='>=3.6,<3.7.0a0'] -> pip -> setuptools
+pyqt -> python[version='>=3.7,<3.8.0a0'] -> pip -> setuptools
+bleach -> setuptools
+jupyter_client -> python[version='>=2.7,<2.8.0a0'] -> pip -> setuptools
+ptyprocess -> python=3.6 -> pip -> setuptools
+libwebp -> libtiff -> zstd[version='>=1.4.3,<1.4.4.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip -> setuptools
+numpy -> python[version='>=2.7,<2.8.0a0'] -> pip -> setuptools
+zstd -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip -> setuptools
+gst-plugins-base -> glib[version='>=2.58.2,<2.59.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip -> setuptools
+jalview -> psutil -> python[version='>=2.7,<2.8.0a0'] -> pip -> setuptools
+boost-cpp -> libboost==1.67.0=h46d08c1_4 -> zstd[version='>=1.3.7,<1.3.8.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip -> setuptools
+jupyterlab_server -> jsonschema[version='>=3.0.1'] -> setuptools
+nbconvert -> bleach -> setuptools
+libtiff -> zstd[version='>=1.4.3,<1.4.4.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip -> setuptools
+libgd -> libtiff[version='>=4.0.9,<5.0a0'] -> zstd[version='>=1.4.3,<1.4.4.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip -> setuptools
+gstreamer -> glib[version='>=2.58.2,<2.59.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip -> setuptools
+notebook -> jinja2 -> setuptools
+mistune -> python[version='>=2.7,<2.8.0a0'] -> pip -> setuptools
+emboss -> libgd -> libtiff[version='>=4.0.9,<5.0a0'] -> zstd[version='>=1.4.3,<1.4.4.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip -> setuptools
+wxpython -> setuptools
+jsonschema -> setuptools
+qt=5.9.5 -> glib[version='>=2.56.1,<3.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip -> setuptools
+phylip -> python -> pip -> setuptools
+beautifulsoup4 -> python[version='>=2.7,<2.8.0a0'] -> pip -> setuptools
+jupyterlab_launcher -> notebook -> jinja2 -> setuptools
+pickleshare -> python[version='>=3.8,<3.9.0a0'] -> pip -> setuptools
+certifi -> python[version='>=3.6,<3.7.0a0'] -> pip -> setuptools
+lxml -> python[version='>=2.7,<2.8.0a0'] -> pip -> setuptools
+openjdk -> lcms2[version='>=2.9,<3.0a0'] -> libtiff[version='>=4.1.0,<5.0a0'] -> zstd[version='>=1.4.3,<1.4.4.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip -> setuptools
+entrypoints -> python=3.6 -> pip -> setuptools
+pyzmq -> python[version='>=2.7,<2.8.0a0'] -> pip -> setuptools
+jupyter_console -> pygments -> setuptools
+libboost -> zstd[version='>=1.3.7,<1.3.8.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip -> setuptools
+prompt_toolkit -> pygments -> setuptools
+gdal -> python[version='>=3.7,<3.8.0a0'] -> pip -> setuptools
+jedi -> python[version='>=2.7,<2.8.0a0'] -> pip -> setuptools
+pyyaml -> cython -> setuptools
+t-coffee -> pasta -> dendropy[version='>=4.1.0'] -> setuptools
+python-dateutil -> python=3.5 -> pip -> setuptools
+send2trash -> python[version='>=3.5,<3.6.0a0'] -> pip -> setuptools
+python==3.5.5 -> pip -> setuptools
+parso -> python[version='>=2.7,<2.8.0a0'] -> pip -> setuptools
+blast -> boost=1.60 -> python=3.4 -> pip -> setuptools
+soupsieve -> backports.functools_lru_cache -> setuptools
+cairo -> glib[version='>=2.55.0,<2.56.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip -> setuptools
+conda -> setuptools[version='>=31.0.1']
+dbus -> glib[version='>=2.53.6,<3.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip -> setuptools
+conda -> ruamel_yaml[version='>=0.11.14'] -> setuptools
+glib -> python[version='>=3.6,<3.7.0a0'] -> pip -> setuptools
+tqdm -> python=3.5 -> pip -> setuptools
+webencodings -> python[version='>=3.6,<3.7.0a0'] -> pip -> setuptools
+pyrsistent -> python[version='>=3.6,<3.7.0a0'] -> pip -> setuptools
+jupyter_core -> python=3.5 -> pip -> setuptools
+biopython -> python[version='>=3.6,<3.7.0a0'] -> pip -> setuptools
+numpy-base -> python[version='>=3.7,<3.8.0a0'] -> pip -> setuptools
+psutil -> python[version='>=2.7,<2.8.0a0'] -> pip -> setuptools
+tornado -> python[version='>=3.6,<3.7.0a0'] -> pip -> setuptools
+six -> python[version='>=2.7,<2.8.0a0'] -> pip -> setuptools
+traitlets -> python=2.7 -> pip -> setuptools
+pycairo -> python[version='>=3.7,<3.8.0a0'] -> pip -> setuptools
+dendropy -> setuptools
+atk -> glib[version='>=2.56.2,<2.57.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip -> setuptools
+matplotlib -> setuptools
+jupyterlab -> jinja2[version='>=2.10'] -> setuptools
+sip -> python[version='>=2.7,<2.8.0a0'] -> pip -> setuptools
+pango -> glib[version='>=2.56.1,<3.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip -> setuptools
+pexpect -> python[version='>=2.7,<2.8.0a0'] -> pip -> setuptools
+pandas -> python[version='>=3.6,<3.7.0a0'] -> pip -> setuptools
+prometheus_client -> python[version='>=3.6,<3.7.0a0'] -> pip -> setuptools
+wcwidth -> python=3.4 -> pip -> setuptools
+decorator -> python[version='>=3.5,<3.6.0a0'] -> pip -> setuptools
+jinja2 -> setuptools
+pandocfilters -> python[version='>=3.6,<3.7.0a0'] -> pip -> setuptools
+harfbuzz -> glib[version='>=2.55.0,<2.56.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip -> setuptools
+beagle-lib -> openjdk -> lcms2[version='>=2.9,<3.0a0'] -> libtiff[version='>=4.1.0,<5.0a0'] -> zstd[version='>=1.4.3,<1.4.4.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip -> setuptools
+testpath -> python -> pip -> setuptools
+defusedxml -> python[version='>=3.7,<3.8.0a0'] -> pip -> setuptools
+viennarna -> python[version='>=3.5,<3.6.0a0'] -> pip -> setuptools
+pygments -> setuptools
+markupsafe -> python[version='>=2.7,<2.8.0a0'] -> pip -> setuptools
+t_coffee -> python=3.5 -> pip -> setuptools
+pyparsing -> python[version='>=3.7,<3.8.0a0'] -> pip -> setuptools
+kiwisolver -> python=3.6 -> pip -> setuptools
+boost -> python=3.4 -> pip -> setuptools
+ipykernel -> ipython[version='>=4.0.0'] -> pygments -> setuptools
+wheel -> setuptools
+terminado -> python=3.5 -> pip -> setuptools
+backcall -> python -> pip -> setuptools
+nbformat -> jsonschema[version='>=2.4,!=2.5.0'] -> setuptools
+pip -> setuptools
+ipython_genutils -> python=3.5 -> pip -> setuptools
+Package wheel conflicts for:
+terminado -> python=3.5 -> pip -> wheel
+atk -> glib[version='>=2.56.2,<2.57.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip -> wheel
+pyparsing -> python[version='>=3.7,<3.8.0a0'] -> pip -> wheel
+numpy-base -> python[version='>=3.7,<3.8.0a0'] -> pip -> wheel
+python==3.5.5 -> pip -> wheel
+wxpython -> python[version='>=2.7,<2.8.0a0'] -> pip -> wheel
+six -> python[version='>=2.7,<2.8.0a0'] -> pip -> wheel
+pygments -> python -> pip -> wheel
+gstreamer -> glib[version='>=2.58.2,<2.59.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip -> wheel
+pyyaml -> python[version='>=3.7,<3.8.0a0'] -> pip -> wheel
+dendropy -> python=2.7 -> pip -> wheel
+boost -> python=3.4 -> pip -> wheel
+certifi -> python[version='>=3.6,<3.7.0a0'] -> pip -> wheel
+pango -> glib[version='>=2.56.1,<3.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip -> wheel
+setuptools -> python=3.5 -> pip -> wheel
+mistune -> python[version='>=2.7,<2.8.0a0'] -> pip -> wheel
+testpath -> python -> pip -> wheel
+prompt_toolkit -> python=3.5 -> pip -> wheel
+ipython -> python=2.7 -> pip -> wheel
+pickleshare -> python[version='>=3.8,<3.9.0a0'] -> pip -> wheel
+jsonschema -> python[version='>=2.7,<2.8.0a0'] -> pip -> wheel
+jinja2 -> python[version='>=3.5,<3.6.0a0'] -> pip -> wheel
+emboss -> libgd -> libtiff[version='>=4.0.9,<5.0a0'] -> zstd[version='>=1.4.3,<1.4.4.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip -> wheel
+glib -> python[version='>=3.6,<3.7.0a0'] -> pip -> wheel
+matplotlib -> python[version='>=3.6,<3.7.0a0'] -> pip -> wheel
+biopython -> python[version='>=3.6,<3.7.0a0'] -> pip -> wheel
+ptyprocess -> python=3.6 -> pip -> wheel
+t_coffee -> python=3.5 -> pip -> wheel
+webencodings -> python[version='>=3.6,<3.7.0a0'] -> pip -> wheel
+libtiff -> zstd[version='>=1.4.3,<1.4.4.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip -> wheel
+phylip -> python -> pip -> wheel
+dbus -> glib[version='>=2.53.6,<3.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip -> wheel
+ipykernel -> python[version='>=3.5,<3.6.0a0'] -> pip -> wheel
+zstd -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip -> wheel
+pyzmq -> python[version='>=2.7,<2.8.0a0'] -> pip -> wheel
+viennarna -> python[version='>=3.5,<3.6.0a0'] -> pip -> wheel
+pandocfilters -> python[version='>=3.6,<3.7.0a0'] -> pip -> wheel
+entrypoints -> python=3.6 -> pip -> wheel
+pandas -> python[version='>=3.6,<3.7.0a0'] -> pip -> wheel
+send2trash -> python[version='>=3.5,<3.6.0a0'] -> pip -> wheel
+prometheus_client -> python[version='>=3.6,<3.7.0a0'] -> pip -> wheel
+pyqt -> python[version='>=3.7,<3.8.0a0'] -> pip -> wheel
+nbconvert -> python[version='>=2.7,<2.8.0a0'] -> pip -> wheel
+pycairo -> python[version='>=3.7,<3.8.0a0'] -> pip -> wheel
+networkx -> python[version='>=3.5'] -> pip -> wheel
+pytz -> python[version='>=3.6,<3.7.0a0'] -> pip -> wheel
+cairo -> glib[version='>=2.55.0,<2.56.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip -> wheel
+markupsafe -> python[version='>=2.7,<2.8.0a0'] -> pip -> wheel
+cycler -> python -> pip -> wheel
+harfbuzz -> glib[version='>=2.55.0,<2.56.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip -> wheel
+parso -> python[version='>=2.7,<2.8.0a0'] -> pip -> wheel
+jupyterlab_server -> python[version='>=3.5'] -> pip -> wheel
+jupyter_core -> python=3.5 -> pip -> wheel
+boost-cpp -> libboost==1.67.0=h46d08c1_4 -> zstd[version='>=1.3.7,<1.3.8.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip -> wheel
+jupyterlab -> python=2.7 -> pip -> wheel
+libgd -> libtiff[version='>=4.0.9,<5.0a0'] -> zstd[version='>=1.4.3,<1.4.4.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip -> wheel
+jalview -> psutil -> python[version='>=2.7,<2.8.0a0'] -> pip -> wheel
+jupyterlab_launcher -> python=3.6 -> pip -> wheel
+t-coffee -> pasta -> python[version='>=3.5,<3.6.0a0'] -> pip -> wheel
+gst-plugins-base -> glib[version='>=2.58.2,<2.59.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip -> wheel
+attrs -> python -> pip -> wheel
+pyrsistent -> python[version='>=3.6,<3.7.0a0'] -> pip -> wheel
+jupyter_client -> python[version='>=2.7,<2.8.0a0'] -> pip -> wheel
+numpy -> python[version='>=2.7,<2.8.0a0'] -> pip -> wheel
+pexpect -> python[version='>=2.7,<2.8.0a0'] -> pip -> wheel
+pip -> wheel
+beagle-lib -> openjdk -> lcms2[version='>=2.9,<3.0a0'] -> libtiff[version='>=4.1.0,<5.0a0'] -> zstd[version='>=1.4.3,<1.4.4.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip -> wheel
+defusedxml -> python[version='>=3.7,<3.8.0a0'] -> pip -> wheel
+bleach -> python[version='>=2.7,<2.8.0a0'] -> pip -> wheel
+ipython_genutils -> python=3.5 -> pip -> wheel
+openjdk -> lcms2[version='>=2.9,<3.0a0'] -> libtiff[version='>=4.1.0,<5.0a0'] -> zstd[version='>=1.4.3,<1.4.4.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip -> wheel
+conda -> python=3.5 -> pip -> wheel
+jupyter_console -> python[version='>=3.5,<3.6.0a0'] -> pip -> wheel
+decorator -> python[version='>=3.5,<3.6.0a0'] -> pip -> wheel
+beautifulsoup4 -> python[version='>=2.7,<2.8.0a0'] -> pip -> wheel
+soupsieve -> python[version='>=3.7,<3.8.0a0'] -> pip -> wheel
+tornado -> python[version='>=3.6,<3.7.0a0'] -> pip -> wheel
+notebook -> python[version='>=3.7,<3.8.0a0'] -> pip -> wheel
+lxml -> python[version='>=2.7,<2.8.0a0'] -> pip -> wheel
+python-dateutil -> python=3.5 -> pip -> wheel
+sip -> python[version='>=2.7,<2.8.0a0'] -> pip -> wheel
+blast -> boost=1.60 -> python=3.4 -> pip -> wheel
+kiwisolver -> python=3.6 -> pip -> wheel
+backcall -> python -> pip -> wheel
+wcwidth -> python=3.4 -> pip -> wheel
+qt=5.9.5 -> glib[version='>=2.56.1,<3.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip -> wheel
+tqdm -> python=3.5 -> pip -> wheel
+gdal -> python[version='>=3.7,<3.8.0a0'] -> pip -> wheel
+jedi -> python[version='>=2.7,<2.8.0a0'] -> pip -> wheel
+psutil -> python[version='>=2.7,<2.8.0a0'] -> pip -> wheel
+traitlets -> python=2.7 -> pip -> wheel
+nbformat -> python=3.6 -> pip -> wheel
+libboost -> zstd[version='>=1.3.7,<1.3.8.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip -> wheel
+libwebp -> libtiff -> zstd[version='>=1.4.3,<1.4.4.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip -> wheel
+Package ipython_genutils conflicts for:
+nbformat -> ipython_genutils
+jupyterlab_launcher -> notebook -> ipython_genutils
+ipykernel -> jupyter_client -> ipython_genutils
+nbconvert -> nbformat[version='>=4.4'] -> ipython_genutils
+jupyter_console -> ipykernel -> traitlets[version='>=4.1'] -> ipython_genutils
+traitlets -> ipython_genutils
+jupyterlab_server -> jsonschema[version='>=3.0.1'] -> ipython_genutils
+ipython -> backports.shutil_get_terminal_size -> ipython_genutils
+jupyter_client -> traitlets -> ipython_genutils
+jupyterlab -> notebook[version='>=4.2'] -> ipython_genutils
+notebook -> ipython_genutils
+jupyter_core -> traitlets -> ipython_genutils
+Package pip conflicts for:
+sip -> python[version='>=2.7,<2.8.0a0'] -> pip
+traitlets -> python=2.7 -> pip
+jupyter_client -> python[version='>=2.7,<2.8.0a0'] -> pip
+beautifulsoup4 -> python[version='>=2.7,<2.8.0a0'] -> pip
+certifi -> python[version='>=3.6,<3.7.0a0'] -> pip
+qt=5.9.5 -> glib[version='>=2.56.1,<3.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip
+webencodings -> python[version='>=3.6,<3.7.0a0'] -> pip
+mistune -> python[version='>=2.7,<2.8.0a0'] -> pip
+markupsafe -> python[version='>=2.7,<2.8.0a0'] -> pip
+jinja2 -> python[version='>=3.5,<3.6.0a0'] -> pip
+pyrsistent -> python[version='>=3.6,<3.7.0a0'] -> pip
+beagle-lib -> openjdk -> lcms2[version='>=2.9,<3.0a0'] -> libtiff[version='>=4.1.0,<5.0a0'] -> zstd[version='>=1.4.3,<1.4.4.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip
+dendropy -> python=2.7 -> pip
+harfbuzz -> glib[version='>=2.55.0,<2.56.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip
+libtiff -> zstd[version='>=1.4.3,<1.4.4.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip
+pyparsing -> python[version='>=3.7,<3.8.0a0'] -> pip
+t_coffee -> python=3.5 -> pip
+ipykernel -> python[version='>=3.5,<3.6.0a0'] -> pip
+cairo -> glib[version='>=2.55.0,<2.56.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip
+gdal -> python[version='>=3.7,<3.8.0a0'] -> pip
+atk -> glib[version='>=2.56.2,<2.57.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip
+t-coffee -> pasta -> python[version='>=3.5,<3.6.0a0'] -> pip
+jupyter_core -> python=3.5 -> pip
+gstreamer -> glib[version='>=2.58.2,<2.59.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip
+jedi -> python[version='>=2.7,<2.8.0a0'] -> pip
+decorator -> python[version='>=3.5,<3.6.0a0'] -> pip
+matplotlib -> python[version='>=3.6,<3.7.0a0'] -> pip
+backcall -> python -> pip
+networkx -> python[version='>=3.5'] -> pip
+send2trash -> python[version='>=3.5,<3.6.0a0'] -> pip
+notebook -> python[version='>=3.7,<3.8.0a0'] -> pip
+jalview -> psutil -> python[version='>=2.7,<2.8.0a0'] -> pip
+ipython -> python=2.7 -> pip
+wheel -> python[version='>=3.6,<3.7.0a0'] -> pip
+setuptools -> python=3.5 -> pip
+pandas -> python[version='>=3.6,<3.7.0a0'] -> pip
+kiwisolver -> python=3.6 -> pip
+prompt_toolkit -> python=3.5 -> pip
+pyzmq -> python[version='>=2.7,<2.8.0a0'] -> pip
+pyyaml -> python[version='>=3.7,<3.8.0a0'] -> pip
+phylip -> python -> pip
+cycler -> python -> pip
+pycairo -> python[version='>=3.7,<3.8.0a0'] -> pip
+soupsieve -> python[version='>=3.7,<3.8.0a0'] -> pip
+tqdm -> python=3.5 -> pip
+bleach -> python[version='>=2.7,<2.8.0a0'] -> pip
+numpy -> python[version='>=2.7,<2.8.0a0'] -> pip
+six -> python[version='>=2.7,<2.8.0a0'] -> pip
+libgd -> libtiff[version='>=4.0.9,<5.0a0'] -> zstd[version='>=1.4.3,<1.4.4.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip
+wcwidth -> python=3.4 -> pip
+ipython_genutils -> python=3.5 -> pip
+lxml -> python[version='>=2.7,<2.8.0a0'] -> pip
+jupyterlab_launcher -> python=3.6 -> pip
+pandocfilters -> python[version='>=3.6,<3.7.0a0'] -> pip
+ptyprocess -> python=3.6 -> pip
+prometheus_client -> python[version='>=3.6,<3.7.0a0'] -> pip
+boost -> python=3.4 -> pip
+pytz -> python[version='>=3.6,<3.7.0a0'] -> pip
+nbconvert -> python[version='>=2.7,<2.8.0a0'] -> pip
+pexpect -> python[version='>=2.7,<2.8.0a0'] -> pip
+pyqt -> python[version='>=3.7,<3.8.0a0'] -> pip
+openjdk -> lcms2[version='>=2.9,<3.0a0'] -> libtiff[version='>=4.1.0,<5.0a0'] -> zstd[version='>=1.4.3,<1.4.4.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip
+jupyterlab_server -> python[version='>=3.5'] -> pip
+boost-cpp -> libboost==1.67.0=h46d08c1_4 -> zstd[version='>=1.3.7,<1.3.8.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip
+python-dateutil -> python=3.5 -> pip
+libwebp -> libtiff -> zstd[version='>=1.4.3,<1.4.4.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip
+entrypoints -> python=3.6 -> pip
+jupyterlab -> python=2.7 -> pip
+wxpython -> python[version='>=2.7,<2.8.0a0'] -> pip
+conda -> python=3.5 -> pip
+jsonschema -> python[version='>=2.7,<2.8.0a0'] -> pip
+terminado -> python=3.5 -> pip
+parso -> python[version='>=2.7,<2.8.0a0'] -> pip
+biopython -> python[version='>=3.6,<3.7.0a0'] -> pip
+numpy-base -> python[version='>=3.7,<3.8.0a0'] -> pip
+defusedxml -> python[version='>=3.7,<3.8.0a0'] -> pip
+attrs -> python -> pip
+testpath -> python -> pip
+tornado -> python[version='>=3.6,<3.7.0a0'] -> pip
+blast -> boost=1.60 -> python=3.4 -> pip
+pango -> glib[version='>=2.56.1,<3.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip
+nbformat -> python=3.6 -> pip
+pygments -> python -> pip
+jupyter_console -> python[version='>=3.5,<3.6.0a0'] -> pip
+zstd -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip
+emboss -> libgd -> libtiff[version='>=4.0.9,<5.0a0'] -> zstd[version='>=1.4.3,<1.4.4.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip
+psutil -> python[version='>=2.7,<2.8.0a0'] -> pip
+libboost -> zstd[version='>=1.3.7,<1.3.8.0a0'] -> lz4 -> python[version='>=3.5,<3.6.0a0'] -> pip
+pickleshare -> python[version='>=3.8,<3.9.0a0'] -> pip
+dbus -> glib[version='>=2.53.6,<3.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip
+python==3.5.5 -> pip
+gst-plugins-base -> glib[version='>=2.58.2,<2.59.0a0'] -> python[version='>=3.6,<3.7.0a0'] -> pip
+viennarna -> python[version='>=3.5,<3.6.0a0'] -> pip
+glib -> python[version='>=3.6,<3.7.0a0'] -> pip
+Package freetype conflicts for:
+qt=5.9.5 -> freetype[version='>=2.8,<2.9.0a0']
+pycairo -> cairo[version='>=1.14.12,<2.0a0'] -> freetype[version='2.6.*|2.7|2.8.1|2.7|2.7.*|>=2.8,<2.9.0a0|>=2.8.1,<2.9.0a0|>=2.9.1,<3.0a0']
+jalview -> openjdk[version='>=8'] -> freetype[version='>=2.9.1,<3.0a0']
+beagle-lib -> openjdk -> freetype[version='>=2.9.1,<3.0a0']
+fontconfig -> freetype[version='2.6.*|2.7|2.8.1|2.7|2.7.*|>=2.8,<2.9.0a0|>=2.8.1,<2.9.0a0|>=2.9,<3.0a0|>=2.9.1,<3.0a0']
+emboss -> libgd -> fontconfig[version='>=2.13.1,<3.0a0'] -> freetype[version='>=2.8,<2.9.0a0|>=2.8.1,<2.9.0a0|>=2.9,<3.0a0']
+libgd -> freetype[version='2.6.*|2.7|2.8.1|2.7|2.7.*|>=2.9.1,<3.0a0']
+qt=5.9.5 -> fontconfig[version='>=2.12.6,<3.0a0'] -> freetype[version='2.8.1|>=2.8.1,<2.9.0a0']
+harfbuzz -> freetype[version='2.6.*|2.8.1|2.7|2.7.*|>=2.8,<2.9.0a0|>=2.8.1,<2.9.0a0|>=2.9.1,<3.0a0']
+matplotlib -> pyqt -> qt=5.6 -> fontconfig[version='>=2.13.1,<3.0a0'] -> freetype[version='2.7.*|2.8.1|>=2.8.1,<2.9.0a0|>=2.9,<3.0a0']
+pango -> fontconfig[version='>=2.13.0,<3.0a0'] -> freetype[version='2.7|>=2.9,<3.0a0']
+biopython -> reportlab -> freetype[version='>=2.8.1,<2.9.0a0']
+wxpython -> cairo[version='>=1.14.12,<2.0a0'] -> fontconfig[version='>=2.13.0,<3.0a0'] -> freetype[version='2.6.*|2.7|>=2.9,<3.0a0']
+gdal -> libgdal==2.3.2=h9d4a965_0 -> poppler[version='>=0.60.1,<1.0a0'] -> cairo[version='>=1.14.10,<2.0a0'] -> freetype[version='2.6.*|2.7|2.8.1|2.7|2.7.*|>=2.8.1,<2.9.0a0|>=2.9,<3.0a0|>=2.9.1,<3.0a0']
+biopython -> reportlab -> pillow[version='>=2.4.0'] -> freetype[version='2.8.*|2.8.1.*|2.8.1|>=2.8,<2.9.0a0']
+pyqt -> qt=5.6 -> freetype[version='2.7|2.7.*|>=2.8,<2.9.0a0|>=2.9.1,<3.0a0']
+wxpython -> cairo[version='>=1.14.12,<2.0a0'] -> freetype[version='2.7|2.7.*|2.8.1|>=2.8,<2.9.0a0|>=2.8.1,<2.9.0a0|>=2.9.1,<3.0a0']
+openjdk -> freetype[version='>=2.9.1,<3.0a0']
+libgd -> fontconfig[version='>=2.13.1,<3.0a0'] -> freetype[version='>=2.8,<2.9.0a0|>=2.8.1,<2.9.0a0|>=2.9,<3.0a0']
+harfbuzz -> cairo[version='>=1.14.12,<1.15.0a0'] -> fontconfig=2.11 -> freetype[version='>=2.9,<3.0a0']
+beast2 -> fontconfig[version='>=2.13.1,<3.0a0'] -> freetype[version='2.6.*|2.7|2.8.1|2.7|2.7.*|>=2.8,<2.9.0a0|>=2.8.1,<2.9.0a0|>=2.9,<3.0a0']
+cairo -> fontconfig=2.11 -> freetype[version='>=2.9,<3.0a0']
+cairo -> freetype[version='2.6.*|2.7|2.8.1|2.7|2.7.*|>=2.8,<2.9.0a0|>=2.8.1,<2.9.0a0|>=2.9.1,<3.0a0']
+atk -> gobject-introspection=1 -> cairo[version='>=1.16.0,<1.17.0a0'] -> fontconfig[version='>=2.13.0,<3.0a0'] -> freetype[version='2.8.1|>=2.9,<3.0a0']
+t-coffee -> pasta -> openjdk -> freetype[version='>=2.9.1,<3.0a0']
+atk -> gobject-introspection=1 -> cairo[version='>=1.16.0,<1.17.0a0'] -> freetype[version='>=2.8,<2.9.0a0|>=2.8.1,<2.9.0a0|>=2.9.1,<3.0a0']
+matplotlib -> freetype[version='>=2.8,<2.9.0a0|>=2.9.1,<3.0a0']
+pango -> freetype[version='2.6.*|2.7.*|2.8.1|2.7|2.7.*|>=2.8,<2.9.0a0|>=2.8.1,<2.9.0a0|>=2.9.1,<3.0a0']
+phylip -> openjdk[version='>=6'] -> freetype[version='>=2.9.1,<3.0a0']
+beast2 -> freetype[version='>=2.9.1,<3.0a0']
+harfbuzz -> cairo[version='>=1.14.12,<1.15.0a0'] -> freetype==2.7
+matplotlib -> pyqt -> qt=5.6 -> freetype[version='2.7|2.7.*']
+pycairo -> cairo[version='>=1.14.12,<2.0a0'] -> fontconfig[version='>=2.13.0,<3.0a0'] -> freetype[version='>=2.9,<3.0a0']
+emboss -> libgd -> freetype[version='2.6.*|2.7|2.8.1|2.7|2.7.*|>=2.9.1,<3.0a0']
+pyqt -> qt=5.6 -> fontconfig[version='>=2.13.1,<3.0a0'] -> freetype[version='2.7.*|2.8.1|>=2.8.1,<2.9.0a0|>=2.9,<3.0a0']
+gdal -> libgdal==2.3.2=h9d4a965_0 -> poppler[version='>=0.60.1,<1.0a0'] -> freetype[version='>=2.8,<2.9.0a0']
+Package ipython conflicts for:
+jupyter_console -> ipykernel -> ipython[version='>=4.0|>=4.0.0|>=5.0']
+jupyterlab -> notebook[version='>=4.2'] -> ipykernel -> ipython[version='>=4.0|>=4.0.0|>=5.0']
+jupyterlab_launcher -> notebook -> ipykernel -> ipython[version='>=4.0|>=4.0.0|>=5.0']
+ipykernel -> ipython[version='>=4.0|>=4.0.0|>=5.0']
+jupyter_console -> ipython
+jupyterlab_server -> notebook[version='>=4.2.0'] -> ipykernel -> ipython[version='>=4.0|>=4.0.0|>=5.0']
+notebook -> ipykernel -> ipython[version='>=4.0|>=4.0.0|>=5.0']
+Package mmtf-python conflicts for:
+biopython -> mmtf-python
+Package python-dateutil conflicts for:
+pandas -> python-dateutil[version='>=2.5.*|>=2.6.1']
+matplotlib -> python-dateutil
+Package msgpack-python conflicts for:
+biopython -> mmtf-python -> msgpack-python

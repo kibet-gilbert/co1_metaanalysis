@@ -5,7 +5,9 @@
 
 import os
 import sys
+import numpy
 import pandas as pd
+import lxml
 from bs4 import BeautifulSoup as b
 
 #To parse a document, pass it into the BeautifulSoup constructor. You can pass in a string or an open filehandle

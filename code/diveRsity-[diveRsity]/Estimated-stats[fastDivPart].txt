@@ -1,0 +1,3 @@
+loci	Harmonic_N	H_st_est	D_st_est	G_st_est	G_hed_st_est	D_Jost_est	Fst_WC	Fit_WC	
+MicroSat	4.8	-0.0053	-0.0012	-0.0016	-0.0122	-0.0106	-0.1038	0.745	
+Global				-0.0016	-0.0125	-0.0106	-0.1038	0.745	

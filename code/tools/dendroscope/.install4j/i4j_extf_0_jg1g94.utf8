@@ -546,4 +546,10 @@ StatusRunProgramExecute=Finishing execution ...
 SelectFile=Select File
 # Text for a button that selects something
 ButtonSelect=Select
+HelpNoFileFailures=In unattended mode, ignore file installation failures
 CreateUserErrorBadUserName=The user name is invalid.
+# {0} is a file name
+FileWriteError=An error occurred while writing the file\n\n{0}\n\nThe error message was: {1}
+FileReadError=An error occurred while reading the file\n\n{0}\n\nThe error message was: {1}
+MsiUninstallerMismatch=The uninstaller of an MSI installation cannot be started directly.\n\nPlease use the control panel instead.
+NonWritablePackDir=JRE directory not writable. Could not unpack jar files. Please move the installation to a writable directory.

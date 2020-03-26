@@ -1,4 +1,6 @@
-Version   Dendroscope (version 3.6.3, built 1 Aug 2019)
-Copyright (C) 2019 Daniel H. Huson. This program comes with ABSOLUTELY NO WARRANTY.
+Version   Dendroscope (version 3.7.2, built 17 Feb 2020)
+Copyright (C) 2020 Daniel H. Huson. This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, licensed under the terms of the GNU General Public License, Version 3.
 Java version: 11.0.1-internal
+Executing: open file='/home/kibet/bioinformatics/github/co1_metaanalysis/data/output/alignment/pasta_output/aligned/diptera/enafroCOI_all_data_Diptera_Ceratitis.newick';
+Trees loaded: 1

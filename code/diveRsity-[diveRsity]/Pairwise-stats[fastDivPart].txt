@@ -1,0 +1,16 @@
+Gst_est			
+	RueDuQuai	Benitier	
+RueDuQuai			
+Benitier	-0.0016		
+G'st_est			
+	RueDuQuai	Benitier	
+RueDuQuai			
+Benitier	-0.0123		
+Djost_est			
+	RueDuQuai	Benitier	
+RueDuQuai			
+Benitier	-0.0107		
+Fst_WC			
+	RueDuQuai	Benitier	
+RueDuQuai			
+Benitier	0.0289		
