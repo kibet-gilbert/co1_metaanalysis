@@ -18,7 +18,7 @@ usage() { #checks if the positional arguments (input files) for execution of the
 	if [ $# -eq 0 ]
 	then
 		echo "Input error..."
-		echo "Usage: $0 file1.fasta[file2.fasta file3.fasta ...]"
+		echo "Usage: ${FUNCNAME[1]} file1.fasta[file2.fasta file3.fasta ...]"
 		return 1
 		
 	fi

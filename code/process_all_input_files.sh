@@ -522,7 +522,8 @@ gbtsv2fasta(){ # This is part of the function gbxml2tsv; takes its output and co
 			if (a[13] ~ /^unclassified.*$/) {e = "NA"}
                         else if (a[13] ~ /^[[:alnum:]]+$/) {e = a[13]}
                         else {e = "NA"}
-			if (a[14] ~ /^[[:alnum:][:space:]]+$/) {f = a[14]}
+			if (a[14] ~ /^unclassified.*$/) {k = "NA"}
+			else if (a[14] ~ /^[[:alnum:][:space:]]+$/) {f = a[14]}
 			else {f = "NA"}
 			if (a[15] ~ /^unclassified.*$/) {k = "NA"} 
 			else if (a[15] ~ /^[[:alnum:][:space:]]+$/) {k = a[15]}
@@ -805,7 +806,7 @@ subset_seqs(){ #This function takes a faster sequence file and split it into mul
 #grep ">" seq2.fasta | awk 'BEGIN { FS="|"}; {print $1}' > file2
 #comm -12 file1 file2 > repeats && less repeats
 
-replacing_headers() { #This function takes an input file of edited_fasta_format_headers and searches through a fasta_format_sequence file and substitute it's headers if their uniq IDs match
+substitute_hdrs() { #This function takes an input file of edited_fasta_format_headers and searches through a fasta_format_sequence file and substitute it's headers if their uniq IDs match
 
  	if [ $# -eq 0 ]
 	then
@@ -940,13 +941,11 @@ move_unwanted() { #
 		if [ $matching_records -gt 0 ]
 		then
 			echo -e "\tRemoving any records with '$pattern_name' description in header from file..."
-			#$AWK_EXEC -v pattern="$pattern_name" 'BEGIN { RS="\n>"; ORS="\n"; FS="\n"; OFS="\n" }; match($1,pattern) {if ( FNR=1 ) {print $0} else {print ">"$0}}' $i >> ${input_src}/${output_filename}_${unwanted}.fasta
 			$AWK_EXEC -v pat="$pattern_name" '/^>/{
 			hdr=$0; next} {
 			seq=$0 } {
  			pattern=pat; gsub(/\|/,"\\\|", pattern)} hdr~pattern{ 
  			print hdr; print seq }' $i >> ${input_src}/${output_filename}_${unwanted}.${filename_ext}
-			#sed -i "/$pattern_name/,+1 p" $i > ${input_src}/${output_filename}_${unwanted}.fasta
 			sed -i "/$pattern_name/,+1 d" $i
 		fi
 	done
@@ -1158,13 +1157,19 @@ regexp='^[0-9]+$'
 set_start_Ngaps() { # This functions sets the value of the variable "start_Ngaps"
 	until [[ "$start_Ngaps" =~ $regexp ]]
 	do
-		read -p "Please enter the muximum number of '-'s or Ns allowed at start position: " start_Ngaps
+		read -p "Please enter the muximum number of '-'s or Ns allowed at 3' start position: " start_Ngaps
 	done
 }
 set_end_Ngaps() { #This function sets the value of the variable "end_Ngaps"
 	until [[ "$end_Ngaps" =~ $regexp ]]
 	do
-		read -p "Please enter the maximum number of '-'s or Ns allowed at the end position: " end_Ngaps
+		read -p "Please enter the maximum number of '-'s or Ns allowed at the 5' end position: " end_Ngaps
+	done
+}
+set_sum_Ngaps() { #This function sets the value of the variable "sum_Ngaps"
+	until [[ "$sum_Ngaps" =~ $regexp ]]
+	do
+		read -p "Please enter the total maximum number of '-'s and Ns allowed in both 3' and 5' ends of the sequence: " sum_Ngaps
 	done
 }
 set_mid_Ns() { #This function sets the value of the variable "mid_Ns"
@@ -1173,6 +1178,7 @@ set_mid_Ns() { #This function sets the value of the variable "mid_Ns"
 		 read -p "Please enter the maximum length of N-string allowed within the sequence: " mid_Ns
 	 done
 }
+
 
 delete_shortseqs() { #This function identifies and removes sequences that have specified number of gaps "-" and Ns at the ends or Ns strings within. It stores the cleaned sequences.
 
@@ -1200,16 +1206,17 @@ delete_shortseqs() { #This function identifies and removes sequences that have s
 						
 			echo -e "\tYou are going to remove sequences that have more than a specific number of undefined nucleotides, 'N', or gaps, '-', at the beginning and end or specific maximum length of N character-string within the sequence."
 			echo -e "\tWhich type of characters are to consider?"
-			PS3='Select a choice from the following options, Enter [1] or [2] or [3] or [4]: '
-			options=("Gaps at the ends only" "Ns and gaps at the ends only" "Gaps & Ns in the entire sequence only" "Quit")
+			PS3='Select a choice from the following options, Enter [1] or [2] or [3] or [4] or [5]: '
+			options=("Gaps at the 3' or 5' ends of sequences" "Ns and gaps at the 3' and 5' ends" "Gaps & Ns in the entire sequence" "Summation of Ns and gaps at the 3' and 5' ends" "Quit")
 			select opt in "${options[@]}"
 			do
 				unset start_Ngaps
 				unset end_Ngaps
 				unset mid_Ns
+				unset sum_Ngaps
 
 				case $opt in
-					"Gaps at the ends only")
+					${options[0]})
 						echo -e "\tProceed and enter the accepted maximum number of '-'s at the start and end positions of the sequences.\n\tIntegers only accepted!!!"
 						set_start_Ngaps
 
@@ -1220,7 +1227,7 @@ delete_shortseqs() { #This function identifies and removes sequences that have s
 						echo -e "\n\tDONE. All cleaned records have been stored in ${input_src}/${output_filename}_sg${start_Ngaps}-e${end_Ngaps}.aln\n"
 						break
 						;;
-					"Ns and gaps at the ends only")
+					${options[1]})
 						echo -e "\tProceed and enter the accepted maximum number of Ns or '-'s at the start and end positions of the sequences.\n\tIntegers only accepted!!!"
 						set_start_Ngaps
 
@@ -1230,7 +1237,7 @@ delete_shortseqs() { #This function identifies and removes sequences that have s
 						echo -e "\n\tDONE. All cleaned records have been stored in $input > ${input_src}/${output_filename}_s${start_Ngaps}-e${end_Ngaps}.aln\n"
 						break
 						;;
-					"Gaps & Ns in the entire sequence only")
+					${options[2]})
 						echo -e "\tProceed and enter the accepted maximum number of Ns or '-'s at the start, within and end positions of the sequences.\n\tIntegers only accepted!!!"
 						set_start_Ngaps
 
@@ -1239,8 +1246,6 @@ delete_shortseqs() { #This function identifies and removes sequences that have s
 						set_end_Ngaps
 						
 						echo -e "\tRemoving sequences in `basename -- ${i}` that have more than ${start_Ngaps} Ns or '-'s in start position, ${mid_Ns} length N string within  and ${end_Ngaps} in end position"
-						#substr(s, i [, n])
-						#awk -v start_N=10 -v mid_N=11 -v end_N=10 '/^>/{hdr=$0; next} { seq=$0 } match(seq,/^[-Nn]*/) && RLENGTH > start_N { next } { seq=substr(seq,RSTART+RLENGTH) } match(seq,/[-Nn]*$/) && RLENGTH > end_N { next } { seq=substr(seq,1,RSTART-1) } { while (match(seq,/[-Nn]+/)) { if(RLENGTH>mid_N) next seq=substr(seq,RSTART+RLENGTH) } } { print hdr; print $0 }' file
 						$AWK_EXEC -v start_N=$start_Ngaps -v mid_N=$mid_Ns -v end_N=$end_Ngaps '
 						/^>/{hdr=$0; next}
 						{ seq=$0 }
@@ -1257,7 +1262,15 @@ delete_shortseqs() { #This function identifies and removes sequences that have s
 						echo -e "\n\tDONE. All cleaned records have been stored in $input > ${input_src}/${output_filename}_s${start_Ngaps}-${mid_Ns}-e${end_Ngaps}.aln\n"
 						break
 						;;
-					"Quit")
+					${options[3]})
+						echo -e "\tProceed and enter the maximum sum of Ns or '-'s at the 3' and 5' ends of the sequences.\n\tIntegers only accepted!!!"
+						set_sum_Ngaps
+
+						$AWK_EXEC -v sum_Ngaps=$sum_Ngaps ' /^>/ { hdr=$0; next }; match($0,/^[-Nn]*/) {start_N=RLENGTH}; match($0,/[-Nn]*$/) {end_N=RLENGTH}; sum_Ngaps>=start_N+end_N { print hdr; print }' $i > ${input_src}/${output_filename}_ends${sum_Ngaps}.aln
+						echo -e "\n\tDONE. All cleaned records have been stored in $input > ${input_src}/${output_filename}_ends${sum_Ngaps}.aln\n"
+						break
+						;;
+					${options[4]})
 						break
 						;;
 					*) echo "INVALID choice $REPLY"

@@ -23,7 +23,7 @@ input_src=dirname(file_path_as_absolute(args[1]))
 
 df_taxa = read.delim(args[1], sep = "\t", stringsAsFactors = F, dec = ".", header = T)
 
-## listing all families with over 10 values represented in the dataset.
+## listing all families with more than 1 value represented in the dataset.
 Prefamily_df <- as.data.frame(table(c(subset(df_taxa, seq_len >= 500)$Family)), row.names = NULL)
 colnames(Prefamily_df) <- c("Family","prefamfreq")
 cat("\n\n", nrow(subset(Prefamily_df, prefamfreq >= 1)),
