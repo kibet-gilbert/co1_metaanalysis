@@ -31,7 +31,7 @@ realpath() { #
 
 
 rename() { #generates output file names with same input filename prefix. The suffix (".suffix") is set in individual functions that perform different tasks.
-        input_filename=`basename -- $i`
+        input_filename=`basename -- ${i}`
         output_filename=${input_filename%.*}
 	filename_ext=${input_filename##*.}
 	src_dir_path=`dirname $(realpath ${i})`
@@ -433,7 +433,7 @@ genbankdata_retrival(){ # This function will retrieve nucleotide sequence data f
 			echo "input error: file '$i' is non-existent!"
 		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*genbankAccessionNumbers\.txt$ ) ]]
 		then
-			rename ${i}
+			rename
 			input_src=`dirname "$( realpath "${i}" )"`
 			genbankouput_dir=${inputdata_path}genbank/${src_dir}
 			until [[ -d ${genbankouput_dir} ]]
@@ -504,7 +504,7 @@ gbtsv2fasta(){ # This is part of the function gbxml2tsv; takes its output and co
 	for i in "$@"
 	do
 		echo -e "\n\tProceeding with converting `basename -- $i` to fasta..."
-		rename ${i}
+		rename
 		input_src=`dirname "$( realpath "${i}" )"`
 
 		$AWK_EXEC 'BEGIN{FS="\t"; OFS="|"} NR == 1 {next} {
@@ -572,7 +572,7 @@ gbxml2tsv(){ # This function will convert a genbank XML file downloaded in gb fo
 			echo "input error: file '$i' is non-existent!"
 		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.gb\.xml$ ) ]]
                 then
-                        rename ${i}
+                        rename
                         input_src=`dirname "$( realpath "${i}" )"`
 			output=${input_src}/${output_filename}
 			unset element
@@ -641,6 +641,57 @@ gbxml2tsv(){ # This function will convert a genbank XML file downloaded in gb fo
 }
 
 #===============================================================================================================================================================
+fasta2nexus(){ # This function will take a FASTA format sequence file and convert it to a nexus for use in PopART and Bayesian Phylogenetic analysis.
+	if [ $# -eq 0 ]
+	then
+		echo "Input error..."
+		echo "Usage: ${FUNCNAME[0]} -t [DNA|RNA|AA] [-s <refrence_aln> ] [-r]"
+		return 1
+	fi
+
+        unset TREE
+        unset REF_MSA
+        unset ROOTED
+        unset MINBR
+        unset OUTGROUP
+
+        local OPTIND=1
+        while getopts 't:rs::' key
+        do
+                case "${key}" in
+                        t)
+                                if [ ! -f $OPTARG ]
+                                then
+                                        echo -e "\tinput error: file $OPTARG is non-existent!"
+                                elif [[ ( -f $OPTARG ) && ( `basename -- $OPTARG` =~ .*\.(tree|tre|newick|.*) ) ]]
+                                then
+                                        TREE=$OPTARG
+                                fi
+                                ;;
+                        r)
+                                echo -e "\tProvided tree $TREE is taken as rooted and if not so, the first taxon will be taken as the root"
+                                ROOTED="TRUE"
+                                ;;
+                        s)
+                                if [ ! -f $OPTARG ]
+                                then
+                                        echo -e "\tinput error: file $OPTARG is non-existent!"
+                                elif [[ ( -f $OPTARG ) && ( `basename -- $OPTARG` =~ .*\.(aln|afa|fasta|fa|fst)$ ) ]]
+                                then
+                                        REF_MSA=$OPTARG
+                                fi
+                                ;;
+                        ?)
+                                echo "Input error..."
+                                echo "Usage: ${FUNCNAME[0]} -t <tree> [-r] [-s <refrence_aln>]"
+                                return 1
+                                ;;
+                esac
+        done
+
+}
+
+#===============================================================================================================================================================
 subset_seqs(){ #This function takes a faster sequence file and split it into multiple files simply based on nucleotide sequence length
 	
 	set -E
@@ -661,7 +712,7 @@ subset_seqs(){ #This function takes a faster sequence file and split it into mul
 		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa|fst)$ ) ]]
 		then
 			input_src=`dirname "$( realpath "${i}" )"`
-			rename $i
+			rename
 
 			#Removing gaps
 			remove_gaps $i
@@ -1064,7 +1115,7 @@ trimming_seqaln() { #This function trims aligned sequences in a file on both end
                 elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa|fst)$ ) ]]
                 then
 			input_src=`dirname "$( realpath "${i}" )"`
-			rename $i
+			rename
 			echo -e "\tThis function will trim your sequences at specific positions and output the desired columns. Proceed and enter the desired start and end positions of the blocks to extract.\n\tTrimming `basename -- $i`..."
 			unset start_pos
 			unset end_pos
@@ -1119,7 +1170,7 @@ delete_shortseqs_gaps() { #This function identifies and removes sequences that h
                 elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa)$ ) ]]
                 then
                         input_src=`dirname "$( realpath "${i}" )"`
-                        rename $i
+                        rename
 			concatenate_fasta_seqs $i
 
 			echo -e "\tThis function will remove sequences that have a specified number of gaps, '-', at the start or end of the sequence. Proceed and enter the accepted maximum number of gaps at the start and end positions of the sequences.\n\tIntegers only accepted!!!"
@@ -1200,7 +1251,7 @@ delete_shortseqs() { #This function identifies and removes sequences that have s
 		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa)$ ) ]]
 		then
 			input_src=`dirname "$( realpath "${i}" )"`
-			rename $i
+			rename
 			concatenate_fasta_seqs $i
 			unset options
 						
@@ -1307,7 +1358,7 @@ remove_gaps() { # Removing gaps, "-" in a sequence.
    		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa)$ ) ]]
 		then
 			input_src=`dirname "$( realpath "${i}" )"`
-			rename $i
+			rename
 			concatenate_fasta_seqs $i
 
 			echo -e "\tRemoving gaps, '-', from `basename -- ${i}`"
@@ -1380,7 +1431,7 @@ retrive_originalseqs() { # Retriving a subset of unaligned sequences from origin
 				read -p "Please enter the path to the parent file with the orginal sequences:: " parentfile
 			done
 
-			rename ${inputfile}
+			rename
 			outputfilename=${output_filename}
 			concatenate_fasta_seqs ${inputfile} ${parentfile}
 			# lets open and save both files using an editor i.e vim to ensure all lines have an "newline" ending.

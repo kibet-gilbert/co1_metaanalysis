@@ -694,7 +694,7 @@ mptp_SpDelim() { # This function performs putative species delimitation from a b
 	if [ $# -eq 0 ]
 	then
 		echo "Input error..."
-		echo "Usage: ${FUNCNAME[0]} -t <tree> [-r] [-s <refrence_aln>]"
+		echo "Usage: ${FUNCNAME[0]} -t <tree> [-s <refrence_aln> ] [-r]"
 		return 1
 	fi
 
@@ -702,6 +702,7 @@ mptp_SpDelim() { # This function performs putative species delimitation from a b
 	unset REF_MSA
 	unset ROOTED
 	unset MINBR
+	unset OUTGROUP
 
 	local OPTIND=1
 	while getopts 't:rs::' key
@@ -738,17 +739,19 @@ mptp_SpDelim() { # This function performs putative species delimitation from a b
 	done
 
 	echo -e "\tLets proceed with ML delimitation of $TREE..."
-	rename $TREE
+	i=$TREE
+	rename
 	input_src=`dirname "$( realpath "${TREE}" )"`
 
-	until [ $ROOTED = "TRUE" ]
+	until [ "$ROOTED" = "TRUE" ]
 	do
+		unset OUTGROUP
 		regexp1='^[a-zA-Z0-9/_-\ \|,\.]+$'
 		until [[ "$OUTGROUP" =~ $regexp1 ]]
 		do
-			read -p "Please enter one or a comma-separated list of outgroup taxa (taxa1,taxa2,..):: " OUTGROUP
+			read -p "Please enter one or a comma-separated list of outgroup taxa (taxa1,taxa2,..) and ensure the alignment file [-s <refrence_aln>] is provided:: " OUTGROUP
 		done
-		mptp --tree_file $TREE --minbr_auto $REF_MSA --output_file ${input_src}/${output_filename} --outgroup_crop $OUTGROUP
+		mptp --tree_file $TREE --minbr_auto $REF_MSA --output_file ${input_src}/${output_filename} --outgroup $OUTGROUP #--outgroup_crop
 		#? rooted tree
 		#? minbr
 		if [ $? -eq 0 ]
@@ -756,8 +759,8 @@ mptp_SpDelim() { # This function performs putative species delimitation from a b
 			ROOTED="TRUE"
 			echo -e "\n\t$TREE has been rooted"
 		else
-			echo -e "\n\t$TREE has not been rooted"
-			return 1
+			echo -e "\n\tERROR!!! $TREE has not been rooted, please check the outgroup given to confirm that it is spelled correctly"
+			#return 1
 		fi
 	done
 	
