@@ -30,7 +30,7 @@ realpath() { #
 }
 
 
-rename() { #generates output file names with same input filename prefix. The suffix (".suffix") is set in individual functions that perform different tasks.
+rename() { #generates output file names with same input filename prefix. The suffix (".suffix") is set by individual functions after performing different tasks.
         input_filename=`basename -- ${i}`
         output_filename=${input_filename%.*}
 	filename_ext=${input_filename##*.}
@@ -534,10 +534,10 @@ gbtsv2fasta(){ # This is part of the function gbxml2tsv; takes its output and co
 		else if ($9 ~ /^[[:alpha:]]*$/) {m = $9; n = "NA"}
 		else {m = "NA"; n = "NA"}
 		} {
-		if ($10 ~ /^-?[[:digit:]]{,3}\.[[:digit:]]{,10}/) {p = $10}
+		if ($10 ~ /^-?[[:digit:]]{,3}\.[[:digit:]]{,12}/) {p = $10}
 	       	else {p = "NA"}
 		} {
-		if ($11 ~ /^-?[[:digit:]]{0,3}\.[[:digit:]]{0,10}/) {q = $11}
+		if ($11 ~ /^-?[[:digit:]]{0,3}\.[[:digit:]]{0,12}/) {q = $11}
 	       	else {q = "NA"}
 		}; {
 		print ">"$3"("$1")",b,c,d,"fam-"e,"subfam-NA","tri-NA","gs-"f,"sp-"$6,"subsp-NA","country-"m,"exactsite-"n, "lat_"p, "lon_"q, "elev-NA", "l-"$4 "\n" $8 }' ${i} > ${input_src}/${output_filename}.fasta
@@ -607,13 +607,13 @@ gbxml2tsv(){ # This function will convert a genbank XML file downloaded in gb fo
 			split($10,f," ");
 			if (f[2] ~ /S/) {v = "-"f[1]} 
 			else if (f[2] ~ /N/) {v = f[1]} 
-			else if ($10 ~ /^[-+][[:digit:]]{1,3}\.[[:digit:]]{0,4}$/) {v = $10} 
+			else if ($10 ~ /^[-+][[:digit:]]{1,3}\.[[:digit:]]{0,12}$/) {v = $10} 
 			else {v = "NA"} 
 			}; {
 			split($10,g," ");
 			if (g[4] ~ /W/) {w = "-"g[3]} 
 			else if (g[4] ~ /E/) {w = g[3]} 
-			else if ($11 ~ /^[-+][[:digit:]]{1,3}\.[[:digit:]]{0,4}$/) {w = $11} 
+			else if ($11 ~ /^[-+][[:digit:]]{1,3}\.[[:digit:]]{0,12}$/) {w = $11} 
 			else {w = "NA"} 
 			} {
 			print $1,$2,y,$3,$4,$5,$6,$7,$9,v,w,$11,$12
@@ -642,53 +642,86 @@ gbxml2tsv(){ # This function will convert a genbank XML file downloaded in gb fo
 
 #===============================================================================================================================================================
 fasta2nexus(){ # This function will take a FASTA format sequence file and convert it to a nexus for use in PopART and Bayesian Phylogenetic analysis.
-	if [ $# -eq 0 ]
+	echo "$*"
+	echo "$#"
+	if [[ ( ! "$*" =~ ^-s[[:space:]][[:alnum:]\._]*[[:space:]]-c[[:space:]][[:digit:]]*.*$ ) || ( $# -lt 2 ) ]]
 	then
 		echo "Input error..."
-		echo "Usage: ${FUNCNAME[0]} -t [DNA|RNA|AA] [-s <refrence_aln> ] [-r]"
+		echo "Usage: ${FUNCNAME[0]} -s <reference_aln> [-c <INTEGER>] [-t <phylogenetic_tree>]"
 		return 1
 	fi
 
-        unset TREE
-        unset REF_MSA
-        unset ROOTED
-        unset MINBR
-        unset OUTGROUP
+	unset TREES
+	unset REF_MSA
+	unset NCLUSTER
 
-        local OPTIND=1
-        while getopts 't:rs::' key
-        do
-                case "${key}" in
-                        t)
-                                if [ ! -f $OPTARG ]
-                                then
-                                        echo -e "\tinput error: file $OPTARG is non-existent!"
-                                elif [[ ( -f $OPTARG ) && ( `basename -- $OPTARG` =~ .*\.(tree|tre|newick|.*) ) ]]
-                                then
-                                        TREE=$OPTARG
-                                fi
-                                ;;
-                        r)
-                                echo -e "\tProvided tree $TREE is taken as rooted and if not so, the first taxon will be taken as the root"
-                                ROOTED="TRUE"
-                                ;;
-                        s)
-                                if [ ! -f $OPTARG ]
-                                then
-                                        echo -e "\tinput error: file $OPTARG is non-existent!"
-                                elif [[ ( -f $OPTARG ) && ( `basename -- $OPTARG` =~ .*\.(aln|afa|fasta|fa|fst)$ ) ]]
-                                then
-                                        REF_MSA=$OPTARG
-                                fi
-                                ;;
-                        ?)
-                                echo "Input error..."
-                                echo "Usage: ${FUNCNAME[0]} -t <tree> [-r] [-s <refrence_aln>]"
-                                return 1
-                                ;;
-                esac
-        done
+	local OPTIND=1
+	while getopts 's:c:t:' key
+	do
+		case "${key}" in
+			s)
+				if [ ! -f $OPTARG ]
+				then
+					echo -e "\tinput error: file $OPTARG is non-existent!"
+				elif [[ ( -f $OPTARG ) && ( `basename -- $OPTARG` =~ .*\.(aln|afa|fasta|fa|fst)$ ) ]]
+				then
+					REF_MSA=$OPTARG
+				fi
+				;;
+			c)
+				if [[ ! $OPTARG =~ ^[1-9][0-9]*$ ]]
+				then
+					echo -e "\tinput error: the value $OPTARG is not an integer"
+				elif [[ $OPTARG =~ ^[1-9][0-9]*$ ]]
+				then
+					NCLUSTER=$OPTARG
+				fi
+				;;
+			t)
+				if [ ! -f $OPTARG ]
+				then
+					echo -e "\tinput error: file $OPTARG is non-existent!"
+				elif [[ ( -f $OPTARG ) && ( `basename -- $OPTARG` =~ .*\.(tree|tre|newick|.*) ) ]]
+				then
+					TREES=$OPTARG
+				fi
+				;;
+			?)
+				echo "Input error..."
+				echo "Usage: ${FUNCNAME[0]} -s <reference_aln> [-c <INTEGER>] [-t <phylogenetic_tree>]"
+				return 1
+				;;
+		esac
+	done
 
+	echo -e "\tGenerating a NEXUS format file from the FASTA format file `basename -- $REF_MSA`"
+	i=${REF_MSA}
+	rename #${REF_MSA}
+	outfile=`echo "${src_dir_path}/${output_filename}.nexus"`
+
+	$AWK_EXEC -v MSA="$REF_MSA" -v outfile=$outfile -v nclust=$NCLUSTER -v input_filename=$input_filename -v output_filename=$output_filename -v input_src=$input_src 'BEGIN{FS="[>|]"};
+	BEGINFILE {printf "#NEXUS\n[This Nexus file has been generated from a fasta file called" input_filename".]\n\nBEGIN TAXA;" > outfile;} /^>/{
+	hdr=$0; Id[FNR]=$2; split($12,a,"-"); country[FNR]=a[2]; split($14,b,"_"); lat[FNR]=b[2]; split($15,c,"_"); lon[FNR]=c[2]; split($16,d,"-"); alt[FNR]=d[2]; ntax=length(Id); next} {
+	seq[FNR-1]=$0; nchar=length(seq[1]) } {
+	for(i=1; i<=FNR; i+=2) if(length(seq[i]) != nchar) {
+		print "The length of the first sequence does not match the length of the sequence" Id[i] "sequences must be aligned first" > "/dev/stdout"
+		exit 1 }}; 
+	ENDFILE{ total=ntax*2; {print "\nDIMENSIONS NTAX="ntax";\n\nTAXLABELS" >> outfile } {
+	for(i=1; i<=total; i+=2) printf Id[i]"\n" >> outfile}; {
+		printf ";\nEND;\n\nBEGIN CHARACTERS;\nDIMENSIONS NCHAR="nchar";\n FORMAT DATATYPE=DNA MISSING=? GAP=- ;\nMATRIX\n\n" >> outfile } {
+	for(i=1; i<=total; i+=2) print Id[i],"\t"seq[i] >> outfile } {
+		printf";\nEND;\n\nBEGIN GeoTags;\nDimensions NClusts="nclust";\nFormat labels=yes separator=Spaces;\nMatrix\n" >> outfile } {
+	for(i=1; i<=total; i+=2) if ( lat[i] ~ "NA" ) {
+		print "["Id[i]," "lat[i]," "lon[i]"]" >> outfile;} else{
+		print Id[i]," "lat[i]," "lon[i] >> outfile } }; {
+	print";\nEnd;\n" >> outfile } }' $REF_MSA
+	
+	if [ $? -eq 0 ]
+	then
+		echo -e "\tDONE. The newick file has been stored in ${input_src}/ as ${output_filename}.nexus"
+	else
+		echo -e "\tERROR ENCOUNTERED!!!"
+	fi
 }
 
 #===============================================================================================================================================================
@@ -1028,8 +1061,8 @@ delete_unwanted() { #this function copys a record that fits a provided pattern, 
 		
 		echo -e "To delete sequences with specific words in the headers please select one of the options [1|2|3] to proceed or [4] to cancel"
 		options[0]="Move records with word patterns specified in a file into one file"
-		options[1]="Move records with word patterns specified in a file into individual word-pattern-specific file"
-		options[2]="Move records with specific single word into word specific file"
+		options[1]="Move records with string-patterns specified in a file into individual word-pattern-specific files"
+		options[2]="Move records with specific single string into a file"
 		options[3]="Exit"
 	
 		PS3='Select option [1|2|3] to delete, or [4] to exit: '	
