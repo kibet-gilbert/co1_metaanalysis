@@ -99,7 +99,7 @@ Programs to be used to visualize and edit phylogenetic trees:
 
 ### Population Structure.
 #### Haplotype Network.
-To elucidate the population structure, first a haplotype network needs to be infered. There are severally GUI tools: DNASP5/6 (Windows and MAC), PopART (Windows, MAC and Linux). But command line tools are limited. One is the haploNet fuction in the pegas R package.
+To elucidate the population structure, first a haplotype network needs to be infered. There are severally GUI tools: DNASP5/6 (Windows and MAC), [PopART (Windows, MAC and Linux)](http://popart.otago.ac.nz/documentation.shtml). But command line tools are limited and majority of those availavle are R packages. One is the haploNet fuction in the pegas R package.
 ##### pegas R package
 [Population and Evolutionary Genetics Analysis System (pegas)](https://doi.org/10.1093/bioinformatics/btp696) is an [R package](https://cran.r-project.org/web/packages/pegas/index.html) that relies on [ape](https://cran.r-project.org/web/packages/ape/), [adegenet](https://cran.r-project.org/web/packages/adegenet/) and other dependencies.
 The first step is to load and parse a FASTA file: the `ape::read.dna()` function of ape package is used here.

@@ -70,3 +70,9 @@
 [submodule "code/tools/epa-ng"]
 	path = code/tools/epa-ng
 	url = https://github.com/Pas-Kapli/mptp.git
+[submodule "code/tools/marble"]
+	path = code/tools/marble
+	url = https://github.com/KDE/marble.git
+[submodule "code/tools/marble/sources"]
+	path = code/tools/marble/sources
+	url = https://github.com/KDE/marble.git

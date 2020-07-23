@@ -1,0 +1,9 @@
+1. Go to your command line;
+2. Make sure python3 and awk are installed - use the commands:
+$ which python3
+$ which awk
+3. Source the script filter_fasta.sh
+$ . ../path-to-file/filter_fasta.sh
+4. Run the command below and you will be take though a series of guide questions as the filtering proceeds.
+$ filter_seqs file1 [file2 file3 ...]
+5. proceed till the end and the filtered sequences will be stored in an output file with the option of deleting or not deleting the filtered sequences from original parent file.

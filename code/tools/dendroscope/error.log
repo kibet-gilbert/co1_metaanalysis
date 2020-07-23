@@ -2,5 +2,6 @@ Version   Dendroscope (version 3.7.2, built 17 Feb 2020)
 Copyright (C) 2020 Daniel H. Huson. This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, licensed under the terms of the GNU General Public License, Version 3.
 Java version: 11.0.1-internal
-Executing: open file='/home/kibet/bioinformatics/github/co1_metaanalysis/data/output/phylogen/iqtree_output/Ceratitis_658/Ceratitis_cosyra-extra.newick';
+Executing: open file='/home/kibet/bioinformatics/github/co1_metaanalysis/data/output/phylogen/iqtree_output/Ceratitis_658_edtd01/Ceratitis_658_edtd02.newick';
 Trees loaded: 1
+Executing: save format=NeXML file='/home/kibet/bioinformatics/github/co1_metaanalysis/data/output/phylogen/iqtree_output/Ceratitis_658_edtd01/Ceratitis_658_edtd02.nexml';

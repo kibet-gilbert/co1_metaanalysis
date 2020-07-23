@@ -30,7 +30,7 @@ realpath() { #
 }
 
 
-rename() { #generates output file names with same input filename prefix. The suffix (".suffix") is set by individual functions after performing different tasks.
+rename() { #Takes input file name and extracts the prefix of the name ("prefix"), The suffix (".suffix"), Absolute path to the file and the name of the Directory within which the file is found.
         input_filename=`basename -- ${i}`
         output_filename=${input_filename%.*}
 	filename_ext=${input_filename##*.}
@@ -195,6 +195,11 @@ boldtsv_cleanup() { # This function takes an 80 column .TSV output of boldxml2ts
 			if [ $? -eq 0 ]
                         then
                                 echo -e "\n\tDONE. The output file has been stored in ${input_src}/${output_filename}_[all_data|Over499_data|500to700_data|650to660_data|Over700_data|Under500_data].tsv"
+			fi
+			${AWK_EXEC} 'BEGIN{FS="\t";OFS="\t"}; FNR>=2{if ($71 !~ /^NA$/) print $1,$71}' ${input_src}/${output_filename}_all_data.tsv > ${input_src}/${output_filename}_all_data.genbank_ids
+			if [ $? -eq 0 ]
+			then
+				echo -e "\n\tGenBank accession numbers have been stored in ${input_src}/${output_filename}_all_data.genbank_ids"
                         fi
 
 		else
@@ -701,12 +706,15 @@ fasta2nexus(){ # This function will take a FASTA format sequence file and conver
 
 	$AWK_EXEC -v MSA="$REF_MSA" -v outfile=$outfile -v nclust=$NCLUSTER -v input_filename=$input_filename -v output_filename=$output_filename -v input_src=$input_src 'BEGIN{FS="[>|]"};
 	BEGINFILE {printf "#NEXUS\n[This Nexus file has been generated from a fasta file called" input_filename".]\n\nBEGIN TAXA;" > outfile;} /^>/{
-	hdr=$0; Id[FNR]=$2; split($12,a,"-"); country[FNR]=a[2]; split($14,b,"_"); lat[FNR]=b[2]; split($15,c,"_"); lon[FNR]=c[2]; split($16,d,"-"); alt[FNR]=d[2]; ntax=length(Id); next} {
+	hdr=$0; Id[FNR]=$2; split($12,a,"-"); country[FNR]=a[2];
+	split($14,b,"_"); lat[FNR]=b[2]; split($15,c,"_"); lon[FNR]=c[2];
+	split($16,d,"-"); alt[FNR]=d[2]; ntax=length(Id); next} {
 	seq[FNR-1]=$0; nchar=length(seq[1]) } {
 	for(i=1; i<=FNR; i+=2) if(length(seq[i]) != nchar) {
 		print "The length of the first sequence does not match the length of the sequence" Id[i] "sequences must be aligned first" > "/dev/stdout"
 		exit 1 }}; 
-	ENDFILE{ total=ntax*2; {print "\nDIMENSIONS NTAX="ntax";\n\nTAXLABELS" >> outfile } {
+	ENDFILE{ total=ntax*2; 
+	{print "\nDIMENSIONS NTAX="ntax";\n\nTAXLABELS" >> outfile } {
 	for(i=1; i<=total; i+=2) printf Id[i]"\n" >> outfile}; {
 		printf ";\nEND;\n\nBEGIN CHARACTERS;\nDIMENSIONS NCHAR="nchar";\n FORMAT DATATYPE=DNA MISSING=? GAP=- ;\nMATRIX\n\n" >> outfile } {
 	for(i=1; i<=total; i+=2) print Id[i],"\t"seq[i] >> outfile } {
@@ -750,9 +758,14 @@ subset_seqs(){ #This function takes a faster sequence file and split it into mul
 			#Removing gaps
 			remove_gaps $i
 			i=${input_src}/${output_filename}_dgpd.${filename_ext}
+			regexp1='^n|y|N|Y|No|Yes|NO|YES|no|yes$'
+			unset choice
 			#Introducing a field "l-xxx" that has the length of the sequence in the header
 			echo -e "\tWould you like to introduce a field 'l-xxx* in the header that denotes the length of the sequence?'"
-			read -p "Please enter [Yes] or [No] to proceed: " choice
+			until [[ "$choice" =~ $regexp1 ]]
+			do
+				read -p "Please enter [Yes] or [No] to proceed: " choice
+			done
 			case $choice in
 				YES|Yes|yes|Y|y)
 					echo -e "Adding a seq. length field, ';l-xxx*' in the header to denote the sequence length..."
@@ -953,7 +966,93 @@ substitute_hdrs() { #This function takes an input file of edited_fasta_format_he
 }
 
 #===============================================================================================================================================================
+edit_ids() { #This function edits the unique identifiers by comparing BOLD ids and GenBank accession numbers to those available within the headers. It requires a file with two columns of BOLD ids and accession numbers, to be indexed, and a fasta file of sequences, to be edited.
 
+	if [ $# -eq 0 ]
+	then
+		echo "Input error..."
+		echo "Usage: ${FUNCNAME[0]} file1.*[file2.* file3.* ...]"
+		return 1
+	fi
+
+	unset input_ids
+	unset ids_option
+
+	for i in "$@"
+	do
+		if [ ! -f $i ]
+		then
+			echo "input error: file '$i' is non-existent!"
+		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(aln|afa|fasta|fa|fst)$ ) ]]
+		then
+			echo -e "Preoceeding with editing IDs in $( basename -- ${i} )"
+			#sitting the BOLD-GenBank ids file
+			regexp1='^n|N|No|NO|no$'
+			if [[ "$ids_option" =~ $regexp1 ]]
+			then
+				unset input_ids
+			fi
+			until [[ -f ${input_ids}  ]]
+			do
+				read -p "Please enter the path to the file with BOLD and GenBank ids to be indexed:: " input_ids
+				num_line=0
+				while read line || [ -n "$line" ]
+				do
+					words=`echo "${line}" | wc -w`
+					num_line=`expr ${num_line} + 1`
+					if [ ${words} -eq 2 ]
+					then
+						sed -i -E 's/^[[:space:]]+//g; s/[[:space:]]+/\t/g' ${input_ids}
+						continue
+					else
+						echo -e "ERROR! There is/are ${words} word(s) in input line ${num_line}: '${line}'"
+						return 1
+					fi
+				done < ${input_ids}
+				if [ $# -gt 1 ]
+				then
+					regexp='^n|y|N|Y|No|Yes|NO|YES|no|yes$'
+					until [[ "$ids_option" =~ $regexp ]]
+					do
+						echo -e "\nWould you like to use `basename $input_ids` as the reference file for all input files?"
+						read -p "Please enter [Yes] or [No] to proceed: " ids_option
+					done
+				fi
+			done
+
+			rename ${i}
+			concatenate_fasta_seqs ${i}
+			$AWK_EXEC -v input=$input_ids 'BEGIN{OFS="|"};FNR==NR{
+			split($0,a,"\t"); ids[FNR,1]=a[1]; ids[FNR,2]=a[2]; Nids=NR }{
+			ids[FNR,3]=ids[FNR,1]"("ids[FNR,2]")"} NR>FNR{
+			if ( $0 ~ /^>/) {hdr=$0; next} {seq=$0} { 
+				split(hdr, b, "[>|]"); $2=b[2]; $3=b[3];
+				$4=b[4]; $5=b[5]; $6=b[6]; $7=b[7]; $8=b[8];
+			       	$9=b[9]; $10=b[10]; $11=b[11]; $12=b[12];
+				$13=b[13]; $14=b[14]; $15=b[15]; $16=b[16];
+				$17=b[17]} {
+				for(i=1; i<=Nids; i++) if($2 ~ ids[i,1]) {
+					$2 = ids[i,3]}
+					else if (split($2,d,"[)(]|__") && 
+i						d[1] ~ ids[i,1] && 
+						d[2] ~ ids[i,2]) {next}
+					else if (split($2,d,"[)(]|__") &&
+					       	d[2] ~ ids[i,2]) {
+							$2 = ids[i,3]}
+					else {continue}}{
+				print ">"$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17"\n"seq}}' ${input_ids} ${i} > ${src_dir_path}/${output_filename}_edtd.${filename_ext}
+			if [ $? -eq 0 ]
+			then
+				echo -e "\n\tDONE. All edited records have been stored in ${input_src}/${output_filename}_edtd.${filename_ext}\n"
+			fi
+		else
+			echo "input file error in `basename $i`: input file should be a .fasta file format"
+			continue
+		fi
+	done
+}
+
+#===============================================================================================================================================================
 delete_repeats() { #This function takes a fasta_format_sequences file and deletes repeats of sequences based on identical headers.
 	#in multiple files at once: awk -F'[|]' 'FNR%2{f=seen[$1]++} !f' *
 	#in each file: awk -F'[|]' 'FNR==1{delete seen} FNR%2{f=seen[$1]++} !f' *
@@ -972,11 +1071,17 @@ delete_repeats() { #This function takes a fasta_format_sequences file and delete
 		rename
 		input_src=`dirname "$( realpath "${i}" )"`
 		unset duplicate_headers
+		unset choice
+		unset option
+		regexp1='^n|y|N|Y|No|Yes|NO|YES|no|yes$'
 		duplicate_headers=`$AWK_EXEC 'BEGIN { FS="[>|(]"}; /^>/{if ($2 ~ /^NA$/) {print $3} else {print $2} }' $i | sort | uniq -d`
 		if [ ! -z "$duplicate_headers" ]
 		then
 			echo -e "\t...`echo -e "$duplicate_headers" | wc -l` records are repeated in $( basename -- ${i} ),\n\t...would you like to proceed and delete all repeats?"
-			read -p "Please enter [Yes] or [No] to proceed: " choice
+			until [[ "$choice" =~ $regexp1 ]]
+			do
+				read -p "Please enter [Yes] or [No] to proceed: " choice
+			done
 		else
 			choice="No"
 		fi
@@ -991,7 +1096,10 @@ delete_repeats() { #This function takes a fasta_format_sequences file and delete
 				if [ ! -z "$duplicate_headers" ]
 				then
 					echo -e "\tWould you like to save a list of the dublicates?"
-					read -p "Please enter [Yes] or [No] to proceed: " option
+					until [[ "$option" =~ $regexp1 ]]
+					do
+						read -p "Please enter [Yes] or [No] to proceed: " option
+					done
 					case $option in
 						YES|Yes|yes|Y|y)
 							echo -e "\tCancelling....\nThe list of repeated sequences is in file called '_duplicates'\n"
@@ -1017,61 +1125,74 @@ delete_repeats() { #This function takes a fasta_format_sequences file and delete
 }
 
 #===============================================================================================================================================================
-move_unwanted() { #	
+move_matched() { #This is updated version of move_unwanted function 
+	# It is used within the filter_seqs function below. It moves and deletes the matching fasta records.
 	for i in "$@"
 	do
 		matching_records=`grep $pattern_name $i | wc -l`
 		echo -e "${matching_records} records match the pattern '$pattern_name'"
 		if [ $matching_records -gt 0 ]
 		then
-			echo -e "\tRemoving any records with '$pattern_name' description in header from file..."
+			echo -e "\tMatching any headers with '$pattern_name' word-pattern in `basename $i`..."
 			$AWK_EXEC -v pat="$pattern_name" '/^>/{
 			hdr=$0; next} {
 			seq=$0 } {
- 			pattern=pat; gsub(/\|/,"\\\|", pattern)} hdr~pattern{ 
- 			print hdr; print seq }' $i >> ${input_src}/${output_filename}_${unwanted}.${filename_ext}
-			sed -i "/$pattern_name/,+1 d" $i
+			pattern=pat; gsub(/\|/,"\\\|", pattern)} hdr~pattern{
+			print hdr; print seq }' $i >> ${input_src}/${output_filename}_${suffix}.${filename_ext}
+			
+			#Deleting matched records
+			regexpno='^n|N|No|NO|no$'
+			regexpyes='^y|Y|Yes|YES|yes$'
+			if [[ $Choice =~ $regexpyes ]]
+			then
+				echo -e "The records that match $pattern_name have been deleted from `basename $i`"
+				sed -i "/$pattern_name/,+1 d" $i
+			elif [[ ${Choice} =~ $regexno ]]
+			then
+				echo -e "The records that match $pattern_name have been retained in `basename $i`"
+			fi
 		fi
-	done
+        done
 }
 
-delete_unwanted() { #this function copys a record that fits a provided pattern, e.g a non-insect class taxon_name_description; the arguments provided, are the files to be searched for the patterns
-	# LOGIC behind the code: To get the list of orders in description_taxon_names and their frequencies, from  which to select the undesired patterns (names), do: 
-	#grep ">" seqs.fasta | awk 'BEGIN {FS="|"; OFS="|" ; }; {print $2}' |sort | uniq -c > seqs_orders && less seqs_orders
 
+filter_seqs() { # Updated version of delete_unwanted function.
+	#this function copys a record that fits a provided pattern, e.g a taxon_name_description; the arguments provided, are the files to be searched for the patterns
+	# LOGIC behind the code: To get the list of orders in description_taxon_names and their frequencies, from  which to select the undesired patterns (names), do:
+	#grep ">" seqs.fasta | awk 'BEGIN {FS="|"; OFS="|" ; }; {print $2}' |sort | uniq -c > seqs_orders && less seqs_orders
+	
 	set -E
 	trap ' return 1 ' ERR
-
+	
 	if [ $# -eq 0 ]
-        then
-                echo "Input error..."
-                echo "Usage: ${FUNCNAME[0]} file1.*[file2.* file3.* ...]"
-                return 1
-
-        fi
-
+	then
+		echo "Input error..."
+		echo "Usage: ${FUNCNAME[0]} file1.*[file2.* file3.* ...]"
+		return 1
+	fi
+	
 	for i in "$@"
 	do
 		echo -e "\nProceeding with `basename -- $i`..."
 		rename
 		input_src=`dirname "$( realpath "${i}" )"`
 		concatenate_fasta_seqs $i
-	
+		
 		unset options
 		
-		echo -e "To delete sequences with specific words in the headers please select one of the options [1|2|3] to proceed or [4] to cancel"
-		options[0]="Move records with word patterns specified in a file into one file"
-		options[1]="Move records with string-patterns specified in a file into individual word-pattern-specific files"
-		options[2]="Move records with specific single string into a file"
+		echo -e "To extract sequences with specific words in the headers please select one of the options [1|2|3] to proceed or [4] to cancel"
+		options[0]="Copy records with word patterns specified in a file into one file"
+		options[1]="Copy records with string-patterns specified in a file into individual word-pattern-specific files"
+		options[2]="Copy records with specific single string into a file"
 		options[3]="Exit"
-	
-		PS3='Select option [1|2|3] to delete, or [4] to exit: '	
+		
+		PS3='Select option [1|2|3] to delete, or [4] to exit: '
 		select option in "${options[@]}"
 		do
 			unset pattern_name
 			unset input_pattern_file
-			
 			regexp='^[a-zA-Z0-9/_-\ \|]+$'
+			regexp1='^n|y|N|Y|No|Yes|NO|YES|no|yes$'
 			
 			case $option in
 				${options[0]})
@@ -1082,14 +1203,24 @@ delete_unwanted() { #this function copys a record that fits a provided pattern, 
 						#cat ${input_pattern_file}
 					done
 					
+					#deleting matches
+					echo -e "\nIf you wish to delete records that match the search patterns in $input_pattern_file from `basename $i` enter [YES] or [NO] if you wish to retain them.\n"
+					unset Choice
+					read -p "Please enter [Yes] or [NO] to proceed:: " Choice
+					until [[ "$Choice" =~ $regexp1 ]]
+					do
+						echo "INVALID choice $REPLY"
+					done
+					
 					for line in `cat ${input_pattern_file}`
 					do
 						pattern_name=${line}
-						unwanted="unwanted"
+						suffix="matched"
 						#echo ${pattern_name}
-						move_unwanted "${i}"
+						move_matched "${i}"
 					done
-					echo -e "\n\tDONE. All deleted records have been stored in '${output_filename}_${unwanted}.fasta'"
+					echo -e "\n\tDONE. All deleted records have been stored in '${output_filename}_${suffix}.fasta'"
+					break
 					;;
 				${options[1]})
 					until [[ -f ${input_pattern_file} ]]
@@ -1097,34 +1228,55 @@ delete_unwanted() { #this function copys a record that fits a provided pattern, 
 						read -p "Please enter the path to the file with pattern names to be removed:: " input_pattern_file
 					done
 					
+					echo -e "\nIf you wish to delete records that match the search patterns in $input_pattern_file from `basename $i` enter [YES] or [NO] if you wish to retain them.\n"
+					unset Choice
+					read -p "Please enter [Yes] or [NO] to proceed:: " Choice
+					until [[ "$Choice" =~ $regexp1 ]]
+					do
+						echo "INVALID choice $REPLY"
+					done
+					
 					for line in `cat ${input_pattern_file}`
 					do
 						pattern_name=${line}
-						unwanted=${pattern_name}
-						move_unwanted "${i}"
-						echo -e "\n\tDONE. All deleted records have been stored in '${output_filename}_${unwanted}.fasta'"
+						suffix=${pattern_name}
+						move_matched "${i}"
+						echo -e "\n\tDONE. All deleted records have been stored in '${output_filename}_${suffix}.fasta'"
 					done
+					break
 					;;
 				${options[2]})
 					until [[ "$pattern_name" =~ $regexp ]]
 					do
 						read -p "Please enter string pattern to be searched:: " pattern_name
 					done
-					unwanted=`echo ${pattern_name} | sed 's/|/\./g'`
-					move_unwanted "${i}"
-					echo -e "\n\tDONE. All deleted records have been stored in '${output_filename}_${unwanted}.fasta'"
+					
+					echo -e "\nIf you wish to delete records that match the search pattern '$pattern_name' from `basename $i` enter [YES] or [NO] if you wish to retain them.\n"
+					unset Choice
+					read -p "Please enter [Yes] or [NO] to proceed:: " Choice
+					until [[ "$Choice" =~ $regexp1 ]]
+					do
+						echo "INVALID choice $REPLY"
+					done
+					
+					suffix=`echo ${pattern_name} | sed 's/|/\./g'`
+					move_matched "${i}"
+					echo -e "\n\tDONE. All deleted records have been stored in '${output_filename}_${suffix}.fasta'"
+					break
 					;;
 				${options[3]})
-					echo -e "Exiting deletion of unwanted sequences..."
+					echo -e "Exiting deletion of pattern-matched sequences..."
 					break
 					;;
 				*)
-					echo "INVALID choice $REPLY"
+					echo "INVALID choice: Select option [1|2|3] to delete, or [4] to exit: "
 					;;
 			esac
 		done
 	done
 }
+
+
 
 #===============================================================================================================================================================
 
@@ -1237,7 +1389,6 @@ delete_shortseqs_gaps() { #This function identifies and removes sequences that h
 
 #===============================================================================================================================================================
 
-regexp='^[0-9]+$'
 set_start_Ngaps() { # This functions sets the value of the variable "start_Ngaps"
 	until [[ "$start_Ngaps" =~ $regexp ]]
 	do
@@ -1294,6 +1445,7 @@ delete_shortseqs() { #This function identifies and removes sequences that have s
 			options=("Gaps at the 3' or 5' ends of sequences" "Ns and gaps at the 3' and 5' ends" "Gaps & Ns in the entire sequence" "Summation of Ns and gaps at the 3' and 5' ends" "Quit")
 			select opt in "${options[@]}"
 			do
+				regexp='^[0-9]+$'
 				unset start_Ngaps
 				unset end_Ngaps
 				unset mid_Ns
