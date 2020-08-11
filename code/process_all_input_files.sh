@@ -83,7 +83,7 @@ bolddata_retrival() { # This fuction retrives data belonging to a list of countr
 
 	echo -e "\n\tDownloading data of countries named in ${countries[@]} from www.boldsystems.org V4"
 	unset taxon_nam
-	regexp='^[a-zA-Z0-9/_-\ ]+$'
+	regexp='^[a-zA-Z0-9/_\-\ ]+$'
 	
 	until [[ "$taxon_nam" =~ $regexp ]]
 	do
@@ -104,15 +104,15 @@ bolddata_retrival() { # This fuction retrives data belonging to a list of countr
 	then
 		for i in ${countries[@]}
 		do
-			wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${i}"_summary.xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/stats?geo=${i}&taxon=${taxon_name}&format=xml"
+			wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${i}`date +"-%d%m%Y"`"_summary.xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/stats?geo=${i}&taxon=${taxon_name}&format=xml"
 			#wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${i}"_specimen.xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/specimen?geo=${i}&taxon=${taxon_name}&format=xml"
-			wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${i}".xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/combined?geo=${i}&taxon=${taxon_name}&format=xml"
+			wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${i}`date +"-%d%m%Y"`".xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/combined?geo=${i}&taxon=${taxon_name}&format=xml"
 		done
 	elif [[ ( `echo ${countries[0]}` =~ "all" ) ]]
 	then
-		wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${taxon_nam}"_summary.xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/stats?taxon=${taxon_name}&format=xml"
+		wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${taxon_nam}`date +"-%d%m%Y"`"_summary.xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/stats?taxon=${taxon_name}&format=xml"
 		#wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${taxon_nam}"_specimen.xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/specimen?taxon=${taxon_name}&format=xml"
-		wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${taxon_nam}".xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/combined?taxon=${taxon_name}&format=xml"
+		wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${taxon_nam}`date +"-%d%m%Y"`".xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/combined?taxon=${taxon_name}&format=xml"
 	fi
 }
 
@@ -196,7 +196,7 @@ boldtsv_cleanup() { # This function takes an 80 column .TSV output of boldxml2ts
                         then
                                 echo -e "\n\tDONE. The output file has been stored in ${input_src}/${output_filename}_[all_data|Over499_data|500to700_data|650to660_data|Over700_data|Under500_data].tsv"
 			fi
-			${AWK_EXEC} 'BEGIN{FS="\t";OFS="\t"}; FNR>=2{if ($71 !~ /^NA$/) print $1,$71}' ${input_src}/${output_filename}_all_data.tsv > ${input_src}/${output_filename}_all_data.genbank_ids
+			${AWK_EXEC} 'BEGIN{FS="\t";OFS="\t"}; FNR>=2{if ($71 !~ /^NA$/) print $1,$71}' ${input_src}/${output_filename}_all_data.tsv ${input_src}/${output_filename}_NonCOI_data.tsv >> ${input_src}/${output_filename}_all_data.genbank_ids
 			if [ $? -eq 0 ]
 			then
 				echo -e "\n\tGenBank accession numbers have been stored in ${input_src}/${output_filename}_all_data.genbank_ids"
@@ -423,20 +423,52 @@ gbifdata_eval(){ #This function evaluates the gbif data downloads and outputs am
 genbankdata_retrival(){ # This function will retrieve nucleotide sequence data from GenBank based on a provided file of accession numbers.
 	# epost -db nuccore -input ../gbif/psychodidae-9164/psychodidae_genbankAccessionNumbers.txt | efetch -format gb -mode xml > output.genbank
 
-
-	if [ $# -eq 0 ]
+	if [[ ( ! "$*" =~ ^-i[[:space:]][[:alnum:]\._]*[[:space:]]-d[[:space:]][[:lower:]]*$ ) || ( $# -lt 4 ) ]]
 	then
 		echo "Input error..."
-		echo "Usage: ${FUNCNAME[0]} file1.genbankAccessionNumbers.txt[file2.genbankAccessionNumbers.txt file3.genbankAccessionNumbers.txt ...]"
+		echo "Usage: ${FUNCNAME[0]} -i <uniq_ids_file> -d <target_database>"
 		return 1
 	fi
-	
-	for i in "$@"
+
+	unset ids
+	unset db
+
+        local OPTIND=1
+	while getopts 'i:d:' key
+	do
+		case "${key}" in
+			i)
+				if [ ! -f $OPTARG ]
+				then
+					echo -e "\tinput error: file $OPTARG is non-existent!"
+				elif [[ ( -f $OPTARG ) && ( `basename -- $OPTARG` =~ .*(\.ids|genbankAccessionNumbers\.txt)$ ) ]]
+				then
+					ids=$OPTARG
+				fi
+				;;
+			d)
+				if [[ ! $OPTARG =~ ^(nuccore|popset|pubmed|taxonomy|gene|genome|nucest|books|protein|snp|sra|probe|nucgss)$ ]]
+				then
+					echo -e "\tinput error: the value $OPTARG is not an integer"
+				elif [[ $OPTARG =~ ^(nuccore|popset|pubmed|taxonomy|gene|genome|nucest|books|protein|snp|sra|probe|nucgss)$ ]]
+				then
+					db=$OPTARG
+				fi
+				;;
+			?)
+				echo "Please check, Input error..."
+				echo "Usage: ${FUNCNAME[0]} -i <uniq_ids_file> -d <target_database>"
+				return 1
+				;;
+		esac
+	done
+
+	for i in "$ids"
 	do
 		if [ ! -f $i ]
 		then
 			echo "input error: file '$i' is non-existent!"
-		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*genbankAccessionNumbers\.txt$ ) ]]
+		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*(\.ids|genbankAccessionNumbers\.txt)$ ) ]]
 		then
 			rename
 			input_src=`dirname "$( realpath "${i}" )"`
@@ -484,7 +516,7 @@ genbankdata_retrival(){ # This function will retrieve nucleotide sequence data f
 				esac
 			done
 
-			epost -db nuccore -input ${i} | efetch -format ${format} -mode ${mode} > ${genbankouput_dir}/${output_filename}.${format}.${mode}
+			epost -db $db -input ${i} | efetch -format ${format} -mode ${mode} > ${genbankouput_dir}/${output_filename}.${format}.${mode}
 
 			if [ $? -eq 0 ]
 			then
@@ -535,7 +567,7 @@ gbtsv2fasta(){ # This is part of the function gbxml2tsv; takes its output and co
 			else {k = "NA"}
 			}
 		} {
-		if ($9 ~ /^[[:alpha:]]*:.*/) {split($9,l,":"); m = l[1]; n = l[2]; gsub(/[[:space:]]*/,"",$7) }
+		if ($9 ~ /^[[:alpha:] '\'']*:.*/) {split($9,l,":"); m = l[1]; n = l[2]; gsub(/^[[:space:]]*/,"",n) }
 		else if ($9 ~ /^[[:alpha:]]*$/) {m = $9; n = "NA"}
 		else {m = "NA"; n = "NA"}
 		} {
@@ -599,7 +631,7 @@ gbxml2tsv(){ # This function will convert a genbank XML file downloaded in gb fo
 
 			$AWK_EXEC -v element="$element1" 'BEGINFILE {gsub(/[[:space:]]/, "\t", element); print element};
 			BEGIN{ FS="\t"; OFS="\t" }; 
-			NR == 1 { next }; {
+			FNR == 1 { next }; {
 			if ($8 ~ /^.*gnl.*$/) {split($8,a,"::"); {
 				for (i in a) if (a[i] ~ /^gnl.*$/) {b = a[i]}
 				}; split(b,c,"|"); d = c[3]; split(d,e,"."); { 
@@ -647,8 +679,6 @@ gbxml2tsv(){ # This function will convert a genbank XML file downloaded in gb fo
 
 #===============================================================================================================================================================
 fasta2nexus(){ # This function will take a FASTA format sequence file and convert it to a nexus for use in PopART and Bayesian Phylogenetic analysis.
-	echo "$*"
-	echo "$#"
 	if [[ ( ! "$*" =~ ^-s[[:space:]][[:alnum:]\._]*[[:space:]]-c[[:space:]][[:digit:]]*.*$ ) || ( $# -lt 2 ) ]]
 	then
 		echo "Input error..."
@@ -701,28 +731,33 @@ fasta2nexus(){ # This function will take a FASTA format sequence file and conver
 
 	echo -e "\tGenerating a NEXUS format file from the FASTA format file `basename -- $REF_MSA`"
 	i=${REF_MSA}
+	concatenate_fasta_seqs ${i}
 	rename #${REF_MSA}
 	outfile=`echo "${src_dir_path}/${output_filename}.nexus"`
+	outfile1=`echo "${src_dir_path}/${output_filename}_shrt.${filename_ext}"`
 
-	$AWK_EXEC -v MSA="$REF_MSA" -v outfile=$outfile -v nclust=$NCLUSTER -v input_filename=$input_filename -v output_filename=$output_filename -v input_src=$input_src 'BEGIN{FS="[>|]"};
-	BEGINFILE {printf "#NEXUS\n[This Nexus file has been generated from a fasta file called" input_filename".]\n\nBEGIN TAXA;" > outfile;} /^>/{
-	hdr=$0; Id[FNR]=$2; split($12,a,"-"); country[FNR]=a[2];
-	split($14,b,"_"); lat[FNR]=b[2]; split($15,c,"_"); lon[FNR]=c[2];
-	split($16,d,"-"); alt[FNR]=d[2]; ntax=length(Id); next} {
+	$AWK_EXEC -v MSA="$REF_MSA" -v outfile=$outfile -v outfile1=$outfile1 -v nclust=$NCLUSTER -v input_filename=$input_filename -v output_filename=$output_filename -v input_src=$input_src 'BEGIN{FS="[>|]"};
+	BEGINFILE {printf "#NEXUS\n[This Nexus file has been generated from a fasta file called "input_filename".]\n\nBEGIN TAXA;" > outfile;} /^>/{ hdr=$0;
+	split($2,id,"("); Id[FNR]=id[1]; split($10,sp,"sp-"); SP[FNR]=sp[2];
+	split($12,a,"-"); country[FNR]=a[2]; split($14,b,"_"); lat[FNR]=b[2];
+	split($15,c,"_"); lon[FNR]=c[2]; split($16,d,"-"); alt[FNR]=d[2];
+	KD[i]=$3; ntax=length(Id); next} {
 	seq[FNR-1]=$0; nchar=length(seq[1]) } {
 	for(i=1; i<=FNR; i+=2) if(length(seq[i]) != nchar) {
 		print "The length of the first sequence does not match the length of the sequence" Id[i] "sequences must be aligned first" > "/dev/stdout"
 		exit 1 }}; 
 	ENDFILE{ total=ntax*2; 
-	{print "\nDIMENSIONS NTAX="ntax";\n\nTAXLABELS" >> outfile } {
+	{print "\n\tDIMENSIONS NTAX="ntax";\n\tTAXLABELS" >> outfile } {
 	for(i=1; i<=total; i+=2) printf Id[i]"\n" >> outfile}; {
-		printf ";\nEND;\n\nBEGIN CHARACTERS;\nDIMENSIONS NCHAR="nchar";\n FORMAT DATATYPE=DNA MISSING=? GAP=- ;\nMATRIX\n\n" >> outfile } {
+		printf ";\nEND;\n\nBEGIN CHARACTERS;\n\tDIMENSIONS NCHAR="nchar";\n\tFORMAT DATATYPE=DNA MISSING=? GAP=- ;\n\tMATRIX\n" >> outfile } {
 	for(i=1; i<=total; i+=2) print Id[i],"\t"seq[i] >> outfile } {
-		printf";\nEND;\n\nBEGIN GeoTags;\nDimensions NClusts="nclust";\nFormat labels=yes separator=Spaces;\nMatrix\n" >> outfile } {
+		printf";\nEND;\n\nBEGIN GeoTags;\n\tDimensions NClusts="nclust";\n\tFormat labels=yes separator=Spaces;\n\tMatrix\n" >> outfile } {
 	for(i=1; i<=total; i+=2) if ( lat[i] ~ "NA" ) {
 		print "["Id[i]," "lat[i]," "lon[i]"]" >> outfile;} else{
 		print Id[i]," "lat[i]," "lon[i] >> outfile } }; {
-	print";\nEnd;\n" >> outfile } }' $REF_MSA
+	print";\nEnd;\n" >> outfile } {
+	for(i=1; i<=total; i+=2) if (KD[i] ~ /^Outgroup.*$/) {SP[i]=KD[i]} { 
+		print Id[i]__SP[i]"\n"seq[i] >> outfile1 }} }' $REF_MSA
 	
 	if [ $? -eq 0 ]
 	then
@@ -1186,7 +1221,7 @@ filter_seqs() { # Updated version of delete_unwanted function.
 		options[2]="Copy records with specific single string into a file"
 		options[3]="Exit"
 		
-		PS3='Select option [1|2|3] to delete, or [4] to exit: '
+		PS3='Select one of the filter methods [1|2|3], or [4] to exit: '
 		select option in "${options[@]}"
 		do
 			unset pattern_name
@@ -1199,7 +1234,7 @@ filter_seqs() { # Updated version of delete_unwanted function.
 					#echo "no error"
 					until [[ -f ${input_pattern_file}  ]]
 					do
-						read -p "Please enter the path to the file with pattern names to be removed:: " input_pattern_file
+						read -p "Please enter the path to the file with pattern names to be extracted:: " input_pattern_file
 						#cat ${input_pattern_file}
 					done
 					
@@ -1225,7 +1260,7 @@ filter_seqs() { # Updated version of delete_unwanted function.
 				${options[1]})
 					until [[ -f ${input_pattern_file} ]]
 					do
-						read -p "Please enter the path to the file with pattern names to be removed:: " input_pattern_file
+						read -p "Please enter the path to the file with pattern names to be extracted:: " input_pattern_file
 					done
 					
 					echo -e "\nIf you wish to delete records that match the search patterns in $input_pattern_file from `basename $i` enter [YES] or [NO] if you wish to retain them.\n"
