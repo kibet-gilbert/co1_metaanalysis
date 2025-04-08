@@ -44,7 +44,7 @@ fasttree_phylo() { #
                         rename
                         echo -e "\nproceeding with file `basename $i`..."
 			sed -i "s/\[//g; s/\]//g; s/ /_/g; s/://g; s/;//g; s/,/__/g; s/(/__/g; s/)//g; s/'//g; s/|/-.-/g; s/\//_/g" $i
-			fasttree -gtr -gamma -nt $i > ${fasttree_dest}${output_filename}.tree
+			fasttree -gtr -gamma -nt $i > ${fasttree_dest}${output_filename}.tree |& tee -a ${fasttree_dest}aligned/${output_filename}.log
 			if [ $? -eq 0 ]
 			then
 				echo -e "\nDONE. The ouput phylogenetic tree file has been stored in ${fasttree_dest}${output_filename}.tree"

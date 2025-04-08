@@ -1,0 +1,28 @@
+
+Before Running any code from align_trim_phylogen.sh please first set up your environments as follows:
+# $ conda activate <environment_name>
+# $ conda install -c bioconda mafft bmge iqtree
+# If you wish to work with Mafft from a HPC and exploit its higher_performance version using MPI version install it from source code from this link >> https://mafft.cbrc.jp/alignment/software/mpi.html
+# And set the path below to its installation in the align_trim_phylogen.sh as shown below. 
+run_mafft=/path/to/mafft-7.471-without-extensions/bin/mafft # you don't need toset this if you are not using a local installation installed directly from the source code.
+
+Then run as follows:
+
+$ source /path/to/align_trim_phylogen.sh
+$ mafft_local <input_file> <<'EOF'
+<number_of_CPUs_to_use>
+1
+EOF
+$ bmge_cleanup <aligned_file_to_be_trimmed> <<'EOF'
+<accepted_gap_rate_in_decimals>
+EOF
+$ iqtree_phylo <trimmed_MSA> <<'EOF'
+<number_of_bootstraps(eg_1000)>
+<3>
+EOF
+
+#The worflow above uses functions from align_trim_phylogen.sh script namely: Mafft_local, bmge_cleanup and iqtree_phylo. You can try them out idividually first.
+# We are using a "Heredocs" approach to feed input into the functions because they are interactiive. Here is how it works >> http://tldp.org/LDP/abs/html/here-docs.html
+
+Now you can copy the code above into a bash script and include a shebang and run it automatically. Example is at the end of align_trim_phylogen.sh. uncomment it and it will hopefully run. by just running the script as shown below:
+bash  align_trim_phylogen.sh <input1 [input2] [input3 ...]>

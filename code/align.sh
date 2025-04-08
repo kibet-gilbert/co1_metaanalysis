@@ -5,6 +5,7 @@
 co1_path=~/bioinformatics/github/co1_metaanalysis/
 muscle_dest=${co1_path}data/output/alignment/muscle_output/
 mafft_dest=${co1_path}data/output/alignment/mafft_output/
+run_mafft=${co1_path}code/tools/mafft-7.471-without-extensions/bin/mafft
 makemergetable=${co1_path}code/makemergetable.rb
 tcoffee_dest=${co1_path}data/output/alignment/t_coffee_output/
 pasta_dest=${co1_path}data/output/alignment/pasta_output/
@@ -13,6 +14,7 @@ sate_dest=${co1_path}data/output/alignment/sate_output/
 MPIRUN=$( which mpirun )
 mpionly=${co1_path}code/mpionly.noscheduler
 PYTHON_EXEC=$( which python )
+AWK_EXEC=$( which gawk )
 
 usage() { #checks if the positional arguments (input files) for execution of the script are defined
 	if [ $# -eq 0 ]
@@ -29,10 +31,10 @@ realpath() { #
 }
 
 rename() { #generates output file names with same input filename prefix. The suffix (".suffix") is set in individual functions that perform different tasks.
-	input_filename=$(basename -- "${i}")
+	input_filename=$(basename -- "$@")
 	output_filename=${input_filename%.*}
 	filename_ext=${input_filename##*.}
-	src_dir_path=`dirname $(realpath ${i})`
+	src_dir_path=`dirname $(realpath $@)`
 	src_dir=${src_dir_path##*/}
 }
 
@@ -53,7 +55,7 @@ muscle_large() { #muscle aligment of large datasets, long execution times is an 
 			echo "input error: file $i is non-existent!"
 		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa)$ ) ]]
 		then
-			rename
+			rename $i
 			echo -e "\nproceeding with file `basename $i`..."
 			muscle -in $i -fastaout ${muscle_dest}./aligned/${output_filename}.afa -clwout ${muscle_dest}./aligned/${output_filename}.aln -maxiters 2
 		else
@@ -77,9 +79,9 @@ muscle_refine() {
 			echo "input error: file $i is non-existent!"
 		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa|aln)$ ) ]]
 		then
-			rename
+			rename $i
 			echo -e "\nproceeding with file `basename $i`..."
-			muscle -in $i -fastaout ${src_dir_path}/${output_filename}_rfnd.afa -clwout ${src_dir_path}/${output_filename}_rfnd.aln -refine
+			muscle -in $i -fastaout ${src_dir_path}/${output_filename}_rfnd.afa -refine
 		else
 			echo "input file error in `basename $i`: input file should be a .afa file format"
 			continue
@@ -162,7 +164,7 @@ mafft_GlINS1() {
                         echo "input error: file $i is non-existent!"
                 elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa)$ ) ]]
                 then
-                        rename
+                        rename $i
                         echo -e "\nmafft G-large-INS-1 MSA: proceeding with file `basename $i`..."
 			printf "Choose from the following output formats: \n"
 			select output_formats in fasta_output_format clustal_output_format none_exit
@@ -170,12 +172,12 @@ mafft_GlINS1() {
 				case $output_formats in
 					fasta_output_format)
 						echo -e "\nGenerating .fasta output\n"
-						mafft --large --globalpair --thread -1 --reorder $i > ${mafft_dest}aligned/${output_filename}.fasta
+						mafft --large --globalpair --thread -1 --reorder $i > ${mafft_dest}aligned/${output_filename}.fasta |& tee -a ${mafft_dest}aligned/${output_filename}.log
 						break
 						;;
 					clustal_output_format)
 						echo -e "\nGenerating a clustal format output\n"
-						mafft --large --globalpair --thread -1 --reorder --clustalout $1 > ${mafft_dest}aligned/${output_filename}.aln
+						mafft --large --globalpair --thread -1 --reorder --clustalout $1 > ${mafft_dest}aligned/${output_filename}.aln |& tee -a ${mafft_dest}aligned/${output_filename}.log
 						break
 						;;
 					none_exit)
@@ -224,22 +226,33 @@ mafft_local() {
 				read -p "Please enter the number of physical cores to be used: " num_cpus
 			done
 
-			rename
+			rename $i
                         echo -e "\nmafft L-large-INS-1 MSA: proceeding with file `basename $i`..."
-                        printf "Choose from the following output formats: \n"
-                        select output_formats in fasta_output_format clustal_output_format none_exit
+                        printf "Choose from the following installations of MAFFT: \n"
+                        select mafft_install in local_environment source_code none_exit
                         do
-                                case $output_formats in
-                                        fasta_output_format)
+                                case $mafft_install in
+                                        local_environment)
                                                 echo -e "\nGenerating .fasta output\n"
 						bash $mpionly
-                                                mafft --mpi --large --localpair --thread -${num_cpus} --reorder $i > ${mafft_dest}aligned/${output_filename}.fasta
+                                                mafft --localpair --maxiterate 1000 --thread -${num_cpus} --reorder $i > ${mafft_dest}aligned/${output_filename}.afa |& tee -a ${mafft_dest}aligned/${output_filename}.log
+						${AWK_EXEC} '{ if($0 ~ /^>/ ) {print $0} else {print toupper($0) }}' ${mafft_dest}aligned/${output_filename}.afa > ${mafft_dest}aligned/${output_filename}_upper.afa && mv ${mafft_dest}aligned/${output_filename}_upper.afa ${mafft_dest}aligned/${output_filename}.afa
+						if [ $? -eq 0 ]
+						then
+							echo -e "\n\tDONE. The MSA output file has been stored in ${mafft_dest}aligned/${output_filename}.afa"
+						fi
+
 						break
                                                 ;;
-                                        clustal_output_format)
+                                        source_code)
                                                 echo -e "\nGenerating a clustal format output\n"
 						bash $mpionly
-                                                mafft --mpi --large --localpair --thread -${num_cpus} --reorder --clustalout $1 > ${mafft_dest}aligned/${output_filename}_l.aln
+						${run_mafft} --mpi --large --localpair --thread -${num_cpus} --reorder $1 > ${mafft_dest}aligned/${output_filename}.afa |& tee -a ${mafft_dest}aligned/${output_filename}.log
+						${AWK_EXEC} '{ if($0 ~ /^>/ ) {print $0} else {print toupper($0) }}' ${mafft_dest}aligned/${output_filename}.afa > ${mafft_dest}aligned/${output_filename}_upper.afa && mv ${mafft_dest}aligned/${output_filename}_upper.afa ${mafft_dest}aligned/${output_filename}.afa
+						if [ $? -eq 0 ]
+						then
+							echo -e "\n\tDONE. The MSA output file has been stored in ${mafft_dest}aligned/${output_filename}_l.aln"
+						fi
 						break
                                                 ;;
                                         none_exit)
@@ -368,7 +381,7 @@ mafft_merge() {
 			
 			cat $@ > ${mafft_dest}merged/input.fasta
 			${RUBY_EXEC} ${makemergetable} $@ > ${mafft_dest}merged/subMSAtable
-			mafft --merge ${mafft_dest}merged/subMSAtable ${mafft_dest}merged/input.fasta > ${mafft_dest}merged/${outname}.fasta
+			mafft --merge ${mafft_dest}merged/subMSAtable ${mafft_dest}merged/input.fasta > ${mafft_dest}merged/${outname}.afa |& tee -a ${mafft_dest}aligned/${outname}_merge.log
 			;;
 		[nN][oO] | [nN] )
 			echo "exiting the operation"
@@ -390,29 +403,130 @@ mafft_merge() {
 #syntax:	% mafft --add new_sequences --reorder existing_alignment > output
 
 mafft_add() {
-	echo -e "\n \$1 should be the new_sequences: unaligned full-length sequence(s) to be added into the existing alignment (\$2) "
-	printf "\nEnter [Yes] to continue or [No] to exit: "
-	read choice
-	case $choice in
-		[yY][eE][sS] | [yY] )
-			usage $@
-			
-			inputfiletest $@
-			
-			outputfilename $@
-			
-			mafft --add $1 --reorder $2 > ${mafft_dest}addseq/${outname}.fasta
-			;;
-		[nN][oO] | [nN] )
-			echo "exiting the --add sequences operation"
-			;;
-		*)
-			echo "Invalid input: please enter [Yes] or [No]"
-			;;
-	esac
+	if [[ ( ! "$*" =~ ^-a[[:space:]][-[:alnum:]\._]*[[:space:]]-i[[:space:]][-[:alnum:]\._]*$ ) || ( $# -lt 2 ) ]]
+	then
+		echo "Input error..."
+		echo "Usage: ${FUNCNAME[0]} -a <reference_aln> -i <newSequences>"
+		return 1
+	fi
+
+	unset REF_MSA
+	unset New_SEQS
+	local OPTIND=1
+	while getopts 'a:i:' key
+	do
+		case "${key}" in
+			a)
+				if [ ! -f $OPTARG ]
+				then
+					echo -e "\tinput error: file $OPTARG is non-existent!"
+				elif [[ ( -f $OPTARG ) && ( `basename -- $OPTARG` =~ .*\.(aln|afa|fasta|fa|fst)$ ) ]]
+				then
+					REF_MSA=$OPTARG
+				fi
+				;;
+			i)
+				if [ ! -f $OPTARG ]
+				then
+					echo -e "\tinput error: file $OPTARG is non-existent!"
+				elif [[ ( -f $OPTARG ) && ( `basename -- $OPTARG` =~ .*\.(aln|afa|fasta|fa|fst)$ ) ]]
+				then
+					New_SEQS=$OPTARG
+				fi
+				;;
+			?)
+				echo "Input error..."
+				echo "Usage: ${FUNCNAME[0]} -a <reference_aln> -i <newSequences>"
+				return 1
+				;;
+		esac
+	done
+	
+	echo -e "\n $REF_MSA is a multible sequence alignment file and $New_SEQS is a single FASTA format file with new sequences"
+
+	rename ${REF_MSA}
+	MSA_file=${output_filename}
+	rename ${New_SEQS}
+	New_file=${output_filename}
+	outname=${MSA_file}_${New_file}
+	
+	${run_mafft} --add ${New_SEQS} --reorder --thread -1 ${REF_MSA} > ${mafft_dest}aligned/${outname}.afa |& tee -a ${mafft_dest}aligned/${outname}_add.log
+
+	if [ $? -eq 0 ]
+	then
+		echo -e "\tDONE. The output file has been stored in ${mafft_dest}aligned/ as ${outname}.afa"
+        else
+                echo -e "\tERROR ENCOUNTERED!!!"
+        fi
 }
 
+#===============================================================================
+## --addlong: Adding unaligned long sequence(s) to an short MSA
 
+#syntax:	Accurate option
+#syntax:	% mafft --addlong longsequences --reorder --thread -1 existing_alignment > output
+#		Fast option (accurate enough for highly similar sequences):
+#		% mafft --addlong longsequences --reorder --6merpair --thread -1 existing_alignment > output
+
+mafft_addlong() {
+
+	if [[ ( ! "$*" =~ ^-a[[:space:]][-[:alnum:]\._]*[[:space:]]-i[[:space:]][-[:alnum:]\._]*$ ) || ( $# -lt 2 ) ]]
+	then
+		echo "Input error..."
+		echo "Usage: ${FUNCNAME[0]} -a <reference_aln> -i <longSequences>"
+		return 1
+	fi
+
+	unset REF_MSA
+	unset L_SEQS
+	local OPTIND=1
+	while getopts 'a:i:' key
+	do
+		case "${key}" in
+			a)
+				if [ ! -f $OPTARG ]
+				then
+					echo -e "\tinput error: file $OPTARG is non-existent!"
+				elif [[ ( -f $OPTARG ) && ( `basename -- $OPTARG` =~ .*\.(aln|afa|fasta|fa|fst)$ ) ]]
+				then
+					REF_MSA=$OPTARG
+				fi
+				;;
+			i)
+				if [ ! -f $OPTARG ]
+				then
+					echo -e "\tinput error: file $OPTARG is non-existent!"
+				elif [[ ( -f $OPTARG ) && ( `basename -- $OPTARG` =~ .*\.(aln|afa|fasta|fa|fst)$ ) ]]
+				then
+					L_SEQS=$OPTARG
+				fi
+				;;
+			?)
+				echo "Input error..."
+				echo "Usage: ${FUNCNAME[0]} -a <reference_aln> -i <LongSequences>"
+				return 1
+				;;
+		esac
+	done
+	
+	echo -e "\n $REF_MSA is a multible sequence alignment file and $L_SEQS is a single FASTA format file with long sequences"
+
+	rename ${REF_MSA}
+	MSA_file=${output_filename}
+	rename ${L_SEQS}
+	L_file=${output_filename}
+	outname=${MSA_file}_${L_file}
+	
+	${run_mafft} --addlong ${L_SEQS} --reorder --thread -1 ${REF_MSA} > ${mafft_dest}aligned/${outname}.afa |& tee -a ${mafft_dest}aligned/${output_filename}_addlong.log
+
+	if [ $? -eq 0 ]
+	then
+		echo -e "\tDONE. The output file has been stored in ${mafft_dest}aligned/ as ${outname}.afa"
+        else
+                echo -e "\tERROR ENCOUNTERED!!!"
+        fi
+
+}
 #===============================================================================
 ## --addfragments: Adding unaligned fragmentary sequence(s) into an existing alignment
 
@@ -421,7 +535,7 @@ mafft_add() {
 #		Fast option (accurate enough for highly similar sequences):
 #		% mafft --addfragments fragments --reorder --6merpair --thread -1 existing_alignment > output
 
-mafft_addfragmets() {
+mafft_addfragments() {
 	echo -e "\n \$1 is fragments is a single multi-FASTA format file and \$2 existing_alignment is a single multi-FASTA format file "
 	printf "\nEnter [Yes] to continue or [No] to exit:  "
 	read choice
@@ -433,7 +547,7 @@ mafft_addfragmets() {
 
 			outputfilename $@
 
-			mafft --addfragments $1 --reorder --thread -1 $2 > ${mafft_dest}addfragments/${outname}.fasta
+			mafft --addfragments $1 --reorder --thread -1 $2 > ${mafft_dest}addfragments/${outname}.afa |& tee -a ${mafft_dest}aligned/${output_filename}_addfragments.log
 			;;
 		[nN][oO] | [nN] )
 			echo "exiting the --addfragments operation"
@@ -483,7 +597,7 @@ tcoffee_large() {
 				read -p "Please enter the number of physical cores to be used: " num_cpus
 			done
 
-			rename
+			rename $i
 			echo -e "\nproceeding with file `basename $i`..."
 			t_coffee -reg -multi_core -n_core=${num_cpus} -seq $i -reg_nseq 100 -reg_tree mbed -reg_method clustalo_msa -outfile ${tcoffee_dest}aligned/${output_filename}.fasta -newtree ${tcoffee_dest}trees/${output_filename}.mbed
 		else
@@ -534,7 +648,7 @@ COREindex() { #Evaluating an existing alignment with the CORE index
 			echo "input error: file $i is non-existent!"
 		elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa|aln)$ ) ]]
 		then
-			rename
+			rename $i
 			outfile_dest
 			echo -e "\nproceeding with `basename $i` alignment file evaluatio..."
 			t_coffee -infile=$i -multi_core -n_core=32 -output=html -score -outfile ${output_dest}scores/coreindex/${output_filename}.html
@@ -593,7 +707,7 @@ TCSeval() { #Evaluating an existing alignment with the TCS
                         echo "input error: file $i is non-existent!"
                 elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa|aln)$ ) ]]
                 then
-                        rename
+                        rename $i
 			outfile_dest
 			if [ -z "$output_dest" ]
 			then
@@ -700,7 +814,7 @@ pasta_aln() { #MSA alignment using pasta
 					until [[ -d ${dest1} ]]
 					do
 						echo "creating output directory '${dest1}'..."
-						mkdir ${dest1}
+						mkdir -p ${dest1}
 					done
 				done
 
@@ -811,7 +925,7 @@ upp_align() { #UPP stands for Ultra-large alignments using Phylogeny-aware Profi
 					until [[ -d ${dest1} ]]
 					do
 						echo "creating output directory '${dest1}'..."
-						mkdir ${dest1}
+						mkdir -p ${dest1}
 					done
 				done
 
@@ -823,7 +937,7 @@ upp_align() { #UPP stands for Ultra-large alignments using Phylogeny-aware Profi
 						break
 						;;
 					using_precomputed_backbone)
-						rename
+						rename $i
 						unset backbone
 						unset start_tree
 						echo -e "\nDoing Multiple Sequence Alignment of `basename $i` using a backbone alignment and a starting tree..."

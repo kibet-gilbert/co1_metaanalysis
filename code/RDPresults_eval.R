@@ -109,7 +109,7 @@ cat(nrow(subset(df_taxa, Species != "NA" & Species_sc == 1.0)),
     "with >= 0.95 bootstrap support and",
    nrow(subset(df_taxa, Species != "NA" & Species_sc >= 0.70)),
    "with >= 0.7 bootstrap support\n\n")
-# All records with predefined species, seq-length of >= 500 and
+# All records with seq-length of >= 500 and
 # assigned species classification at BS support of 1, >= 0.95 and >= 0.70
 cat(nrow(subset(df_taxa, seq_len >= 500 & Species_sc == 1.0)),
     "records, with >= 500 seq. length, were classiffied with a bootsrap of = 1,",

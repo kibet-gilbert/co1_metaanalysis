@@ -1,69 +1,64 @@
-[INFO] logger started at Mon Mar 09 01:16:32 EAT 2020
+[INFO] logger started at Wed Sep 01 08:55:28 EAT 2021
 [INFO] executable name: /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/uninstall
-[INFO] install4j version: 7.0.12 (build 7365)
+[INFO] install4j version: 8.0.4 (build 8111)
 [INFO] Properties: 
 -- listing properties --
-sun.desktop=gnome
-awt.toolkit=sun.awt.X11.XToolkit
-java.specification.version=11
-sun.cpu.isalist=
+java.specification.version=14
+install4j.launcherId=uninstaller
 sun.jnu.encoding=UTF-8
 java.class.path=/home/kibet/bioinformatics/github/co1...
-java.vm.vendor=Ubuntu
+java.vm.vendor=AdoptOpenJDK
 sun.arch.data.model=64
 install4j.exeDir=/home/kibet/bioinformatics/github/co1...
-java.vendor.url=https://ubuntu.com/
+java.vendor.url=https://adoptopenjdk.net/
 user.timezone=Africa/Nairobi
+java.vm.specification.version=14
 os.name=Linux
-java.vm.specification.version=11
 sun.java.launcher=SUN_STANDARD
 user.country=GB
-sun.boot.library.path=/usr/lib/jvm/java-11-openjdk-amd64/lib
-install4j.alternativeLogfile=/tmp/i4j_log_uninstaller1479191320719...
-sun.java.command=com.install4j.runtime.launcher.UnixLa...
+sun.boot.library.path=/home/kibet/bioinformatics/github/co1...
+install4j.alternativeLogfile=/tmp/i4j_log_uninstaller2597630094630...
+sun.java.command=install4j.Uninstaller1175798920 -q -D...
 jdk.debug=release
 sun.cpu.endian=little
 user.home=/home/kibet
 user.language=en
 java.specification.vendor=Oracle Corporation
-java.version.date=2020-01-14
-java.home=/usr/lib/jvm/java-11-openjdk-amd64
+java.version.date=2020-04-14
+java.home=/home/kibet/bioinformatics/github/co1...
 file.separator=/
 java.vm.compressedOopsMode=32-bit
 line.separator=
 
 java.specification.name=Java Platform API Specification
 java.vm.specification.vendor=Oracle Corporation
-java.awt.graphicsenv=sun.awt.X11GraphicsEnvironment
 exe4j.moduleName=/home/kibet/bioinformatics/github/co1...
 sun.management.compiler=HotSpot 64-Bit Tiered Compilers
 install4j.dontUninstallServices=false
-i4jv=0
-java.runtime.version=11.0.6+10-post-Ubuntu-1ubuntu118.04.1
+java.runtime.version=14.0.1+7
 user.name=kibet
 path.separator=:
-os.version=5.3.0-40-generic
+os.version=5.4.0-81-generic
 java.runtime.name=OpenJDK Runtime Environment
 file.encoding=UTF-8
 java.vm.name=OpenJDK 64-Bit Server VM
-install4j.jvmDir=/usr/lib/jvm/default-java
+java.vendor.version=AdoptOpenJDK
+install4j.jvmDir=/home/kibet/bioinformatics/github/co1...
 install4j.appDir=/home/kibet/bioinformatics/github/co1...
-java.vendor.url.bug=https://bugs.launchpad.net/ubuntu/+so...
+java.vendor.url.bug=https://github.com/AdoptOpenJDK/openj...
 java.io.tmpdir=/tmp
-java.version=11.0.6
+java.version=14.0.1
 user.dir=/home/kibet/bioinformatics/github/co1...
 os.arch=amd64
 java.vm.specification.name=Java Virtual Machine Specification
-java.awt.printerjob=sun.print.PSPrinterJob
-sun.os.patch.level=unknown
 java.library.path=/home/kibet/bioinformatics/github/co1...
-java.vendor=Ubuntu
-java.vm.info=mixed mode, sharing
-java.vm.version=11.0.6+10-post-Ubuntu-1ubuntu118.04.1
+java.vm.info=mixed mode
+java.vendor=AdoptOpenJDK
+java.vm.version=14.0.1+7
 sun.io.unicode.encoding=UnicodeLittle
 install4j.upgradeUninstall=true
-java.class.version=55.0
-i4j.vpt=true
+java.class.version=58.0
+install4j.swt=false
 [INFO] com.install4j.runtime.beans.actions.misc.RequestPrivilegesAction [ID 1691242262]: Execute action
        Property allRequested: false
        Property failIfNotObtainedMac: true
@@ -75,7 +70,7 @@ i4j.vpt=true
        Property obtainIfNormalWin: false
        Property rollbackSupported: false
        Property updateInstallationDirectory: true
-       Execute action successful after 14 ms
+       Execute action successful after 6 ms
 [INFO] com.install4j.runtime.beans.screens.StartupScreen [ID 16]: command: move 1 screens, executing actions, checking condition
 [INFO] com.install4j.runtime.beans.screens.UninstallWelcomeScreen [ID 1691242173]: Show screen
 [INFO] com.install4j.runtime.beans.screens.UninstallWelcomeScreen [ID 1691242173]: command: move 1 screens, executing actions, checking condition
@@ -83,8 +78,9 @@ i4j.vpt=true
 [INFO] com.install4j.runtime.beans.actions.UninstallFilesAction [ID 1691242175]: Execute action
 [INFO] com.install4j.runtime.beans.actions.desktop.RegisterAddRemoveAction: executing auto uninstall
 [INFO] com.install4j.runtime.installer.helper.fileinst.FileRemover: postponing deletion of /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/i4jruntime.jar
+       postponing deletion of /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/launcher2bfa42ba.jar
        postponing deletion of /home/kibet/bioinformatics/github/co1_metaanalysis/code/tools/dendroscope/.install4j/user.jar
-[INFO] com.install4j.runtime.beans.actions.UninstallFilesAction [ID 1691242175]: Execute action successful after 90 ms
+[INFO] com.install4j.runtime.beans.actions.UninstallFilesAction [ID 1691242175]: Execute action successful after 626 ms
 [INFO] com.install4j.runtime.beans.screens.UninstallationScreen [ID 1691242174]: command: move 1 screens, executing actions, checking condition
 [INFO] com.install4j.runtime.beans.screens.UninstallFailureScreen [ID 1691242176]: Show screen
 [INFO] com.install4j.runtime.beans.screens.UninstallFailureScreen [ID 1691242176]: command: finish

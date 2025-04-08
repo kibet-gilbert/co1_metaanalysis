@@ -46,23 +46,42 @@ bolddata_retrival() { # This fuction retrives data belonging to a list of countr
 	if [[ ( $# -eq 0 ) || ! ( `echo $1` =~ -.*$ ) ]]
 	then
 		echo "Input error..."
-		echo "function usage: ${FUNCNAME[0]} [-a] [-c <name of country>] [-f <a file with list of countries and named *countries*>]"
+		echo "function usage: ${FUNCNAME[0]} [-i <Taxonomy>] [-a] [-c <name of country>] [-f <a file with list of countries and named *countries*>]"
 		return 1
 	fi
 
+	unset taxon_nam
+	regexp='^[a-zA-Z0-9/_\-\ ]+$'
 	local OPTIND=1
-	countries=()
+	unset countries
+	unset country_geo
 
-	while getopts 'ac:f:' key
+	while getopts 'i:ac:f:' key
 	do
 		case "${key}" in
+			i)
+				if [[ ( ! -f $OPTARG ) && ( "$OPTARG" =~ $regexp ) ]]
+				then
+					taxon_nam=${OPTARG}
+					#echo $taxon_nam
+				else		
+					until [[ "$taxon_nam" =~ $regexp ]]
+					do
+						read -p "Please enter taxon name to be searched, ensure the spelling is right otherwise you will download everything from the BOLD database. To ensure that you are downloading the right dataset/taxon first go to 'http://v4.boldsystems.org/index.php/Public_BINSearch?searchtype=records' and search the tax(on|a) of choice as explained:: " taxon_nam
+					done
+				fi
+				;;
 			f)
 				if [ ! -f $OPTARG ]
 				then
 					echo "input error: file $OPTARG is non-existent!"
 				elif [[ ( -f $OPTARG ) && ( `basename $OPTARG` =~ ^.*countries.*$ ) ]]
 				then
-					countries+=("$(while IFS="\n" read -r line || [[ "$line" ]]; do geography+=("`echo $line | sed 's/ /%20/g'`"); done < $OPTARG)")
+					#countries+=("$(while IFS="\n" read -r line || [[ "$line" ]]; do geography+=("`echo $line | sed 's/ /%20/g'`"); done < $OPTARG)")
+					while IFS= read -r line || [[ -n "$line" ]]
+					do countries+=("`echo $line | sed 's/ /%20/g'`")
+						country_geo+=("`echo -e "'$line'"`")
+					done < $OPTARG
 				else
 					echo "input file error in `basename $OPTARG`: input file should be named '.*countries.*'"
 				fi
@@ -75,21 +94,14 @@ bolddata_retrival() { # This fuction retrives data belonging to a list of countr
 				;;
 			?)
 				echo "Input error..."
-				echo "function usage: ${FUNCNAME[0]} [-a] [-c <name of country>] [-f <a file with list of countries>]"
+				echo "function usage: ${FUNCNAME[0]} [-i <Taxonomy>] [-a] [-c <name of country>] [-f <a file with list of countries>]"
 				return 1
 				;;
 		esac
 	done
 
-	echo -e "\n\tDownloading data of countries named in ${countries[@]} from www.boldsystems.org V4"
-	unset taxon_nam
-	regexp='^[a-zA-Z0-9/_\-\ ]+$'
+	echo -e "\n\tDownloading $taxon_nam data of countries named in ${#countries[@]} countr[y|ies]: ${country_geo[@]} from www.boldsystems.org V4"
 	
-	until [[ "$taxon_nam" =~ $regexp ]]
-	do
-		read -p "Please enter taxon name to be searched, ensure the spelling is right otherwise you get everything downloaded. To ensure that you are downloading the right dataset first go to 'http://v4.boldsystems.org/index.php/Public_BINSearch?searchtype=records' and search the tax(on|a) of choice as explained:: " taxon_nam
-	done
-
 	taxon_name=`echo $taxon_nam | sed 's/ /%20/g'`
 	
 	wgetoutput_dir=${inputdata_path}bold_data/${taxon_name}
@@ -104,9 +116,11 @@ bolddata_retrival() { # This fuction retrives data belonging to a list of countr
 	then
 		for i in ${countries[@]}
 		do
-			wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${i}`date +"-%d%m%Y"`"_summary.xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/stats?geo=${i}&taxon=${taxon_name}&format=xml"
+			country=`echo ${i} | sed "s/%20/_/g; s/'//"g`
+			echo -e "\t${country}"
+			wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${country}`date +"-%d%m%Y"`"_summary.xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/stats?geo=${i}&taxon=${taxon_name}&format=xml"
 			#wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${i}"_specimen.xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/specimen?geo=${i}&taxon=${taxon_name}&format=xml"
-			wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${i}`date +"-%d%m%Y"`".xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/combined?geo=${i}&taxon=${taxon_name}&format=xml"
+			wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${country}`date +"-%d%m%Y"`".xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/combined?geo=${i}&taxon=${taxon_name}&format=xml"
 		done
 	elif [[ ( `echo ${countries[0]}` =~ "all" ) ]]
 	then
@@ -130,16 +144,20 @@ boldxml2tsv() { #This function generates .tsv files from .xml files using python
 		if [ ! -f $i ]
 		then
 			echo -e "\n\t!!!input error: file '$i' is non-existent!"
-		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(xml)$ ) ]]
+		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(xml)$ ) && ( `basename -- "$i"` =~ .*_summary.xml$ ) ]]
+		then
+			continue
+		elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*\.(xml)$ ) && ( `basename -- "$i"` != .*_summary.xml$ ) ]]
 		then
 			input_src=`dirname "$( realpath "${i}" )"`
 			rename 
-			echo -e "\tLet us proceed with file '${input_filename}'..."
+			echo -e "\n\tLet us proceed with file '${input_filename}'...`date +"-%H.%M.%S-%Y%m%d"`"
 			sed 's/class/Class/g' "$i" | sed "s/$TAB/,/g" > ${input_src}/input.xml
 			${PYTHON_EXEC} ${xml_to_tsv} ${input_src}/input.xml && mv output.tsv ${input_src}/${output_filename}.tsv
+			rm ${input_src}/input.xml
 			if [ $? -eq 0 ]
 			then
-				echo -e "\n\tDONE. The output file has been stored in ${input_src}/${output_filename}.tsv"
+				echo -e "\tDONE. The output file has been stored in ${input_src}/${output_filename}.tsv"
 			fi
 		else
 			echo -e "\n\tinput file error in `basename -- $i`: input file should be a .xml file format"
@@ -151,7 +169,7 @@ boldxml2tsv() { #This function generates .tsv files from .xml files using python
 #===============================================================================================================================================================
 #bolddata_tsv2fasta
 
-boldtsv2fasta() { #This function generates .fasta files from .tsv files using an awk script
+boldtsv2fasta() { #This function generates .fasta files from cleaned-up .tsv files using an awk script
 
 	usage $@
 
@@ -196,6 +214,7 @@ boldtsv_cleanup() { # This function takes an 80 column .TSV output of boldxml2ts
                         then
                                 echo -e "\n\tDONE. The output file has been stored in ${input_src}/${output_filename}_[all_data|Over499_data|500to700_data|650to660_data|Over700_data|Under500_data].tsv"
 			fi
+			#Generating a file of Genbank and BOLD ids.
 			${AWK_EXEC} 'BEGIN{FS="\t";OFS="\t"}; FNR>=2{if ($71 !~ /^NA$/) print $1,$71}' ${input_src}/${output_filename}_all_data.tsv ${input_src}/${output_filename}_NonCOI_data.tsv >> ${input_src}/${output_filename}_all_data.genbank_ids
 			if [ $? -eq 0 ]
 			then
@@ -213,14 +232,99 @@ boldtsv_cleanup() { # This function takes an 80 column .TSV output of boldxml2ts
 
 append_tsvfile() { # this function tests if the .tsv file has content and if it does it appends it to a cummulative file of all input records. This function is applied in the function below: clean_sort_tsv()
 
-	if [ `grep -v "X..bioinformatics" ${input} | wc -l` -ge 1 ]
+	if [ `grep -v "processid" ${input} | wc -l` -ge 1 ]
 	then
-		awk 'FNR==1 { while (/^X..bioinformatics/) getline; }   1 {print}' ${input} >> ${output}
+		echo -e "Transfering contents in '${input}'"
+		awk ' FNR == 1 { if ( $0 ~ /^.*processid/) {next}} {print $0}' ${input} >> ${output}
+		rm ${input}
 	else
-		echo -e "\n `basename -- $input` from `basename -- $i` has no content besides the header!!!"
+		echo -e "\n `basename -- $input` has no content besides the header!!!"
+		rm ${input}
 	fi
 }
 
+boldtsv_assemble() { #aggregate together records from separate files into one file.
+	if [ $# -eq 0 ]
+	then
+		echo "Input error..."
+		echo "Usage: ${FUNCNAME[0]} file1.tsv file2.tsv [file3.tsv ...]"
+		return 1
+	fi
+
+	echo "cleaning up and sorting .tsv files "
+
+	i=${1}
+	rename
+	inputdata_path=${src_dir_path}
+	output_file=${src_dir}
+	output_files=("${inputdata_path}/${output_file}_500to700_data.tsv" "${inputdata_path}/${output_file}_650to660_data.tsv" "${inputdata_path}/${output_file}_all_data.tsv" "${inputdata_path}/${output_file}_Over499_data.tsv" "${inputdata_path}/${output_file}_Over700_data.tsv" "${inputdata_path}/${output_file}_Under500_data.tsv" "${inputdata_path}/${output_file}_NonCOI_data.tsv")
+
+	for i in "$@"
+	do
+                if [ ! -f $i ]
+		then
+                        echo "input error: file '$i' is non-existent!"
+                elif [[ ( -f $i ) && ( `basename -- "$i"` =~ .*[0-9]{8}\.(tsv)$ ) ]]
+                then
+                        rename
+                        echo -e "\nLet us proceed with file '${input_filename}'..."
+                        ${RSCRIPT_EXEC} --vanilla ${data_cleanup} $i |& tee -a ${input_src}/${output_file}_cleanup
+
+			if [ $? -eq 0 ]
+                        then
+                                echo -e "\nCreating temporary output files as ${output_filename}_[all_data|Over499_data|500to700_data|650to660_data|Over700_data|Under500_data].tsv"
+			fi
+			
+			#Generating a file of Genbank and BOLD ids.
+			${AWK_EXEC} 'BEGIN{FS="\t";OFS="\t"}; FNR>=2{if ($71 !~ /^NA$/) print $1,$71}' ${input_src}/${output_filename}_all_data.tsv ${input_src}/${output_filename}_NonCOI_data.tsv >> ${input_src}/${output_file}_all_data.genbank_ids
+			if [ $? -eq 0 ]
+			then
+				echo -e "GenBank accession numbers have been stored in ${input_src}/${output_filename}_all_data.genbank_ids"
+                        fi
+
+
+			for i in ${output_files[@]}
+			do
+				if [[ ( ! -f $i ) || ( `grep -A 100 "processid" ${i} | wc -l` -eq 0 ) ]]
+				then
+					grep "processid" $1 > $i && echo -e "\nInput file $i is set"
+				else
+					continue
+				fi
+			done
+			input=${output_filename}_500to700_data.tsv
+			output=${output_files[0]}
+			append_tsvfile
+			
+			input=${output_filename}_650to660_data.tsv
+			output=${output_files[1]}
+			append_tsvfile
+
+			input=${output_filename}_all_data.tsv 
+			output=${output_files[2]}
+			append_tsvfile
+			
+			input=${output_filename}_Over499_data.tsv
+			output=${output_files[3]}
+			append_tsvfile
+
+			input=${output_filename}_Over700_data.tsv
+			output=${output_files[4]}
+			append_tsvfile
+
+			input=${output_filename}_Under500_data.tsv
+			output=${output_files[5]}
+			append_tsvfile
+
+			input=${output_filename}_NonCOI_data.tsv
+			output=${output_files[6]}
+			append_tsvfile
+		 else
+                        echo "input file error in `basename -- $i`: input file should be a [0-9]{8}.tsv file format"
+                        continue
+                fi
+        done
+}
 
 clean_sort_tsv() { #This function cleans the .tsv files, sort the records into differnt files based on the sequence length and finally appends this files to a cummulative files of diffent input files
 
@@ -943,21 +1047,64 @@ substitute_hdrs() { #This function takes an input file of edited_fasta_format_he
  	if [ $# -eq 0 ]
 	then
 		echo "Input error..."
-      		echo "Usage: ${FUNCNAME[0]} seq.fasta [seq2.fasta seq3.fasta ...]"
+		echo -e "\tUsage: ${FUNCNAME[0]} -i 'file1.fasta* [file2.fasta* file3.fasta* ...]' [-h <headers>]"
       		return 1
         fi
 	
 	unset headers
-	until [[ ( -f "$headers" ) && ( `basename -- "$headers"` =~ .*_(headers|fasta|fa|afa|aln)$ ) ]]
-	do
-		echo -e "\nFor the headers_[aln|fasta|fa|afa] input, provide the full path to the file, the filename included."
-		read -p "Please enter the file to be used as the FASTA headers source: " headers
-		#$.*/[\]'^
-		sed -i "s/\r$//g; s/ /_/g; s/\&/_n_/g; s/\//_/g; s/'//g; s/\[//g; s/\]//g" $headers
+	unset files
+
+        local OPTIND=1
+        while getopts 'i:h:' key
+        do
+                case "${key}" in
+                        i)
+                                files=$OPTARG
+                                for inputfile in $files
+                                do
+                                        if [ ! -f $inputfile ]
+                                        then
+                                                echo -e "\tInput file error in `basename -- $inputfile`: provided file does not exist"
+                                                echo -e "\tUsage: ${FUNCNAME[0]} -i 'file1.fasta* [file2.fasta* file3.fasta* ...]' [-l <INTEGER>] [-m <INTEGERg|G|m|M>]"
+                                                return 1
+                                        elif [[ ( -f $inputfile ) && ( `basename -- $inputfile` =~ .*\.(aln|afa|fasta|fa|fst)$ ) ]]
+                                        then
+						concatenate_fasta_seqs ${inputfile}
+                                                continue
+                                        fi
+                                done
+                                ;;
+                        h)
+				headers=$OPTARG
+				if [ ! -f $headers ]
+				then
+					echo -e "\tinput file error: the headers file (-h) `basename -- $inputfile` does not exist"
+					until [[ ( -f "$headers" ) && ( `basename -- "$headers"` =~ .*_(headers|fasta|fa|afa|aln)$ ) ]]
+					do
+						echo -e "\nFor the headers_[aln|fasta|fa|afa] input, provide the full path to the file, the filename included."
+						read -p "Please enter the file to be used as the FASTA headers source: " headers
+					done
+				elif [[ ( -f "$headers" ) && ( `basename -- "$headers"` =~ .*_(headers|fasta|fa|afa|aln)$ ) ]]
+				then
+					continue
+				else
+					echo -e "The file containing headers should be provided via the flag -h <*_(headers|fasta|fa|afa|aln)>"
+					return 1
+				fi
+				#$.*/[\]'^
+				sed -i "s/\r$//g; s/ /_/g; s/\&/_n_/g; s/\//_/g; s/'//g; s/\[//g; s/\]//g" $headers
+				;;
+			?)
+				echo "Input error..."
+				echo 'Usage: ${FUNCNAME[0]} -i "file1.fasta* [file2.fasta* file3.fasta* ...]" [-h <headers>]'
+				return 1
+				;;
+		esac
 	done
+
 	
 	echo -e "\n\tStarting operation....\n\tPlease wait, this may take a while...."
-	for i in "$@"
+	for i in "$files"
 	do
 		unset records
 		number_of_replacements=0
@@ -969,7 +1116,7 @@ substitute_hdrs() { #This function takes an input file of edited_fasta_format_he
 		for line in `cat ${headers}`
 		do
 			#x=$( head -10 idrck_headers | tail -1 | awk 'BEGIN { FS="|"; }{print $1;}') && echo $x
-			x=`echo "$line" | ${AWK_EXEC} 'BEGIN { RS="\n"; FS="|"; }{ x = $1; print x; }'`
+			x=`echo "$line" | ${AWK_EXEC} 'BEGIN { RS="\n"; FS="[>|]"; }{ x = $2; print x; }'`
 			y=`echo "$line" | ${AWK_EXEC} 'BEGIN { RS="\n"; FS="|"; }{ y = $0; print y; }'`
 			#echo -e "\n $x \n $y"
 
@@ -1164,15 +1311,17 @@ move_matched() { #This is updated version of move_unwanted function
 	# It is used within the filter_seqs function below. It moves and deletes the matching fasta records.
 	for i in "$@"
 	do
-		matching_records=`grep $pattern_name $i | wc -l`
-		echo -e "${matching_records} records match the pattern '$pattern_name'"
+		matching_records=$(grep "$pattern_name" $i | wc -l)
+		#echo -e "$i"
+		#echo -e "${pattern_name}"
+		echo -e "${matching_records} records match the pattern $pattern_name"
 		if [ $matching_records -gt 0 ]
 		then
-			echo -e "\tMatching any headers with '$pattern_name' word-pattern in `basename $i`..."
-			$AWK_EXEC -v pat="$pattern_name" '/^>/{
+			echo -e "\tSearching headers with '$pattern_name' word-pattern in `basename $i`..."
+			$AWK_EXEC -v pat=$pattern_name '/^>/{
 			hdr=$0; next} {
 			seq=$0 } {
-			pattern=pat; gsub(/\|/,"\\\|", pattern)} hdr~pattern{
+			pattern=pat; gsub(/\|/,"\\|",pattern)} hdr~pattern{
 			print hdr; print seq }' $i >> ${input_src}/${output_filename}_${suffix}.${filename_ext}
 			
 			#Deleting matched records
@@ -1208,106 +1357,115 @@ filter_seqs() { # Updated version of delete_unwanted function.
 	
 	for i in "$@"
 	do
-		echo -e "\nProceeding with `basename -- $i`..."
-		rename
-		input_src=`dirname "$( realpath "${i}" )"`
-		concatenate_fasta_seqs $i
+		 if [ ! -f $i ]
+ 		 then
+ 			 echo "input error: file $i is non-existent!"
+			 return 1
+ 		 elif [[ ( -f $i ) && ( `basename $i` =~ .*\.(afa|fasta|fa|aln)$ ) ]]
+ 		 then
+	 		 echo -e "\nProceeding with `basename -- $i`..."
+	 		 rename
+	 		 input_src=`dirname "$( realpath "${i}" )"`
+	 		 concatenate_fasta_seqs ${i}
+	 
+			 unset options
+	 		 echo -e "To extract sequences with specific words in the headers please select one of the options [1|2|3] to proceed or [4] to cancel"
+	 		 options[0]="Copy records with word patterns specified in a file into one file"
+	 		 options[1]="Copy records with string-patterns specified in a file into individual word-pattern-specific files"
+	 		 options[2]="Copy records with specific single string into a file"
+	 		 options[3]="Exit"
+	 
+			 PS3='Select one of the filter methods [1|2|3], or [4] to exit: '
+	 		 select option in "${options[@]}"
+	 		 do
+	 			 unset pattern_name
+	 			 unset input_pattern_file
+	 			 regexp='^[a-zA-Z0-9/_-\ \|]+$'
+	 			 regexp1='^n|y|N|Y|No|Yes|NO|YES|no|yes$'
+				 
+				 case $option in
+	 				 ${options[0]})
+	 					 #echo "no error"
+	 					 until [[ -f ${input_pattern_file}  ]]
+		 				 do
+	 						 read -p "Please enter the path to the file with pattern names to be extracted:: " input_pattern_file
+	 						 #cat ${input_pattern_file}
+	 					 done
+						 #deleting matches
+	 					 echo -e "\nIf you wish to delete records that match the search patterns in $input_pattern_file from `basename $i` enter [YES] or [NO] if you wish to retain them.\n"
+	 					 unset Choice
+	 					 read -p "Please enter [Yes] or [NO] to proceed:: " Choice
+	 					 until [[ "$Choice" =~ $regexp1 ]]
+	 					 do
+	 						 echo "INVALID choice $REPLY"
+	 					 done
 		
-		unset options
-		
-		echo -e "To extract sequences with specific words in the headers please select one of the options [1|2|3] to proceed or [4] to cancel"
-		options[0]="Copy records with word patterns specified in a file into one file"
-		options[1]="Copy records with string-patterns specified in a file into individual word-pattern-specific files"
-		options[2]="Copy records with specific single string into a file"
-		options[3]="Exit"
-		
-		PS3='Select one of the filter methods [1|2|3], or [4] to exit: '
-		select option in "${options[@]}"
-		do
-			unset pattern_name
-			unset input_pattern_file
-			regexp='^[a-zA-Z0-9/_-\ \|]+$'
-			regexp1='^n|y|N|Y|No|Yes|NO|YES|no|yes$'
-			
-			case $option in
-				${options[0]})
-					#echo "no error"
-					until [[ -f ${input_pattern_file}  ]]
-					do
-						read -p "Please enter the path to the file with pattern names to be extracted:: " input_pattern_file
-						#cat ${input_pattern_file}
-					done
-					
-					#deleting matches
-					echo -e "\nIf you wish to delete records that match the search patterns in $input_pattern_file from `basename $i` enter [YES] or [NO] if you wish to retain them.\n"
-					unset Choice
-					read -p "Please enter [Yes] or [NO] to proceed:: " Choice
-					until [[ "$Choice" =~ $regexp1 ]]
-					do
-						echo "INVALID choice $REPLY"
-					done
-					
-					for line in `cat ${input_pattern_file}`
-					do
-						pattern_name=${line}
-						suffix="matched"
-						#echo ${pattern_name}
-						move_matched "${i}"
-					done
-					echo -e "\n\tDONE. All deleted records have been stored in '${output_filename}_${suffix}.fasta'"
-					break
-					;;
-				${options[1]})
-					until [[ -f ${input_pattern_file} ]]
-					do
-						read -p "Please enter the path to the file with pattern names to be extracted:: " input_pattern_file
-					done
-					
-					echo -e "\nIf you wish to delete records that match the search patterns in $input_pattern_file from `basename $i` enter [YES] or [NO] if you wish to retain them.\n"
-					unset Choice
-					read -p "Please enter [Yes] or [NO] to proceed:: " Choice
-					until [[ "$Choice" =~ $regexp1 ]]
-					do
-						echo "INVALID choice $REPLY"
-					done
-					
-					for line in `cat ${input_pattern_file}`
-					do
-						pattern_name=${line}
-						suffix=${pattern_name}
-						move_matched "${i}"
-						echo -e "\n\tDONE. All deleted records have been stored in '${output_filename}_${suffix}.fasta'"
-					done
-					break
-					;;
-				${options[2]})
-					until [[ "$pattern_name" =~ $regexp ]]
-					do
-						read -p "Please enter string pattern to be searched:: " pattern_name
-					done
-					
-					echo -e "\nIf you wish to delete records that match the search pattern '$pattern_name' from `basename $i` enter [YES] or [NO] if you wish to retain them.\n"
-					unset Choice
-					read -p "Please enter [Yes] or [NO] to proceed:: " Choice
-					until [[ "$Choice" =~ $regexp1 ]]
-					do
-						echo "INVALID choice $REPLY"
-					done
-					
-					suffix=`echo ${pattern_name} | sed 's/|/\./g'`
-					move_matched "${i}"
-					echo -e "\n\tDONE. All deleted records have been stored in '${output_filename}_${suffix}.fasta'"
-					break
-					;;
-				${options[3]})
-					echo -e "Exiting deletion of pattern-matched sequences..."
-					break
-					;;
-				*)
-					echo "INVALID choice: Select option [1|2|3] to delete, or [4] to exit: "
-					;;
-			esac
-		done
+						 for line in `cat $(echo ${input_pattern_file})`
+	 					 do
+							 #echo -e "$line"
+							 pattern_name=${line}
+	 						 suffix="matched"
+	 						 #echo "${pattern_name}"
+	 						 move_matched "${i}"
+	 					 done
+	 					 echo -e "\n\tDONE. All matched records have been stored in '${output_filename}_${suffix}.fasta'"
+	 					 break
+	 					 ;;
+	 				 ${options[1]})
+	 					 until [[ -f ${input_pattern_file} ]]
+	 					 do
+	 						 read -p "Please enter the path to the file with pattern names to be extracted:: " input_pattern_file
+	 					 done
+	 
+						 echo -e "\nIf you wish to delete records that match the search patterns in $input_pattern_file from `basename $i` enter [YES] or [NO] if you wish to retain them.\n"
+	 					 unset Choice
+	 					 read -p "Please enter [Yes] or [NO] to proceed:: " Choice
+	 					 until [[ "$Choice" =~ $regexp1 ]]
+	 					 do
+	 						 echo "INVALID choice $REPLY"
+	 					 done
+	 
+						 for line in `cat ${input_pattern_file}`
+	 					 do
+	 						 pattern_name=${line}
+	 						 suffix=${pattern_name}
+		 					 move_matched "${i}"
+	 						 echo -e "\n\tDONE. All matched records have been stored in '${output_filename}_${suffix}.fasta'"
+	 					 done
+	 					 break
+	 					 ;;
+	 				 ${options[2]})
+	 					 until [[ "$pattern_name" =~ $regexp ]]
+	 					 do
+	 						 read -p "Please enter string pattern to be searched:: " pattern_name
+	 					 done
+	 
+						 echo -e "\nIf you wish to delete records that match the search pattern '$pattern_name' from `basename $i` enter [YES] or [NO] if you wish to retain them.\n"
+	 					 unset Choice
+	 					 read -p "Please enter [Yes] or [NO] to proceed:: " Choice
+	 					 until [[ "$Choice" =~ $regexp1 ]]
+	 					 do
+	 						 echo "INVALID choice $REPLY"
+	 					 done
+			 
+	 					 suffix=`echo ${pattern_name} | sed 's/|/\./g'`
+	 					 move_matched "${i}"
+	 					 echo -e "\n\tDONE. All matched records have been stored in '${output_filename}_${suffix}.fasta'"
+	 					 break
+	 					 ;;
+	 				 ${options[3]})
+	 					 echo -e "Exiting filtering of pattern-matched sequences..."
+	 					 break
+	 					 ;;
+	 				 *)
+	 					 echo "INVALID choice: Select option [1|2|3] to delete, or [4] to exit: "
+	 					 ;;
+	 			 esac
+	 		 done
+		 else
+ 			 echo "input file error in `basename $i`: input file should be a .afa file format"
+ 			 continue
+ 		 fi
 	done
 }
 
@@ -1358,7 +1516,7 @@ trimming_seqaln() { #This function trims aligned sequences in a file on both end
 			#awk 'BEGIN {FS=""; OFS=""; }; /^>/ {print "\n" $0 }; !/^>/ { for(v=1087; v<=2574; v++) { printf "%s", $v; if (v <= 2574) { printf "%s", OFS; } else { printf "\n"; } }}' input.aln | less
 			if [ $? -eq 0 ]
 			then
-				echo -e "\n\tDONE. All trimmed records have been stored in ${input_src}/${output_filename}_trmmd${start_pos}-${end_pos}.aln\n"
+				echo -e "\n\tDONE. All trimmed records have been stored in ${input_src}/${output_filename}_trmmd${start_pos}-${end_pos}.${filename_ext}\n"
 			fi
 		else
 			echo "input file error in `basename $i`: input file should be a .fasta file format"
@@ -1471,7 +1629,7 @@ delete_shortseqs() { #This function identifies and removes sequences that have s
 		then
 			input_src=`dirname "$( realpath "${i}" )"`
 			rename
-			concatenate_fasta_seqs $i
+			#concatenate_fasta_seqs $i
 			unset options
 						
 			echo -e "\tYou are going to remove sequences that have more than a specific number of undefined nucleotides, 'N', or gaps, '-', at the beginning and end or specific maximum length of N character-string within the sequence."
@@ -1614,7 +1772,12 @@ concatenate_fasta_seqs() { # This function converts a multiple line FASTA format
 		then
 			echo -e "\t...Concatinating sequence lines for each record in `basename -- ${i}`..."
 			input_src=`dirname "$( realpath "${i}" )"`
-			$AWK_EXEC '/^>/ {if (FNR==1) print $0; else print "\n" $0; }; !/^>/ {gsub("\n","",$0); printf $0}' $i > ${input_src}/outfile.afa && mv ${input_src}/outfile.afa ${i}
+			$AWK_EXEC '/^>/ {if (FNR==1) print $0; else print "\n" $0; }; !/^>/ {gsub("\n","",$0); printf $0}' $i > ${input_src}/outfile.afa #&& mv ${input_src}/outfile.afa ${i}
+			if [ $? -eq 0 ]
+                        then
+				echo -e "\t moving ${input_src}/outfile.afa to ${input_src}/${i}"
+				mv ${input_src}/outfile.afa ${input_src}/${i}
+			fi
 		else
 			echo "input file error in `basename $i`: input file should be a .aln file format"
 			continue

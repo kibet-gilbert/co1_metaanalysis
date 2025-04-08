@@ -1,11 +1,11 @@
 # co1_metaanalysis
 
 ## Preview
-The co1_metaanalysis is a Master's of science in Molecular Biology and Bioinformatics project, Department of Biochemistry, [Jomo Kenyatta University of Agriculture and Technology(Jkuat)](http://www.jkuat.ac.ke/)
+The co1_metaanalysis project was originally an MSc Thesis Project (MSc Molecular Biology and Bioinformatics, Department of Biochemistry, [Jomo Kenyatta University of Agriculture and Technology(Jkuat)](http://www.jkuat.ac.ke/).
 
-It is conducted at the **[international centre for insect physiology and ecology(_icipe_)](http://www.icipe.org/)**  based on data from [BOLD Systems](http://www.boldsystems.org/)
+It is conducted at the **[international centre for insect physiology and ecology(_icipe_)](http://www.icipe.org/)**. The project relies on data from [BOLD Systems](http://www.boldsystems.org/), **GenBank** and **Global Biodiversity Information Facility (GBIF)**
 
-This project is conducted with the supervision and support of:
+This project was under with the guidance and support from:
 1. [Dr Scott Miller](https://entomology.si.edu/StaffPages/MillerS.html)
 2. [Dr Jandouwe Villinger](http://www.icipe.org/about/staff/jandouwe-villinger)
 3. [Dr Steven Ger(JKUAT)](https://scholar.google.com/citations?user=Qdp8yCsAAAAJ&hl=en)
@@ -56,7 +56,7 @@ Data used in this project are retrieved from three major puplicly accessible dat
 Bash fuctions have been written to simplify usage of this API packages, namely: `bolddata_retrival`, `gbifdata_retrival` and `genbankdata_retrival`
 ### Classification of sequences.
 On avarage, less than 20% of all downloaded sequences have species taxonomic identities and a small fraction of this are misclassified. Therefore to give species identities to the sequences and assess the accuracy of the identities for those with species taxon classification, a classification analysis is done. The tool used is:
-1. [**Ribosomal Database Project classifier (RDPClassifier)**](https://github.com/rdpstaff/classifier), a naive Bayasian classifier originally developed to do rapid taxonomic placement of 16S rRNA sequences as descriped by [Cole et al.](https://doi.org/10.1093/nar/gkt1244), is used to  assign taxon names to CO1 metabarcode sequences that have missing taxa values. It has been trained to species rank using [CO1 Eukaryote v3.2 training set](https://github.com/terrimporter/CO1Classifier/releases/tag/v3.2) as described by [Porter and Hajibabaei](http://dx.doi.org/10.1146/annurev-ecolsys-102209-144621)
+1. [**Ribosomal Database Project classifier (RDPClassifier)**](https://github.com/rdpstaff/classifier), a naive Bayasian classifier originally developed to do rapid taxonomic placement of 16S rRNA sequences as described by [Cole et al.](https://doi.org/10.1093/nar/gkt1244), is used to  assign taxon names to CO1 metabarcode sequences that have missing taxa values. It has been trained to species rank using [CO1 Eukaryote v3.2 training set](https://github.com/terrimporter/CO1Classifier/releases/tag/v3.2) as described by [Porter and Hajibabaei](https://doi.org/10.1111/1755-0998.12240)
 
 ### Multiple Sequence Alignment tools.
 1. [**Muscle.**](http://www.drive5.com/muscle/)
@@ -78,7 +78,7 @@ We used the following [sequence based methods](https://tcoffee.readthedocs.io/en
 2. [**BMGE (Block Mapping and Gathering with Entropy)**](ftp://ftp.pasteur.fr/pub/gensoft/projects/BMGE/): A tool for selection of phylogenetic informative regions from MSAs as documented [**HERE**]( http://gensoft.pasteur.fr/docs/BMGE/1.12/BMGE_doc.pdf). Removes ambiguously aligned regions, highly variable (saturated) characters altimately improving overall performance of the phylogenetic reconstruction  method as described by [Criscuolo et. al. (2010)](https://doi.org/10.1186/1471-2148-10-210)
 3. [**RAxML (Randomized Axelerated Maximum Likelihood)**](https://cme.h-its.org/exelixis/web/software/raxml/index.html): Highly accurate, computer intensive but, a little slow. Removes duplicate sequences (Headers/nucleotide-sequences) then infers the tree. described in [Stamakis et. al. (2014)]( https://doi.org/10.1093/bioinformatics/btu033)
 4.  [**RAxML-ng (RAxML Next Generation)**](https://github.com/amkozlov/raxml-ng): a fast, scalable and user-friendly tool for maximum likelihood phylogenetic inference. "A from-scratch re-implementation of the established greedy tree search algorithm of RAxML/ExaML" with "improved accuracy, flexibility, speed, scalability, and usability compared with RAxML/ExaML". Desribed by [Kozlov et. al. (2019)](https://doi.org/10.1093/bioinformatics/btz305) as having higher scoring trees than IQtree on "taxon-rich datasets"
-5. [**IQtree**](http://www.iqtree.org/doc/): An "Efficient search algorithm: Fast and effective stochastic algorithm to reconstruct phylogenetic trees by maximum likelihood". Has a "Ultrafast" bootstrap algorithm 10-40 times faster than RAxML, "Ultafast model selection" algorithm (ModelFinder) that is automatic, 10-100 times faster than jModelTest and ProTest, support Bid Data Analysis and other attributes as descriped by [Nguyen et. al.](https://doi.org/10.1093/molbev/msu300).
+5. [**IQtree**](http://www.iqtree.org/doc/): An "Efficient search algorithm: Fast and effective stochastic algorithm to reconstruct phylogenetic trees by maximum likelihood". Has a "Ultrafast" bootstrap algorithm 10-40 times faster than RAxML, "Ultafast model selection" algorithm (ModelFinder) that is automatic, 10-100 times faster than jModelTest and ProTest, support Bid Data Analysis and other attributes as described by [Nguyen et. al.](https://doi.org/10.1093/molbev/msu300).
 6. [**FastTree**](http://www.microbesonline.org/fasttree/): Fast and less computer intensive, but not so accurate.
 
 The resultant computer readable formats of the phylogenetic trees are either of the following [Newick](http://evolution.genetics.washington.edu/phylip/newicktree.html), [NEXUS](http://en.wikipedia.org/wiki/Nexus_file) and [PhyloXML](http://en.wikipedia.org/wiki/PhyloXML).
@@ -92,14 +92,21 @@ Programs to be used to visualize and edit phylogenetic trees:
 #### Phylogenetic Tree Analysis Tools:
 1. [**Evolutionary Placement Algorithm (EPA)**](https://academic.oup.com/sysbio/article/60/3/291/1667010): Used to root a tree (adding outgroups). Integrated into RAxML, it can classify a bunch of environmental sequences into a reference tree using thorough read insertions given a non-comprehensive reference tree and an alignment containing all sequences (reference + query)
 2. [**Evolutionary Placement Algorithm -NG (EPA-NG)**](https://doi.org/10.1093/sysbio/syy054): "A complete reimplementation of EPA in RAxML-EPA. Faster, scalable (upto 2048 cores) and accomodate more parameters. Source code and documentation are in [GitHub](https://github.com/Pbdas/epa-ng) by [Barbera et. al]( https://doi.org/10.1093/sysbio/syy054)
-3. [**Bio.Phylo**](https://doi.org/10.1186/1471-2105-13-209): Biopython's Phylo package as descriped in the [Phylo Cookbook](https://biopython.org/wiki/Phylo_cookbook) and [tutorial](http://biopython.org/DIST/docs/tutorial/Tutorial.html#htoc204), uses other Python packages; MatPlotlib and NetworkX. Can be used to study the tree and manipulate it's nodes
+3. [**Bio.Phylo**](https://doi.org/10.1186/1471-2105-13-209): Biopython's Phylo package as described in the [Phylo Cookbook](https://biopython.org/wiki/Phylo_cookbook) and [tutorial](http://biopython.org/DIST/docs/tutorial/Tutorial.html#htoc204), uses other Python packages; MatPlotlib and NetworkX. Can be used to study the tree and manipulate it's nodes
 
 #### Species Delimitation:
 1. [**Multi-rate Poisson Tree Processes (mPTP)**](https://doi.org/10.1093/bioinformatics/btx025): It computes putative species through maximum likelihood species delimitation using inferred phylogenetic trees. Uses a more accurate, faster and scalable multi-rate [“Poisson Tree Processes” (PTP) method](https://cme.h-its.org/exelixis/web/software/PTP/index.html). Also supports Markov Chain Monte Carlo sampling to compute support values for each OTU providing "a comprehensive evaluation of the inferred delimitation in just a few seconds for millions of steps, independently of tree size" [Kapli. P. et. al](https://doi.org/10.1093/bioinformatics/btx025). The [code is available GitHub](https://github.com/Pas-Kapli/mptp) and the [documentaion wiki here](https://github.com/Pas-Kapli/mptp/wiki).
 
 ### Population Structure.
+
+There are three main ways to examine if the population of an organism under consideration has undergone some differentiation into a structured organization with clusters or groups that can be distinctly identified from one another. A population can be studied and determined if it is structured using three methods:
+1. Haplotype networks e.g minimum spanning networks,
+2. Population differentiation summary statistics e.g. GST,
+3. Clustering eg K-means clustering.
+
 #### Haplotype Network.
-To elucidate the population structure, first a haplotype network needs to be infered. There are severally GUI tools: DNASP5/6 (Windows and MAC), [PopART (Windows, MAC and Linux)](http://popart.otago.ac.nz/documentation.shtml). But command line tools are limited and majority of those availavle are R packages. One is the haploNet fuction in the pegas R package.
+A haplotype network helps to visually depict the population structure, based on molecular phylogenetic relationships between the population individuals. To elucidate the population structure, first a haplotype network needs to be infered.
+There are severally GUI tools: DNASP5/6 (Windows and MAC), [PopART (Windows, MAC and Linux)](http://popart.otago.ac.nz/documentation.shtml). But command line tools are limited and majority of those availavle are R packages. One is the haploNet fuction in the pegas R package.
 ##### pegas R package
 [Population and Evolutionary Genetics Analysis System (pegas)](https://doi.org/10.1093/bioinformatics/btp696) is an [R package](https://cran.r-project.org/web/packages/pegas/index.html) that relies on [ape](https://cran.r-project.org/web/packages/ape/), [adegenet](https://cran.r-project.org/web/packages/adegenet/) and other dependencies.
 The first step is to load and parse a FASTA file: the `ape::read.dna()` function of ape package is used here.
@@ -135,7 +142,7 @@ Lastly is to conduct statistical tests to acertain the evolutionary nutrality in
 
 ### Other tools
 Besides tools mentioned above, the tools below proved useful:
-1. [PGDSpider](http://www.cmpg.unibe.ch/software/PGDSpider/): Very useful a Java program that can read 27 different file formats and export data into 29 in molecular sequence format convertion/transformation by [Lischer et al., 2012](https://doi.org/10.1093/bioinformatics/btr642).
+1. [PGDSpider](http://www.cmpg.unibe.ch/software/PGDSpider/): A very useful Java program that can read 27 different file formats and export data into 29 in molecular sequence format convertion/transformation by [Lischer et al., 2012](https://doi.org/10.1093/bioinformatics/btr642).
 
 ## Resources
 COI sequences preparation protocol;

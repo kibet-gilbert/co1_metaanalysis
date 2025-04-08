@@ -1,5 +1,5 @@
-# install4j response file for Dendroscope 3.7.2
-myXmx$Integer=600
+# install4j response file for Dendroscope 3.7.6
+myXmx$Integer=1200
 sys.adminRights$Boolean=false
 sys.component.1691242183$Boolean=true
 sys.component.1691242184$Boolean=true

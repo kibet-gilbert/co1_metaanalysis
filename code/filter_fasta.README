@@ -7,3 +7,5 @@ $ . ../path-to-file/filter_fasta.sh
 4. Run the command below and you will be take though a series of guide questions as the filtering proceeds.
 $ filter_seqs file1 [file2 file3 ...]
 5. proceed till the end and the filtered sequences will be stored in an output file with the option of deleting or not deleting the filtered sequences from original parent file.
+
+# rsync --dry-run -r --progress --size-only gkibet@hpc01.icipe.org:/home/gkibet/bioinformatics/github/co1_metaanalysis/data/* ./
