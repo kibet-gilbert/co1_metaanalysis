@@ -5,6 +5,39 @@
 
 import os
 import sys
+import subprocess
+import importlib
+import ssl
+import certifi
+
+# Use certifi's CA Bundle
+ssl_context = ssl.create_default_context(cafile=certifi.where())
+
+# Get the Python version:
+python_version = f"{sys.version_info.major}.{sys.version_info.minor}"
+
+# Add the user site-packages directory to PYTHONPATH
+site_packages_path = os.path.expanduser('~/.local/lib/python{python_version}/site-packages')
+sys.path.append(site_packages_path)
+
+# List of required packages
+required_packages = ['numpy', 'pandas', 'lxml', 'beautifulsoup4']
+
+def install_and_import(package):
+    try:
+        importlib.import_module(package)
+    except ImportError:
+        subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--user', package], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    finally:
+        if package == 'beautifulsoup4':
+            globals()['bs4'] = importlib.import_module('bs4')
+        else:
+            globals()[package] = importlib.import_module(package)
+
+# Install and import required packages
+for package in required_packages:
+    install_and_import(package)
+
 import numpy
 import pandas as pd
 import lxml

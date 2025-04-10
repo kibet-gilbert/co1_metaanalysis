@@ -40,8 +40,21 @@ rename() { #Takes input file name and extracts the prefix of the name ("prefix")
 }
 
 #===============================================================================================================================================================
+# Functions to support bolddata_retrival for BOLD systems v5:
 
-bolddata_retrival() { # This fuction retrives data belonging to a list of country names given. Input can be a file containing names of select countries or idividual country names
+# Functionn to extract data from JSON response
+extract_data() {
+	local json_response="$1"
+	taxa=$(echo "$json_response" | jq -r '.successful_terms[0].matched' | cut -d':' -f2)
+	taxaName=$(echo "$json_response" | jq -r '.successful_terms[0].matched' | cut -d':' -f3)
+	geo_loc=$(echo "$json_response" | jq -r '.successful_terms[1].matched' | cut -d':' -f3)
+	echo -e "\ttaxa:${taxa};taxaName:${taxaName};geo_loc:${geo_loc}"
+}
+
+# ********************************************************************
+bolddata_retrival() { #
+	# This fuction retrives data belonging to a list of country names given.
+	### input can be a file containing names of select countries or idividual country names
 
 	if [[ ( $# -eq 0 ) || ! ( `echo $1` =~ -.*$ ) ]]
 	then
@@ -55,14 +68,15 @@ bolddata_retrival() { # This fuction retrives data belonging to a list of countr
 	local OPTIND=1
 	unset countries
 	unset country_geo
+	unset shortDate
 
-	while getopts 'i:ac:f:' key
+	while getopts 't:ac:f:' key
 	do
 		case "${key}" in
-			i)
+			t)
 				if [[ ( ! -f $OPTARG ) && ( "$OPTARG" =~ $regexp ) ]]
 				then
-					taxon_nam=${OPTARG}
+					local taxon_nam=${OPTARG}
 					#echo $taxon_nam
 				else		
 					until [[ "$taxon_nam" =~ $regexp ]]
@@ -82,15 +96,18 @@ bolddata_retrival() { # This fuction retrives data belonging to a list of countr
 					do countries+=("`echo $line | sed 's/ /%20/g'`")
 						country_geo+=("`echo -e "'$line'"`")
 					done < $OPTARG
+					local countryNO=${#countries[@]}
 				else
 					echo "input file error in `basename $OPTARG`: input file should be named '.*countries.*'"
 				fi
 				;;
 			c)
 				countries+=(`echo $OPTARG | sed 's/ /%20/g'`)
+				local countryNO=${#countries[@]}
 				;;
 			a)
 				countries=("all")
+				local countryNO="all"
 				;;
 			?)
 				echo "Input error..."
@@ -100,11 +117,12 @@ bolddata_retrival() { # This fuction retrives data belonging to a list of countr
 		esac
 	done
 
-	echo -e "\n\tDownloading $taxon_nam data of countries named in ${#countries[@]} countr[y|ies]: ${country_geo[@]} from www.boldsystems.org V4"
+	echo -e "\n\tDownloading $taxon_nam data of countries named in ${countryNO} countr[y|ies]: ${country_geo[@]} from www.boldsystems.org V5"
 	
-	taxon_name=`echo $taxon_nam | sed 's/ /%20/g'`
+	local taxon_name=`echo $taxon_nam | sed 's/ /%20/g'`
+	local shortDate=$(date +"%Y%m%d")
 	
-	wgetoutput_dir=${inputdata_path}bold_data/${taxon_name}
+	local wgetoutput_dir=${inputdata_path}bold_data/${shortDate}_${taxon_name}
 	until [[ -d ${wgetoutput_dir} ]]
 	do
 		echo "Creating output directory '${wgetoutput_dir}'"
@@ -116,17 +134,55 @@ bolddata_retrival() { # This fuction retrives data belonging to a list of countr
 	then
 		for i in ${countries[@]}
 		do
-			country=`echo ${i} | sed "s/%20/_/g; s/'//"g`
+			local country=`echo ${i} | sed "s/%20/_/g; s/'//"g`
 			echo -e "\t${country}"
-			wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${country}`date +"-%d%m%Y"`"_summary.xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/stats?geo=${i}&taxon=${taxon_name}&format=xml"
-			#wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${i}"_specimen.xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/specimen?geo=${i}&taxon=${taxon_name}&format=xml"
-			wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${country}`date +"-%d%m%Y"`".xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/combined?geo=${i}&taxon=${taxon_name}&format=xml"
+
+			# Run search query through a preprocessor first:
+			query_url="https://portal.boldsystems.org/api/query/preprocessor?query=tax:${taxon_name};geo:${i}"
+			json_response=$(wget -qO- "$query_url")
+			# Extract data from JSON response:
+			extract_data "$json_response"
+			
+			# Second URL to download data:
+			download_summary_url="https://portal.boldsystems.org/api/summary?query=tax:${taxa}:${taxaName};geo:country/ocean:${geo_loc}&fields=specimens"
+			download_queryID_url="https://portal.boldsystems.org/api/query?query=tax:${taxa}:${taxaName};geo:country/ocean:${geo_loc}&extent=full"
+			dataQuery_response=$(wget -qO- "$download_queryID_url")
+	 		query_id=$(echo "$dataQuery_response" | jq -r '.query_id')		
+			echo -e "\tquery_id:${query_id}"
+			download_data_url="https://portal.boldsystems.org/api/documents/${query_id}/download?format=tsv"
+			download_dataDWC_url="https://portal.boldsystems.org/api/documents/${query_id}/download?format=dwc"
+
+			# Download data from URLs:download_summary_url
+			wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${taxon_name}"_"${country}`date +"-%d%m%Y"`"_summary.json -a ${wgetoutput_dir}/${taxon_nam}_wget_log ${download_summary_url}
+			# Download data from URLs:download_data_url
+			wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${taxon_name}"_"${country}`date +"-%d%m%Y"`"_data.tsv -a ${wgetoutput_dir}/${taxon_nam}_wget_log ${download_data_url}
+			# Download data from URLs:download_dataDWC_url
+			#wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${taxon_name}"_"${country}`date +"-%d%m%Y"`"_dataDWC.tsv -a ${wgetoutput_dir}/${taxon_nam}_wget_log ${download_dataDWC_url}
+
 		done
 	elif [[ ( `echo ${countries[0]}` =~ "all" ) ]]
 	then
-		wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${taxon_nam}`date +"-%d%m%Y"`"_summary.xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/stats?taxon=${taxon_name}&format=xml"
-		#wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${taxon_nam}"_specimen.xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/specimen?taxon=${taxon_name}&format=xml"
-		wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${taxon_nam}`date +"-%d%m%Y"`".xml -a ${wgetoutput_dir}/${taxon_nam}_wget_log "http://www.boldsystems.org/index.php/API_Public/combined?taxon=${taxon_name}&format=xml"
+		# Run search query through a preprocessor first:
+		query_url="https://portal.boldsystems.org/api/query/preprocessor?query=tax:${taxon_name}"
+		json_response=$(wget -qO- "$query_url")
+		# Extract data from JSON response:
+		extract_data "$json_response"
+		
+		# Second URL to download data:
+		download_summary_url="https://portal.boldsystems.org/api/summary?query=tax:${taxa}:${taxaName}&fields=specimens"
+		download_queryID_url="https://portal.boldsystems.org/api/query?query=tax:${taxa}:${taxaName}&extent=full"
+		dataQuery_response=$(wget -qO- "$download_queryID_url")
+	 	query_id=$(echo "$dataQuery_response" | jq -r '.query_id')
+		echo -e "\tquery_id:${query_id}"
+		download_data_url="https://portal.boldsystems.org/api/documents/${query_id}/download?format=tsv"
+		download_dataDWC_url="https://portal.boldsystems.org/api/documents/${query_id}/download?format=dwc"
+	
+		# Download data from URLs:download_summary_url
+		wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${taxaName}"_all"`date +"-%d%m%Y"`"_summary.json -a ${wgetoutput_dir}/${taxon_nam}_wget_log ${download_summary_url}
+		# Download data from URLs:download_data_url
+		wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${taxaName}"_all"`date +"-%d%m%Y"`"_data.tsv -a ${wgetoutput_dir}/${taxon_nam}_wget_log ${download_data_url}
+		# Download data from URLs:download_dataDWC_url
+		#wget --show-progress --progress=bar:noscroll --retry-connrefused -t inf -O ${wgetoutput_dir}/"${taxaName}"_all"`date +"-%d%m%Y"`"_dataDWC.tsv -a ${wgetoutput_dir}/${taxon_nam}_wget_log ${download_dataDWC_url}
 	fi
 }
 
@@ -137,7 +193,7 @@ boldxml2tsv() { #This function generates .tsv files from .xml files using python
 	
 	TAB=$(printf '\t')
 	
-	echo -e "\n\tgenerating .tsv files from .xml downloads"
+	echo -e "\n\tGenerating .tsv files from .xml downloads..."
 
 	for i in "$@"
 	do
@@ -151,13 +207,17 @@ boldxml2tsv() { #This function generates .tsv files from .xml files using python
 		then
 			input_src=`dirname "$( realpath "${i}" )"`
 			rename 
-			echo -e "\n\tLet us proceed with file '${input_filename}'...`date +"-%H.%M.%S-%Y%m%d"`"
+			echo -e "\n\t'${input_filename}'...STARTing: `date +"-%H.%M.%S-%Y%m%d"`"
 			sed 's/class/Class/g' "$i" | sed "s/$TAB/,/g" > ${input_src}/input.xml
-			${PYTHON_EXEC} ${xml_to_tsv} ${input_src}/input.xml && mv output.tsv ${input_src}/${output_filename}.tsv
-			rm ${input_src}/input.xml
-			if [ $? -eq 0 ]
-			then
-				echo -e "\tDONE. The output file has been stored in ${input_src}/${output_filename}.tsv"
+			${PYTHON_EXEC} ${xml_to_tsv} ${input_src}/input.xml
+			if [ -f output.tsv ]; then
+				mv output.tsv ${input_src}/${output_filename}.tsv
+				rm ${input_src}/input.xml
+				if [ $? -eq 0 ]; then
+					echo -e "\b...DONE. The output file has been stored in ${input_src}/${output_filename}.tsv"
+				fi
+			else
+				echo "output.tsv does not exist. The input might be empty."
 			fi
 		else
 			echo -e "\n\tinput file error in `basename -- $i`: input file should be a .xml file format"
@@ -173,7 +233,7 @@ boldtsv2fasta() { #This function generates .fasta files from cleaned-up .tsv fil
 
 	usage $@
 
-	echo "generating .fasta files from .tsv metadata files"
+	echo "Generating FASTA files from BOLD BCDM TSV files"
 
 	for i in "$@"
 	do
@@ -184,7 +244,7 @@ boldtsv2fasta() { #This function generates .fasta files from cleaned-up .tsv fil
 		then
 			input_src=`dirname "$( realpath "${i}" )"`
 			rename
-			echo -e "\nLet us proceed with file '${input_filename}'..."
+			echo -e "\n\tProcessing '${input_filename}'..."
 			${AWK_EXEC} -f ${AWK_SCRIPT} "$i" > ${input_src}/${output_filename}.fasta
 		else
 			echo "input file error in `basename -- $i`: input file should be a .tsv file format"
@@ -207,12 +267,12 @@ boldtsv_cleanup() { # This function takes an 80 column .TSV output of boldxml2ts
 		then
 			rename
 			input_src=`dirname "$( realpath "${i}" )"`
-			echo -e "\nProceeding processing file '${input_filename}'..."
+			echo -e "\nProcessing file '${input_filename}'..."
 			${RSCRIPT_EXEC} --vanilla ${data_cleanup} $i |& tee -a ${input_src}/${output_filename}_cleanup
 
 			if [ $? -eq 0 ]
                         then
-                                echo -e "\n\tDONE. The output file has been stored in ${input_src}/${output_filename}_[all_data|Over499_data|500to700_data|650to660_data|Over700_data|Under500_data].tsv"
+                                echo -e "\n\tDONE. Output file stored in ${input_src}/${output_filename}_[all_data|Over499_data|500to700_data|650to660_data|Over700_data|Under500_data].tsv"
 			fi
 			#Generating a file of Genbank and BOLD ids.
 			${AWK_EXEC} 'BEGIN{FS="\t";OFS="\t"}; FNR>=2{if ($71 !~ /^NA$/) print $1,$71}' ${input_src}/${output_filename}_all_data.tsv ${input_src}/${output_filename}_NonCOI_data.tsv >> ${input_src}/${output_filename}_all_data.genbank_ids
